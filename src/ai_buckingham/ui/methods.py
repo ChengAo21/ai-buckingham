@@ -1,0 +1,71 @@
+import streamlit as st
+from .theme import intro,heading
+from .knowledge import browser
+
+TYPE_I=r'\Pi_y=\Phi(\Pi_1,\ldots,\Pi_n)\;\longrightarrow\;\Phi^{(0)}(\Pi_1,\ldots,\Pi_k),\qquad \Pi_{k+1},\ldots,\Pi_n\to0\ \mathrm{or}\ \infty'
+TYPE_II=r'\Pi_y\prod_{j=k+1}^{n}\Pi_j^{\xi_j}=\Phi^{(1)}\!\left(\Pi_1\prod_{j=k+1}^{n}\Pi_j^{\xi_j^{(1)}},\ldots,\Pi_k\prod_{j=k+1}^{n}\Pi_j^{\xi_j^{(k)}}\right)'
+
+def render():
+    intro('Methods','From admissible Buckingham–Π coordinates to physical-regime identification and dimensionless learning.')
+    a,b,c,d,e=st.tabs(['Dimensional analysis','GPR gradients','Physical-regime clustering','MI-based learning','Retrieval grounding'])
+    with a:
+        heading('Buckingham–Π space')
+        st.markdown('For p governing variables, the dimensional matrix D defines an n-dimensional null space. Every candidate group stays inside this admissible space.')
+        st.latex(r'n=p-\operatorname{rank}(\mathbf D),\qquad \mathbf D\mathbf w^{(q)}=\mathbf0,\qquad \Pi^{(q)}=\prod_{i=1}^{p}x_i^{w_i^{(q)}}')
+        st.latex(r'\mathbf w(\boldsymbol\gamma)=\sum_{q=1}^{n}\gamma_q\mathbf w^{(q)},\qquad \Pi(\boldsymbol\gamma)=\prod_{q=1}^{n}(\Pi^{(q)})^{\gamma_q}')
+        heading('Complete and incomplete similarity')
+        st.markdown('**Type I:** the response approaches a finite, non-zero limit and depends on fewer effective variables.')
+        st.latex(TYPE_I)
+        st.markdown('**Type II:** both the input similarity variables and the output power-law rescaling must be inferred.')
+        st.latex(TYPE_II)
+        st.caption('Physical regimes are a separate level of the hierarchy: Type I or Type II learning is performed within each selected regime.')
+    with b:
+        heading('GPR surrogate and analytical gradients')
+        st.markdown('Gram–Schmidt orthonormalization gives B⁽ˢ⁾. Gradient directions are compared in consistently scaled logarithmic coordinates.')
+        st.latex(r'\mathbf z=\mathbf B^{(S)}\log\mathbf x,\qquad g(\mathbf z)\simeq\log\Pi_y,\qquad g\sim\mathcal{GP}(m,k)')
+        st.latex(r'k(\mathbf z,\mathbf z^\prime)=\sigma_0^2\exp[-\sigma_1^2\|\mathbf z-\mathbf z^\prime\|_2^2],\qquad \mathbf K_y=\mathbf K+\sigma_u^2\mathbf I')
+        st.latex(r'\log\Pi_y=g(\mathbf z)+\epsilon,\qquad\epsilon\sim\mathcal N(0,\sigma_u^2)')
+        st.latex(r'\boldsymbol\alpha=\mathbf K_y^{-1}[\mathbf y-m(\mathbf Z)],\qquad g_{\mathrm{pred}}(\mathbf z)=m(\mathbf z)+k(\mathbf z,\mathbf Z)\boldsymbol\alpha')
+        st.markdown('The posterior-mean gradient is evaluated analytically, without finite differences.')
+        st.latex(r'\nabla_{\mathbf z}g_{\mathrm{pred}}(\mathbf z)=\nabla_{\mathbf z}m(\mathbf z)+2\sigma_1^2\sum_{i=1}^{N_{\mathrm{tr}}}\alpha_i k(\mathbf z,\mathbf z^{(i)})(\mathbf z^{(i)}-\mathbf z)')
+        heading('Hyperparameter estimation')
+        st.latex(r'\mathcal L=\tfrac12\mathbf r^T\mathbf K_y^{-1}\mathbf r+\tfrac12\log|\mathbf K_y|+\tfrac{N_{\mathrm{tr}}}{2}\log(2\pi),\qquad\mathbf r=\mathbf y-m(\mathbf Z)')
+        st.latex(r'\frac{\partial\mathcal L}{\partial\theta}=\tfrac12\operatorname{tr}\!\left[(\mathbf K_y^{-1}-\boldsymbol\alpha\boldsymbol\alpha^T)\frac{\partial\mathbf K_y}{\partial\theta}\right]')
+        st.caption('The displayed likelihood derivative applies to covariance parameters θ. Bounded L-BFGS-B uses analytical derivatives and multiple initializations. Cholesky solves include diagonal jitter 10⁻¹⁰.')
+        st.markdown('**Mean functions.** The default is constant. The rough-pipe case uses an affine–sigmoid transition to represent sharp-gradient behavior.')
+        st.latex(r'm(\mathbf z)=\beta+(\mathbf w_1^T\mathbf z+b_1)s(\mathbf w_2^T\mathbf z+b_2),\qquad s(a)=(1+e^{-a})^{-1}')
+        st.latex(r'\nabla m=s\mathbf w_1+(\mathbf w_1^T\mathbf z+b_1)s(1-s)\mathbf w_2')
+    with c:
+        heading('Eigenvalue-weighted gradient similarity')
+        st.latex(r'\widehat{\mathbf g}_i=\frac{\nabla g(\mathbf z^{(i)})}{\|\nabla g(\mathbf z^{(i)})\|_2},\qquad\mathbf C_I=\frac1{N_I}\sum_{i\in\Omega_I}\widehat{\mathbf g}_i\widehat{\mathbf g}_i^T=\mathbf V_I\mathbf\Lambda_I\mathbf V_I^T')
+        st.latex(r'\operatorname{Sim}(\nabla g,\Omega_I)=\sum_{j=1}^{n}\left(\frac{\lambda_j^{(I)}}{\|\boldsymbol\lambda_I\|_2}\right)^2[\nabla g\cdot\mathbf v_j^{(I)}]^2')
+        st.markdown('Assign each sample to the cluster with the largest similarity, then recompute cluster covariance eigenpairs until assignments converge.')
+        heading('Admissibility and global/multiple-regime selection')
+        st.latex(r'\frac{\lambda_1^{(I)}}{\lambda_n^{(I)}}\ge E,\qquad \frac{N_I}{N}\ge p_{\min},\qquad N_I\ge N_{\min}\quad\text{for every cluster}')
+        st.latex(r's_{\mathrm{dir}}=\left|(\mathbf v_1^{(A)})^T\mathbf v_1^{(B)}\right|<\tau_{\mathrm{dir}}\quad(K=2)')
+        st.markdown('A multiple-regime treatment requires an admissible candidate partition and directional separation. The smallest admissible K is selected. Otherwise a global treatment is adopted; unresolved numerical failures remain visible.')
+        st.caption('Current thresholds: E = 50, p_min = 0.05, N_min = 60, τ_dir = 0.90; candidate K ∈ {2, 3, 4}. The global leading-eigenvalue fraction is a diagnostic, not an acceptance threshold.')
+    with d:
+        heading('Mutual information')
+        st.latex(r'I(X;Y)=\iint p(x,y)\log\frac{p(x,y)}{p_X(x)p_Y(y)}\,dx\,dy')
+        st.latex(r'I(f(X);Y)=I(X;Y)\qquad\text{for an invertible reparameterization }f')
+        st.markdown('**Finite-sample estimators.** KSG uses Chebyshev neighborhoods and inclusive marginal counts. Histogram estimation uses equal-width bins over the observed range.')
+        st.latex(r'\widehat I_{\mathrm{KSG}}=\psi(\omega)+\psi(N)-\frac1N\sum_{i=1}^{N}[\psi(n_{x,i})+\psi(n_{y,i})]')
+        st.latex(r'\widehat I_{\mathrm{hist}}=\widehat H_b(X)+\widehat H_b(Y)-\widehat H_b(X,Y),\qquad \widehat H_b=-\sum_{j:p_j>0}p_j\log p_j')
+        st.caption('The marginal radius is max(ρ_i, 10⁻¹⁰), and counts include sample i. Automatic selection uses KSG below N = 800 and histograms otherwise; comparison settings stay fixed for a candidate-count comparison.')
+        heading('Joint optimization and adaptive dimensionality')
+        st.latex(r'\mathbf\Gamma_k^*=\arg\max_{\mathbf\Gamma_k}\widehat I(\boldsymbol\Pi_k(\mathbf\Gamma_k);\Pi_y)\quad\text{(Type I)}')
+        st.latex(r'(\mathbf\Gamma_k^*,\boldsymbol\gamma_o^*)=\arg\max_{\mathbf\Gamma_k,\boldsymbol\gamma_o}\widehat I(\boldsymbol\Pi_k(\mathbf\Gamma_k);\widetilde\Pi_y),\qquad\widetilde\Pi_y=\Pi_y\Pi(\boldsymbol\gamma_o)\quad\text{(Type II)}')
+        st.latex(r'\varepsilon_k=\exp[-\max(\widehat I_k,0)],\qquad\Delta\varepsilon_k=\varepsilon_{k-1}-\varepsilon_k')
+        st.markdown('CMA-ES searches the coefficients. Retain an additional group only if Δε reaches 0.10. A one-group output-rescaling screen selects Type I when the relative MI loss without rescaling is at most 0.15.')
+        heading('Sparsification, rationalization and validation')
+        st.markdown('Small physical-variable exponents trigger a restricted null-space search, rather than direct deletion of powers. Rational coefficients are accepted only after checking their MI loss.')
+        st.latex(r'\max_j|\widetilde w_i^{(j)}|<\delta_1,\qquad\varepsilon_{\mathrm{sparse}}-\varepsilon_{\mathrm{selected}}\le\delta_2')
+        st.latex(r'|\gamma-a/q|\le\delta_3,\quad q\le Q_{\max},\qquad \frac{\widehat I_{\mathrm{selected}}-\widehat I_{\mathrm{rational}}}{\widehat I_{\mathrm{selected}}}\le\delta_4')
+        st.caption('Current settings: δ1 = δ2 = δ3 = 0.05, Qmax = 5, δ4 = 0.10, with case-specific overrides. Held-out GPR evaluates the selected representation; it does not select the group count.')
+    with e:
+        heading('Two knowledge bases, two grounding roles')
+        st.markdown('**Physical quantities** ground the pre-inference dimensional audit. **Dimensionless relations** support post-inference physical interpretation without changing the computed groups, scores or regime decisions.')
+        st.latex(r's_{\mathrm{quantity}}=0.65s_{\mathrm{lex}}+0.35s_{\mathrm{sem}},\qquad s_{\mathrm{relation}}=0.20s_{\mathrm{lex}}+0.80s_{\mathrm{sem}}')
+        st.caption('GLM-Embedding-3 supplies semantic embeddings. Quantity retrieval uses a minimum hybrid score of 0.22 and up to three records per variable; interpretation retrieves up to five relations. Retrieval scores are rankings, not physical probabilities.')
+        browser()
