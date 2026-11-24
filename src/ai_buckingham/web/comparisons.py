@@ -92,13 +92,13 @@ def cess():
             band=settings.get("transition_range",{})
             if band:
                 fig.add_hrect(y0=band["eta_min"],y1=band["eta_max"],fillcolor="#8B6BA5",opacity=.14,line_width=0)
-            chart(fig,"cess_regional")
+            chart(fig,"cess_regional",compact_title=True)
         else:
             st.info("Pointwise regional category arrays are unavailable for this selection.")
     with right:
         chart(px.scatter(coordinates,x="Re_tau",y="eta",color="original_regime",log_x=True,log_y=True,hover_data=["row_id","y_plus"],
                          labels={"original_regime":"Physical regime"},
-                         title="AI Buckingham<br><sup>Recorded gradient partition</sup>"),"cess_gradient")
+                         title="AI Buckingham<br><sup>Recorded gradient partition</sup>"),"cess_gradient",compact_title=True)
     st.caption("Both panels use the same 1,000 Cess observations. M controls the geometric partition resolution; K identifies the gradient regimes. The shaded band spans the recorded intermediate samples.")
     table(selected,"selected_regional_scores.csv")
     if not sensitivity.empty:

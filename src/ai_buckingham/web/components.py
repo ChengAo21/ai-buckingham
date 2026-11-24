@@ -49,7 +49,7 @@ def masthead(title: str, description: str, tag: str = "Evidence explorer") -> No
                 f'<h1>{html.escape(title)}</h1><div class="ab-deck">{html.escape(description)}</div></div>', unsafe_allow_html=True)
 
 
-def chart(fig: go.Figure, key: str | None = None) -> None:
+def chart(fig: go.Figure, key: str | None = None, *, compact_title: bool = False) -> None:
     # Keep the title above the plotting area and the legend below the axes.
     # A shared top strip made long titles collide with Plotly Express legend
     # headings, especially when two comparisons share a Streamlit row.
@@ -66,6 +66,11 @@ def chart(fig: go.Figure, key: str | None = None) -> None:
                               "autoexpand":True},
                       legend={"orientation":"h","yanchor":"top","y":-.22,"x":0,"xanchor":"left",
                               "title":{"side":"top"},"font":{"size":12},"maxheight":100})
+    if compact_title and fig.layout.title.text:
+        # Keep comparison headings close to the axes, with room for two lines
+        # below the preceding controls, independent of the figure height.
+        fig.update_layout(title={"yref":"paper","y":1,"yanchor":"bottom",
+                                 "pad":{"b":30},"automargin":False}, margin={"t":85})
     fig.update_xaxes(automargin=True, title_standoff=16)
     fig.update_yaxes(automargin=True, title_standoff=12)
     st.plotly_chart(fig, width="stretch", key=key,

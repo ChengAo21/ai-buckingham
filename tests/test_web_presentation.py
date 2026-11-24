@@ -34,9 +34,11 @@ def test_titled_comparison_has_separate_legend_strip_and_unchanged_points():
                         title="AI Buckingham<br><sup>Recorded gradient partition</sup>")
     points = [(list(trace.x), list(trace.y)) for trace in figure.data]
     with patch("ai_buckingham.web.components.st.plotly_chart") as display:
-        chart(figure, "cess_layout_regression")
+        chart(figure, "cess_layout_regression", compact_title=True)
     assert [(list(trace.x), list(trace.y)) for trace in figure.data] == points
     assert figure.layout.title.y > 0.9
+    assert figure.layout.title.yref == "paper"
+    assert figure.layout.title.yanchor == "bottom"
     assert figure.layout.legend.y < 0
     assert figure.layout.legend.yanchor == "top"
     assert figure.layout.margin.b >= 100
