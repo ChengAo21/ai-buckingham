@@ -1,6 +1,6 @@
 # GitHub 上传文件夹说明
 
-本文件夹是独立仓库根目录。上传本文件夹内的内容即可；外层的原始材料、开发环境及临时辅助脚本不属于交付仓库。本次未执行云部署。
+本文件夹是独立仓库根目录。上传本文件夹内的内容即可；外层的原始材料、开发环境及临时辅助脚本不属于交付仓库。仓库首页与 GitHub Pages 静态结果页共用已验收的展示素材；Streamlit 可按说明本地运行。
 
 ## 已包含
 
@@ -30,9 +30,13 @@ Sandgrain 的额外预测比较使用同一 83/21 划分及原 GPR 评价实现�
 
 真实 API key 未写入 notebook、程序或交付配置。新运行从环境变量或网页会话读取凭据；浏览已保存结果不需要 key。源码许可证设为 MIT，第三方代码和数据遵循各自来源条款。
 
-## 启动
+## 网页展示与启动
 
-建议使用 Python 3.12，在本文件夹根目录安装：
+在线静态结果页：<https://chengao21.github.io/ai-buckingham/>。其中包含十例图片、数值、Notebook 入口及完整结果卡片。
+
+首页横幅、流程图与五张代表性结果图位于 `docs/assets/`，来源及哈希见该目录的 `manifest.json`。可用 `python scripts/build_showcase_assets.py` 和 `python scripts/build_pages.py` 重建展示内容；它们不调用模型 API，也不改动已有科学结果。
+
+Streamlit 建议使用 Python 3.12，在本文件夹根目录安装：
 
 ```bash
 python -m pip install -e ".[app,notebooks,dev]"
