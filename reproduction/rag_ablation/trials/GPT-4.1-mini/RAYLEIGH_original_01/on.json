@@ -1,0 +1,2159 @@
+{
+  "pair_id": "RAYLEIGH_original_01",
+  "arm": "on",
+  "initial_ledger_sha256": "de760ef77574f700c0f79f43b60853a79d3f8ffda4fe828235dad022a98a72de",
+  "checker_rounds": [
+    {
+      "candidate_ledger": {
+        "output_variable_name": "Nu",
+        "output_variable_reasoning": "The Nusselt number (Nu) is a dimensionless quantity representing the ratio of convective to conductive heat transfer across a fluid layer. It is derived from the given physical quantities related to Rayleigh-Bénard convection, which include length (h), temperature difference (delta_T), thermal conductivity (lambda), gravitational acceleration (g), thermal expansion coefficient (alpha), kinematic viscosity (nu), and thermal diffusivity (kappa). Each input's physical dimension is identified based on standard SI base units and physical definitions.",
+        "output_variable_confidence": "high",
+        "input_variable_names": [
+          "h",
+          "delta_T",
+          "lambda",
+          "g",
+          "alpha",
+          "nu",
+          "kappa"
+        ],
+        "variables": [
+          {
+            "csv_name": "h",
+            "quantity_name": "length",
+            "physical_definition": "height of the container, a length scale",
+            "si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "delta_T",
+            "quantity_name": "temperature difference",
+            "physical_definition": "temperature difference between the top and bottom surfaces",
+            "si_exponents": {
+              "M": "0",
+              "L": "0",
+              "T": "0",
+              "I": "0",
+              "Theta": "1",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "lambda",
+            "quantity_name": "thermal conductivity",
+            "physical_definition": "thermal conductivity, the rate of heat transfer through a material per unit area per unit temperature gradient",
+            "si_exponents": {
+              "M": "1",
+              "L": "1",
+              "T": "-3",
+              "I": "0",
+              "Theta": "-1",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "g",
+            "quantity_name": "acceleration",
+            "physical_definition": "gravitational acceleration, acceleration due to gravity",
+            "si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "-2",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "alpha",
+            "quantity_name": "thermal expansion coefficient",
+            "physical_definition": "thermal expansion coefficient, fractional change in volume per unit temperature change",
+            "si_exponents": {
+              "M": "0",
+              "L": "0",
+              "T": "0",
+              "I": "0",
+              "Theta": "-1",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "nu",
+            "quantity_name": "kinematic viscosity",
+            "physical_definition": "kinematic viscosity, ratio of dynamic viscosity to density",
+            "si_exponents": {
+              "M": "0",
+              "L": "2",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "kappa",
+            "quantity_name": "thermal diffusivity",
+            "physical_definition": "thermal diffusivity, ratio of thermal conductivity to volumetric heat capacity",
+            "si_exponents": {
+              "M": "0",
+              "L": "2",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          }
+        ]
+      },
+      "ledger_sha256": "de760ef77574f700c0f79f43b60853a79d3f8ffda4fe828235dad022a98a72de",
+      "gate": {
+        "gate_status": "PASSED",
+        "ledger_sha256": "de760ef77574f700c0f79f43b60853a79d3f8ffda4fe828235dad022a98a72de",
+        "checker_audit": {
+          "ledger_sha256": "de760ef77574f700c0f79f43b60853a79d3f8ffda4fe828235dad022a98a72de",
+          "variables": [
+            {
+              "csv_name": "h",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "0",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_container_height"
+              ],
+              "reason": "The retrieved record pq_container_height is the canonical Rayleigh-Bénard 'container height' entry: it defines the vertical separation between confining plates in the Rayleigh-Bénard configuration and explicitly uses the symbol h/H. Its si_dimension is L (dimension_vector [0,1,0,0,0,0,0]), which directly supplies the length-only exponents expected for the problem's geometric height h. This record therefore justifies the candidate's pure L^1 assignment in the original Rayleigh-Bénard context."
+            },
+            {
+              "csv_name": "delta_T",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "0",
+                "T": "0",
+                "I": "0",
+                "Theta": "1",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_temperature_difference"
+              ],
+              "reason": "The record pq_temperature_difference is the canonical entry for a temperature difference (symbols ΔT, delta_T) and is explicitly defined as the difference between two thermodynamic temperatures. Its si_dimension is Theta (dimension_vector [0,0,0,0,1,0,0]), which supports the candidate's single nonzero Theta^1 coordinate. This record applies because the problem input is the temperature difference between top and bottom surfaces."
+            },
+            {
+              "csv_name": "lambda",
+              "before_si_exponents": {
+                "M": "1",
+                "L": "1",
+                "T": "-3",
+                "I": "0",
+                "Theta": "-1",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_thermal_conductivity"
+              ],
+              "reason": "The record pq_thermal_conductivity is the canonical thermal conductivity entry (symbols λ, lambda) used in Fourier's law and heat-transfer contexts. It lists si_dimension M L T^-3 Theta^-1 (dimension_vector [1,1,-3,0,-1,0,0]), matching every known coordinate of the candidate. It applies here because the problem uses thermal conductivity of the fluid/plates as λ in the conductive heat-flux term."
+            },
+            {
+              "csv_name": "g",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "-2",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_gravitational_acceleration"
+              ],
+              "reason": "The record pq_gravitational_acceleration defines acceleration due to gravity with si_dimension L T^-2 (dimension_vector [0,1,-2,0,0,0,0]) and the canonical symbol g. In Rayleigh-Bénard convection g provides the body-force scale entering buoyancy; thus this record justifies the candidate's L^1 T^-2 assignment."
+            },
+            {
+              "csv_name": "alpha",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "0",
+                "T": "0",
+                "I": "0",
+                "Theta": "-1",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_thermal_expansion_coefficient"
+              ],
+              "reason": "The record pq_thermal_expansion_coefficient is the canonical entry for the (volumetric/linear) thermal expansion coefficient, symbol α/alpha, defined as fractional change per unit temperature and carrying dimension Theta^-1 (dimension_vector [0,0,0,0,-1,0,0]). In the Rayleigh-Bénard problem α multiplies temperature differences in the buoyancy term, so this record justifies the Theta^-1 exponent."
+            },
+            {
+              "csv_name": "nu",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "2",
+                "T": "-1",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_kinematic_viscosity"
+              ],
+              "reason": "The record pq_kinematic_viscosity is the standard kinematic viscosity entry (symbol ν/nu) defined as dynamic viscosity divided by density, with si_dimension L^2 T^-1 (dimension_vector [0,2,-1,0,0,0,0]). In fluid mechanics (including Rayleigh-Bénard) ν is the momentum diffusivity parameter used in the viscous term; this matches the candidate's L^2 T^-1 coordinates."
+            },
+            {
+              "csv_name": "kappa",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "2",
+                "T": "-1",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_thermal_diffusivity"
+              ],
+              "reason": "The record pq_thermal_diffusivity is the canonical thermal diffusivity entry (symbols κ/kappa) with si_dimension L^2 T^-1 (dimension_vector [0,2,-1,0,0,0,0]). Thermal diffusivity is used in the heat equation for Rayleigh-Bénard convection, so this record supports the candidate's L^2 T^-1 assignment."
+            }
+          ]
+        },
+        "variable_results": [
+          {
+            "csv_name": "h",
+            "decision": "PASSED",
+            "before": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "suggested": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "coordinate_diff": {},
+            "issues": [],
+            "referenced_entry_ids": [
+              "pq_container_height"
+            ],
+            "selected_entities": [
+              {
+                "entry_id": "pq_container_height",
+                "canonical_quantity": "container height",
+                "source_identifier": "https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/scaling-laws-for-rayleighbenard-convection-between-navierslip-boundaries/F474DBFC0CC0A874A0B14A383195D714"
+              }
+            ],
+            "cited_reference_si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "known_coordinate_conflicts_with_reference": {}
+          },
+          {
+            "csv_name": "delta_T",
+            "decision": "PASSED",
+            "before": {
+              "M": "0",
+              "L": "0",
+              "T": "0",
+              "I": "0",
+              "Theta": "1",
+              "N": "0",
+              "J": "0"
+            },
+            "suggested": {
+              "M": "0",
+              "L": "0",
+              "T": "0",
+              "I": "0",
+              "Theta": "1",
+              "N": "0",
+              "J": "0"
+            },
+            "coordinate_diff": {},
+            "issues": [],
+            "referenced_entry_ids": [
+              "pq_temperature_difference"
+            ],
+            "selected_entities": [
+              {
+                "entry_id": "pq_temperature_difference",
+                "canonical_quantity": "temperature difference",
+                "source_identifier": "doi:10.59161/AUEZ1291"
+              }
+            ],
+            "cited_reference_si_exponents": {
+              "M": "0",
+              "L": "0",
+              "T": "0",
+              "I": "0",
+              "Theta": "1",
+              "N": "0",
+              "J": "0"
+            },
+            "known_coordinate_conflicts_with_reference": {}
+          },
+          {
+            "csv_name": "lambda",
+            "decision": "PASSED",
+            "before": {
+              "M": "1",
+              "L": "1",
+              "T": "-3",
+              "I": "0",
+              "Theta": "-1",
+              "N": "0",
+              "J": "0"
+            },
+            "suggested": {
+              "M": "1",
+              "L": "1",
+              "T": "-3",
+              "I": "0",
+              "Theta": "-1",
+              "N": "0",
+              "J": "0"
+            },
+            "coordinate_diff": {},
+            "issues": [],
+            "referenced_entry_ids": [
+              "pq_thermal_conductivity"
+            ],
+            "selected_entities": [
+              {
+                "entry_id": "pq_thermal_conductivity",
+                "canonical_quantity": "thermal conductivity",
+                "source_identifier": "doi:10.59161/AUEZ1291"
+              }
+            ],
+            "cited_reference_si_exponents": {
+              "M": "1",
+              "L": "1",
+              "T": "-3",
+              "I": "0",
+              "Theta": "-1",
+              "N": "0",
+              "J": "0"
+            },
+            "known_coordinate_conflicts_with_reference": {}
+          },
+          {
+            "csv_name": "g",
+            "decision": "PASSED",
+            "before": {
+              "M": "0",
+              "L": "1",
+              "T": "-2",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "suggested": {
+              "M": "0",
+              "L": "1",
+              "T": "-2",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "coordinate_diff": {},
+            "issues": [],
+            "referenced_entry_ids": [
+              "pq_gravitational_acceleration"
+            ],
+            "selected_entities": [
+              {
+                "entry_id": "pq_gravitational_acceleration",
+                "canonical_quantity": "gravitational acceleration",
+                "source_identifier": "doi:10.59161/AUEZ1291"
+              }
+            ],
+            "cited_reference_si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "-2",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "known_coordinate_conflicts_with_reference": {}
+          },
+          {
+            "csv_name": "alpha",
+            "decision": "PASSED",
+            "before": {
+              "M": "0",
+              "L": "0",
+              "T": "0",
+              "I": "0",
+              "Theta": "-1",
+              "N": "0",
+              "J": "0"
+            },
+            "suggested": {
+              "M": "0",
+              "L": "0",
+              "T": "0",
+              "I": "0",
+              "Theta": "-1",
+              "N": "0",
+              "J": "0"
+            },
+            "coordinate_diff": {},
+            "issues": [],
+            "referenced_entry_ids": [
+              "pq_thermal_expansion_coefficient"
+            ],
+            "selected_entities": [
+              {
+                "entry_id": "pq_thermal_expansion_coefficient",
+                "canonical_quantity": "thermal expansion coefficient",
+                "source_identifier": "https://www.nist.gov/document/sp260-173pdf"
+              }
+            ],
+            "cited_reference_si_exponents": {
+              "M": "0",
+              "L": "0",
+              "T": "0",
+              "I": "0",
+              "Theta": "-1",
+              "N": "0",
+              "J": "0"
+            },
+            "known_coordinate_conflicts_with_reference": {}
+          },
+          {
+            "csv_name": "nu",
+            "decision": "PASSED",
+            "before": {
+              "M": "0",
+              "L": "2",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "suggested": {
+              "M": "0",
+              "L": "2",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "coordinate_diff": {},
+            "issues": [],
+            "referenced_entry_ids": [
+              "pq_kinematic_viscosity"
+            ],
+            "selected_entities": [
+              {
+                "entry_id": "pq_kinematic_viscosity",
+                "canonical_quantity": "kinematic viscosity",
+                "source_identifier": "doi:10.6028/NIST.SP.811e2008"
+              }
+            ],
+            "cited_reference_si_exponents": {
+              "M": "0",
+              "L": "2",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "known_coordinate_conflicts_with_reference": {}
+          },
+          {
+            "csv_name": "kappa",
+            "decision": "PASSED",
+            "before": {
+              "M": "0",
+              "L": "2",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "suggested": {
+              "M": "0",
+              "L": "2",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "coordinate_diff": {},
+            "issues": [],
+            "referenced_entry_ids": [
+              "pq_thermal_diffusivity"
+            ],
+            "selected_entities": [
+              {
+                "entry_id": "pq_thermal_diffusivity",
+                "canonical_quantity": "thermal diffusivity",
+                "source_identifier": "doi:10.1351/goldbook.08697"
+              }
+            ],
+            "cited_reference_si_exponents": {
+              "M": "0",
+              "L": "2",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "known_coordinate_conflicts_with_reference": {}
+          }
+        ],
+        "issues": [],
+        "referenced_records": [
+          {
+            "csv_name": "h",
+            "record": {
+              "variable_name": "h",
+              "entry_id": "pq_container_height",
+              "canonical_quantity": "container height",
+              "symbols": "h; H",
+              "aliases": "cell height; layer height; plate separation",
+              "definition": "Vertical separation between confining plates in the Rayleigh-Benard configuration.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "Rayleigh-Benard convection",
+              "ambiguity_notes": "The symbol h may denote a half-height in channel flow; use the problem geometry.",
+              "source": "Rayleigh-Benard convection reference defining Ra and Pr",
+              "source_identifier": "https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/scaling-laws-for-rayleighbenard-convection-between-navierslip-boundaries/F474DBFC0CC0A874A0B14A383195D714",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5926428430420988,
+              "hybrid_score": 0.8574249950647346,
+              "retrieval_mode": "hybrid"
+            }
+          },
+          {
+            "csv_name": "delta_T",
+            "record": {
+              "variable_name": "delta_T",
+              "entry_id": "pq_temperature_difference",
+              "canonical_quantity": "temperature difference",
+              "symbols": "DeltaT; delta_T; ΔT; Tl-T0; T_l-T_0",
+              "aliases": "temperature gap; melting-to-ambient temperature difference",
+              "definition": "Difference between two thermodynamic temperatures.",
+              "si_dimension": "Theta",
+              "dimension_vector": "[0, 0, 0, 0, 1, 0, 0]",
+              "si_unit": "K",
+              "domain": "heat transfer; thermodynamics",
+              "ambiguity_notes": "A temperature difference has the same dimension as thermodynamic temperature.",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5300721133962607,
+              "hybrid_score": 0.8355252396886912,
+              "retrieval_mode": "hybrid"
+            }
+          },
+          {
+            "csv_name": "lambda",
+            "record": {
+              "variable_name": "lambda",
+              "entry_id": "pq_thermal_conductivity",
+              "canonical_quantity": "thermal conductivity",
+              "symbols": "lambda; λ; k; kappa; κ",
+              "aliases": "heat conductivity",
+              "definition": "Proportionality coefficient in Fourier heat conduction.",
+              "si_dimension": "M L T^-3 Theta^-1",
+              "dimension_vector": "[1, 1, -3, 0, -1, 0, 0]",
+              "si_unit": "W m^-1 K^-1",
+              "domain": "heat transfer",
+              "ambiguity_notes": "Symbols lambda/λ may denote wavelength; k or kappa/κ may denote other coefficients. Resolve using heat-transfer context.",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "curated",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5622612700022278,
+              "hybrid_score": 0.8467914445007798,
+              "retrieval_mode": "hybrid"
+            }
+          },
+          {
+            "csv_name": "g",
+            "record": {
+              "variable_name": "g",
+              "entry_id": "pq_gravitational_acceleration",
+              "canonical_quantity": "gravitational acceleration",
+              "symbols": "g",
+              "aliases": "gravity; acceleration due to gravity",
+              "definition": "Acceleration associated with gravity.",
+              "si_dimension": "L T^-2",
+              "dimension_vector": "[0, 1, -2, 0, 0, 0, 0]",
+              "si_unit": "m s^-2",
+              "domain": "mechanics; convection",
+              "ambiguity_notes": "",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5212331221890292,
+              "hybrid_score": 0.8324315927661602,
+              "retrieval_mode": "hybrid"
+            }
+          },
+          {
+            "csv_name": "alpha",
+            "record": {
+              "variable_name": "alpha",
+              "entry_id": "pq_thermal_expansion_coefficient",
+              "canonical_quantity": "thermal expansion coefficient",
+              "symbols": "alpha; α; beta; β",
+              "aliases": "coefficient of thermal expansion; thermal expansivity",
+              "definition": "Fractional change of a characteristic length or volume per unit temperature change, according to the chosen convention.",
+              "si_dimension": "Theta^-1",
+              "dimension_vector": "[0, 0, 0, 0, -1, 0, 0]",
+              "si_unit": "K^-1",
+              "domain": "thermodynamics; convection",
+              "ambiguity_notes": "Alpha/α is also widely used for thermal diffusivity. The Rayleigh-Benard context usually uses alpha for thermal expansion coefficient and kappa for thermal diffusivity.",
+              "source": "NIST SP 260-173, thermal-property nomenclature",
+              "source_identifier": "https://www.nist.gov/document/sp260-173pdf",
+              "confidence": "curated",
+              "lexical_score": 1.0,
+              "semantic_score": 0.6021418926572065,
+              "hybrid_score": 0.8607496624300223,
+              "retrieval_mode": "hybrid"
+            }
+          },
+          {
+            "csv_name": "nu",
+            "record": {
+              "variable_name": "nu",
+              "entry_id": "pq_kinematic_viscosity",
+              "canonical_quantity": "kinematic viscosity",
+              "symbols": "nu; ν",
+              "aliases": "momentum diffusivity",
+              "definition": "Dynamic viscosity divided by mass density.",
+              "si_dimension": "L^2 T^-1",
+              "dimension_vector": "[0, 2, -1, 0, 0, 0, 0]",
+              "si_unit": "m^2 s^-1",
+              "domain": "fluid mechanics",
+              "ambiguity_notes": "Do not confuse lowercase nu/ν with the Nusselt number Nu or a generic frequency symbol.",
+              "source": "NIST SP 811, Guide for the Use of the International System of Units (SI)",
+              "source_identifier": "doi:10.6028/NIST.SP.811e2008",
+              "confidence": "curated",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5579328175797859,
+              "hybrid_score": 0.845276486152925,
+              "retrieval_mode": "hybrid"
+            }
+          },
+          {
+            "csv_name": "kappa",
+            "record": {
+              "variable_name": "kappa",
+              "entry_id": "pq_thermal_diffusivity",
+              "canonical_quantity": "thermal diffusivity",
+              "symbols": "alpha; α; kappa; κ; a",
+              "aliases": "heat diffusivity",
+              "definition": "Thermal conductivity divided by the product of density and specific heat capacity.",
+              "si_dimension": "L^2 T^-1",
+              "dimension_vector": "[0, 2, -1, 0, 0, 0, 0]",
+              "si_unit": "m^2 s^-1",
+              "domain": "heat transfer",
+              "ambiguity_notes": "Alpha/α may instead denote a thermal expansion coefficient; kappa/κ may instead denote thermal conductivity or another diffusivity.",
+              "source": "IUPAC Gold Book: thermal diffusivity",
+              "source_identifier": "doi:10.1351/goldbook.08697",
+              "confidence": "curated",
+              "lexical_score": 1.0,
+              "semantic_score": 0.6096583207357047,
+              "hybrid_score": 0.8633804122574966,
+              "retrieval_mode": "hybrid"
+            }
+          }
+        ],
+        "feedback": "Typed ledger de760ef77574f700c0f79f43b60853a79d3f8ffda4fe828235dad022a98a72de; program gate=PASSED\nVariable h: decision=PASSED; reason=The retrieved record pq_container_height is the canonical Rayleigh-Bénard 'container height' entry: it defines the vertical separation between confining plates in the Rayleigh-Bénard configuration and explicitly uses the symbol h/H. Its si_dimension is L (dimension_vector [0,1,0,0,0,0,0]), which directly supplies the length-only exponents expected for the problem's geometric height h. This record therefore justifies the candidate's pure L^1 assignment in the original Rayleigh-Bénard context.\nActual named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_container_height\", \"canonical_quantity\": \"container height\", \"source_identifier\": \"https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/scaling-laws-for-rayleighbenard-convection-between-navierslip-boundaries/F474DBFC0CC0A874A0B14A383195D714\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for h:\n{\"aliases\": \"cell height; layer height; plate separation\", \"ambiguity_notes\": \"The symbol h may denote a half-height in channel flow; use the problem geometry.\", \"canonical_quantity\": \"container height\", \"confidence\": \"high\", \"definition\": \"Vertical separation between confining plates in the Rayleigh-Benard configuration.\", \"dimension_vector\": \"[0, 1, 0, 0, 0, 0, 0]\", \"domain\": \"Rayleigh-Benard convection\", \"entry_id\": \"pq_container_height\", \"hybrid_score\": 0.8574249950647346, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.5926428430420988, \"si_dimension\": \"L\", \"si_unit\": \"m\", \"source\": \"Rayleigh-Benard convection reference defining Ra and Pr\", \"source_identifier\": \"https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/scaling-laws-for-rayleighbenard-convection-between-navierslip-boundaries/F474DBFC0CC0A874A0B14A383195D714\", \"symbols\": \"h; H\", \"variable_name\": \"h\"}\n\nVariable delta_T: decision=PASSED; reason=The record pq_temperature_difference is the canonical entry for a temperature difference (symbols ΔT, delta_T) and is explicitly defined as the difference between two thermodynamic temperatures. Its si_dimension is Theta (dimension_vector [0,0,0,0,1,0,0]), which supports the candidate's single nonzero Theta^1 coordinate. This record applies because the problem input is the temperature difference between top and bottom surfaces.\nActual named SI={\"M\": \"0\", \"L\": \"0\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"1\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"0\", \"L\": \"0\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"1\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_temperature_difference\", \"canonical_quantity\": \"temperature difference\", \"source_identifier\": \"doi:10.59161/AUEZ1291\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for delta_T:\n{\"aliases\": \"temperature gap; melting-to-ambient temperature difference\", \"ambiguity_notes\": \"A temperature difference has the same dimension as thermodynamic temperature.\", \"canonical_quantity\": \"temperature difference\", \"confidence\": \"high\", \"definition\": \"Difference between two thermodynamic temperatures.\", \"dimension_vector\": \"[0, 0, 0, 0, 1, 0, 0]\", \"domain\": \"heat transfer; thermodynamics\", \"entry_id\": \"pq_temperature_difference\", \"hybrid_score\": 0.8355252396886912, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.5300721133962607, \"si_dimension\": \"Theta\", \"si_unit\": \"K\", \"source\": \"BIPM SI Brochure, 9th ed. (updated 2026)\", \"source_identifier\": \"doi:10.59161/AUEZ1291\", \"symbols\": \"DeltaT; delta_T; ΔT; Tl-T0; T_l-T_0\", \"variable_name\": \"delta_T\"}\n\nVariable lambda: decision=PASSED; reason=The record pq_thermal_conductivity is the canonical thermal conductivity entry (symbols λ, lambda) used in Fourier's law and heat-transfer contexts. It lists si_dimension M L T^-3 Theta^-1 (dimension_vector [1,1,-3,0,-1,0,0]), matching every known coordinate of the candidate. It applies here because the problem uses thermal conductivity of the fluid/plates as λ in the conductive heat-flux term.\nActual named SI={\"M\": \"1\", \"L\": \"1\", \"T\": \"-3\", \"I\": \"0\", \"Theta\": \"-1\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"1\", \"L\": \"1\", \"T\": \"-3\", \"I\": \"0\", \"Theta\": \"-1\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_thermal_conductivity\", \"canonical_quantity\": \"thermal conductivity\", \"source_identifier\": \"doi:10.59161/AUEZ1291\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for lambda:\n{\"aliases\": \"heat conductivity\", \"ambiguity_notes\": \"Symbols lambda/λ may denote wavelength; k or kappa/κ may denote other coefficients. Resolve using heat-transfer context.\", \"canonical_quantity\": \"thermal conductivity\", \"confidence\": \"curated\", \"definition\": \"Proportionality coefficient in Fourier heat conduction.\", \"dimension_vector\": \"[1, 1, -3, 0, -1, 0, 0]\", \"domain\": \"heat transfer\", \"entry_id\": \"pq_thermal_conductivity\", \"hybrid_score\": 0.8467914445007798, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.5622612700022278, \"si_dimension\": \"M L T^-3 Theta^-1\", \"si_unit\": \"W m^-1 K^-1\", \"source\": \"BIPM SI Brochure, 9th ed. (updated 2026)\", \"source_identifier\": \"doi:10.59161/AUEZ1291\", \"symbols\": \"lambda; λ; k; kappa; κ\", \"variable_name\": \"lambda\"}\n\nVariable g: decision=PASSED; reason=The record pq_gravitational_acceleration defines acceleration due to gravity with si_dimension L T^-2 (dimension_vector [0,1,-2,0,0,0,0]) and the canonical symbol g. In Rayleigh-Bénard convection g provides the body-force scale entering buoyancy; thus this record justifies the candidate's L^1 T^-2 assignment.\nActual named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"-2\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"-2\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_gravitational_acceleration\", \"canonical_quantity\": \"gravitational acceleration\", \"source_identifier\": \"doi:10.59161/AUEZ1291\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for g:\n{\"aliases\": \"gravity; acceleration due to gravity\", \"ambiguity_notes\": \"\", \"canonical_quantity\": \"gravitational acceleration\", \"confidence\": \"high\", \"definition\": \"Acceleration associated with gravity.\", \"dimension_vector\": \"[0, 1, -2, 0, 0, 0, 0]\", \"domain\": \"mechanics; convection\", \"entry_id\": \"pq_gravitational_acceleration\", \"hybrid_score\": 0.8324315927661602, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.5212331221890292, \"si_dimension\": \"L T^-2\", \"si_unit\": \"m s^-2\", \"source\": \"BIPM SI Brochure, 9th ed. (updated 2026)\", \"source_identifier\": \"doi:10.59161/AUEZ1291\", \"symbols\": \"g\", \"variable_name\": \"g\"}\n\nVariable alpha: decision=PASSED; reason=The record pq_thermal_expansion_coefficient is the canonical entry for the (volumetric/linear) thermal expansion coefficient, symbol α/alpha, defined as fractional change per unit temperature and carrying dimension Theta^-1 (dimension_vector [0,0,0,0,-1,0,0]). In the Rayleigh-Bénard problem α multiplies temperature differences in the buoyancy term, so this record justifies the Theta^-1 exponent.\nActual named SI={\"M\": \"0\", \"L\": \"0\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"-1\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"0\", \"L\": \"0\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"-1\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_thermal_expansion_coefficient\", \"canonical_quantity\": \"thermal expansion coefficient\", \"source_identifier\": \"https://www.nist.gov/document/sp260-173pdf\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for alpha:\n{\"aliases\": \"coefficient of thermal expansion; thermal expansivity\", \"ambiguity_notes\": \"Alpha/α is also widely used for thermal diffusivity. The Rayleigh-Benard context usually uses alpha for thermal expansion coefficient and kappa for thermal diffusivity.\", \"canonical_quantity\": \"thermal expansion coefficient\", \"confidence\": \"curated\", \"definition\": \"Fractional change of a characteristic length or volume per unit temperature change, according to the chosen convention.\", \"dimension_vector\": \"[0, 0, 0, 0, -1, 0, 0]\", \"domain\": \"thermodynamics; convection\", \"entry_id\": \"pq_thermal_expansion_coefficient\", \"hybrid_score\": 0.8607496624300223, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.6021418926572065, \"si_dimension\": \"Theta^-1\", \"si_unit\": \"K^-1\", \"source\": \"NIST SP 260-173, thermal-property nomenclature\", \"source_identifier\": \"https://www.nist.gov/document/sp260-173pdf\", \"symbols\": \"alpha; α; beta; β\", \"variable_name\": \"alpha\"}\n\nVariable nu: decision=PASSED; reason=The record pq_kinematic_viscosity is the standard kinematic viscosity entry (symbol ν/nu) defined as dynamic viscosity divided by density, with si_dimension L^2 T^-1 (dimension_vector [0,2,-1,0,0,0,0]). In fluid mechanics (including Rayleigh-Bénard) ν is the momentum diffusivity parameter used in the viscous term; this matches the candidate's L^2 T^-1 coordinates.\nActual named SI={\"M\": \"0\", \"L\": \"2\", \"T\": \"-1\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"0\", \"L\": \"2\", \"T\": \"-1\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_kinematic_viscosity\", \"canonical_quantity\": \"kinematic viscosity\", \"source_identifier\": \"doi:10.6028/NIST.SP.811e2008\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for nu:\n{\"aliases\": \"momentum diffusivity\", \"ambiguity_notes\": \"Do not confuse lowercase nu/ν with the Nusselt number Nu or a generic frequency symbol.\", \"canonical_quantity\": \"kinematic viscosity\", \"confidence\": \"curated\", \"definition\": \"Dynamic viscosity divided by mass density.\", \"dimension_vector\": \"[0, 2, -1, 0, 0, 0, 0]\", \"domain\": \"fluid mechanics\", \"entry_id\": \"pq_kinematic_viscosity\", \"hybrid_score\": 0.845276486152925, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.5579328175797859, \"si_dimension\": \"L^2 T^-1\", \"si_unit\": \"m^2 s^-1\", \"source\": \"NIST SP 811, Guide for the Use of the International System of Units (SI)\", \"source_identifier\": \"doi:10.6028/NIST.SP.811e2008\", \"symbols\": \"nu; ν\", \"variable_name\": \"nu\"}\n\nVariable kappa: decision=PASSED; reason=The record pq_thermal_diffusivity is the canonical thermal diffusivity entry (symbols κ/kappa) with si_dimension L^2 T^-1 (dimension_vector [0,2,-1,0,0,0,0]). Thermal diffusivity is used in the heat equation for Rayleigh-Bénard convection, so this record supports the candidate's L^2 T^-1 assignment.\nActual named SI={\"M\": \"0\", \"L\": \"2\", \"T\": \"-1\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"0\", \"L\": \"2\", \"T\": \"-1\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_thermal_diffusivity\", \"canonical_quantity\": \"thermal diffusivity\", \"source_identifier\": \"doi:10.1351/goldbook.08697\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for kappa:\n{\"aliases\": \"heat diffusivity\", \"ambiguity_notes\": \"Alpha/α may instead denote a thermal expansion coefficient; kappa/κ may instead denote thermal conductivity or another diffusivity.\", \"canonical_quantity\": \"thermal diffusivity\", \"confidence\": \"curated\", \"definition\": \"Thermal conductivity divided by the product of density and specific heat capacity.\", \"dimension_vector\": \"[0, 2, -1, 0, 0, 0, 0]\", \"domain\": \"heat transfer\", \"entry_id\": \"pq_thermal_diffusivity\", \"hybrid_score\": 0.8633804122574966, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.6096583207357047, \"si_dimension\": \"L^2 T^-1\", \"si_unit\": \"m^2 s^-1\", \"source\": \"IUPAC Gold Book: thermal diffusivity\", \"source_identifier\": \"doi:10.1351/goldbook.08697\", \"symbols\": \"alpha; α; kappa; κ; a\", \"variable_name\": \"kappa\"}",
+        "entity_policy": "Only Checker-selected visible record IDs identify cited canonical entities; no unselected-record or Analyzer-name anchor. Equal vectors do not establish equal physical entities.",
+        "physical_correctness_scope": "A passed contract is not a theorem of physical correctness. Record ID and coordinate checks establish citation consistency; semantic relevance/applicability in the reason and internal-reasoning physics remain model judgements."
+      },
+      "gate_status": "PASSED",
+      "retrieval": {
+        "status": "success",
+        "kb_path": "Q:\\Chengao_File\\CodeX_\\Dimsionless_learn\\1114_final\\Data_csv\\dimensional_physical_quantities.md",
+        "kb_sha256": "64d8ebb7988c9157401c6b023add3ed8681651bc6d4d1d1bbb7a7aa452fc9f60",
+        "embedding_cache_path": "Q:\\Chengao_File\\CodeX_\\Dimsionless_learn\\1114_final\\Codes_src\\RAG_ablation\\followup_live\\runs\\20261115_v2_paired_rag_rounds\\cache\\dimensional_physical_quantities-d1e3d1e7178395497e4f.npz",
+        "embedding_cache_source": null,
+        "embedding_model": "GLM-Embedding-3",
+        "embedding_provider": "Paratera",
+        "embedding_base_url": "https://llmapi.paratera.com/v1",
+        "embedding_status": "cache",
+        "retrieval_modes": [
+          "hybrid"
+        ],
+        "retrieved_variables": [
+          "h",
+          "delta_T",
+          "lambda",
+          "g",
+          "alpha",
+          "nu",
+          "kappa"
+        ],
+        "n_retrieved_records": 21,
+        "top_k_per_variable": 3,
+        "max_evidence_rows": 30,
+        "lexical_weight": 0.65,
+        "semantic_weight": 0.35,
+        "min_hybrid_score": 0.22,
+        "allow_lexical_fallback": false,
+        "matches_by_variable": {
+          "h": [
+            {
+              "variable_name": "h",
+              "entry_id": "pq_container_height",
+              "canonical_quantity": "container height",
+              "symbols": "h; H",
+              "aliases": "cell height; layer height; plate separation",
+              "definition": "Vertical separation between confining plates in the Rayleigh-Benard configuration.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "Rayleigh-Benard convection",
+              "ambiguity_notes": "The symbol h may denote a half-height in channel flow; use the problem geometry.",
+              "source": "Rayleigh-Benard convection reference defining Ra and Pr",
+              "source_identifier": "https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/scaling-laws-for-rayleighbenard-convection-between-navierslip-boundaries/F474DBFC0CC0A874A0B14A383195D714",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5926428430420988,
+              "hybrid_score": 0.8574249950647346,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "h",
+              "entry_id": "pq_heat_transfer_coefficient",
+              "canonical_quantity": "convective heat-transfer coefficient",
+              "symbols": "h_c; h",
+              "aliases": "film coefficient; convection coefficient",
+              "definition": "Heat flux divided by a driving temperature difference.",
+              "si_dimension": "M T^-3 Theta^-1",
+              "dimension_vector": "[1, 0, -3, 0, -1, 0, 0]",
+              "si_unit": "W m^-2 K^-1",
+              "domain": "heat transfer",
+              "ambiguity_notes": "h is also used for length or enthalpy in some contexts.",
+              "source": "Lupi, Heat Transfer, in Fundamentals of Electroheat",
+              "source_identifier": "doi:10.1007/978-3-319-46015-4_1",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5560990572200596,
+              "hybrid_score": 0.8446346700270209,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "h",
+              "entry_id": "pq_channel_half_height",
+              "canonical_quantity": "channel half-height",
+              "symbols": "h; delta; δ",
+              "aliases": "channel half-height; half-gap",
+              "definition": "Distance from a channel wall to its centerline for a symmetric plane channel.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "channel flow",
+              "ambiguity_notes": "The symbol h is also used for full height, enthalpy, or heat-transfer coefficient in other contexts.",
+              "source": "Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling",
+              "source_identifier": "https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5074025294893317,
+              "hybrid_score": 0.8275908853212661,
+              "retrieval_mode": "hybrid"
+            }
+          ],
+          "delta_T": [
+            {
+              "variable_name": "delta_T",
+              "entry_id": "pq_temperature_difference",
+              "canonical_quantity": "temperature difference",
+              "symbols": "DeltaT; delta_T; ΔT; Tl-T0; T_l-T_0",
+              "aliases": "temperature gap; melting-to-ambient temperature difference",
+              "definition": "Difference between two thermodynamic temperatures.",
+              "si_dimension": "Theta",
+              "dimension_vector": "[0, 0, 0, 0, 1, 0, 0]",
+              "si_unit": "K",
+              "domain": "heat transfer; thermodynamics",
+              "ambiguity_notes": "A temperature difference has the same dimension as thermodynamic temperature.",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5300721133962607,
+              "hybrid_score": 0.8355252396886912,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "delta_T",
+              "entry_id": "pq_thermal_expansion_coefficient",
+              "canonical_quantity": "thermal expansion coefficient",
+              "symbols": "alpha; α; beta; β",
+              "aliases": "coefficient of thermal expansion; thermal expansivity",
+              "definition": "Fractional change of a characteristic length or volume per unit temperature change, according to the chosen convention.",
+              "si_dimension": "Theta^-1",
+              "dimension_vector": "[0, 0, 0, 0, -1, 0, 0]",
+              "si_unit": "K^-1",
+              "domain": "thermodynamics; convection",
+              "ambiguity_notes": "Alpha/α is also widely used for thermal diffusivity. The Rayleigh-Benard context usually uses alpha for thermal expansion coefficient and kappa for thermal diffusivity.",
+              "source": "NIST SP 260-173, thermal-property nomenclature",
+              "source_identifier": "https://www.nist.gov/document/sp260-173pdf",
+              "confidence": "curated",
+              "lexical_score": 0.2717391304347826,
+              "semantic_score": 0.5278261689936996,
+              "hybrid_score": 0.3613695939304036,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "delta_T",
+              "entry_id": "pq_container_height",
+              "canonical_quantity": "container height",
+              "symbols": "h; H",
+              "aliases": "cell height; layer height; plate separation",
+              "definition": "Vertical separation between confining plates in the Rayleigh-Benard configuration.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "Rayleigh-Benard convection",
+              "ambiguity_notes": "The symbol h may denote a half-height in channel flow; use the problem geometry.",
+              "source": "Rayleigh-Benard convection reference defining Ra and Pr",
+              "source_identifier": "https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/scaling-laws-for-rayleighbenard-convection-between-navierslip-boundaries/F474DBFC0CC0A874A0B14A383195D714",
+              "confidence": "high",
+              "lexical_score": 0.2556818181818182,
+              "semantic_score": 0.5486157377650339,
+              "hybrid_score": 0.3582086900359437,
+              "retrieval_mode": "hybrid"
+            }
+          ],
+          "lambda": [
+            {
+              "variable_name": "lambda",
+              "entry_id": "pq_thermal_conductivity",
+              "canonical_quantity": "thermal conductivity",
+              "symbols": "lambda; λ; k; kappa; κ",
+              "aliases": "heat conductivity",
+              "definition": "Proportionality coefficient in Fourier heat conduction.",
+              "si_dimension": "M L T^-3 Theta^-1",
+              "dimension_vector": "[1, 1, -3, 0, -1, 0, 0]",
+              "si_unit": "W m^-1 K^-1",
+              "domain": "heat transfer",
+              "ambiguity_notes": "Symbols lambda/λ may denote wavelength; k or kappa/κ may denote other coefficients. Resolve using heat-transfer context.",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "curated",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5622612700022278,
+              "hybrid_score": 0.8467914445007798,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "lambda",
+              "entry_id": "pq_wavelength",
+              "canonical_quantity": "wavelength",
+              "symbols": "lambda; λ",
+              "aliases": "wavelength; characteristic wavelength",
+              "definition": "Spatial period of a wave.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "waves; optics",
+              "ambiguity_notes": "Lambda/λ is also widely used for thermal conductivity; use domain context.",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.4755075573813479,
+              "hybrid_score": 0.8164276450834718,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "lambda",
+              "entry_id": "pq_thermal_expansion_coefficient",
+              "canonical_quantity": "thermal expansion coefficient",
+              "symbols": "alpha; α; beta; β",
+              "aliases": "coefficient of thermal expansion; thermal expansivity",
+              "definition": "Fractional change of a characteristic length or volume per unit temperature change, according to the chosen convention.",
+              "si_dimension": "Theta^-1",
+              "dimension_vector": "[0, 0, 0, 0, -1, 0, 0]",
+              "si_unit": "K^-1",
+              "domain": "thermodynamics; convection",
+              "ambiguity_notes": "Alpha/α is also widely used for thermal diffusivity. The Rayleigh-Benard context usually uses alpha for thermal expansion coefficient and kappa for thermal diffusivity.",
+              "source": "NIST SP 260-173, thermal-property nomenclature",
+              "source_identifier": "https://www.nist.gov/document/sp260-173pdf",
+              "confidence": "curated",
+              "lexical_score": 0.30303030303030304,
+              "semantic_score": 0.5133414857586672,
+              "hybrid_score": 0.3766392169852305,
+              "retrieval_mode": "hybrid"
+            }
+          ],
+          "g": [
+            {
+              "variable_name": "g",
+              "entry_id": "pq_gravitational_acceleration",
+              "canonical_quantity": "gravitational acceleration",
+              "symbols": "g",
+              "aliases": "gravity; acceleration due to gravity",
+              "definition": "Acceleration associated with gravity.",
+              "si_dimension": "L T^-2",
+              "dimension_vector": "[0, 1, -2, 0, 0, 0, 0]",
+              "si_unit": "m s^-2",
+              "domain": "mechanics; convection",
+              "ambiguity_notes": "",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5212331221890292,
+              "hybrid_score": 0.8324315927661602,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "g",
+              "entry_id": "pq_electrical_conductance",
+              "canonical_quantity": "electrical conductance",
+              "symbols": "G",
+              "aliases": "electric conductance",
+              "definition": "Reciprocal of electrical resistance.",
+              "si_dimension": "M^-1 L^-2 T^3 I^2",
+              "dimension_vector": "[-1, -2, 3, 2, 0, 0, 0]",
+              "si_unit": "S",
+              "domain": "electromagnetism",
+              "ambiguity_notes": "",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "high",
+              "lexical_score": 0.9,
+              "semantic_score": 0.43495252939165147,
+              "hybrid_score": 0.737233385287078,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "g",
+              "entry_id": "pq_container_height",
+              "canonical_quantity": "container height",
+              "symbols": "h; H",
+              "aliases": "cell height; layer height; plate separation",
+              "definition": "Vertical separation between confining plates in the Rayleigh-Benard configuration.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "Rayleigh-Benard convection",
+              "ambiguity_notes": "The symbol h may denote a half-height in channel flow; use the problem geometry.",
+              "source": "Rayleigh-Benard convection reference defining Ra and Pr",
+              "source_identifier": "https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/scaling-laws-for-rayleighbenard-convection-between-navierslip-boundaries/F474DBFC0CC0A874A0B14A383195D714",
+              "confidence": "high",
+              "lexical_score": 0.25,
+              "semantic_score": 0.5339390343519768,
+              "hybrid_score": 0.3493786620231919,
+              "retrieval_mode": "hybrid"
+            }
+          ],
+          "alpha": [
+            {
+              "variable_name": "alpha",
+              "entry_id": "pq_thermal_expansion_coefficient",
+              "canonical_quantity": "thermal expansion coefficient",
+              "symbols": "alpha; α; beta; β",
+              "aliases": "coefficient of thermal expansion; thermal expansivity",
+              "definition": "Fractional change of a characteristic length or volume per unit temperature change, according to the chosen convention.",
+              "si_dimension": "Theta^-1",
+              "dimension_vector": "[0, 0, 0, 0, -1, 0, 0]",
+              "si_unit": "K^-1",
+              "domain": "thermodynamics; convection",
+              "ambiguity_notes": "Alpha/α is also widely used for thermal diffusivity. The Rayleigh-Benard context usually uses alpha for thermal expansion coefficient and kappa for thermal diffusivity.",
+              "source": "NIST SP 260-173, thermal-property nomenclature",
+              "source_identifier": "https://www.nist.gov/document/sp260-173pdf",
+              "confidence": "curated",
+              "lexical_score": 1.0,
+              "semantic_score": 0.6021418926572065,
+              "hybrid_score": 0.8607496624300223,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "alpha",
+              "entry_id": "pq_thermal_diffusivity",
+              "canonical_quantity": "thermal diffusivity",
+              "symbols": "alpha; α; kappa; κ; a",
+              "aliases": "heat diffusivity",
+              "definition": "Thermal conductivity divided by the product of density and specific heat capacity.",
+              "si_dimension": "L^2 T^-1",
+              "dimension_vector": "[0, 2, -1, 0, 0, 0, 0]",
+              "si_unit": "m^2 s^-1",
+              "domain": "heat transfer",
+              "ambiguity_notes": "Alpha/α may instead denote a thermal expansion coefficient; kappa/κ may instead denote thermal conductivity or another diffusivity.",
+              "source": "IUPAC Gold Book: thermal diffusivity",
+              "source_identifier": "doi:10.1351/goldbook.08697",
+              "confidence": "curated",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5605228826152623,
+              "hybrid_score": 0.8461830089153418,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "alpha",
+              "entry_id": "pq_container_height",
+              "canonical_quantity": "container height",
+              "symbols": "h; H",
+              "aliases": "cell height; layer height; plate separation",
+              "definition": "Vertical separation between confining plates in the Rayleigh-Benard configuration.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "Rayleigh-Benard convection",
+              "ambiguity_notes": "The symbol h may denote a half-height in channel flow; use the problem geometry.",
+              "source": "Rayleigh-Benard convection reference defining Ra and Pr",
+              "source_identifier": "https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/scaling-laws-for-rayleighbenard-convection-between-navierslip-boundaries/F474DBFC0CC0A874A0B14A383195D714",
+              "confidence": "high",
+              "lexical_score": 0.2717391304347826,
+              "semantic_score": 0.532688175568588,
+              "hybrid_score": 0.3630712962316145,
+              "retrieval_mode": "hybrid"
+            }
+          ],
+          "nu": [
+            {
+              "variable_name": "nu",
+              "entry_id": "pq_kinematic_viscosity",
+              "canonical_quantity": "kinematic viscosity",
+              "symbols": "nu; ν",
+              "aliases": "momentum diffusivity",
+              "definition": "Dynamic viscosity divided by mass density.",
+              "si_dimension": "L^2 T^-1",
+              "dimension_vector": "[0, 2, -1, 0, 0, 0, 0]",
+              "si_unit": "m^2 s^-1",
+              "domain": "fluid mechanics",
+              "ambiguity_notes": "Do not confuse lowercase nu/ν with the Nusselt number Nu or a generic frequency symbol.",
+              "source": "NIST SP 811, Guide for the Use of the International System of Units (SI)",
+              "source_identifier": "doi:10.6028/NIST.SP.811e2008",
+              "confidence": "curated",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5579328175797859,
+              "hybrid_score": 0.845276486152925,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "nu",
+              "entry_id": "pq_thermal_diffusivity",
+              "canonical_quantity": "thermal diffusivity",
+              "symbols": "alpha; α; kappa; κ; a",
+              "aliases": "heat diffusivity",
+              "definition": "Thermal conductivity divided by the product of density and specific heat capacity.",
+              "si_dimension": "L^2 T^-1",
+              "dimension_vector": "[0, 2, -1, 0, 0, 0, 0]",
+              "si_unit": "m^2 s^-1",
+              "domain": "heat transfer",
+              "ambiguity_notes": "Alpha/α may instead denote a thermal expansion coefficient; kappa/κ may instead denote thermal conductivity or another diffusivity.",
+              "source": "IUPAC Gold Book: thermal diffusivity",
+              "source_identifier": "doi:10.1351/goldbook.08697",
+              "confidence": "curated",
+              "lexical_score": 0.28735632183908044,
+              "semantic_score": 0.47951847379187523,
+              "hybrid_score": 0.3546130750225586,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "nu",
+              "entry_id": "pq_eddy_viscosity",
+              "canonical_quantity": "eddy viscosity",
+              "symbols": "nu_t; ν_t; mu_t/rho",
+              "aliases": "turbulent kinematic viscosity; turbulent eddy diffusivity for momentum",
+              "definition": "Turbulent transport coefficient with the dimensions of kinematic viscosity when written as nu_t.",
+              "si_dimension": "L^2 T^-1",
+              "dimension_vector": "[0, 2, -1, 0, 0, 0, 0]",
+              "si_unit": "m^2 s^-1",
+              "domain": "turbulence modeling",
+              "ambiguity_notes": "If a code uses dynamic eddy viscosity mu_t instead, its dimension is M L^-1 T^-1.",
+              "source": "NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions",
+              "source_identifier": "https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html",
+              "confidence": "high",
+              "lexical_score": 0.23936170212765956,
+              "semantic_score": 0.55912041567132,
+              "hybrid_score": 0.3512772518679407,
+              "retrieval_mode": "hybrid"
+            }
+          ],
+          "kappa": [
+            {
+              "variable_name": "kappa",
+              "entry_id": "pq_thermal_diffusivity",
+              "canonical_quantity": "thermal diffusivity",
+              "symbols": "alpha; α; kappa; κ; a",
+              "aliases": "heat diffusivity",
+              "definition": "Thermal conductivity divided by the product of density and specific heat capacity.",
+              "si_dimension": "L^2 T^-1",
+              "dimension_vector": "[0, 2, -1, 0, 0, 0, 0]",
+              "si_unit": "m^2 s^-1",
+              "domain": "heat transfer",
+              "ambiguity_notes": "Alpha/α may instead denote a thermal expansion coefficient; kappa/κ may instead denote thermal conductivity or another diffusivity.",
+              "source": "IUPAC Gold Book: thermal diffusivity",
+              "source_identifier": "doi:10.1351/goldbook.08697",
+              "confidence": "curated",
+              "lexical_score": 1.0,
+              "semantic_score": 0.6096583207357047,
+              "hybrid_score": 0.8633804122574966,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "kappa",
+              "entry_id": "pq_thermal_conductivity",
+              "canonical_quantity": "thermal conductivity",
+              "symbols": "lambda; λ; k; kappa; κ",
+              "aliases": "heat conductivity",
+              "definition": "Proportionality coefficient in Fourier heat conduction.",
+              "si_dimension": "M L T^-3 Theta^-1",
+              "dimension_vector": "[1, 1, -3, 0, -1, 0, 0]",
+              "si_unit": "W m^-1 K^-1",
+              "domain": "heat transfer",
+              "ambiguity_notes": "Symbols lambda/λ may denote wavelength; k or kappa/κ may denote other coefficients. Resolve using heat-transfer context.",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "curated",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5925242409572665,
+              "hybrid_score": 0.8573834843350433,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "kappa",
+              "entry_id": "pq_thermal_expansion_coefficient",
+              "canonical_quantity": "thermal expansion coefficient",
+              "symbols": "alpha; α; beta; β",
+              "aliases": "coefficient of thermal expansion; thermal expansivity",
+              "definition": "Fractional change of a characteristic length or volume per unit temperature change, according to the chosen convention.",
+              "si_dimension": "Theta^-1",
+              "dimension_vector": "[0, 0, 0, 0, -1, 0, 0]",
+              "si_unit": "K^-1",
+              "domain": "thermodynamics; convection",
+              "ambiguity_notes": "Alpha/α is also widely used for thermal diffusivity. The Rayleigh-Benard context usually uses alpha for thermal expansion coefficient and kappa for thermal diffusivity.",
+              "source": "NIST SP 260-173, thermal-property nomenclature",
+              "source_identifier": "https://www.nist.gov/document/sp260-173pdf",
+              "confidence": "curated",
+              "lexical_score": 0.2604166666666667,
+              "semantic_score": 0.5547940966098903,
+              "hybrid_score": 0.36344876714679497,
+              "retrieval_mode": "hybrid"
+            }
+          ]
+        },
+        "evidence_markdown": "### Input variable `h`\n- entry_id: pq_container_height; canonical_quantity: container height; symbols: h; H; aliases: cell height; layer height; plate separation; definition: Vertical separation between confining plates in the Rayleigh-Benard configuration.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: Rayleigh-Benard convection; ambiguity_notes: The symbol h may denote a half-height in channel flow; use the problem geometry.; source: Rayleigh-Benard convection reference defining Ra and Pr; source_identifier: https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/scaling-laws-for-rayleighbenard-convection-between-navierslip-boundaries/F474DBFC0CC0A874A0B14A383195D714; confidence: high\n- entry_id: pq_heat_transfer_coefficient; canonical_quantity: convective heat-transfer coefficient; symbols: h_c; h; aliases: film coefficient; convection coefficient; definition: Heat flux divided by a driving temperature difference.; si_dimension: M T^-3 Theta^-1; dimension_vector: [1, 0, -3, 0, -1, 0, 0]; si_unit: W m^-2 K^-1; domain: heat transfer; ambiguity_notes: h is also used for length or enthalpy in some contexts.; source: Lupi, Heat Transfer, in Fundamentals of Electroheat; source_identifier: doi:10.1007/978-3-319-46015-4_1; confidence: high\n- entry_id: pq_channel_half_height; canonical_quantity: channel half-height; symbols: h; delta; δ; aliases: channel half-height; half-gap; definition: Distance from a channel wall to its centerline for a symmetric plane channel.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: channel flow; ambiguity_notes: The symbol h is also used for full height, enthalpy, or heat-transfer coefficient in other contexts.; source: Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling; source_identifier: https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8; confidence: high\n### Input variable `delta_T`\n- entry_id: pq_temperature_difference; canonical_quantity: temperature difference; symbols: DeltaT; delta_T; ΔT; Tl-T0; T_l-T_0; aliases: temperature gap; melting-to-ambient temperature difference; definition: Difference between two thermodynamic temperatures.; si_dimension: Theta; dimension_vector: [0, 0, 0, 0, 1, 0, 0]; si_unit: K; domain: heat transfer; thermodynamics; ambiguity_notes: A temperature difference has the same dimension as thermodynamic temperature.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_thermal_expansion_coefficient; canonical_quantity: thermal expansion coefficient; symbols: alpha; α; beta; β; aliases: coefficient of thermal expansion; thermal expansivity; definition: Fractional change of a characteristic length or volume per unit temperature change, according to the chosen convention.; si_dimension: Theta^-1; dimension_vector: [0, 0, 0, 0, -1, 0, 0]; si_unit: K^-1; domain: thermodynamics; convection; ambiguity_notes: Alpha/α is also widely used for thermal diffusivity. The Rayleigh-Benard context usually uses alpha for thermal expansion coefficient and kappa for thermal diffusivity.; source: NIST SP 260-173, thermal-property nomenclature; source_identifier: https://www.nist.gov/document/sp260-173pdf; confidence: curated\n- entry_id: pq_container_height; canonical_quantity: container height; symbols: h; H; aliases: cell height; layer height; plate separation; definition: Vertical separation between confining plates in the Rayleigh-Benard configuration.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: Rayleigh-Benard convection; ambiguity_notes: The symbol h may denote a half-height in channel flow; use the problem geometry.; source: Rayleigh-Benard convection reference defining Ra and Pr; source_identifier: https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/scaling-laws-for-rayleighbenard-convection-between-navierslip-boundaries/F474DBFC0CC0A874A0B14A383195D714; confidence: high\n### Input variable `lambda`\n- entry_id: pq_thermal_conductivity; canonical_quantity: thermal conductivity; symbols: lambda; λ; k; kappa; κ; aliases: heat conductivity; definition: Proportionality coefficient in Fourier heat conduction.; si_dimension: M L T^-3 Theta^-1; dimension_vector: [1, 1, -3, 0, -1, 0, 0]; si_unit: W m^-1 K^-1; domain: heat transfer; ambiguity_notes: Symbols lambda/λ may denote wavelength; k or kappa/κ may denote other coefficients. Resolve using heat-transfer context.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: curated\n- entry_id: pq_wavelength; canonical_quantity: wavelength; symbols: lambda; λ; aliases: wavelength; characteristic wavelength; definition: Spatial period of a wave.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: waves; optics; ambiguity_notes: Lambda/λ is also widely used for thermal conductivity; use domain context.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_thermal_expansion_coefficient; canonical_quantity: thermal expansion coefficient; symbols: alpha; α; beta; β; aliases: coefficient of thermal expansion; thermal expansivity; definition: Fractional change of a characteristic length or volume per unit temperature change, according to the chosen convention.; si_dimension: Theta^-1; dimension_vector: [0, 0, 0, 0, -1, 0, 0]; si_unit: K^-1; domain: thermodynamics; convection; ambiguity_notes: Alpha/α is also widely used for thermal diffusivity. The Rayleigh-Benard context usually uses alpha for thermal expansion coefficient and kappa for thermal diffusivity.; source: NIST SP 260-173, thermal-property nomenclature; source_identifier: https://www.nist.gov/document/sp260-173pdf; confidence: curated\n### Input variable `g`\n- entry_id: pq_gravitational_acceleration; canonical_quantity: gravitational acceleration; symbols: g; aliases: gravity; acceleration due to gravity; definition: Acceleration associated with gravity.; si_dimension: L T^-2; dimension_vector: [0, 1, -2, 0, 0, 0, 0]; si_unit: m s^-2; domain: mechanics; convection; ambiguity_notes: ; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_electrical_conductance; canonical_quantity: electrical conductance; symbols: G; aliases: electric conductance; definition: Reciprocal of electrical resistance.; si_dimension: M^-1 L^-2 T^3 I^2; dimension_vector: [-1, -2, 3, 2, 0, 0, 0]; si_unit: S; domain: electromagnetism; ambiguity_notes: ; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_container_height; canonical_quantity: container height; symbols: h; H; aliases: cell height; layer height; plate separation; definition: Vertical separation between confining plates in the Rayleigh-Benard configuration.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: Rayleigh-Benard convection; ambiguity_notes: The symbol h may denote a half-height in channel flow; use the problem geometry.; source: Rayleigh-Benard convection reference defining Ra and Pr; source_identifier: https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/scaling-laws-for-rayleighbenard-convection-between-navierslip-boundaries/F474DBFC0CC0A874A0B14A383195D714; confidence: high\n### Input variable `alpha`\n- entry_id: pq_thermal_expansion_coefficient; canonical_quantity: thermal expansion coefficient; symbols: alpha; α; beta; β; aliases: coefficient of thermal expansion; thermal expansivity; definition: Fractional change of a characteristic length or volume per unit temperature change, according to the chosen convention.; si_dimension: Theta^-1; dimension_vector: [0, 0, 0, 0, -1, 0, 0]; si_unit: K^-1; domain: thermodynamics; convection; ambiguity_notes: Alpha/α is also widely used for thermal diffusivity. The Rayleigh-Benard context usually uses alpha for thermal expansion coefficient and kappa for thermal diffusivity.; source: NIST SP 260-173, thermal-property nomenclature; source_identifier: https://www.nist.gov/document/sp260-173pdf; confidence: curated\n- entry_id: pq_thermal_diffusivity; canonical_quantity: thermal diffusivity; symbols: alpha; α; kappa; κ; a; aliases: heat diffusivity; definition: Thermal conductivity divided by the product of density and specific heat capacity.; si_dimension: L^2 T^-1; dimension_vector: [0, 2, -1, 0, 0, 0, 0]; si_unit: m^2 s^-1; domain: heat transfer; ambiguity_notes: Alpha/α may instead denote a thermal expansion coefficient; kappa/κ may instead denote thermal conductivity or another diffusivity.; source: IUPAC Gold Book: thermal diffusivity; source_identifier: doi:10.1351/goldbook.08697; confidence: curated\n- entry_id: pq_container_height; canonical_quantity: container height; symbols: h; H; aliases: cell height; layer height; plate separation; definition: Vertical separation between confining plates in the Rayleigh-Benard configuration.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: Rayleigh-Benard convection; ambiguity_notes: The symbol h may denote a half-height in channel flow; use the problem geometry.; source: Rayleigh-Benard convection reference defining Ra and Pr; source_identifier: https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/scaling-laws-for-rayleighbenard-convection-between-navierslip-boundaries/F474DBFC0CC0A874A0B14A383195D714; confidence: high\n### Input variable `nu`\n- entry_id: pq_kinematic_viscosity; canonical_quantity: kinematic viscosity; symbols: nu; ν; aliases: momentum diffusivity; definition: Dynamic viscosity divided by mass density.; si_dimension: L^2 T^-1; dimension_vector: [0, 2, -1, 0, 0, 0, 0]; si_unit: m^2 s^-1; domain: fluid mechanics; ambiguity_notes: Do not confuse lowercase nu/ν with the Nusselt number Nu or a generic frequency symbol.; source: NIST SP 811, Guide for the Use of the International System of Units (SI); source_identifier: doi:10.6028/NIST.SP.811e2008; confidence: curated\n- entry_id: pq_thermal_diffusivity; canonical_quantity: thermal diffusivity; symbols: alpha; α; kappa; κ; a; aliases: heat diffusivity; definition: Thermal conductivity divided by the product of density and specific heat capacity.; si_dimension: L^2 T^-1; dimension_vector: [0, 2, -1, 0, 0, 0, 0]; si_unit: m^2 s^-1; domain: heat transfer; ambiguity_notes: Alpha/α may instead denote a thermal expansion coefficient; kappa/κ may instead denote thermal conductivity or another diffusivity.; source: IUPAC Gold Book: thermal diffusivity; source_identifier: doi:10.1351/goldbook.08697; confidence: curated\n- entry_id: pq_eddy_viscosity; canonical_quantity: eddy viscosity; symbols: nu_t; ν_t; mu_t/rho; aliases: turbulent kinematic viscosity; turbulent eddy diffusivity for momentum; definition: Turbulent transport coefficient with the dimensions of kinematic viscosity when written as nu_t.; si_dimension: L^2 T^-1; dimension_vector: [0, 2, -1, 0, 0, 0, 0]; si_unit: m^2 s^-1; domain: turbulence modeling; ambiguity_notes: If a code uses dynamic eddy viscosity mu_t instead, its dimension is M L^-1 T^-1.; source: NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions; source_identifier: https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html; confidence: high\n### Input variable `kappa`\n- entry_id: pq_thermal_diffusivity; canonical_quantity: thermal diffusivity; symbols: alpha; α; kappa; κ; a; aliases: heat diffusivity; definition: Thermal conductivity divided by the product of density and specific heat capacity.; si_dimension: L^2 T^-1; dimension_vector: [0, 2, -1, 0, 0, 0, 0]; si_unit: m^2 s^-1; domain: heat transfer; ambiguity_notes: Alpha/α may instead denote a thermal expansion coefficient; kappa/κ may instead denote thermal conductivity or another diffusivity.; source: IUPAC Gold Book: thermal diffusivity; source_identifier: doi:10.1351/goldbook.08697; confidence: curated\n- entry_id: pq_thermal_conductivity; canonical_quantity: thermal conductivity; symbols: lambda; λ; k; kappa; κ; aliases: heat conductivity; definition: Proportionality coefficient in Fourier heat conduction.; si_dimension: M L T^-3 Theta^-1; dimension_vector: [1, 1, -3, 0, -1, 0, 0]; si_unit: W m^-1 K^-1; domain: heat transfer; ambiguity_notes: Symbols lambda/λ may denote wavelength; k or kappa/κ may denote other coefficients. Resolve using heat-transfer context.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: curated\n- entry_id: pq_thermal_expansion_coefficient; canonical_quantity: thermal expansion coefficient; symbols: alpha; α; beta; β; aliases: coefficient of thermal expansion; thermal expansivity; definition: Fractional change of a characteristic length or volume per unit temperature change, according to the chosen convention.; si_dimension: Theta^-1; dimension_vector: [0, 0, 0, 0, -1, 0, 0]; si_unit: K^-1; domain: thermodynamics; convection; ambiguity_notes: Alpha/α is also widely used for thermal diffusivity. The Rayleigh-Benard context usually uses alpha for thermal expansion coefficient and kappa for thermal diffusivity.; source: NIST SP 260-173, thermal-property nomenclature; source_identifier: https://www.nist.gov/document/sp260-173pdf; confidence: curated",
+        "evidence_records_visible_by_variable": {
+          "h": [
+            "pq_container_height",
+            "pq_heat_transfer_coefficient",
+            "pq_channel_half_height"
+          ],
+          "delta_T": [
+            "pq_temperature_difference",
+            "pq_thermal_expansion_coefficient",
+            "pq_container_height"
+          ],
+          "lambda": [
+            "pq_thermal_conductivity",
+            "pq_wavelength",
+            "pq_thermal_expansion_coefficient"
+          ],
+          "g": [
+            "pq_gravitational_acceleration",
+            "pq_electrical_conductance",
+            "pq_container_height"
+          ],
+          "alpha": [
+            "pq_thermal_expansion_coefficient",
+            "pq_thermal_diffusivity",
+            "pq_container_height"
+          ],
+          "nu": [
+            "pq_kinematic_viscosity",
+            "pq_thermal_diffusivity",
+            "pq_eddy_viscosity"
+          ],
+          "kappa": [
+            "pq_thermal_diffusivity",
+            "pq_thermal_conductivity",
+            "pq_thermal_expansion_coefficient"
+          ]
+        },
+        "queries_by_variable": {
+          "h": "Target CSV variable: h\nLocal problem description: the height of the container (h), the thermal conductivity (lambda), the temperature difference between the top and bottom surfaces (delta_T), the gravitational acceleration (g), the thermal expansion coefficient (alpha), the kinematic viscosity (nu), and the thermal diffusivity (kappa).\nProblem domain/context: Perform dimensional analysis for Rayleigh-Bénard convection in a planar horizontal layer of fluid heated from below, to derive the dimensionless form of the Nusselt number (denoted as Nu).\nAnalyzer interpretation: exact_column: h; quantity_name: length; physical_definition: height of the container, a length scale",
+          "delta_T": "Target CSV variable: delta_T\nLocal problem description: the height of the container (h), the thermal conductivity (lambda), the temperature difference between the top and bottom surfaces (delta_T), the gravitational acceleration (g), the thermal expansion coefficient (alpha), the kinematic viscosity (nu), and the thermal diffusivity (kappa).\nProblem domain/context: Perform dimensional analysis for Rayleigh-Bénard convection in a planar horizontal layer of fluid heated from below, to derive the dimensionless form of the Nusselt number (denoted as Nu).\nAnalyzer interpretation: exact_column: delta_T; quantity_name: temperature difference; physical_definition: temperature difference between the top and bottom surfaces",
+          "lambda": "Target CSV variable: lambda\nLocal problem description: the height of the container (h), the thermal conductivity (lambda), the temperature difference between the top and bottom surfaces (delta_T), the gravitational acceleration (g), the thermal expansion coefficient (alpha), the kinematic viscosity (nu), and the thermal diffusivity (kappa).\nProblem domain/context: Perform dimensional analysis for Rayleigh-Bénard convection in a planar horizontal layer of fluid heated from below, to derive the dimensionless form of the Nusselt number (denoted as Nu).\nAnalyzer interpretation: exact_column: lambda; quantity_name: thermal conductivity; physical_definition: thermal conductivity, the rate of heat transfer through a material per unit area per unit temperature gradient",
+          "g": "Target CSV variable: g\nLocal problem description: the height of the container (h), the thermal conductivity (lambda), the temperature difference between the top and bottom surfaces (delta_T), the gravitational acceleration (g), the thermal expansion coefficient (alpha), the kinematic viscosity (nu), and the thermal diffusivity (kappa).\nProblem domain/context: Perform dimensional analysis for Rayleigh-Bénard convection in a planar horizontal layer of fluid heated from below, to derive the dimensionless form of the Nusselt number (denoted as Nu).\nAnalyzer interpretation: exact_column: g; quantity_name: acceleration; physical_definition: gravitational acceleration, acceleration due to gravity",
+          "alpha": "Target CSV variable: alpha\nLocal problem description: the height of the container (h), the thermal conductivity (lambda), the temperature difference between the top and bottom surfaces (delta_T), the gravitational acceleration (g), the thermal expansion coefficient (alpha), the kinematic viscosity (nu), and the thermal diffusivity (kappa).\nProblem domain/context: Perform dimensional analysis for Rayleigh-Bénard convection in a planar horizontal layer of fluid heated from below, to derive the dimensionless form of the Nusselt number (denoted as Nu).\nAnalyzer interpretation: exact_column: alpha; quantity_name: thermal expansion coefficient; physical_definition: thermal expansion coefficient, fractional change in volume per unit temperature change",
+          "nu": "Target CSV variable: nu\nLocal problem description: Perform dimensional analysis for Rayleigh-Bénard convection in a planar horizontal layer of fluid heated from below, to derive the dimensionless form of the Nusselt number (denoted as Nu). the height of the container (h), the thermal conductivity (lambda), the temperature difference between the top and bottom surfaces (delta_T), the gravitational acceleration (g), the thermal expansion coefficient (alpha), the kinematic viscosity (nu), and the thermal diffusivity (kappa).\nProblem domain/context: Perform dimensional analysis for Rayleigh-Bénard convection in a planar horizontal layer of fluid heated from below, to derive the dimensionless form of the Nusselt number (denoted as Nu).\nAnalyzer interpretation: exact_column: nu; quantity_name: kinematic viscosity; physical_definition: kinematic viscosity, ratio of dynamic viscosity to density",
+          "kappa": "Target CSV variable: kappa\nLocal problem description: the height of the container (h), the thermal conductivity (lambda), the temperature difference between the top and bottom surfaces (delta_T), the gravitational acceleration (g), the thermal expansion coefficient (alpha), the kinematic viscosity (nu), and the thermal diffusivity (kappa).\nProblem domain/context: Perform dimensional analysis for Rayleigh-Bénard convection in a planar horizontal layer of fluid heated from below, to derive the dimensionless form of the Nusselt number (denoted as Nu).\nAnalyzer interpretation: exact_column: kappa; quantity_name: thermal diffusivity; physical_definition: thermal diffusivity, ratio of thermal conductivity to volumetric heat capacity"
+        },
+        "query_sha256_by_variable": {
+          "h": "41d4635e4e04b62131777bec5c5b816b848e915baedee0204f1b36228a1e262b",
+          "delta_T": "11047ee78d2b3a34cd7483c08e686666bfac945f216608f87e9a6e4c221d44ef",
+          "lambda": "ccd5b56321e33a9e7912138d65424cca062300c3a370de1fc5824de7af68558a",
+          "g": "aef82eabb9eafce593f16ae8a6dabd4523272cb8e5566b11b14bae4471654b39",
+          "alpha": "c7f0d50a33029c995b759c138f695f5c1277bc90bbcbcb163a5fdead6ab477ad",
+          "nu": "14daf56446e9667021b43a2493f3a0912fe7c4b459a3f2ce5acc6ff8bccdaf15",
+          "kappa": "27a7637ce381820b2b9731d4d2af1ec82a6dbebd6476733e67ca91306be3c61f"
+        },
+        "query_observed_in_retriever_by_variable": {
+          "h": true,
+          "delta_T": true,
+          "lambda": true,
+          "g": true,
+          "alpha": true,
+          "nu": true,
+          "kappa": true
+        },
+        "query_scope": "Candidate SI powers excluded. Original problem and typed quantity/definition provide semantic context; they still require physical interpretation."
+      },
+      "provisional_zero_coordinates": [],
+      "checker_response": {
+        "ledger_sha256": "de760ef77574f700c0f79f43b60853a79d3f8ffda4fe828235dad022a98a72de",
+        "variables": [
+          {
+            "csv_name": "h",
+            "before_si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "decision": "PASSED",
+            "suggested_si_exponents": null,
+            "support_mode": "KB_RECORD",
+            "evidence_entry_ids": [
+              "pq_container_height"
+            ],
+            "reason": "The retrieved record pq_container_height is the canonical Rayleigh-Bénard 'container height' entry: it defines the vertical separation between confining plates in the Rayleigh-Bénard configuration and explicitly uses the symbol h/H. Its si_dimension is L (dimension_vector [0,1,0,0,0,0,0]), which directly supplies the length-only exponents expected for the problem's geometric height h. This record therefore justifies the candidate's pure L^1 assignment in the original Rayleigh-Bénard context."
+          },
+          {
+            "csv_name": "delta_T",
+            "before_si_exponents": {
+              "M": "0",
+              "L": "0",
+              "T": "0",
+              "I": "0",
+              "Theta": "1",
+              "N": "0",
+              "J": "0"
+            },
+            "decision": "PASSED",
+            "suggested_si_exponents": null,
+            "support_mode": "KB_RECORD",
+            "evidence_entry_ids": [
+              "pq_temperature_difference"
+            ],
+            "reason": "The record pq_temperature_difference is the canonical entry for a temperature difference (symbols ΔT, delta_T) and is explicitly defined as the difference between two thermodynamic temperatures. Its si_dimension is Theta (dimension_vector [0,0,0,0,1,0,0]), which supports the candidate's single nonzero Theta^1 coordinate. This record applies because the problem input is the temperature difference between top and bottom surfaces."
+          },
+          {
+            "csv_name": "lambda",
+            "before_si_exponents": {
+              "M": "1",
+              "L": "1",
+              "T": "-3",
+              "I": "0",
+              "Theta": "-1",
+              "N": "0",
+              "J": "0"
+            },
+            "decision": "PASSED",
+            "suggested_si_exponents": null,
+            "support_mode": "KB_RECORD",
+            "evidence_entry_ids": [
+              "pq_thermal_conductivity"
+            ],
+            "reason": "The record pq_thermal_conductivity is the canonical thermal conductivity entry (symbols λ, lambda) used in Fourier's law and heat-transfer contexts. It lists si_dimension M L T^-3 Theta^-1 (dimension_vector [1,1,-3,0,-1,0,0]), matching every known coordinate of the candidate. It applies here because the problem uses thermal conductivity of the fluid/plates as λ in the conductive heat-flux term."
+          },
+          {
+            "csv_name": "g",
+            "before_si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "-2",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "decision": "PASSED",
+            "suggested_si_exponents": null,
+            "support_mode": "KB_RECORD",
+            "evidence_entry_ids": [
+              "pq_gravitational_acceleration"
+            ],
+            "reason": "The record pq_gravitational_acceleration defines acceleration due to gravity with si_dimension L T^-2 (dimension_vector [0,1,-2,0,0,0,0]) and the canonical symbol g. In Rayleigh-Bénard convection g provides the body-force scale entering buoyancy; thus this record justifies the candidate's L^1 T^-2 assignment."
+          },
+          {
+            "csv_name": "alpha",
+            "before_si_exponents": {
+              "M": "0",
+              "L": "0",
+              "T": "0",
+              "I": "0",
+              "Theta": "-1",
+              "N": "0",
+              "J": "0"
+            },
+            "decision": "PASSED",
+            "suggested_si_exponents": null,
+            "support_mode": "KB_RECORD",
+            "evidence_entry_ids": [
+              "pq_thermal_expansion_coefficient"
+            ],
+            "reason": "The record pq_thermal_expansion_coefficient is the canonical entry for the (volumetric/linear) thermal expansion coefficient, symbol α/alpha, defined as fractional change per unit temperature and carrying dimension Theta^-1 (dimension_vector [0,0,0,0,-1,0,0]). In the Rayleigh-Bénard problem α multiplies temperature differences in the buoyancy term, so this record justifies the Theta^-1 exponent."
+          },
+          {
+            "csv_name": "nu",
+            "before_si_exponents": {
+              "M": "0",
+              "L": "2",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "decision": "PASSED",
+            "suggested_si_exponents": null,
+            "support_mode": "KB_RECORD",
+            "evidence_entry_ids": [
+              "pq_kinematic_viscosity"
+            ],
+            "reason": "The record pq_kinematic_viscosity is the standard kinematic viscosity entry (symbol ν/nu) defined as dynamic viscosity divided by density, with si_dimension L^2 T^-1 (dimension_vector [0,2,-1,0,0,0,0]). In fluid mechanics (including Rayleigh-Bénard) ν is the momentum diffusivity parameter used in the viscous term; this matches the candidate's L^2 T^-1 coordinates."
+          },
+          {
+            "csv_name": "kappa",
+            "before_si_exponents": {
+              "M": "0",
+              "L": "2",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "decision": "PASSED",
+            "suggested_si_exponents": null,
+            "support_mode": "KB_RECORD",
+            "evidence_entry_ids": [
+              "pq_thermal_diffusivity"
+            ],
+            "reason": "The record pq_thermal_diffusivity is the canonical thermal diffusivity entry (symbols κ/kappa) with si_dimension L^2 T^-1 (dimension_vector [0,2,-1,0,0,0,0]). Thermal diffusivity is used in the heat equation for Rayleigh-Bénard convection, so this record supports the candidate's L^2 T^-1 assignment."
+          }
+        ]
+      },
+      "checker_elapsed_s": 25.01630550000118,
+      "checker_tokens": {
+        "input": 5055,
+        "output": 3519
+      },
+      "embedding_tokens": {
+        "input": 1178,
+        "output": 0
+      },
+      "checker_call": {
+        "parsed_response": {
+          "ledger_sha256": "de760ef77574f700c0f79f43b60853a79d3f8ffda4fe828235dad022a98a72de",
+          "variables": [
+            {
+              "csv_name": "h",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "0",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_container_height"
+              ],
+              "reason": "The retrieved record pq_container_height is the canonical Rayleigh-Bénard 'container height' entry: it defines the vertical separation between confining plates in the Rayleigh-Bénard configuration and explicitly uses the symbol h/H. Its si_dimension is L (dimension_vector [0,1,0,0,0,0,0]), which directly supplies the length-only exponents expected for the problem's geometric height h. This record therefore justifies the candidate's pure L^1 assignment in the original Rayleigh-Bénard context."
+            },
+            {
+              "csv_name": "delta_T",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "0",
+                "T": "0",
+                "I": "0",
+                "Theta": "1",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_temperature_difference"
+              ],
+              "reason": "The record pq_temperature_difference is the canonical entry for a temperature difference (symbols ΔT, delta_T) and is explicitly defined as the difference between two thermodynamic temperatures. Its si_dimension is Theta (dimension_vector [0,0,0,0,1,0,0]), which supports the candidate's single nonzero Theta^1 coordinate. This record applies because the problem input is the temperature difference between top and bottom surfaces."
+            },
+            {
+              "csv_name": "lambda",
+              "before_si_exponents": {
+                "M": "1",
+                "L": "1",
+                "T": "-3",
+                "I": "0",
+                "Theta": "-1",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_thermal_conductivity"
+              ],
+              "reason": "The record pq_thermal_conductivity is the canonical thermal conductivity entry (symbols λ, lambda) used in Fourier's law and heat-transfer contexts. It lists si_dimension M L T^-3 Theta^-1 (dimension_vector [1,1,-3,0,-1,0,0]), matching every known coordinate of the candidate. It applies here because the problem uses thermal conductivity of the fluid/plates as λ in the conductive heat-flux term."
+            },
+            {
+              "csv_name": "g",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "-2",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_gravitational_acceleration"
+              ],
+              "reason": "The record pq_gravitational_acceleration defines acceleration due to gravity with si_dimension L T^-2 (dimension_vector [0,1,-2,0,0,0,0]) and the canonical symbol g. In Rayleigh-Bénard convection g provides the body-force scale entering buoyancy; thus this record justifies the candidate's L^1 T^-2 assignment."
+            },
+            {
+              "csv_name": "alpha",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "0",
+                "T": "0",
+                "I": "0",
+                "Theta": "-1",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_thermal_expansion_coefficient"
+              ],
+              "reason": "The record pq_thermal_expansion_coefficient is the canonical entry for the (volumetric/linear) thermal expansion coefficient, symbol α/alpha, defined as fractional change per unit temperature and carrying dimension Theta^-1 (dimension_vector [0,0,0,0,-1,0,0]). In the Rayleigh-Bénard problem α multiplies temperature differences in the buoyancy term, so this record justifies the Theta^-1 exponent."
+            },
+            {
+              "csv_name": "nu",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "2",
+                "T": "-1",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_kinematic_viscosity"
+              ],
+              "reason": "The record pq_kinematic_viscosity is the standard kinematic viscosity entry (symbol ν/nu) defined as dynamic viscosity divided by density, with si_dimension L^2 T^-1 (dimension_vector [0,2,-1,0,0,0,0]). In fluid mechanics (including Rayleigh-Bénard) ν is the momentum diffusivity parameter used in the viscous term; this matches the candidate's L^2 T^-1 coordinates."
+            },
+            {
+              "csv_name": "kappa",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "2",
+                "T": "-1",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_thermal_diffusivity"
+              ],
+              "reason": "The record pq_thermal_diffusivity is the canonical thermal diffusivity entry (symbols κ/kappa) with si_dimension L^2 T^-1 (dimension_vector [0,2,-1,0,0,0,0]). Thermal diffusivity is used in the heat equation for Rayleigh-Bénard convection, so this record supports the candidate's L^2 T^-1 assignment."
+            }
+          ]
+        },
+        "raw_tool_calls": [
+          {
+            "id": "call_CljYHPkj3fZotcobSdpgOsMe",
+            "type": "function",
+            "function": {
+              "name": "CheckerDimensionAudit",
+              "arguments": "{\"ledger_sha256\":\"de760ef77574f700c0f79f43b60853a79d3f8ffda4fe828235dad022a98a72de\",\"variables\":[{\"csv_name\":\"h\",\"before_si_exponents\":{\"M\":\"0\",\"L\":\"1\",\"T\":\"0\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"},\"decision\":\"PASSED\",\"suggested_si_exponents\":null,\"support_mode\":\"KB_RECORD\",\"evidence_entry_ids\":[\"pq_container_height\"],\"reason\":\"The retrieved record pq_container_height is the canonical Rayleigh-Bénard 'container height' entry: it defines the vertical separation between confining plates in the Rayleigh-Bénard configuration and explicitly uses the symbol h/H. Its si_dimension is L (dimension_vector [0,1,0,0,0,0,0]), which directly supplies the length-only exponents expected for the problem's geometric height h. This record therefore justifies the candidate's pure L^1 assignment in the original Rayleigh-Bénard context.\"},{\"csv_name\":\"delta_T\",\"before_si_exponents\":{\"M\":\"0\",\"L\":\"0\",\"T\":\"0\",\"I\":\"0\",\"Theta\":\"1\",\"N\":\"0\",\"J\":\"0\"},\"decision\":\"PASSED\",\"suggested_si_exponents\":null,\"support_mode\":\"KB_RECORD\",\"evidence_entry_ids\":[\"pq_temperature_difference\"],\"reason\":\"The record pq_temperature_difference is the canonical entry for a temperature difference (symbols ΔT, delta_T) and is explicitly defined as the difference between two thermodynamic temperatures. Its si_dimension is Theta (dimension_vector [0,0,0,0,1,0,0]), which supports the candidate's single nonzero Theta^1 coordinate. This record applies because the problem input is the temperature difference between top and bottom surfaces.\"},{\"csv_name\":\"lambda\",\"before_si_exponents\":{\"M\":\"1\",\"L\":\"1\",\"T\":\"-3\",\"I\":\"0\",\"Theta\":\"-1\",\"N\":\"0\",\"J\":\"0\"},\"decision\":\"PASSED\",\"suggested_si_exponents\":null,\"support_mode\":\"KB_RECORD\",\"evidence_entry_ids\":[\"pq_thermal_conductivity\"],\"reason\":\"The record pq_thermal_conductivity is the canonical thermal conductivity entry (symbols λ, lambda) used in Fourier's law and heat-transfer contexts. It lists si_dimension M L T^-3 Theta^-1 (dimension_vector [1,1,-3,0,-1,0,0]), matching every known coordinate of the candidate. It applies here because the problem uses thermal conductivity of the fluid/plates as λ in the conductive heat-flux term.\"},{\"csv_name\":\"g\",\"before_si_exponents\":{\"M\":\"0\",\"L\":\"1\",\"T\":\"-2\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"},\"decision\":\"PASSED\",\"suggested_si_exponents\":null,\"support_mode\":\"KB_RECORD\",\"evidence_entry_ids\":[\"pq_gravitational_acceleration\"],\"reason\":\"The record pq_gravitational_acceleration defines acceleration due to gravity with si_dimension L T^-2 (dimension_vector [0,1,-2,0,0,0,0]) and the canonical symbol g. In Rayleigh-Bénard convection g provides the body-force scale entering buoyancy; thus this record justifies the candidate's L^1 T^-2 assignment.\"},{\"csv_name\":\"alpha\",\"before_si_exponents\":{\"M\":\"0\",\"L\":\"0\",\"T\":\"0\",\"I\":\"0\",\"Theta\":\"-1\",\"N\":\"0\",\"J\":\"0\"},\"decision\":\"PASSED\",\"suggested_si_exponents\":null,\"support_mode\":\"KB_RECORD\",\"evidence_entry_ids\":[\"pq_thermal_expansion_coefficient\"],\"reason\":\"The record pq_thermal_expansion_coefficient is the canonical entry for the (volumetric/linear) thermal expansion coefficient, symbol α/alpha, defined as fractional change per unit temperature and carrying dimension Theta^-1 (dimension_vector [0,0,0,0,-1,0,0]). In the Rayleigh-Bénard problem α multiplies temperature differences in the buoyancy term, so this record justifies the Theta^-1 exponent.\"},{\"csv_name\":\"nu\",\"before_si_exponents\":{\"M\":\"0\",\"L\":\"2\",\"T\":\"-1\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"},\"decision\":\"PASSED\",\"suggested_si_exponents\":null,\"support_mode\":\"KB_RECORD\",\"evidence_entry_ids\":[\"pq_kinematic_viscosity\"],\"reason\":\"The record pq_kinematic_viscosity is the standard kinematic viscosity entry (symbol ν/nu) defined as dynamic viscosity divided by density, with si_dimension L^2 T^-1 (dimension_vector [0,2,-1,0,0,0,0]). In fluid mechanics (including Rayleigh-Bénard) ν is the momentum diffusivity parameter used in the viscous term; this matches the candidate's L^2 T^-1 coordinates.\"},{\"csv_name\":\"kappa\",\"before_si_exponents\":{\"M\":\"0\",\"L\":\"2\",\"T\":\"-1\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"},\"decision\":\"PASSED\",\"suggested_si_exponents\":null,\"support_mode\":\"KB_RECORD\",\"evidence_entry_ids\":[\"pq_thermal_diffusivity\"],\"reason\":\"The record pq_thermal_diffusivity is the canonical thermal diffusivity entry (symbols κ/kappa) with si_dimension L^2 T^-1 (dimension_vector [0,2,-1,0,0,0,0]). Thermal diffusivity is used in the heat equation for Rayleigh-Bénard convection, so this record supports the candidate's L^2 T^-1 assignment.\"}]}"
+            }
+          }
+        ],
+        "model_messages": [
+          {
+            "type": "system",
+            "content": "Audit every named physical input in this exact typed ledger, including literal SI coordinate values. Do not substitute the correct definition or a KB vector for a wrong candidate and then claim PASSED. Return ledger_sha256 and each csv_name exactly once; before_si_exponents must copy the actual candidate. PASSED confirms the actual vector, CONFLICT requires a complete corrected suggested vector, and UNCERTAIN does not permit numerical execution. KB_RECORD requires actual entry_id citations from that variable's retrieved records. Canonical entity names are read by the program from the selected IDs; do not echo another quantity-name field. Your reason must explain why each cited record applies to this variable in the original problem, not merely why its vector matches. Cited vectors must support all known coordinates of the proposed/confirmed SI vector. INTERNAL_REASONING uses no IDs and must explain the physical meaning. Retrieval rank is relevance, not truth. Resolve symbol ambiguity from the original problem; do not choose an unrelated matching symbol. Known absent base dimensions must be explicit '0'; null means genuinely unknown, not unused. If any current coordinate is unknown, request revision or report UNCERTAIN; never call a partly known vector PASSED. Give a complete correction when physically justified. If a correction remains partly unknown, preserve null and explain what remains unresolved; the program will request revision rather than invent zeros. Lack of KB alone is not a physical contradiction. Matrix compilation and n/r/k are program tasks, not audit tasks."
+          },
+          {
+            "type": "human",
+            "content": "Problem:\nPerform dimensional analysis for Rayleigh-Bénard convection in a planar horizontal layer of fluid heated from below, to derive the dimensionless form of the Nusselt number (denoted as Nu). \nThis analysis uses ONLY the following 7 physical quantities as input parameters: \nthe height of the container (h), the thermal conductivity (lambda), the temperature difference between the top and bottom surfaces (delta_T), the gravitational acceleration (g), the thermal expansion coefficient (alpha), the kinematic viscosity (nu), and the thermal diffusivity (kappa).\n\nTyped ledger SHA256: de760ef77574f700c0f79f43b60853a79d3f8ffda4fe828235dad022a98a72de\nTyped candidate ledger:\n{\"input_variable_names\": [\"h\", \"delta_T\", \"lambda\", \"g\", \"alpha\", \"nu\", \"kappa\"], \"output_variable_confidence\": \"high\", \"output_variable_name\": \"Nu\", \"output_variable_reasoning\": \"The Nusselt number (Nu) is a dimensionless quantity representing the ratio of convective to conductive heat transfer across a fluid layer. It is derived from the given physical quantities related to Rayleigh-Bénard convection, which include length (h), temperature difference (delta_T), thermal conductivity (lambda), gravitational acceleration (g), thermal expansion coefficient (alpha), kinematic viscosity (nu), and thermal diffusivity (kappa). Each input's physical dimension is identified based on standard SI base units and physical definitions.\", \"variables\": [{\"csv_name\": \"h\", \"physical_definition\": \"height of the container, a length scale\", \"quantity_name\": \"length\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"1\", \"M\": \"0\", \"N\": \"0\", \"T\": \"0\", \"Theta\": \"0\"}}, {\"csv_name\": \"delta_T\", \"physical_definition\": \"temperature difference between the top and bottom surfaces\", \"quantity_name\": \"temperature difference\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"0\", \"M\": \"0\", \"N\": \"0\", \"T\": \"0\", \"Theta\": \"1\"}}, {\"csv_name\": \"lambda\", \"physical_definition\": \"thermal conductivity, the rate of heat transfer through a material per unit area per unit temperature gradient\", \"quantity_name\": \"thermal conductivity\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"1\", \"M\": \"1\", \"N\": \"0\", \"T\": \"-3\", \"Theta\": \"-1\"}}, {\"csv_name\": \"g\", \"physical_definition\": \"gravitational acceleration, acceleration due to gravity\", \"quantity_name\": \"acceleration\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"1\", \"M\": \"0\", \"N\": \"0\", \"T\": \"-2\", \"Theta\": \"0\"}}, {\"csv_name\": \"alpha\", \"physical_definition\": \"thermal expansion coefficient, fractional change in volume per unit temperature change\", \"quantity_name\": \"thermal expansion coefficient\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"0\", \"M\": \"0\", \"N\": \"0\", \"T\": \"0\", \"Theta\": \"-1\"}}, {\"csv_name\": \"nu\", \"physical_definition\": \"kinematic viscosity, ratio of dynamic viscosity to density\", \"quantity_name\": \"kinematic viscosity\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"2\", \"M\": \"0\", \"N\": \"0\", \"T\": \"-1\", \"Theta\": \"0\"}}, {\"csv_name\": \"kappa\", \"physical_definition\": \"thermal diffusivity, ratio of thermal conductivity to volumetric heat capacity\", \"quantity_name\": \"thermal diffusivity\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"2\", \"M\": \"0\", \"N\": \"0\", \"T\": \"-1\", \"Theta\": \"0\"}}]}\n\nRetrieved dimensional evidence:\n### Input variable `h`\n- entry_id: pq_container_height; canonical_quantity: container height; symbols: h; H; aliases: cell height; layer height; plate separation; definition: Vertical separation between confining plates in the Rayleigh-Benard configuration.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: Rayleigh-Benard convection; ambiguity_notes: The symbol h may denote a half-height in channel flow; use the problem geometry.; source: Rayleigh-Benard convection reference defining Ra and Pr; source_identifier: https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/scaling-laws-for-rayleighbenard-convection-between-navierslip-boundaries/F474DBFC0CC0A874A0B14A383195D714; confidence: high\n- entry_id: pq_heat_transfer_coefficient; canonical_quantity: convective heat-transfer coefficient; symbols: h_c; h; aliases: film coefficient; convection coefficient; definition: Heat flux divided by a driving temperature difference.; si_dimension: M T^-3 Theta^-1; dimension_vector: [1, 0, -3, 0, -1, 0, 0]; si_unit: W m^-2 K^-1; domain: heat transfer; ambiguity_notes: h is also used for length or enthalpy in some contexts.; source: Lupi, Heat Transfer, in Fundamentals of Electroheat; source_identifier: doi:10.1007/978-3-319-46015-4_1; confidence: high\n- entry_id: pq_channel_half_height; canonical_quantity: channel half-height; symbols: h; delta; δ; aliases: channel half-height; half-gap; definition: Distance from a channel wall to its centerline for a symmetric plane channel.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: channel flow; ambiguity_notes: The symbol h is also used for full height, enthalpy, or heat-transfer coefficient in other contexts.; source: Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling; source_identifier: https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8; confidence: high\n### Input variable `delta_T`\n- entry_id: pq_temperature_difference; canonical_quantity: temperature difference; symbols: DeltaT; delta_T; ΔT; Tl-T0; T_l-T_0; aliases: temperature gap; melting-to-ambient temperature difference; definition: Difference between two thermodynamic temperatures.; si_dimension: Theta; dimension_vector: [0, 0, 0, 0, 1, 0, 0]; si_unit: K; domain: heat transfer; thermodynamics; ambiguity_notes: A temperature difference has the same dimension as thermodynamic temperature.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_thermal_expansion_coefficient; canonical_quantity: thermal expansion coefficient; symbols: alpha; α; beta; β; aliases: coefficient of thermal expansion; thermal expansivity; definition: Fractional change of a characteristic length or volume per unit temperature change, according to the chosen convention.; si_dimension: Theta^-1; dimension_vector: [0, 0, 0, 0, -1, 0, 0]; si_unit: K^-1; domain: thermodynamics; convection; ambiguity_notes: Alpha/α is also widely used for thermal diffusivity. The Rayleigh-Benard context usually uses alpha for thermal expansion coefficient and kappa for thermal diffusivity.; source: NIST SP 260-173, thermal-property nomenclature; source_identifier: https://www.nist.gov/document/sp260-173pdf; confidence: curated\n- entry_id: pq_container_height; canonical_quantity: container height; symbols: h; H; aliases: cell height; layer height; plate separation; definition: Vertical separation between confining plates in the Rayleigh-Benard configuration.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: Rayleigh-Benard convection; ambiguity_notes: The symbol h may denote a half-height in channel flow; use the problem geometry.; source: Rayleigh-Benard convection reference defining Ra and Pr; source_identifier: https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/scaling-laws-for-rayleighbenard-convection-between-navierslip-boundaries/F474DBFC0CC0A874A0B14A383195D714; confidence: high\n### Input variable `lambda`\n- entry_id: pq_thermal_conductivity; canonical_quantity: thermal conductivity; symbols: lambda; λ; k; kappa; κ; aliases: heat conductivity; definition: Proportionality coefficient in Fourier heat conduction.; si_dimension: M L T^-3 Theta^-1; dimension_vector: [1, 1, -3, 0, -1, 0, 0]; si_unit: W m^-1 K^-1; domain: heat transfer; ambiguity_notes: Symbols lambda/λ may denote wavelength; k or kappa/κ may denote other coefficients. Resolve using heat-transfer context.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: curated\n- entry_id: pq_wavelength; canonical_quantity: wavelength; symbols: lambda; λ; aliases: wavelength; characteristic wavelength; definition: Spatial period of a wave.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: waves; optics; ambiguity_notes: Lambda/λ is also widely used for thermal conductivity; use domain context.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_thermal_expansion_coefficient; canonical_quantity: thermal expansion coefficient; symbols: alpha; α; beta; β; aliases: coefficient of thermal expansion; thermal expansivity; definition: Fractional change of a characteristic length or volume per unit temperature change, according to the chosen convention.; si_dimension: Theta^-1; dimension_vector: [0, 0, 0, 0, -1, 0, 0]; si_unit: K^-1; domain: thermodynamics; convection; ambiguity_notes: Alpha/α is also widely used for thermal diffusivity. The Rayleigh-Benard context usually uses alpha for thermal expansion coefficient and kappa for thermal diffusivity.; source: NIST SP 260-173, thermal-property nomenclature; source_identifier: https://www.nist.gov/document/sp260-173pdf; confidence: curated\n### Input variable `g`\n- entry_id: pq_gravitational_acceleration; canonical_quantity: gravitational acceleration; symbols: g; aliases: gravity; acceleration due to gravity; definition: Acceleration associated with gravity.; si_dimension: L T^-2; dimension_vector: [0, 1, -2, 0, 0, 0, 0]; si_unit: m s^-2; domain: mechanics; convection; ambiguity_notes: ; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_electrical_conductance; canonical_quantity: electrical conductance; symbols: G; aliases: electric conductance; definition: Reciprocal of electrical resistance.; si_dimension: M^-1 L^-2 T^3 I^2; dimension_vector: [-1, -2, 3, 2, 0, 0, 0]; si_unit: S; domain: electromagnetism; ambiguity_notes: ; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_container_height; canonical_quantity: container height; symbols: h; H; aliases: cell height; layer height; plate separation; definition: Vertical separation between confining plates in the Rayleigh-Benard configuration.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: Rayleigh-Benard convection; ambiguity_notes: The symbol h may denote a half-height in channel flow; use the problem geometry.; source: Rayleigh-Benard convection reference defining Ra and Pr; source_identifier: https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/scaling-laws-for-rayleighbenard-convection-between-navierslip-boundaries/F474DBFC0CC0A874A0B14A383195D714; confidence: high\n### Input variable `alpha`\n- entry_id: pq_thermal_expansion_coefficient; canonical_quantity: thermal expansion coefficient; symbols: alpha; α; beta; β; aliases: coefficient of thermal expansion; thermal expansivity; definition: Fractional change of a characteristic length or volume per unit temperature change, according to the chosen convention.; si_dimension: Theta^-1; dimension_vector: [0, 0, 0, 0, -1, 0, 0]; si_unit: K^-1; domain: thermodynamics; convection; ambiguity_notes: Alpha/α is also widely used for thermal diffusivity. The Rayleigh-Benard context usually uses alpha for thermal expansion coefficient and kappa for thermal diffusivity.; source: NIST SP 260-173, thermal-property nomenclature; source_identifier: https://www.nist.gov/document/sp260-173pdf; confidence: curated\n- entry_id: pq_thermal_diffusivity; canonical_quantity: thermal diffusivity; symbols: alpha; α; kappa; κ; a; aliases: heat diffusivity; definition: Thermal conductivity divided by the product of density and specific heat capacity.; si_dimension: L^2 T^-1; dimension_vector: [0, 2, -1, 0, 0, 0, 0]; si_unit: m^2 s^-1; domain: heat transfer; ambiguity_notes: Alpha/α may instead denote a thermal expansion coefficient; kappa/κ may instead denote thermal conductivity or another diffusivity.; source: IUPAC Gold Book: thermal diffusivity; source_identifier: doi:10.1351/goldbook.08697; confidence: curated\n- entry_id: pq_container_height; canonical_quantity: container height; symbols: h; H; aliases: cell height; layer height; plate separation; definition: Vertical separation between confining plates in the Rayleigh-Benard configuration.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: Rayleigh-Benard convection; ambiguity_notes: The symbol h may denote a half-height in channel flow; use the problem geometry.; source: Rayleigh-Benard convection reference defining Ra and Pr; source_identifier: https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/scaling-laws-for-rayleighbenard-convection-between-navierslip-boundaries/F474DBFC0CC0A874A0B14A383195D714; confidence: high\n### Input variable `nu`\n- entry_id: pq_kinematic_viscosity; canonical_quantity: kinematic viscosity; symbols: nu; ν; aliases: momentum diffusivity; definition: Dynamic viscosity divided by mass density.; si_dimension: L^2 T^-1; dimension_vector: [0, 2, -1, 0, 0, 0, 0]; si_unit: m^2 s^-1; domain: fluid mechanics; ambiguity_notes: Do not confuse lowercase nu/ν with the Nusselt number Nu or a generic frequency symbol.; source: NIST SP 811, Guide for the Use of the International System of Units (SI); source_identifier: doi:10.6028/NIST.SP.811e2008; confidence: curated\n- entry_id: pq_thermal_diffusivity; canonical_quantity: thermal diffusivity; symbols: alpha; α; kappa; κ; a; aliases: heat diffusivity; definition: Thermal conductivity divided by the product of density and specific heat capacity.; si_dimension: L^2 T^-1; dimension_vector: [0, 2, -1, 0, 0, 0, 0]; si_unit: m^2 s^-1; domain: heat transfer; ambiguity_notes: Alpha/α may instead denote a thermal expansion coefficient; kappa/κ may instead denote thermal conductivity or another diffusivity.; source: IUPAC Gold Book: thermal diffusivity; source_identifier: doi:10.1351/goldbook.08697; confidence: curated\n- entry_id: pq_eddy_viscosity; canonical_quantity: eddy viscosity; symbols: nu_t; ν_t; mu_t/rho; aliases: turbulent kinematic viscosity; turbulent eddy diffusivity for momentum; definition: Turbulent transport coefficient with the dimensions of kinematic viscosity when written as nu_t.; si_dimension: L^2 T^-1; dimension_vector: [0, 2, -1, 0, 0, 0, 0]; si_unit: m^2 s^-1; domain: turbulence modeling; ambiguity_notes: If a code uses dynamic eddy viscosity mu_t instead, its dimension is M L^-1 T^-1.; source: NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions; source_identifier: https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html; confidence: high\n### Input variable `kappa`\n- entry_id: pq_thermal_diffusivity; canonical_quantity: thermal diffusivity; symbols: alpha; α; kappa; κ; a; aliases: heat diffusivity; definition: Thermal conductivity divided by the product of density and specific heat capacity.; si_dimension: L^2 T^-1; dimension_vector: [0, 2, -1, 0, 0, 0, 0]; si_unit: m^2 s^-1; domain: heat transfer; ambiguity_notes: Alpha/α may instead denote a thermal expansion coefficient; kappa/κ may instead denote thermal conductivity or another diffusivity.; source: IUPAC Gold Book: thermal diffusivity; source_identifier: doi:10.1351/goldbook.08697; confidence: curated\n- entry_id: pq_thermal_conductivity; canonical_quantity: thermal conductivity; symbols: lambda; λ; k; kappa; κ; aliases: heat conductivity; definition: Proportionality coefficient in Fourier heat conduction.; si_dimension: M L T^-3 Theta^-1; dimension_vector: [1, 1, -3, 0, -1, 0, 0]; si_unit: W m^-1 K^-1; domain: heat transfer; ambiguity_notes: Symbols lambda/λ may denote wavelength; k or kappa/κ may denote other coefficients. Resolve using heat-transfer context.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: curated\n- entry_id: pq_thermal_expansion_coefficient; canonical_quantity: thermal expansion coefficient; symbols: alpha; α; beta; β; aliases: coefficient of thermal expansion; thermal expansivity; definition: Fractional change of a characteristic length or volume per unit temperature change, according to the chosen convention.; si_dimension: Theta^-1; dimension_vector: [0, 0, 0, 0, -1, 0, 0]; si_unit: K^-1; domain: thermodynamics; convection; ambiguity_notes: Alpha/α is also widely used for thermal diffusivity. The Rayleigh-Benard context usually uses alpha for thermal expansion coefficient and kappa for thermal diffusivity.; source: NIST SP 260-173, thermal-property nomenclature; source_identifier: https://www.nist.gov/document/sp260-173pdf; confidence: curated"
+          }
+        ],
+        "elapsed_s": 25.01630550000118
+      },
+      "retrieval_elapsed_s": 18.8110946000088
+    }
+  ],
+  "final_ledger": {
+    "output_variable_name": "Nu",
+    "output_variable_reasoning": "The Nusselt number (Nu) is a dimensionless quantity representing the ratio of convective to conductive heat transfer across a fluid layer. It is derived from the given physical quantities related to Rayleigh-Bénard convection, which include length (h), temperature difference (delta_T), thermal conductivity (lambda), gravitational acceleration (g), thermal expansion coefficient (alpha), kinematic viscosity (nu), and thermal diffusivity (kappa). Each input's physical dimension is identified based on standard SI base units and physical definitions.",
+    "output_variable_confidence": "high",
+    "input_variable_names": [
+      "h",
+      "delta_T",
+      "lambda",
+      "g",
+      "alpha",
+      "nu",
+      "kappa"
+    ],
+    "variables": [
+      {
+        "csv_name": "h",
+        "quantity_name": "length",
+        "physical_definition": "height of the container, a length scale",
+        "si_exponents": {
+          "M": "0",
+          "L": "1",
+          "T": "0",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "delta_T",
+        "quantity_name": "temperature difference",
+        "physical_definition": "temperature difference between the top and bottom surfaces",
+        "si_exponents": {
+          "M": "0",
+          "L": "0",
+          "T": "0",
+          "I": "0",
+          "Theta": "1",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "lambda",
+        "quantity_name": "thermal conductivity",
+        "physical_definition": "thermal conductivity, the rate of heat transfer through a material per unit area per unit temperature gradient",
+        "si_exponents": {
+          "M": "1",
+          "L": "1",
+          "T": "-3",
+          "I": "0",
+          "Theta": "-1",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "g",
+        "quantity_name": "acceleration",
+        "physical_definition": "gravitational acceleration, acceleration due to gravity",
+        "si_exponents": {
+          "M": "0",
+          "L": "1",
+          "T": "-2",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "alpha",
+        "quantity_name": "thermal expansion coefficient",
+        "physical_definition": "thermal expansion coefficient, fractional change in volume per unit temperature change",
+        "si_exponents": {
+          "M": "0",
+          "L": "0",
+          "T": "0",
+          "I": "0",
+          "Theta": "-1",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "nu",
+        "quantity_name": "kinematic viscosity",
+        "physical_definition": "kinematic viscosity, ratio of dynamic viscosity to density",
+        "si_exponents": {
+          "M": "0",
+          "L": "2",
+          "T": "-1",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "kappa",
+        "quantity_name": "thermal diffusivity",
+        "physical_definition": "thermal diffusivity, ratio of thermal conductivity to volumetric heat capacity",
+        "si_exponents": {
+          "M": "0",
+          "L": "2",
+          "T": "-1",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      }
+    ]
+  },
+  "workflow_status": "basis_ready",
+  "basis_built": true,
+  "basis": {
+    "workflow_status": "basis_ready",
+    "input_vars": [
+      "h",
+      "delta_T",
+      "lambda",
+      "g",
+      "alpha",
+      "nu",
+      "kappa"
+    ],
+    "output_var": "Nu",
+    "basis_pi_formulas": {
+      "Pi_1": "delta_T * alpha",
+      "Pi_2": "(nu) / (h^{3/2} * g^{1/2})",
+      "Pi_3": "(kappa) / (h^{3/2} * g^{1/2})"
+    },
+    "basis_pi_matrices": [
+      [
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        -1.5,
+        0.0,
+        0.0,
+        -0.5,
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        -1.5,
+        0.0,
+        0.0,
+        -0.5,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "basis_tool_history": [
+      {
+        "args": {
+          "D_in": [
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0,
+              1.0,
+              1.0,
+              0.0,
+              2.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              -3.0,
+              -2.0,
+              0.0,
+              -1.0,
+              -1.0
+            ],
+            [
+              0.0,
+              1.0,
+              -1.0,
+              0.0,
+              -1.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "var_names": [
+            "h",
+            "delta_T",
+            "lambda",
+            "g",
+            "alpha",
+            "nu",
+            "kappa"
+          ]
+        },
+        "result": {
+          "status": "success",
+          "pi_formulas": {
+            "Pi_1": "delta_T * alpha",
+            "Pi_2": "(nu) / (h^{3/2} * g^{1/2})",
+            "Pi_3": "(kappa) / (h^{3/2} * g^{1/2})"
+          },
+          "basis_matrices": [
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              -1.5,
+              0.0,
+              0.0,
+              -0.5,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              -1.5,
+              0.0,
+              0.0,
+              -0.5,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "basis_matrices_display": [
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              -1.5,
+              0.0,
+              0.0,
+              -0.5,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              -1.5,
+              0.0,
+              0.0,
+              -0.5,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "null_space_residual_inf": 0.0,
+          "basis_precision_note": "basis_matrices stores full floating-point precision; basis_matrices_display is rounded for display only."
+        }
+      }
+    ],
+    "output_resolution": {
+      "status": "success",
+      "output_var": "Nu",
+      "source": "structured_analyzer",
+      "requested": "Nu",
+      "candidates": [
+        "source",
+        "Ra",
+        "Nu"
+      ]
+    }
+  },
+  "revision_calls": [],
+  "elapsed_s": 43.90060659998562,
+  "error": null,
+  "infrastructure_error": [],
+  "node_sequence": [
+    "Analyzer",
+    "Hallu_Checker",
+    "Basis_Decider",
+    "Basis_Executor"
+  ],
+  "provenance": {
+    "run_id": "b708f00d-b292-43d7-add0-c227068686a6",
+    "release": "run-provenance-2026-11-09",
+    "engine_sha256": "ae9a03710f9685d3be863b98acc1880d72c9ea3f04450af039b92f5459ee1ea9",
+    "started_utc": "2026-11-15T15:31:43Z",
+    "finished_utc": null,
+    "status": "running",
+    "dataset": {
+      "name": "dataset_rayben.csv",
+      "sha256": "db5d6dfda46ee68cbdab8cbaba0d070093f2a63d52c0b3eab82e6c5cb9da4a8a"
+    },
+    "problem_sha256": "659a484bad793fb4a14fc8529f273aa5dafe2e71a7498669a70fc89271e99665",
+    "manual_hyperparams_sha256": "1a77ac90efe4bc0a9be8c57fdd1e148af3616f2ddcc5fada158148b929b1e8a7",
+    "model_configuration": {
+      "analyzer": "gpt-4.1-mini",
+      "checker": "gpt-5-mini",
+      "planner": "gpt-5-mini",
+      "interpretation": "gpt-5-mini"
+    },
+    "package_versions": {
+      "numpy": "2.4.0",
+      "pandas": "2.3.3",
+      "scipy": "1.16.3",
+      "sympy": "1.14.0",
+      "scikit-learn": "1.8.0",
+      "cma": "4.4.4",
+      "pydantic": "2.12.5",
+      "openai": "2.14.0",
+      "httpx": "0.28.1",
+      "langchain-core": "1.2.5",
+      "langchain-openai": "1.1.6",
+      "langgraph": "1.0.5"
+    },
+    "tracing_enabled": false,
+    "wall_seconds": 43.899825699976645,
+    "node_timings": [
+      {
+        "node": "Analyzer",
+        "visit": 1,
+        "duration_seconds": 0.02505099994596094,
+        "status": "returned",
+        "error_type": null
+      },
+      {
+        "node": "Hallu_Checker",
+        "visit": 1,
+        "duration_seconds": 43.83813619997818,
+        "status": "returned",
+        "error_type": null
+      },
+      {
+        "node": "Basis_Decider",
+        "visit": 1,
+        "duration_seconds": 0.008967100002337247,
+        "status": "returned",
+        "error_type": null
+      },
+      {
+        "node": "Basis_Executor",
+        "visit": 1,
+        "duration_seconds": 0.024580699973739684,
+        "status": "returned",
+        "error_type": null
+      }
+    ],
+    "http_attempts": [
+      {
+        "attempt_id": "08b5050a-693e-4205-9076-22821fa6c637",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 3.380671799997799,
+        "started_utc": "2026-11-15T15:31:43Z",
+        "input_tokens": 155,
+        "output_tokens": 0,
+        "total_tokens": 155,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "53f34e1127e10d1f4aa5a3df666f6259ea366f0c8859d6863d247d57ac0b76af",
+        "response_id": null
+      },
+      {
+        "attempt_id": "650606bf-c7df-49b4-a4fd-a075b27bf4f5",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 1.3829688999685459,
+        "started_utc": "2026-11-15T15:31:46Z",
+        "input_tokens": 160,
+        "output_tokens": 0,
+        "total_tokens": 160,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "4af33d2a780010d8859bb71fa5d2e307a7a0ac9776ce070b43a14752f159ed22",
+        "response_id": null
+      },
+      {
+        "attempt_id": "0f3523c3-347e-4a21-b896-2b1e11f0ea99",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 0.7523240000009537,
+        "started_utc": "2026-11-15T15:31:47Z",
+        "input_tokens": 170,
+        "output_tokens": 0,
+        "total_tokens": 170,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "5e1e3b5c508c52cbb592957e0abfd4e21e769619c57817fc3a16c737b9375059",
+        "response_id": null
+      },
+      {
+        "attempt_id": "19bfac4b-d2ee-493d-9e37-32a10fe009f3",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 1.0960530000156723,
+        "started_utc": "2026-11-15T15:31:48Z",
+        "input_tokens": 154,
+        "output_tokens": 0,
+        "total_tokens": 154,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "cca498ca14ccd7e063ffa03e390099be034c9ccd11227f255c3ccd395fa7ce1b",
+        "response_id": null
+      },
+      {
+        "attempt_id": "3e3aeccc-bc33-427d-939a-7f38ac959517",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 6.609634299995378,
+        "started_utc": "2026-11-15T15:31:49Z",
+        "input_tokens": 162,
+        "output_tokens": 0,
+        "total_tokens": 162,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "5a4a30e57e6296a47e0cda95a15c207fcdbae6a1e3ea7d80ffcc00c97d5d5638",
+        "response_id": null
+      },
+      {
+        "attempt_id": "7cf2c8a2-08ab-4abb-af91-f0c7800e17bc",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 3.8992072999826632,
+        "started_utc": "2026-11-15T15:31:56Z",
+        "input_tokens": 209,
+        "output_tokens": 0,
+        "total_tokens": 209,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "f654827d11ee334d6424ada2d9f3de875cb25bed65b7b4b7588f9759d65cefef",
+        "response_id": null
+      },
+      {
+        "attempt_id": "48716cd2-1e63-4034-88bf-640551b919e8",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 1.4512662999914028,
+        "started_utc": "2026-11-15T15:32:00Z",
+        "input_tokens": 168,
+        "output_tokens": 0,
+        "total_tokens": 168,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "2b7bce86c0cf99c5035498140e704b39cbda771913fd19669c886119bc57d2ae",
+        "response_id": null
+      },
+      {
+        "attempt_id": "13f7c48c-1951-44a3-aed2-4086f8489ce2",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "llm",
+        "requested_model": "gpt-5-mini",
+        "response_model": "gpt-5-mini",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 25.012458500044886,
+        "started_utc": "2026-11-15T15:32:01Z",
+        "input_tokens": 5055,
+        "output_tokens": 3519,
+        "total_tokens": 8574,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 0,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "0b9eb38dc8e5816686bdbff11ac558d6f064a3a5c0a914f63dbf3bf42245912e",
+        "response_id": "chatcmpl-202611151532081783793038268d9d6ajhsIxqq"
+      }
+    ],
+    "observation_warnings": [],
+    "workflow_status": "basis_ready",
+    "scientific_status": null,
+    "totals": {
+      "http_attempt_count": 8,
+      "llm_http_attempt_count": 1,
+      "embedding_http_attempt_count": 7,
+      "usage_missing_attempt_count": 0,
+      "http_duration_seconds_sum": 43.5845840999973,
+      "node_duration_seconds_sum": 43.89673499990022,
+      "http_success_count": 8,
+      "http_error_count": 0,
+      "transport_error_count": 0,
+      "known_input_tokens": 6233,
+      "input_tokens_missing_count": 0,
+      "known_output_tokens": 3519,
+      "output_tokens_missing_count": 0,
+      "known_total_tokens": 9752,
+      "total_tokens_missing_count": 0,
+      "known_cached_input_tokens": 0,
+      "cached_input_tokens_missing_count": 7,
+      "known_reasoning_tokens": 0,
+      "reasoning_tokens_missing_count": 7
+    }
+  }
+}

@@ -1,0 +1,164 @@
+{
+  "schema_version": 1,
+  "case_id": "cess_channel",
+  "title": "Cess eddy-viscosity model in turbulent channel flow",
+  "dataset": "data/datasets/cess_channel.csv",
+  "prompt": "Perform dimensional analysis for the Cess eddy-viscosity model in turbulent channel flow to derive the dimensionless relationship governing the normalized eddy viscosity (denoted as nu_t/nu).\nThis analysis uses ONLY the following 4 physical quantities as input parameters:\nthe channel half-height (h), the distance from the wall (y), the friction velocity (u_tau), and the fluid kinematic viscosity (nu).",
+  "manual_hyperparams": {
+    "workflow_template": "auto_mechanism_adaptive",
+    "similarity_type": "auto",
+    "gradient_regime_options": {
+      "surrogate": {
+        "mean_mode": "constant",
+        "max_train_samples": 800,
+        "regime_target_transform": "log",
+        "n_restarts_optimizer": 3,
+        "optimizer_maxiter": 2000,
+        "log_sigma0_sq_bounds": [
+          -30.0,
+          30.0
+        ],
+        "log_sigma1_sq_bounds": [
+          -30.0,
+          30.0
+        ],
+        "log_sigma_u_sq_bounds": [
+          -30.0,
+          30.0
+        ]
+      },
+      "clustering": {
+        "n_clusters": null,
+        "candidate_cluster_counts": [
+          2,
+          3,
+          4
+        ],
+        "min_cluster_fraction": 0.05,
+        "eigenvalue_ratio_threshold": 50.0,
+        "n_init": 30,
+        "max_iter": 200,
+        "require_convergence": true
+      }
+    },
+    "regime_plot_feature_mode": "screening_basis",
+    "regime_plot_feature_pi_indices": [
+      1,
+      2
+    ],
+    "regime_plot_feature_labels": [
+      "$\\log(\\Pi^{(S)}_1)$",
+      "$\\log(\\Pi^{(S)}_2)$"
+    ],
+    "regime_plot_physical_x": {
+      "source": "power_product",
+      "powers": {
+        "u_tau": 1.0,
+        "h": 1.0,
+        "nu": -1.0
+      },
+      "label": "$Re_\\tau=u_\\tau h/\\nu$",
+      "scale": "log"
+    },
+    "regime_plot_physical_y": {
+      "source": "power_product",
+      "powers": {
+        "y": 1.0,
+        "h": -1.0
+      },
+      "label": "$\\eta=y/h$",
+      "scale": "log"
+    }
+  },
+  "input_columns": [
+    "u_tau",
+    "h",
+    "y",
+    "nu"
+  ],
+  "output_column": "nu_t/nu",
+  "expected_dimensions": {
+    "dimension_order": [
+      "M",
+      "L",
+      "T",
+      "I",
+      "Theta",
+      "N",
+      "J"
+    ],
+    "inputs": {
+      "h": {
+        "M": 0,
+        "L": 1,
+        "T": 0,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "y": {
+        "M": 0,
+        "L": 1,
+        "T": 0,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "u_tau": {
+        "M": 0,
+        "L": 1,
+        "T": -1,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "nu": {
+        "M": 0,
+        "L": 2,
+        "T": -1,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      }
+    },
+    "output": {
+      "M": 0,
+      "L": 0,
+      "T": 0,
+      "I": 0,
+      "Theta": 0,
+      "N": 0,
+      "J": 0
+    }
+  },
+  "data_metadata": {
+    "rows": 1000,
+    "columns": [
+      "u_tau",
+      "h",
+      "y",
+      "nu",
+      "nu_t/nu"
+    ],
+    "auxiliary_columns": [],
+    "sha256": "5f33633175902520ef6de3478e60aea9fc5fa9bcf830178d0be5ff928d308cb4",
+    "original_filename": "dataset_cess_channel.csv",
+    "original_column_order_preserved": true,
+    "response_log_eligible_rows": 1000
+  },
+  "provenance": {
+    "prompt_source": "author-supplied current agent definitions",
+    "manual_hyperparams_source": "author-supplied current agent definitions",
+    "source_sha256": "55a4a6f2c9c0b3424a83d3576517539128d6dc86fb2d9479bf1c86ab5f4794db",
+    "original_prompt_symbol": "CMAME24_CESS_PROMPT",
+    "original_hyperparams_symbol": "CMAME24_CESS_hparams",
+    "reference_dimensions_source": "reproduction/rag_ablation/reference/expected_dimensions.json",
+    "reference_case_id": "CESS",
+    "reference_dimensions_sha256": "72764f551ff87b286641978d8ed96addd0d80047028a351f06b0814329b04f98"
+  },
+  "numerical_threads": 1
+}

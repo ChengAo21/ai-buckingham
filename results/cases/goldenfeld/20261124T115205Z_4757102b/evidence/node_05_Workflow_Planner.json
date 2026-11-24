@@ -1,0 +1,679 @@
+{
+  "workflow_plan": {
+    "template": "auto_mechanism_adaptive",
+    "rationale": "Use the single-regime adaptive template because the prompt describes a single physical mechanism (rough-wall turbulent pipe flow) but enforces an explicit output constraint that removes the roughness dependence from the output formula. Similarity policy is first-kind (classical Buckingham Pi) because the user requested a fixed exponent (Pi_2 power = 0) rather than incomplete-similarity or automatic similarity screening. Kraskov mutual-information estimator is selected because the sample size (414) is <= 800; k=5 is a typical Kraskov choice. The output exponent constraint is recorded in fixed_out_power to ensure the derived dimensionless output depends only on Pi_1. Regime detection is left null (n_clusters = null) for a single-mechanism analysis, with candidate cluster counts provided should the runtime need to test multi-mechanism hypotheses. Optimization of the output scaling is disabled (optimize_output = false) consistent with first-kind similarity.",
+    "target_is_dimensionless": true,
+    "stages": [
+      "load_and_validate_data",
+      "gradient_regime_detection",
+      "validate_regime_partition",
+      "local_dominant_group_search",
+      "fan_out_local_workflows",
+      "aggregate_results",
+      "generate_report"
+    ],
+    "regime_detection": {
+      "n_clusters": null,
+      "candidate_cluster_counts": [
+        2,
+        3,
+        4
+      ],
+      "min_cluster_fraction": 0.05,
+      "min_cluster_samples": 60,
+      "max_intercluster_cosine": 0.9,
+      "eigenvalue_ratio_threshold": 50.0,
+      "require_convergence": true,
+      "exclude_low_confidence_points": false,
+      "assignment_confidence_threshold": 0.05
+    },
+    "local_analysis": {
+      "start_count": 1,
+      "max_count": null,
+      "absolute_score_drop_threshold": 0.08,
+      "require_two_counts_when_possible": true,
+      "similarity_type": "auto",
+      "optimize_output": null,
+      "output_scaling_reason": "Authoritative manual similarity_type='auto'; runtime numerical screening required.",
+      "output_scaling_confidence": "medium",
+      "similarity_screening_max_relative_mi_change": 0.15,
+      "similarity_screening_max_cosine_similarity": 0.7,
+      "mi_method": "kraskov",
+      "mi_param": 5,
+      "cma_restarts": 3,
+      "minimum_samples": 20,
+      "minimum_samples_per_mi_dimension": 20,
+      "minimum_samples_for_second_count": 40,
+      "fixed_in_power": {},
+      "fixed_out_power": {
+        "Pi_2": 0.0
+      },
+      "sparsification_enabled": true,
+      "sparsify_exponent_threshold": 0.05,
+      "sparsify_max_score_increase": 0.05,
+      "rationalization_enabled": true,
+      "max_rational_denominator": 5,
+      "validate_after_rationalization": true
+    },
+    "replanning_triggers": [
+      "insufficient_MI_improvement",
+      "validation_failure"
+    ]
+  },
+  "compiled_workflow": {
+    "status": "compiled",
+    "template": "auto_mechanism_adaptive",
+    "rationale": "Use the single-regime adaptive template because the prompt describes a single physical mechanism (rough-wall turbulent pipe flow) but enforces an explicit output constraint that removes the roughness dependence from the output formula. Similarity policy is first-kind (classical Buckingham Pi) because the user requested a fixed exponent (Pi_2 power = 0) rather than incomplete-similarity or automatic similarity screening. Kraskov mutual-information estimator is selected because the sample size (414) is <= 800; k=5 is a typical Kraskov choice. The output exponent constraint is recorded in fixed_out_power to ensure the derived dimensionless output depends only on Pi_1. Regime detection is left null (n_clusters = null) for a single-mechanism analysis, with candidate cluster counts provided should the runtime need to test multi-mechanism hypotheses. Optimization of the output scaling is disabled (optimize_output = false) consistent with first-kind similarity.",
+    "target_is_dimensionless": true,
+    "stages": [
+      "load_and_validate_data",
+      "gradient_regime_detection",
+      "validate_regime_partition",
+      "local_dominant_group_search",
+      "fan_out_local_workflows",
+      "aggregate_results",
+      "generate_report"
+    ],
+    "tool_ids": [
+      "calc_basis_tool",
+      "detect_gradient_regimes",
+      "run_local_dominant_group_workflow",
+      "rationalize_local_solution"
+    ],
+    "regime_detection": {
+      "n_clusters": null,
+      "candidate_cluster_counts": [
+        2,
+        3,
+        4
+      ],
+      "min_cluster_fraction": 0.05,
+      "min_cluster_samples": 60,
+      "max_intercluster_cosine": 0.9,
+      "eigenvalue_ratio_threshold": 50.0,
+      "require_convergence": true,
+      "exclude_low_confidence_points": false,
+      "assignment_confidence_threshold": 0.05
+    },
+    "resolved_gradient_regime_options": {
+      "surrogate": {
+        "mean_mode": "constant",
+        "max_train_samples": null,
+        "n_restarts_optimizer": 3,
+        "optimizer_maxiter": 2000,
+        "optimizer_ftol": 1e-10,
+        "optimizer_gtol": 1e-06,
+        "jitter": 1e-10,
+        "random_state": 42,
+        "log_sigma0_sq_bounds": [
+          -30.0,
+          30.0
+        ],
+        "log_sigma1_sq_bounds": [
+          -30.0,
+          30.0
+        ],
+        "log_sigma_u_sq_bounds": [
+          -30.0,
+          30.0
+        ],
+        "mean_parameter_bounds": [
+          null,
+          null
+        ],
+        "initial_noise_fraction": 1e-06,
+        "require_optimizer_success": false,
+        "regime_target_transform": "log"
+      },
+      "clustering": {
+        "n_clusters": null,
+        "candidate_cluster_counts": [
+          2,
+          3,
+          4
+        ],
+        "min_cluster_fraction": 0.05,
+        "min_cluster_samples": 60,
+        "max_intercluster_cosine": 0.9,
+        "eigenvalue_ratio_threshold": 50.0,
+        "n_init": 30,
+        "max_iter": 200,
+        "random_state": 42,
+        "initialization": "random_eigenpairs",
+        "max_initialization_attempts": 100,
+        "require_convergence": true,
+        "gradient_norm_tolerance": 1e-12,
+        "exclude_low_confidence_points": false,
+        "assignment_confidence_threshold": 0.05
+      }
+    },
+    "regime_configuration_precedence": [
+      "library_defaults",
+      "workflow_plan",
+      "nested_manual",
+      "flat_manual"
+    ],
+    "resolved_manual_regime_overrides": {},
+    "local_workflow": {
+      "start_count": 1,
+      "max_count": 2,
+      "absolute_score_drop_threshold": 0.08,
+      "require_two_counts_when_possible": true,
+      "similarity_type": "auto",
+      "optimize_output": null,
+      "output_scaling_reason": "Authoritative manual similarity_type='auto'; runtime numerical screening required.",
+      "output_scaling_confidence": "medium",
+      "similarity_screening_max_relative_mi_change": 0.15,
+      "similarity_screening_max_cosine_similarity": 0.7,
+      "mi_method": "kraskov",
+      "mi_param": 5,
+      "cma_restarts": 3,
+      "minimum_samples": 20,
+      "minimum_samples_per_mi_dimension": 20,
+      "minimum_samples_for_second_count": 40,
+      "fixed_in_power": {},
+      "fixed_out_power": {
+        "Pi_2": 0.0
+      },
+      "sparsification_enabled": true,
+      "sparsify_exponent_threshold": 0.05,
+      "sparsify_max_score_increase": 0.05,
+      "rationalization_enabled": true,
+      "max_rational_denominator": 5,
+      "validate_after_rationalization": true
+    },
+    "replanning_triggers": [
+      "insufficient_MI_improvement",
+      "validation_failure"
+    ],
+    "max_replans": 2
+  },
+  "resolved_hyperparameters": {
+    "output_variable": "cf",
+    "output_resolution": {
+      "status": "success",
+      "output_var": "cf",
+      "source": "structured_analyzer",
+      "requested": "cf",
+      "candidates": [
+        "cf"
+      ]
+    },
+    "manual_hyperparams": {
+      "workflow_template": "auto_mechanism_adaptive",
+      "similarity_type": "auto",
+      "normalize_input": "norm2",
+      "max_rational_denominator": 5,
+      "cma_init_position": 0.1,
+      "cma_init_stepsize": 0.1,
+      "cma_bounds_min": -0.1,
+      "cma_bounds_max": 0.5,
+      "use_collinearity_penalty": true,
+      "max_cosine_similarity": 0.7,
+      "mi_param_used": 5,
+      "mi_method_used": "kraskov"
+    },
+    "effective_workflow": {
+      "status": "compiled",
+      "template": "auto_mechanism_adaptive",
+      "rationale": "Use the single-regime adaptive template because the prompt describes a single physical mechanism (rough-wall turbulent pipe flow) but enforces an explicit output constraint that removes the roughness dependence from the output formula. Similarity policy is first-kind (classical Buckingham Pi) because the user requested a fixed exponent (Pi_2 power = 0) rather than incomplete-similarity or automatic similarity screening. Kraskov mutual-information estimator is selected because the sample size (414) is <= 800; k=5 is a typical Kraskov choice. The output exponent constraint is recorded in fixed_out_power to ensure the derived dimensionless output depends only on Pi_1. Regime detection is left null (n_clusters = null) for a single-mechanism analysis, with candidate cluster counts provided should the runtime need to test multi-mechanism hypotheses. Optimization of the output scaling is disabled (optimize_output = false) consistent with first-kind similarity.",
+      "target_is_dimensionless": true,
+      "stages": [
+        "load_and_validate_data",
+        "gradient_regime_detection",
+        "validate_regime_partition",
+        "local_dominant_group_search",
+        "fan_out_local_workflows",
+        "aggregate_results",
+        "generate_report"
+      ],
+      "tool_ids": [
+        "calc_basis_tool",
+        "detect_gradient_regimes",
+        "run_local_dominant_group_workflow",
+        "rationalize_local_solution"
+      ],
+      "regime_detection": {
+        "n_clusters": null,
+        "candidate_cluster_counts": [
+          2,
+          3,
+          4
+        ],
+        "min_cluster_fraction": 0.05,
+        "min_cluster_samples": 60,
+        "max_intercluster_cosine": 0.9,
+        "eigenvalue_ratio_threshold": 50.0,
+        "require_convergence": true,
+        "exclude_low_confidence_points": false,
+        "assignment_confidence_threshold": 0.05
+      },
+      "resolved_gradient_regime_options": {
+        "surrogate": {
+          "mean_mode": "constant",
+          "max_train_samples": null,
+          "n_restarts_optimizer": 3,
+          "optimizer_maxiter": 2000,
+          "optimizer_ftol": 1e-10,
+          "optimizer_gtol": 1e-06,
+          "jitter": 1e-10,
+          "random_state": 42,
+          "log_sigma0_sq_bounds": [
+            -30.0,
+            30.0
+          ],
+          "log_sigma1_sq_bounds": [
+            -30.0,
+            30.0
+          ],
+          "log_sigma_u_sq_bounds": [
+            -30.0,
+            30.0
+          ],
+          "mean_parameter_bounds": [
+            null,
+            null
+          ],
+          "initial_noise_fraction": 1e-06,
+          "require_optimizer_success": false,
+          "regime_target_transform": "log"
+        },
+        "clustering": {
+          "n_clusters": null,
+          "candidate_cluster_counts": [
+            2,
+            3,
+            4
+          ],
+          "min_cluster_fraction": 0.05,
+          "min_cluster_samples": 60,
+          "max_intercluster_cosine": 0.9,
+          "eigenvalue_ratio_threshold": 50.0,
+          "n_init": 30,
+          "max_iter": 200,
+          "random_state": 42,
+          "initialization": "random_eigenpairs",
+          "max_initialization_attempts": 100,
+          "require_convergence": true,
+          "gradient_norm_tolerance": 1e-12,
+          "exclude_low_confidence_points": false,
+          "assignment_confidence_threshold": 0.05
+        }
+      },
+      "regime_configuration_precedence": [
+        "library_defaults",
+        "workflow_plan",
+        "nested_manual",
+        "flat_manual"
+      ],
+      "resolved_manual_regime_overrides": {},
+      "local_workflow": {
+        "start_count": 1,
+        "max_count": 2,
+        "absolute_score_drop_threshold": 0.08,
+        "require_two_counts_when_possible": true,
+        "similarity_type": "auto",
+        "optimize_output": null,
+        "output_scaling_reason": "Authoritative manual similarity_type='auto'; runtime numerical screening required.",
+        "output_scaling_confidence": "medium",
+        "similarity_screening_max_relative_mi_change": 0.15,
+        "similarity_screening_max_cosine_similarity": 0.7,
+        "mi_method": "kraskov",
+        "mi_param": 5,
+        "cma_restarts": 3,
+        "minimum_samples": 20,
+        "minimum_samples_per_mi_dimension": 20,
+        "minimum_samples_for_second_count": 40,
+        "fixed_in_power": {},
+        "fixed_out_power": {
+          "Pi_2": 0.0
+        },
+        "sparsification_enabled": true,
+        "sparsify_exponent_threshold": 0.05,
+        "sparsify_max_score_increase": 0.05,
+        "rationalization_enabled": true,
+        "max_rational_denominator": 5,
+        "validate_after_rationalization": true
+      },
+      "replanning_triggers": [
+        "insufficient_MI_improvement",
+        "validation_failure"
+      ],
+      "max_replans": 2
+    },
+    "policy": "library defaults < LLM planner < manual_hyperparams"
+  },
+  "hyperparameter_provenance": {
+    "precedence": [
+      "library_defaults",
+      "llm_workflow_plan",
+      "manual_hyperparams"
+    ],
+    "manual_overrides": {
+      "template": "auto_mechanism_adaptive",
+      "local_analysis.mi_method": "kraskov",
+      "local_analysis.mi_param": 5,
+      "local_analysis.max_rational_denominator": 5,
+      "local_analysis.similarity_type": "auto",
+      "local_analysis.optimize_output": null
+    },
+    "passthrough_manual_hyperparameters": {
+      "normalize_input": "norm2",
+      "cma_init_position": 0.1,
+      "cma_init_stepsize": 0.1,
+      "cma_bounds_min": -0.1,
+      "cma_bounds_max": 0.5,
+      "use_collinearity_penalty": true,
+      "max_cosine_similarity": 0.7
+    }
+  },
+  "workflow_status": "workflow_compiled",
+  "run_provenance": {
+    "run_id": "56c8f71e-7624-43c1-9f76-e45dec779281",
+    "release": "ai-buckingham",
+    "engine_sha256": "aaa912d2f6acac02775f069df09f8ce533191d35c039ebf93782802d6f693147",
+    "started_utc": "2026-11-24T11:52:10Z",
+    "finished_utc": null,
+    "status": "running",
+    "dataset": {
+      "name": "goldenfeld.csv",
+      "sha256": "06df41e9d43219c99411d8a1ca1bf00325293242f5100095a45afbfbd0cdb544"
+    },
+    "problem_sha256": "fc15e99391f2540424d685efe85eaccbec2c92a52c30c41c00c41b2d95d346e7",
+    "manual_hyperparams_sha256": "d5394109ee1ee5808e6f61e22391f274889c1e99729bf733da27aa75e18e206b",
+    "model_configuration": {
+      "analyzer": "gpt-5-mini",
+      "checker": "gpt-5-mini",
+      "planner": "gpt-5-mini",
+      "interpretation": "gpt-5-mini",
+      "output_binding_checker": "gpt-5-mini"
+    },
+    "package_versions": {
+      "numpy": "2.4.0",
+      "pandas": "2.3.3",
+      "scipy": "1.16.3",
+      "sympy": "1.14.0",
+      "scikit-learn": "1.8.0",
+      "cma": "4.4.4",
+      "pydantic": "2.12.5",
+      "openai": "2.14.0",
+      "httpx": "0.28.1",
+      "langchain-core": "1.2.5",
+      "langchain-openai": "1.1.6",
+      "langgraph": "1.0.5"
+    },
+    "tracing_enabled": false,
+    "wall_seconds": 72.60005430000001,
+    "node_timings": [
+      {
+        "node": "Analyzer",
+        "visit": 1,
+        "duration_seconds": 26.752080500000034,
+        "status": "returned",
+        "error_type": null
+      },
+      {
+        "node": "Hallu_Checker",
+        "visit": 1,
+        "duration_seconds": 24.93265860000008,
+        "status": "returned",
+        "error_type": null
+      },
+      {
+        "node": "Basis_Decider",
+        "visit": 1,
+        "duration_seconds": 0.00707549999992807,
+        "status": "returned",
+        "error_type": null
+      },
+      {
+        "node": "Basis_Executor",
+        "visit": 1,
+        "duration_seconds": 0.01891149999994468,
+        "status": "returned",
+        "error_type": null
+      },
+      {
+        "node": "Workflow_Planner",
+        "visit": 1,
+        "duration_seconds": 20.407916099999966,
+        "status": "returned",
+        "error_type": null
+      }
+    ],
+    "http_attempts": [
+      {
+        "attempt_id": "8582775d-070e-447a-a25d-645abdd764f9",
+        "node": "Analyzer",
+        "node_visit": 1,
+        "kind": "llm",
+        "requested_model": "gpt-5-mini",
+        "response_model": "gpt-5-mini-2025-08-07",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 15.08958789999997,
+        "started_utc": "2026-11-24T11:52:10Z",
+        "input_tokens": 835,
+        "output_tokens": 1201,
+        "total_tokens": 2036,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 768,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "15441b5e019e9448865ff6e9e6e09d236b43f26bcd11588ac9b33abc2d842f66",
+        "response_id": "chatcmpl-EnjMETxhWz3rnWbzs2VNuSeNV57gN"
+      },
+      {
+        "attempt_id": "8f96d4ee-6f76-4fea-817b-30812425bc09",
+        "node": "Output_Binding_Checker",
+        "node_visit": 1,
+        "kind": "llm",
+        "requested_model": "gpt-5-mini",
+        "response_model": "gpt-5-mini-2025-08-07",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 11.56171100000006,
+        "started_utc": "2026-11-24T11:52:25Z",
+        "input_tokens": 337,
+        "output_tokens": 1369,
+        "total_tokens": 1706,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 1344,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "03906689a5d30c94c57a9dbee55b36dfd8a4c5a4bba8b7c43b9610d297726076",
+        "response_id": "chatcmpl-EnjMPDrUyJn6uMDmzlCrthXL583Sl"
+      },
+      {
+        "attempt_id": "0e69151f-e398-4baf-8c02-4a729a4d1c6d",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 0.2751511000000164,
+        "started_utc": "2026-11-24T11:52:37Z",
+        "input_tokens": 124,
+        "output_tokens": 0,
+        "total_tokens": 124,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "36184bee91ef60f7ad9a252aca2492899bda8a219526b4249bd82d40b4318de3",
+        "response_id": null
+      },
+      {
+        "attempt_id": "35c3a4a4-1d89-4dce-8ace-005c4a03c6bf",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 0.21512840000002598,
+        "started_utc": "2026-11-24T11:52:37Z",
+        "input_tokens": 127,
+        "output_tokens": 0,
+        "total_tokens": 127,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "16561c0f676db90c634befeed445906b4723fc6c3de56be1063111acd0769ea4",
+        "response_id": null
+      },
+      {
+        "attempt_id": "ae700909-a18a-4f09-9390-26e317fb5358",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 0.23357110000006287,
+        "started_utc": "2026-11-24T11:52:37Z",
+        "input_tokens": 121,
+        "output_tokens": 0,
+        "total_tokens": 121,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "f0c0e520d9a429eafc58a30013e5597c1cf213377fc6f20a9a8ac68cda0d464c",
+        "response_id": null
+      },
+      {
+        "attempt_id": "bbfa944d-70c7-465c-95da-4c8d3d2a6d09",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 0.19205570000008265,
+        "started_utc": "2026-11-24T11:52:38Z",
+        "input_tokens": 121,
+        "output_tokens": 0,
+        "total_tokens": 121,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "17541bd5a32ed246d4ea29550b24fd5e8314c052d275e6048829667ede5fa7be",
+        "response_id": null
+      },
+      {
+        "attempt_id": "4798f82c-54ec-42b9-9693-d6769a5c67b1",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 0.1915698999999904,
+        "started_utc": "2026-11-24T11:52:38Z",
+        "input_tokens": 126,
+        "output_tokens": 0,
+        "total_tokens": 126,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "01cbe2fdc2d87c9c2175f92c3917251297520e4a78eacbae9c7c4ca84a1222f5",
+        "response_id": null
+      },
+      {
+        "attempt_id": "189fbcde-a5fb-4612-aa67-79e8a5eb626b",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "llm",
+        "requested_model": "gpt-5-mini",
+        "response_model": "gpt-5-mini-2025-08-07",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 23.60379469999998,
+        "started_utc": "2026-11-24T11:52:38Z",
+        "input_tokens": 3707,
+        "output_tokens": 3012,
+        "total_tokens": 6719,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 1856,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "f0b0a839d23af16523c6d0c182268243b043b731df6f002586f00209797611c5",
+        "response_id": "chatcmpl-EnjMc5ePywnKsiMxO72H0wbz1Kuh1"
+      },
+      {
+        "attempt_id": "43a1fbbf-7296-4454-9e00-21651e14d93c",
+        "node": "Workflow_Planner",
+        "node_visit": 1,
+        "kind": "llm",
+        "requested_model": "gpt-5-mini",
+        "response_model": "gpt-5-mini-2025-08-07",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 20.399660399999902,
+        "started_utc": "2026-11-24T11:53:02Z",
+        "input_tokens": 1524,
+        "output_tokens": 2251,
+        "total_tokens": 3775,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 1536,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "986d11ee34d4ab4711a4f8e1176ab5f311fc27028d2df24e86f0c96b1ee2842f",
+        "response_id": "chatcmpl-EnjN0CxGN8qnzyK2RS8jWlgvQIVdj"
+      }
+    ],
+    "observation_warnings": [],
+    "output_binding_events": [
+      {
+        "action": "verify",
+        "submitted": "cf",
+        "selected": "cf",
+        "status": "confirmed",
+        "duration_seconds": 11.564034200000037,
+        "analyzer_visit": 1
+      }
+    ],
+    "workflow_status": "workflow_compiled",
+    "scientific_status": null,
+    "totals": {
+      "http_attempt_count": 9,
+      "llm_http_attempt_count": 4,
+      "embedding_http_attempt_count": 5,
+      "usage_missing_attempt_count": 0,
+      "http_duration_seconds_sum": 71.76223020000009,
+      "node_duration_seconds_sum": 72.11864219999995,
+      "http_success_count": 9,
+      "http_error_count": 0,
+      "transport_error_count": 0,
+      "known_input_tokens": 7022,
+      "input_tokens_missing_count": 0,
+      "known_output_tokens": 7833,
+      "output_tokens_missing_count": 0,
+      "known_total_tokens": 14855,
+      "total_tokens_missing_count": 0,
+      "known_cached_input_tokens": 0,
+      "cached_input_tokens_missing_count": 5,
+      "known_reasoning_tokens": 5504,
+      "reasoning_tokens_missing_count": 5
+    }
+  }
+}

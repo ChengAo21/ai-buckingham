@@ -1,0 +1,161 @@
+{
+  "schema_version": 1,
+  "case_id": "sandgrain",
+  "title": "Equivalent sand-grain roughness",
+  "dataset": "data/datasets/sandgrain.csv",
+  "prompt": "Perform dimensional analysis for sand-grain roughness parameterization to derive the dimensionless relationship governing the normalized equivalent sand-grain roughness (denoted as ks/Ra).\nThis analysis uses ONLY the following 7 physical quantities as input parameters:\nthe first-order absolute moment of height fluctuations, Ra;\nthe peak-to-valley height, kt;\nthe root-mean-square height, k_rms;\nthe skewness of roughness height fluctuations, Sk;\nthe kurtosis of roughness height fluctuations, Ku;\nthe effective streamwise slope of the roughness, ES;\nthe surface porosity, Po.",
+  "manual_hyperparams": {
+    "workflow_template": "auto_mechanism_adaptive",
+    "cma_maxiter": 240,
+    "cma_popsize": 60,
+    "max_rational_denominator": 5,
+    "mi_param_used": 5,
+    "mi_method_used": "kraskov",
+    "dimensionless_input_preprocessing": {
+      "Sk": {
+        "transform": "shift",
+        "offset": 2.0
+      }
+    },
+    "display_ipt_Pi": "none",
+    "enable_score_uq": true,
+    "gpr_log_features": false,
+    "gpr_log_target": false,
+    "gpr_n_splits": 1,
+    "gpr_n_restarts_optimizer": 1,
+    "gpr_stratify_column": "case",
+    "similarity_type": "first_kind"
+  },
+  "input_columns": [
+    "Ra",
+    "kt",
+    "k_rms",
+    "Sk",
+    "Ku",
+    "ES",
+    "Po"
+  ],
+  "output_column": "ks/Ra",
+  "expected_dimensions": {
+    "dimension_order": [
+      "M",
+      "L",
+      "T",
+      "I",
+      "Theta",
+      "N",
+      "J"
+    ],
+    "inputs": {
+      "Ra": {
+        "M": 0,
+        "L": 1,
+        "T": 0,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "kt": {
+        "M": 0,
+        "L": 1,
+        "T": 0,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "k_rms": {
+        "M": 0,
+        "L": 1,
+        "T": 0,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "Sk": {
+        "M": 0,
+        "L": 0,
+        "T": 0,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "Ku": {
+        "M": 0,
+        "L": 0,
+        "T": 0,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "ES": {
+        "M": 0,
+        "L": 0,
+        "T": 0,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "Po": {
+        "M": 0,
+        "L": 0,
+        "T": 0,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      }
+    },
+    "output": {
+      "M": 0,
+      "L": 0,
+      "T": 0,
+      "I": 0,
+      "Theta": 0,
+      "N": 0,
+      "J": 0
+    }
+  },
+  "data_metadata": {
+    "rows": 104,
+    "columns": [
+      "Ra",
+      "kt",
+      "k_rms",
+      "Sk",
+      "Ku",
+      "ES",
+      "Po",
+      "ks",
+      "ks/Ra",
+      "case",
+      "case_id"
+    ],
+    "auxiliary_columns": [
+      "ks",
+      "case",
+      "case_id"
+    ],
+    "sha256": "0bd235aa92db381dacdc6c176396efe5fbf2f0a9c84ccf1d468410321203a175",
+    "original_filename": "dataset_sandgrain.csv",
+    "original_column_order_preserved": true,
+    "response_log_eligible_rows": 104
+  },
+  "provenance": {
+    "prompt_source": "author-supplied current agent definitions",
+    "manual_hyperparams_source": "author-supplied current agent definitions",
+    "source_sha256": "55a4a6f2c9c0b3424a83d3576517539128d6dc86fb2d9479bf1c86ab5f4794db",
+    "original_prompt_symbol": "sand_grain_roughness",
+    "original_hyperparams_symbol": "sand_grain_hparams",
+    "reference_dimensions_source": "reproduction/rag_ablation/reference/expected_dimensions.json",
+    "reference_case_id": "SANDGRAIN",
+    "reference_dimensions_sha256": "72764f551ff87b286641978d8ed96addd0d80047028a351f06b0814329b04f98"
+  },
+  "preprocessing_note": "Sk is shifted by +2 by the declared dimensionless_input_preprocessing; archived CSV values are unchanged.",
+  "numerical_threads": 1
+}

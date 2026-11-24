@@ -1,0 +1,1938 @@
+{
+  "pair_id": "MHD_challenge_05",
+  "arm": "on",
+  "initial_ledger_sha256": "86c65ecffd41c24d84ba448207d4f22ba83e95801e4481124c3f8e52d60a133c",
+  "checker_rounds": [
+    {
+      "candidate_ledger": {
+        "output_variable_name": "u*",
+        "output_variable_reasoning": "The dimensionless average flow velocity u* is derived from the given physical quantities by dimensional analysis in magnetohydrodynamics. Each input quantity's physical dimension is identified and used to form dimensionless groups, including u* as a dimensionless velocity ratio.",
+        "output_variable_confidence": "high",
+        "input_variable_names": [
+          "h",
+          "mu",
+          "rho",
+          "eta",
+          "dp_dx",
+          "B"
+        ],
+        "variables": [
+          {
+            "csv_name": "h",
+            "quantity_name": "length",
+            "physical_definition": "side length of the square duct",
+            "si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "mu",
+            "quantity_name": "dynamic_viscosity",
+            "physical_definition": "dynamic viscosity of the fluid",
+            "si_exponents": {
+              "M": "1",
+              "L": "-1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "rho",
+            "quantity_name": "density",
+            "physical_definition": "fluid density",
+            "si_exponents": {
+              "M": "1",
+              "L": "-3",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "eta",
+            "quantity_name": "electric_proportionality_coefficient",
+            "physical_definition": "fluid's proportionality coefficient in E = eta J relating electric field and current density",
+            "si_exponents": {
+              "M": "1",
+              "L": "3",
+              "T": "-3",
+              "I": "-2",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "dp_dx",
+            "quantity_name": "pressure_gradient",
+            "physical_definition": "applied pressure gradient",
+            "si_exponents": {
+              "M": "1",
+              "L": "-3",
+              "T": "-2",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "B",
+            "quantity_name": "magnetic_field",
+            "physical_definition": "magnetic field magnitude",
+            "si_exponents": {
+              "M": "1",
+              "L": "0",
+              "T": "-2",
+              "I": "-1",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          }
+        ]
+      },
+      "ledger_sha256": "86c65ecffd41c24d84ba448207d4f22ba83e95801e4481124c3f8e52d60a133c",
+      "gate": {
+        "gate_status": "RETRY",
+        "ledger_sha256": "86c65ecffd41c24d84ba448207d4f22ba83e95801e4481124c3f8e52d60a133c",
+        "checker_audit": {
+          "ledger_sha256": "86c65ecffd41c24d84ba448207d4f22ba83e95801e4481124c3f8e52d60a133c",
+          "variables": [
+            {
+              "csv_name": "h",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "0",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_duct_side_length"
+              ],
+              "reason": "The problem statement defines h as the side length of the square duct. The cited record pq_duct_side_length has canonical_quantity 'square-duct side length' and definition 'Side length of a square duct cross-section.' Its si_dimension is L (dimension_vector [0,1,0,0,0,0,0]), which directly matches the role and units of h in the original problem."
+            },
+            {
+              "csv_name": "mu",
+              "before_si_exponents": {
+                "M": "1",
+                "L": "-1",
+                "T": "-1",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_dynamic_viscosity"
+              ],
+              "reason": "The ledger labels mu as dynamic viscosity. The cited record pq_dynamic_viscosity defines dynamic viscosity (coefficient relating viscous shear stress to velocity gradient) with SI dimension M L^-1 T^-1 (dimension_vector [1,-1,-1,0,0,0,0]). That matches the physical definition and usage of μ in the MHD flow problem."
+            },
+            {
+              "csv_name": "rho",
+              "before_si_exponents": {
+                "M": "1",
+                "L": "-3",
+                "T": "0",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_mass_density"
+              ],
+              "reason": "The problem names ρ as fluid density. The cited record pq_mass_density has canonical_quantity 'mass density' with definition 'Mass per unit volume' and SI dimension M L^-3 (dimension_vector [1,-3,0,0,0,0,0]). This is the standard interpretation of ρ in the given fluid-mechanics context."
+            },
+            {
+              "csv_name": "eta",
+              "before_si_exponents": {
+                "M": "1",
+                "L": "3",
+                "T": "-3",
+                "I": "-2",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_electrical_resistivity"
+              ],
+              "reason": "The prompt explicitly defines η as the proportionality in E = η J (electric field = η × current density). That is the constitutive definition of electrical resistivity in MHD. The cited record pq_electrical_resistivity has that canonical_quantity and SI dimension M L^3 T^-3 I^-2 (dimension_vector [1,3,-3,-2,0,0,0]), and its ambiguity_notes state that in an MHD prompt explicitly saying electrical resistivity, use this record. Thus the record directly applies."
+            },
+            {
+              "csv_name": "dp_dx",
+              "before_si_exponents": {
+                "M": "1",
+                "L": "-3",
+                "T": "-2",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "CONFLICT",
+              "suggested_si_exponents": {
+                "M": "1",
+                "L": "-2",
+                "T": "-2",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_pressure_gradient"
+              ],
+              "reason": "The candidate vector given in the ledger uses L^-3 for dp/dx, but the physics of a pressure gradient (spatial derivative of pressure) has SI dimension of pressure per length: pressure is M L^-1 T^-2, so pressure gradient is M L^-2 T^-2. The cited record pq_pressure_gradient explicitly defines 'pressure gradient' and gives SI dimension M L^-2 T^-2 (dimension_vector [1,-2,-2,0,0,0,0]). Therefore the ledger's L exponent is incorrect and the corrected full SI exponent vector is provided above."
+            },
+            {
+              "csv_name": "B",
+              "before_si_exponents": {
+                "M": "1",
+                "L": "0",
+                "T": "-2",
+                "I": "-1",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_magnetic_flux_density"
+              ],
+              "reason": "The problem names B as the magnetic field magnitude (magnetic flux density). The cited record pq_magnetic_flux_density defines magnetic flux density (tesla) with SI dimension M T^-2 I^-1 (dimension_vector [1,0,-2,-1,0,0,0]). This matches the intended physical quantity and usage of B in the MHD generator problem."
+            }
+          ]
+        },
+        "variable_results": [
+          {
+            "csv_name": "h",
+            "decision": "PASSED",
+            "before": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "suggested": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "coordinate_diff": {},
+            "issues": [],
+            "referenced_entry_ids": [
+              "pq_duct_side_length"
+            ],
+            "selected_entities": [
+              {
+                "entry_id": "pq_duct_side_length",
+                "canonical_quantity": "square-duct side length",
+                "source_identifier": "doi:10.1007/s10894-023-00390-8"
+              }
+            ],
+            "cited_reference_si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "known_coordinate_conflicts_with_reference": {}
+          },
+          {
+            "csv_name": "mu",
+            "decision": "PASSED",
+            "before": {
+              "M": "1",
+              "L": "-1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "suggested": {
+              "M": "1",
+              "L": "-1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "coordinate_diff": {},
+            "issues": [],
+            "referenced_entry_ids": [
+              "pq_dynamic_viscosity"
+            ],
+            "selected_entities": [
+              {
+                "entry_id": "pq_dynamic_viscosity",
+                "canonical_quantity": "dynamic viscosity",
+                "source_identifier": "doi:10.6028/NIST.SP.811e2008"
+              }
+            ],
+            "cited_reference_si_exponents": {
+              "M": "1",
+              "L": "-1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "known_coordinate_conflicts_with_reference": {}
+          },
+          {
+            "csv_name": "rho",
+            "decision": "PASSED",
+            "before": {
+              "M": "1",
+              "L": "-3",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "suggested": {
+              "M": "1",
+              "L": "-3",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "coordinate_diff": {},
+            "issues": [],
+            "referenced_entry_ids": [
+              "pq_mass_density"
+            ],
+            "selected_entities": [
+              {
+                "entry_id": "pq_mass_density",
+                "canonical_quantity": "mass density",
+                "source_identifier": "doi:10.59161/AUEZ1291"
+              }
+            ],
+            "cited_reference_si_exponents": {
+              "M": "1",
+              "L": "-3",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "known_coordinate_conflicts_with_reference": {}
+          },
+          {
+            "csv_name": "eta",
+            "decision": "PASSED",
+            "before": {
+              "M": "1",
+              "L": "3",
+              "T": "-3",
+              "I": "-2",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "suggested": {
+              "M": "1",
+              "L": "3",
+              "T": "-3",
+              "I": "-2",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "coordinate_diff": {},
+            "issues": [],
+            "referenced_entry_ids": [
+              "pq_electrical_resistivity"
+            ],
+            "selected_entities": [
+              {
+                "entry_id": "pq_electrical_resistivity",
+                "canonical_quantity": "electrical resistivity",
+                "source_identifier": "doi:10.1007/s10894-023-00390-8"
+              }
+            ],
+            "cited_reference_si_exponents": {
+              "M": "1",
+              "L": "3",
+              "T": "-3",
+              "I": "-2",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "known_coordinate_conflicts_with_reference": {}
+          },
+          {
+            "csv_name": "dp_dx",
+            "decision": "CONFLICT",
+            "before": {
+              "M": "1",
+              "L": "-3",
+              "T": "-2",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "suggested": {
+              "M": "1",
+              "L": "-2",
+              "T": "-2",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "coordinate_diff": {
+              "L": {
+                "before": "-3",
+                "suggested": "-2"
+              }
+            },
+            "issues": [
+              "Checker decision CONFLICT"
+            ],
+            "referenced_entry_ids": [
+              "pq_pressure_gradient"
+            ],
+            "selected_entities": [
+              {
+                "entry_id": "pq_pressure_gradient",
+                "canonical_quantity": "pressure gradient",
+                "source_identifier": "https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html"
+              }
+            ],
+            "cited_reference_si_exponents": {
+              "M": "1",
+              "L": "-2",
+              "T": "-2",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "known_coordinate_conflicts_with_reference": {}
+          },
+          {
+            "csv_name": "B",
+            "decision": "PASSED",
+            "before": {
+              "M": "1",
+              "L": "0",
+              "T": "-2",
+              "I": "-1",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "suggested": {
+              "M": "1",
+              "L": "0",
+              "T": "-2",
+              "I": "-1",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "coordinate_diff": {},
+            "issues": [],
+            "referenced_entry_ids": [
+              "pq_magnetic_flux_density"
+            ],
+            "selected_entities": [
+              {
+                "entry_id": "pq_magnetic_flux_density",
+                "canonical_quantity": "magnetic flux density",
+                "source_identifier": "doi:10.59161/AUEZ1291"
+              }
+            ],
+            "cited_reference_si_exponents": {
+              "M": "1",
+              "L": "0",
+              "T": "-2",
+              "I": "-1",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "known_coordinate_conflicts_with_reference": {}
+          }
+        ],
+        "issues": [
+          "dp_dx: Checker decision CONFLICT"
+        ],
+        "referenced_records": [
+          {
+            "csv_name": "h",
+            "record": {
+              "variable_name": "h",
+              "entry_id": "pq_duct_side_length",
+              "canonical_quantity": "square-duct side length",
+              "symbols": "h",
+              "aliases": "duct side length; side length of square duct",
+              "definition": "Side length of a square duct cross-section.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "duct flow; magnetohydrodynamics",
+              "ambiguity_notes": "The symbol h is also used for channel half-height or full container height; all are length quantities.",
+              "source": "MHD Flow in Simple Cubic Periodic Array Geometry, Journal of Fusion Energy (2023)",
+              "source_identifier": "doi:10.1007/s10894-023-00390-8",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5957665851280901,
+              "hybrid_score": 0.8585183047948315,
+              "retrieval_mode": "hybrid"
+            }
+          },
+          {
+            "csv_name": "mu",
+            "record": {
+              "variable_name": "mu",
+              "entry_id": "pq_dynamic_viscosity",
+              "canonical_quantity": "dynamic viscosity",
+              "symbols": "mu; μ; eta; η",
+              "aliases": "absolute viscosity; viscosity coefficient; dynamic viscosity coefficient",
+              "definition": "Coefficient relating Newtonian viscous shear stress to velocity gradient.",
+              "si_dimension": "M L^-1 T^-1",
+              "dimension_vector": "[1, -1, -1, 0, 0, 0, 0]",
+              "si_unit": "Pa s",
+              "domain": "fluid mechanics; rheology",
+              "ambiguity_notes": "Symbols eta/η can instead denote electrical resistivity, magnetic diffusivity, or other quantities; symbols mu/μ are also used for magnetic permeability in some contexts.",
+              "source": "NIST SP 811, Guide for the Use of the International System of Units (SI)",
+              "source_identifier": "doi:10.6028/NIST.SP.811e2008",
+              "confidence": "curated",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5398293549684083,
+              "hybrid_score": 0.8389402742389429,
+              "retrieval_mode": "hybrid"
+            }
+          },
+          {
+            "csv_name": "rho",
+            "record": {
+              "variable_name": "rho",
+              "entry_id": "pq_mass_density",
+              "canonical_quantity": "mass density",
+              "symbols": "rho; ρ",
+              "aliases": "density; fluid density; material density; wall density",
+              "definition": "Mass per unit volume.",
+              "si_dimension": "M L^-3",
+              "dimension_vector": "[1, -3, 0, 0, 0, 0, 0]",
+              "si_unit": "kg m^-3",
+              "domain": "continuum mechanics; fluid mechanics; materials",
+              "ambiguity_notes": "The symbol rho/ρ may also denote electrical resistivity in electromagnetism; resolve by physical context.",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5322940837495709,
+              "hybrid_score": 0.8363029293123498,
+              "retrieval_mode": "hybrid"
+            }
+          },
+          {
+            "csv_name": "eta",
+            "record": {
+              "variable_name": "eta",
+              "entry_id": "pq_electrical_resistivity",
+              "canonical_quantity": "electrical resistivity",
+              "symbols": "eta; η; rho_e; ρ_e",
+              "aliases": "resistivity; specific electrical resistance; rho notation for electrical resistivity; ρ notation for electrical resistivity",
+              "definition": "Material property relating electric field to current density; equivalently electrical resistance times a length scale divided by area.",
+              "si_dimension": "M L^3 T^-3 I^-2",
+              "dimension_vector": "[1, 3, -3, -2, 0, 0, 0]",
+              "si_unit": "ohm m",
+              "domain": "electromagnetism; magnetohydrodynamics",
+              "ambiguity_notes": "Eta/η may denote dynamic viscosity or magnetic diffusivity; rho/ρ may denote mass density. In an MHD prompt explicitly saying electrical resistivity, use this record.",
+              "source": "MHD Flow in Simple Cubic Periodic Array Geometry, Journal of Fusion Energy (2023)",
+              "source_identifier": "doi:10.1007/s10894-023-00390-8",
+              "confidence": "curated",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5071758795626496,
+              "hybrid_score": 0.8275115578469274,
+              "retrieval_mode": "hybrid"
+            }
+          },
+          {
+            "csv_name": "dp_dx",
+            "record": {
+              "variable_name": "dp_dx",
+              "entry_id": "pq_pressure_gradient",
+              "canonical_quantity": "pressure gradient",
+              "symbols": "dp/dx; dpdx; grad_p; ∇p",
+              "aliases": "applied pressure gradient; streamwise pressure gradient; pressure drop per unit length",
+              "definition": "Spatial derivative of pressure.",
+              "si_dimension": "M L^-2 T^-2",
+              "dimension_vector": "[1, -2, -2, 0, 0, 0, 0]",
+              "si_unit": "Pa m^-1",
+              "domain": "fluid mechanics",
+              "ambiguity_notes": "Do not confuse pressure gradient with pressure.",
+              "source": "NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions",
+              "source_identifier": "https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html",
+              "confidence": "curated",
+              "lexical_score": 0.2692307692307693,
+              "semantic_score": 0.5636540204069349,
+              "hybrid_score": 0.3722789071424273,
+              "retrieval_mode": "hybrid"
+            }
+          },
+          {
+            "csv_name": "B",
+            "record": {
+              "variable_name": "B",
+              "entry_id": "pq_magnetic_flux_density",
+              "canonical_quantity": "magnetic flux density",
+              "symbols": "B",
+              "aliases": "magnetic induction; magnetic field magnitude",
+              "definition": "Magnetic flux per unit area; the quantity whose SI unit is tesla.",
+              "si_dimension": "M T^-2 I^-1",
+              "dimension_vector": "[1, 0, -2, -1, 0, 0, 0]",
+              "si_unit": "T",
+              "domain": "electromagnetism; magnetohydrodynamics",
+              "ambiguity_notes": "Many fluid and engineering papers informally call B the magnetic field. Distinguish B from magnetic field strength H, whose SI unit is A m^-1.",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "curated",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5390283464443573,
+              "hybrid_score": 0.838659921255525,
+              "retrieval_mode": "hybrid"
+            }
+          }
+        ],
+        "feedback": "Typed ledger 86c65ecffd41c24d84ba448207d4f22ba83e95801e4481124c3f8e52d60a133c; program gate=RETRY\nVariable h: decision=PASSED; reason=The problem statement defines h as the side length of the square duct. The cited record pq_duct_side_length has canonical_quantity 'square-duct side length' and definition 'Side length of a square duct cross-section.' Its si_dimension is L (dimension_vector [0,1,0,0,0,0,0]), which directly matches the role and units of h in the original problem.\nActual named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_duct_side_length\", \"canonical_quantity\": \"square-duct side length\", \"source_identifier\": \"doi:10.1007/s10894-023-00390-8\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for h:\n{\"aliases\": \"duct side length; side length of square duct\", \"ambiguity_notes\": \"The symbol h is also used for channel half-height or full container height; all are length quantities.\", \"canonical_quantity\": \"square-duct side length\", \"confidence\": \"high\", \"definition\": \"Side length of a square duct cross-section.\", \"dimension_vector\": \"[0, 1, 0, 0, 0, 0, 0]\", \"domain\": \"duct flow; magnetohydrodynamics\", \"entry_id\": \"pq_duct_side_length\", \"hybrid_score\": 0.8585183047948315, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.5957665851280901, \"si_dimension\": \"L\", \"si_unit\": \"m\", \"source\": \"MHD Flow in Simple Cubic Periodic Array Geometry, Journal of Fusion Energy (2023)\", \"source_identifier\": \"doi:10.1007/s10894-023-00390-8\", \"symbols\": \"h\", \"variable_name\": \"h\"}\n\nVariable mu: decision=PASSED; reason=The ledger labels mu as dynamic viscosity. The cited record pq_dynamic_viscosity defines dynamic viscosity (coefficient relating viscous shear stress to velocity gradient) with SI dimension M L^-1 T^-1 (dimension_vector [1,-1,-1,0,0,0,0]). That matches the physical definition and usage of μ in the MHD flow problem.\nActual named SI={\"M\": \"1\", \"L\": \"-1\", \"T\": \"-1\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"1\", \"L\": \"-1\", \"T\": \"-1\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_dynamic_viscosity\", \"canonical_quantity\": \"dynamic viscosity\", \"source_identifier\": \"doi:10.6028/NIST.SP.811e2008\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for mu:\n{\"aliases\": \"absolute viscosity; viscosity coefficient; dynamic viscosity coefficient\", \"ambiguity_notes\": \"Symbols eta/η can instead denote electrical resistivity, magnetic diffusivity, or other quantities; symbols mu/μ are also used for magnetic permeability in some contexts.\", \"canonical_quantity\": \"dynamic viscosity\", \"confidence\": \"curated\", \"definition\": \"Coefficient relating Newtonian viscous shear stress to velocity gradient.\", \"dimension_vector\": \"[1, -1, -1, 0, 0, 0, 0]\", \"domain\": \"fluid mechanics; rheology\", \"entry_id\": \"pq_dynamic_viscosity\", \"hybrid_score\": 0.8389402742389429, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.5398293549684083, \"si_dimension\": \"M L^-1 T^-1\", \"si_unit\": \"Pa s\", \"source\": \"NIST SP 811, Guide for the Use of the International System of Units (SI)\", \"source_identifier\": \"doi:10.6028/NIST.SP.811e2008\", \"symbols\": \"mu; μ; eta; η\", \"variable_name\": \"mu\"}\n\nVariable rho: decision=PASSED; reason=The problem names ρ as fluid density. The cited record pq_mass_density has canonical_quantity 'mass density' with definition 'Mass per unit volume' and SI dimension M L^-3 (dimension_vector [1,-3,0,0,0,0,0]). This is the standard interpretation of ρ in the given fluid-mechanics context.\nActual named SI={\"M\": \"1\", \"L\": \"-3\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"1\", \"L\": \"-3\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_mass_density\", \"canonical_quantity\": \"mass density\", \"source_identifier\": \"doi:10.59161/AUEZ1291\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for rho:\n{\"aliases\": \"density; fluid density; material density; wall density\", \"ambiguity_notes\": \"The symbol rho/ρ may also denote electrical resistivity in electromagnetism; resolve by physical context.\", \"canonical_quantity\": \"mass density\", \"confidence\": \"high\", \"definition\": \"Mass per unit volume.\", \"dimension_vector\": \"[1, -3, 0, 0, 0, 0, 0]\", \"domain\": \"continuum mechanics; fluid mechanics; materials\", \"entry_id\": \"pq_mass_density\", \"hybrid_score\": 0.8363029293123498, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.5322940837495709, \"si_dimension\": \"M L^-3\", \"si_unit\": \"kg m^-3\", \"source\": \"BIPM SI Brochure, 9th ed. (updated 2026)\", \"source_identifier\": \"doi:10.59161/AUEZ1291\", \"symbols\": \"rho; ρ\", \"variable_name\": \"rho\"}\n\nVariable eta: decision=PASSED; reason=The prompt explicitly defines η as the proportionality in E = η J (electric field = η × current density). That is the constitutive definition of electrical resistivity in MHD. The cited record pq_electrical_resistivity has that canonical_quantity and SI dimension M L^3 T^-3 I^-2 (dimension_vector [1,3,-3,-2,0,0,0]), and its ambiguity_notes state that in an MHD prompt explicitly saying electrical resistivity, use this record. Thus the record directly applies.\nActual named SI={\"M\": \"1\", \"L\": \"3\", \"T\": \"-3\", \"I\": \"-2\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"1\", \"L\": \"3\", \"T\": \"-3\", \"I\": \"-2\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_electrical_resistivity\", \"canonical_quantity\": \"electrical resistivity\", \"source_identifier\": \"doi:10.1007/s10894-023-00390-8\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for eta:\n{\"aliases\": \"resistivity; specific electrical resistance; rho notation for electrical resistivity; ρ notation for electrical resistivity\", \"ambiguity_notes\": \"Eta/η may denote dynamic viscosity or magnetic diffusivity; rho/ρ may denote mass density. In an MHD prompt explicitly saying electrical resistivity, use this record.\", \"canonical_quantity\": \"electrical resistivity\", \"confidence\": \"curated\", \"definition\": \"Material property relating electric field to current density; equivalently electrical resistance times a length scale divided by area.\", \"dimension_vector\": \"[1, 3, -3, -2, 0, 0, 0]\", \"domain\": \"electromagnetism; magnetohydrodynamics\", \"entry_id\": \"pq_electrical_resistivity\", \"hybrid_score\": 0.8275115578469274, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.5071758795626496, \"si_dimension\": \"M L^3 T^-3 I^-2\", \"si_unit\": \"ohm m\", \"source\": \"MHD Flow in Simple Cubic Periodic Array Geometry, Journal of Fusion Energy (2023)\", \"source_identifier\": \"doi:10.1007/s10894-023-00390-8\", \"symbols\": \"eta; η; rho_e; ρ_e\", \"variable_name\": \"eta\"}\n\nVariable dp_dx: decision=CONFLICT; reason=The candidate vector given in the ledger uses L^-3 for dp/dx, but the physics of a pressure gradient (spatial derivative of pressure) has SI dimension of pressure per length: pressure is M L^-1 T^-2, so pressure gradient is M L^-2 T^-2. The cited record pq_pressure_gradient explicitly defines 'pressure gradient' and gives SI dimension M L^-2 T^-2 (dimension_vector [1,-2,-2,0,0,0,0]). Therefore the ledger's L exponent is incorrect and the corrected full SI exponent vector is provided above.\nActual named SI={\"M\": \"1\", \"L\": \"-3\", \"T\": \"-2\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"1\", \"L\": \"-2\", \"T\": \"-2\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={\"L\": {\"before\": \"-3\", \"suggested\": \"-2\"}}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_pressure_gradient\", \"canonical_quantity\": \"pressure gradient\", \"source_identifier\": \"https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[\"Checker decision CONFLICT\"]\n\nReferenced KB original record for dp_dx:\n{\"aliases\": \"applied pressure gradient; streamwise pressure gradient; pressure drop per unit length\", \"ambiguity_notes\": \"Do not confuse pressure gradient with pressure.\", \"canonical_quantity\": \"pressure gradient\", \"confidence\": \"curated\", \"definition\": \"Spatial derivative of pressure.\", \"dimension_vector\": \"[1, -2, -2, 0, 0, 0, 0]\", \"domain\": \"fluid mechanics\", \"entry_id\": \"pq_pressure_gradient\", \"hybrid_score\": 0.3722789071424273, \"lexical_score\": 0.2692307692307693, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.5636540204069349, \"si_dimension\": \"M L^-2 T^-2\", \"si_unit\": \"Pa m^-1\", \"source\": \"NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions\", \"source_identifier\": \"https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html\", \"symbols\": \"dp/dx; dpdx; grad_p; ∇p\", \"variable_name\": \"dp_dx\"}\n\nVariable B: decision=PASSED; reason=The problem names B as the magnetic field magnitude (magnetic flux density). The cited record pq_magnetic_flux_density defines magnetic flux density (tesla) with SI dimension M T^-2 I^-1 (dimension_vector [1,0,-2,-1,0,0,0]). This matches the intended physical quantity and usage of B in the MHD generator problem.\nActual named SI={\"M\": \"1\", \"L\": \"0\", \"T\": \"-2\", \"I\": \"-1\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"1\", \"L\": \"0\", \"T\": \"-2\", \"I\": \"-1\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_magnetic_flux_density\", \"canonical_quantity\": \"magnetic flux density\", \"source_identifier\": \"doi:10.59161/AUEZ1291\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for B:\n{\"aliases\": \"magnetic induction; magnetic field magnitude\", \"ambiguity_notes\": \"Many fluid and engineering papers informally call B the magnetic field. Distinguish B from magnetic field strength H, whose SI unit is A m^-1.\", \"canonical_quantity\": \"magnetic flux density\", \"confidence\": \"curated\", \"definition\": \"Magnetic flux per unit area; the quantity whose SI unit is tesla.\", \"dimension_vector\": \"[1, 0, -2, -1, 0, 0, 0]\", \"domain\": \"electromagnetism; magnetohydrodynamics\", \"entry_id\": \"pq_magnetic_flux_density\", \"hybrid_score\": 0.838659921255525, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.5390283464443573, \"si_dimension\": \"M T^-2 I^-1\", \"si_unit\": \"T\", \"source\": \"BIPM SI Brochure, 9th ed. (updated 2026)\", \"source_identifier\": \"doi:10.59161/AUEZ1291\", \"symbols\": \"B\", \"variable_name\": \"B\"}",
+        "entity_policy": "Only Checker-selected visible record IDs identify cited canonical entities; no unselected-record or Analyzer-name anchor. Equal vectors do not establish equal physical entities.",
+        "physical_correctness_scope": "A passed contract is not a theorem of physical correctness. Record ID and coordinate checks establish citation consistency; semantic relevance/applicability in the reason and internal-reasoning physics remain model judgements."
+      },
+      "gate_status": "RETRY",
+      "retrieval": {
+        "status": "success",
+        "kb_path": "Q:\\Chengao_File\\CodeX_\\Dimsionless_learn\\1114_final\\Data_csv\\dimensional_physical_quantities.md",
+        "kb_sha256": "64d8ebb7988c9157401c6b023add3ed8681651bc6d4d1d1bbb7a7aa452fc9f60",
+        "embedding_cache_path": "Q:\\Chengao_File\\CodeX_\\Dimsionless_learn\\1114_final\\Codes_src\\RAG_ablation\\followup_live\\runs\\20261115_v2_paired_rag_rounds\\cache\\dimensional_physical_quantities-d1e3d1e7178395497e4f.npz",
+        "embedding_cache_source": null,
+        "embedding_model": "GLM-Embedding-3",
+        "embedding_provider": "Paratera",
+        "embedding_base_url": "https://llmapi.paratera.com/v1",
+        "embedding_status": "cache",
+        "retrieval_modes": [
+          "hybrid"
+        ],
+        "retrieved_variables": [
+          "h",
+          "mu",
+          "rho",
+          "eta",
+          "dp_dx",
+          "B"
+        ],
+        "n_retrieved_records": 18,
+        "top_k_per_variable": 3,
+        "max_evidence_rows": 30,
+        "lexical_weight": 0.65,
+        "semantic_weight": 0.35,
+        "min_hybrid_score": 0.22,
+        "allow_lexical_fallback": false,
+        "matches_by_variable": {
+          "h": [
+            {
+              "variable_name": "h",
+              "entry_id": "pq_duct_side_length",
+              "canonical_quantity": "square-duct side length",
+              "symbols": "h",
+              "aliases": "duct side length; side length of square duct",
+              "definition": "Side length of a square duct cross-section.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "duct flow; magnetohydrodynamics",
+              "ambiguity_notes": "The symbol h is also used for channel half-height or full container height; all are length quantities.",
+              "source": "MHD Flow in Simple Cubic Periodic Array Geometry, Journal of Fusion Energy (2023)",
+              "source_identifier": "doi:10.1007/s10894-023-00390-8",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5957665851280901,
+              "hybrid_score": 0.8585183047948315,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "h",
+              "entry_id": "pq_channel_half_height",
+              "canonical_quantity": "channel half-height",
+              "symbols": "h; delta; δ",
+              "aliases": "channel half-height; half-gap",
+              "definition": "Distance from a channel wall to its centerline for a symmetric plane channel.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "channel flow",
+              "ambiguity_notes": "The symbol h is also used for full height, enthalpy, or heat-transfer coefficient in other contexts.",
+              "source": "Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling",
+              "source_identifier": "https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.4992071551765928,
+              "hybrid_score": 0.8247225043118075,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "h",
+              "entry_id": "pq_heat_transfer_coefficient",
+              "canonical_quantity": "convective heat-transfer coefficient",
+              "symbols": "h_c; h",
+              "aliases": "film coefficient; convection coefficient",
+              "definition": "Heat flux divided by a driving temperature difference.",
+              "si_dimension": "M T^-3 Theta^-1",
+              "dimension_vector": "[1, 0, -3, 0, -1, 0, 0]",
+              "si_unit": "W m^-2 K^-1",
+              "domain": "heat transfer",
+              "ambiguity_notes": "h is also used for length or enthalpy in some contexts.",
+              "source": "Lupi, Heat Transfer, in Fundamentals of Electroheat",
+              "source_identifier": "doi:10.1007/978-3-319-46015-4_1",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.48492553214282685,
+              "hybrid_score": 0.8197239362499894,
+              "retrieval_mode": "hybrid"
+            }
+          ],
+          "mu": [
+            {
+              "variable_name": "mu",
+              "entry_id": "pq_dynamic_viscosity",
+              "canonical_quantity": "dynamic viscosity",
+              "symbols": "mu; μ; eta; η",
+              "aliases": "absolute viscosity; viscosity coefficient; dynamic viscosity coefficient",
+              "definition": "Coefficient relating Newtonian viscous shear stress to velocity gradient.",
+              "si_dimension": "M L^-1 T^-1",
+              "dimension_vector": "[1, -1, -1, 0, 0, 0, 0]",
+              "si_unit": "Pa s",
+              "domain": "fluid mechanics; rheology",
+              "ambiguity_notes": "Symbols eta/η can instead denote electrical resistivity, magnetic diffusivity, or other quantities; symbols mu/μ are also used for magnetic permeability in some contexts.",
+              "source": "NIST SP 811, Guide for the Use of the International System of Units (SI)",
+              "source_identifier": "doi:10.6028/NIST.SP.811e2008",
+              "confidence": "curated",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5398293549684083,
+              "hybrid_score": 0.8389402742389429,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "mu",
+              "entry_id": "pq_magnetic_permeability",
+              "canonical_quantity": "magnetic permeability",
+              "symbols": "mu_m; μ; mu0; μ0",
+              "aliases": "permeability; magnetic permeability",
+              "definition": "Constitutive coefficient relating magnetic flux density and magnetic field strength in a linear medium.",
+              "si_dimension": "M L T^-2 I^-2",
+              "dimension_vector": "[1, 1, -2, -2, 0, 0, 0]",
+              "si_unit": "H m^-1",
+              "domain": "electromagnetism",
+              "ambiguity_notes": "The symbol mu/μ is also the standard symbol for dynamic viscosity in fluid mechanics.",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "high",
+              "lexical_score": 0.3160919540229885,
+              "semantic_score": 0.5149613140827057,
+              "hybrid_score": 0.38569623004388953,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "mu",
+              "entry_id": "pq_electrical_resistivity",
+              "canonical_quantity": "electrical resistivity",
+              "symbols": "eta; η; rho_e; ρ_e",
+              "aliases": "resistivity; specific electrical resistance; rho notation for electrical resistivity; ρ notation for electrical resistivity",
+              "definition": "Material property relating electric field to current density; equivalently electrical resistance times a length scale divided by area.",
+              "si_dimension": "M L^3 T^-3 I^-2",
+              "dimension_vector": "[1, 3, -3, -2, 0, 0, 0]",
+              "si_unit": "ohm m",
+              "domain": "electromagnetism; magnetohydrodynamics",
+              "ambiguity_notes": "Eta/η may denote dynamic viscosity or magnetic diffusivity; rho/ρ may denote mass density. In an MHD prompt explicitly saying electrical resistivity, use this record.",
+              "source": "MHD Flow in Simple Cubic Periodic Array Geometry, Journal of Fusion Energy (2023)",
+              "source_identifier": "doi:10.1007/s10894-023-00390-8",
+              "confidence": "curated",
+              "lexical_score": 0.34653465346534656,
+              "semantic_score": 0.4490964632034802,
+              "hybrid_score": 0.3824312868736933,
+              "retrieval_mode": "hybrid"
+            }
+          ],
+          "rho": [
+            {
+              "variable_name": "rho",
+              "entry_id": "pq_mass_density",
+              "canonical_quantity": "mass density",
+              "symbols": "rho; ρ",
+              "aliases": "density; fluid density; material density; wall density",
+              "definition": "Mass per unit volume.",
+              "si_dimension": "M L^-3",
+              "dimension_vector": "[1, -3, 0, 0, 0, 0, 0]",
+              "si_unit": "kg m^-3",
+              "domain": "continuum mechanics; fluid mechanics; materials",
+              "ambiguity_notes": "The symbol rho/ρ may also denote electrical resistivity in electromagnetism; resolve by physical context.",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5322940837495709,
+              "hybrid_score": 0.8363029293123498,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "rho",
+              "entry_id": "pq_electrical_resistivity",
+              "canonical_quantity": "electrical resistivity",
+              "symbols": "eta; η; rho_e; ρ_e",
+              "aliases": "resistivity; specific electrical resistance; rho notation for electrical resistivity; ρ notation for electrical resistivity",
+              "definition": "Material property relating electric field to current density; equivalently electrical resistance times a length scale divided by area.",
+              "si_dimension": "M L^3 T^-3 I^-2",
+              "dimension_vector": "[1, 3, -3, -2, 0, 0, 0]",
+              "si_unit": "ohm m",
+              "domain": "electromagnetism; magnetohydrodynamics",
+              "ambiguity_notes": "Eta/η may denote dynamic viscosity or magnetic diffusivity; rho/ρ may denote mass density. In an MHD prompt explicitly saying electrical resistivity, use this record.",
+              "source": "MHD Flow in Simple Cubic Periodic Array Geometry, Journal of Fusion Energy (2023)",
+              "source_identifier": "doi:10.1007/s10894-023-00390-8",
+              "confidence": "curated",
+              "lexical_score": 0.74,
+              "semantic_score": 0.5296451679749692,
+              "hybrid_score": 0.6663758087912393,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "rho",
+              "entry_id": "pq_magnetic_permeability",
+              "canonical_quantity": "magnetic permeability",
+              "symbols": "mu_m; μ; mu0; μ0",
+              "aliases": "permeability; magnetic permeability",
+              "definition": "Constitutive coefficient relating magnetic flux density and magnetic field strength in a linear medium.",
+              "si_dimension": "M L T^-2 I^-2",
+              "dimension_vector": "[1, 1, -2, -2, 0, 0, 0]",
+              "si_unit": "H m^-1",
+              "domain": "electromagnetism",
+              "ambiguity_notes": "The symbol mu/μ is also the standard symbol for dynamic viscosity in fluid mechanics.",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "high",
+              "lexical_score": 0.3160919540229885,
+              "semantic_score": 0.4521163672242503,
+              "hybrid_score": 0.3637004986434301,
+              "retrieval_mode": "hybrid"
+            }
+          ],
+          "eta": [
+            {
+              "variable_name": "eta",
+              "entry_id": "pq_electrical_resistivity",
+              "canonical_quantity": "electrical resistivity",
+              "symbols": "eta; η; rho_e; ρ_e",
+              "aliases": "resistivity; specific electrical resistance; rho notation for electrical resistivity; ρ notation for electrical resistivity",
+              "definition": "Material property relating electric field to current density; equivalently electrical resistance times a length scale divided by area.",
+              "si_dimension": "M L^3 T^-3 I^-2",
+              "dimension_vector": "[1, 3, -3, -2, 0, 0, 0]",
+              "si_unit": "ohm m",
+              "domain": "electromagnetism; magnetohydrodynamics",
+              "ambiguity_notes": "Eta/η may denote dynamic viscosity or magnetic diffusivity; rho/ρ may denote mass density. In an MHD prompt explicitly saying electrical resistivity, use this record.",
+              "source": "MHD Flow in Simple Cubic Periodic Array Geometry, Journal of Fusion Energy (2023)",
+              "source_identifier": "doi:10.1007/s10894-023-00390-8",
+              "confidence": "curated",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5071758795626496,
+              "hybrid_score": 0.8275115578469274,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "eta",
+              "entry_id": "pq_dynamic_viscosity",
+              "canonical_quantity": "dynamic viscosity",
+              "symbols": "mu; μ; eta; η",
+              "aliases": "absolute viscosity; viscosity coefficient; dynamic viscosity coefficient",
+              "definition": "Coefficient relating Newtonian viscous shear stress to velocity gradient.",
+              "si_dimension": "M L^-1 T^-1",
+              "dimension_vector": "[1, -1, -1, 0, 0, 0, 0]",
+              "si_unit": "Pa s",
+              "domain": "fluid mechanics; rheology",
+              "ambiguity_notes": "Symbols eta/η can instead denote electrical resistivity, magnetic diffusivity, or other quantities; symbols mu/μ are also used for magnetic permeability in some contexts.",
+              "source": "NIST SP 811, Guide for the Use of the International System of Units (SI)",
+              "source_identifier": "doi:10.6028/NIST.SP.811e2008",
+              "confidence": "curated",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5062975309520779,
+              "hybrid_score": 0.8272041358332273,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "eta",
+              "entry_id": "pq_coriolis_parameter",
+              "canonical_quantity": "Coriolis parameter",
+              "symbols": "f_c; f",
+              "aliases": "planetary vorticity parameter",
+              "definition": "Twice the component of rotation normal to the local horizontal plane.",
+              "si_dimension": "T^-1",
+              "dimension_vector": "[0, 0, -1, 0, 0, 0, 0]",
+              "si_unit": "s^-1",
+              "domain": "geophysical fluid dynamics",
+              "ambiguity_notes": "",
+              "source": "Hauke, An Introduction to Fluid Mechanics and Transport Phenomena",
+              "source_identifier": "doi:10.1007/978-1-4020-8537-6",
+              "confidence": "high",
+              "lexical_score": 0.74,
+              "semantic_score": 0.4249838471717673,
+              "hybrid_score": 0.6297443465101185,
+              "retrieval_mode": "hybrid"
+            }
+          ],
+          "dp_dx": [
+            {
+              "variable_name": "dp_dx",
+              "entry_id": "pq_pressure_gradient",
+              "canonical_quantity": "pressure gradient",
+              "symbols": "dp/dx; dpdx; grad_p; ∇p",
+              "aliases": "applied pressure gradient; streamwise pressure gradient; pressure drop per unit length",
+              "definition": "Spatial derivative of pressure.",
+              "si_dimension": "M L^-2 T^-2",
+              "dimension_vector": "[1, -2, -2, 0, 0, 0, 0]",
+              "si_unit": "Pa m^-1",
+              "domain": "fluid mechanics",
+              "ambiguity_notes": "Do not confuse pressure gradient with pressure.",
+              "source": "NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions",
+              "source_identifier": "https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html",
+              "confidence": "curated",
+              "lexical_score": 0.2692307692307693,
+              "semantic_score": 0.5636540204069349,
+              "hybrid_score": 0.3722789071424273,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "dp_dx",
+              "entry_id": "pq_mean_flow_velocity",
+              "canonical_quantity": "mean flow velocity",
+              "symbols": "U; U_m; Umean; V",
+              "aliases": "bulk velocity; mean velocity; average flow velocity",
+              "definition": "Mean or bulk velocity used to characterize a flow.",
+              "si_dimension": "L T^-1",
+              "dimension_vector": "[0, 1, -1, 0, 0, 0, 0]",
+              "si_unit": "m s^-1",
+              "domain": "fluid mechanics",
+              "ambiguity_notes": "",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "high",
+              "lexical_score": 0.3125,
+              "semantic_score": 0.4528868329445823,
+              "hybrid_score": 0.3616353915306038,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "dp_dx",
+              "entry_id": "pq_velocity",
+              "canonical_quantity": "velocity",
+              "symbols": "u; U; v; V",
+              "aliases": "speed; flow velocity; fluid velocity",
+              "definition": "Rate of displacement with time.",
+              "si_dimension": "L T^-1",
+              "dimension_vector": "[0, 1, -1, 0, 0, 0, 0]",
+              "si_unit": "m s^-1",
+              "domain": "mechanics; fluid mechanics",
+              "ambiguity_notes": "",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "high",
+              "lexical_score": 0.26785714285714285,
+              "semantic_score": 0.44538347911819776,
+              "hybrid_score": 0.3299913605485121,
+              "retrieval_mode": "hybrid"
+            }
+          ],
+          "B": [
+            {
+              "variable_name": "B",
+              "entry_id": "pq_magnetic_flux_density",
+              "canonical_quantity": "magnetic flux density",
+              "symbols": "B",
+              "aliases": "magnetic induction; magnetic field magnitude",
+              "definition": "Magnetic flux per unit area; the quantity whose SI unit is tesla.",
+              "si_dimension": "M T^-2 I^-1",
+              "dimension_vector": "[1, 0, -2, -1, 0, 0, 0]",
+              "si_unit": "T",
+              "domain": "electromagnetism; magnetohydrodynamics",
+              "ambiguity_notes": "Many fluid and engineering papers informally call B the magnetic field. Distinguish B from magnetic field strength H, whose SI unit is A m^-1.",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "curated",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5390283464443573,
+              "hybrid_score": 0.838659921255525,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "B",
+              "entry_id": "pq_buoyancy",
+              "canonical_quantity": "buoyancy variable",
+              "symbols": "b",
+              "aliases": "reduced-gravity acceleration; buoyancy acceleration",
+              "definition": "Acceleration-like scalar representing density-induced buoyancy.",
+              "si_dimension": "L T^-2",
+              "dimension_vector": "[0, 1, -2, 0, 0, 0, 0]",
+              "si_unit": "m s^-2",
+              "domain": "geophysical fluid dynamics",
+              "ambiguity_notes": "",
+              "source": "Hauke, An Introduction to Fluid Mechanics and Transport Phenomena",
+              "source_identifier": "doi:10.1007/978-1-4020-8537-6",
+              "confidence": "high",
+              "lexical_score": 0.9,
+              "semantic_score": 0.45990576259658494,
+              "hybrid_score": 0.7459670169088048,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "B",
+              "entry_id": "pq_molality",
+              "canonical_quantity": "molality",
+              "symbols": "b; m_mol",
+              "aliases": "amount per mass of solvent",
+              "definition": "Amount of solute divided by mass of solvent.",
+              "si_dimension": "N M^-1",
+              "dimension_vector": "[-1, 0, 0, 0, 0, 1, 0]",
+              "si_unit": "mol kg^-1",
+              "domain": "solution chemistry",
+              "ambiguity_notes": "",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "high",
+              "lexical_score": 0.9,
+              "semantic_score": 0.42251970868512356,
+              "hybrid_score": 0.7328818980397933,
+              "retrieval_mode": "hybrid"
+            }
+          ]
+        },
+        "evidence_markdown": "### Input variable `h`\n- entry_id: pq_duct_side_length; canonical_quantity: square-duct side length; symbols: h; aliases: duct side length; side length of square duct; definition: Side length of a square duct cross-section.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: duct flow; magnetohydrodynamics; ambiguity_notes: The symbol h is also used for channel half-height or full container height; all are length quantities.; source: MHD Flow in Simple Cubic Periodic Array Geometry, Journal of Fusion Energy (2023); source_identifier: doi:10.1007/s10894-023-00390-8; confidence: high\n- entry_id: pq_channel_half_height; canonical_quantity: channel half-height; symbols: h; delta; δ; aliases: channel half-height; half-gap; definition: Distance from a channel wall to its centerline for a symmetric plane channel.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: channel flow; ambiguity_notes: The symbol h is also used for full height, enthalpy, or heat-transfer coefficient in other contexts.; source: Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling; source_identifier: https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8; confidence: high\n- entry_id: pq_heat_transfer_coefficient; canonical_quantity: convective heat-transfer coefficient; symbols: h_c; h; aliases: film coefficient; convection coefficient; definition: Heat flux divided by a driving temperature difference.; si_dimension: M T^-3 Theta^-1; dimension_vector: [1, 0, -3, 0, -1, 0, 0]; si_unit: W m^-2 K^-1; domain: heat transfer; ambiguity_notes: h is also used for length or enthalpy in some contexts.; source: Lupi, Heat Transfer, in Fundamentals of Electroheat; source_identifier: doi:10.1007/978-3-319-46015-4_1; confidence: high\n### Input variable `mu`\n- entry_id: pq_dynamic_viscosity; canonical_quantity: dynamic viscosity; symbols: mu; μ; eta; η; aliases: absolute viscosity; viscosity coefficient; dynamic viscosity coefficient; definition: Coefficient relating Newtonian viscous shear stress to velocity gradient.; si_dimension: M L^-1 T^-1; dimension_vector: [1, -1, -1, 0, 0, 0, 0]; si_unit: Pa s; domain: fluid mechanics; rheology; ambiguity_notes: Symbols eta/η can instead denote electrical resistivity, magnetic diffusivity, or other quantities; symbols mu/μ are also used for magnetic permeability in some contexts.; source: NIST SP 811, Guide for the Use of the International System of Units (SI); source_identifier: doi:10.6028/NIST.SP.811e2008; confidence: curated\n- entry_id: pq_magnetic_permeability; canonical_quantity: magnetic permeability; symbols: mu_m; μ; mu0; μ0; aliases: permeability; magnetic permeability; definition: Constitutive coefficient relating magnetic flux density and magnetic field strength in a linear medium.; si_dimension: M L T^-2 I^-2; dimension_vector: [1, 1, -2, -2, 0, 0, 0]; si_unit: H m^-1; domain: electromagnetism; ambiguity_notes: The symbol mu/μ is also the standard symbol for dynamic viscosity in fluid mechanics.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_electrical_resistivity; canonical_quantity: electrical resistivity; symbols: eta; η; rho_e; ρ_e; aliases: resistivity; specific electrical resistance; rho notation for electrical resistivity; ρ notation for electrical resistivity; definition: Material property relating electric field to current density; equivalently electrical resistance times a length scale divided by area.; si_dimension: M L^3 T^-3 I^-2; dimension_vector: [1, 3, -3, -2, 0, 0, 0]; si_unit: ohm m; domain: electromagnetism; magnetohydrodynamics; ambiguity_notes: Eta/η may denote dynamic viscosity or magnetic diffusivity; rho/ρ may denote mass density. In an MHD prompt explicitly saying electrical resistivity, use this record.; source: MHD Flow in Simple Cubic Periodic Array Geometry, Journal of Fusion Energy (2023); source_identifier: doi:10.1007/s10894-023-00390-8; confidence: curated\n### Input variable `rho`\n- entry_id: pq_mass_density; canonical_quantity: mass density; symbols: rho; ρ; aliases: density; fluid density; material density; wall density; definition: Mass per unit volume.; si_dimension: M L^-3; dimension_vector: [1, -3, 0, 0, 0, 0, 0]; si_unit: kg m^-3; domain: continuum mechanics; fluid mechanics; materials; ambiguity_notes: The symbol rho/ρ may also denote electrical resistivity in electromagnetism; resolve by physical context.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_electrical_resistivity; canonical_quantity: electrical resistivity; symbols: eta; η; rho_e; ρ_e; aliases: resistivity; specific electrical resistance; rho notation for electrical resistivity; ρ notation for electrical resistivity; definition: Material property relating electric field to current density; equivalently electrical resistance times a length scale divided by area.; si_dimension: M L^3 T^-3 I^-2; dimension_vector: [1, 3, -3, -2, 0, 0, 0]; si_unit: ohm m; domain: electromagnetism; magnetohydrodynamics; ambiguity_notes: Eta/η may denote dynamic viscosity or magnetic diffusivity; rho/ρ may denote mass density. In an MHD prompt explicitly saying electrical resistivity, use this record.; source: MHD Flow in Simple Cubic Periodic Array Geometry, Journal of Fusion Energy (2023); source_identifier: doi:10.1007/s10894-023-00390-8; confidence: curated\n- entry_id: pq_magnetic_permeability; canonical_quantity: magnetic permeability; symbols: mu_m; μ; mu0; μ0; aliases: permeability; magnetic permeability; definition: Constitutive coefficient relating magnetic flux density and magnetic field strength in a linear medium.; si_dimension: M L T^-2 I^-2; dimension_vector: [1, 1, -2, -2, 0, 0, 0]; si_unit: H m^-1; domain: electromagnetism; ambiguity_notes: The symbol mu/μ is also the standard symbol for dynamic viscosity in fluid mechanics.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n### Input variable `eta`\n- entry_id: pq_electrical_resistivity; canonical_quantity: electrical resistivity; symbols: eta; η; rho_e; ρ_e; aliases: resistivity; specific electrical resistance; rho notation for electrical resistivity; ρ notation for electrical resistivity; definition: Material property relating electric field to current density; equivalently electrical resistance times a length scale divided by area.; si_dimension: M L^3 T^-3 I^-2; dimension_vector: [1, 3, -3, -2, 0, 0, 0]; si_unit: ohm m; domain: electromagnetism; magnetohydrodynamics; ambiguity_notes: Eta/η may denote dynamic viscosity or magnetic diffusivity; rho/ρ may denote mass density. In an MHD prompt explicitly saying electrical resistivity, use this record.; source: MHD Flow in Simple Cubic Periodic Array Geometry, Journal of Fusion Energy (2023); source_identifier: doi:10.1007/s10894-023-00390-8; confidence: curated\n- entry_id: pq_dynamic_viscosity; canonical_quantity: dynamic viscosity; symbols: mu; μ; eta; η; aliases: absolute viscosity; viscosity coefficient; dynamic viscosity coefficient; definition: Coefficient relating Newtonian viscous shear stress to velocity gradient.; si_dimension: M L^-1 T^-1; dimension_vector: [1, -1, -1, 0, 0, 0, 0]; si_unit: Pa s; domain: fluid mechanics; rheology; ambiguity_notes: Symbols eta/η can instead denote electrical resistivity, magnetic diffusivity, or other quantities; symbols mu/μ are also used for magnetic permeability in some contexts.; source: NIST SP 811, Guide for the Use of the International System of Units (SI); source_identifier: doi:10.6028/NIST.SP.811e2008; confidence: curated\n- entry_id: pq_coriolis_parameter; canonical_quantity: Coriolis parameter; symbols: f_c; f; aliases: planetary vorticity parameter; definition: Twice the component of rotation normal to the local horizontal plane.; si_dimension: T^-1; dimension_vector: [0, 0, -1, 0, 0, 0, 0]; si_unit: s^-1; domain: geophysical fluid dynamics; ambiguity_notes: ; source: Hauke, An Introduction to Fluid Mechanics and Transport Phenomena; source_identifier: doi:10.1007/978-1-4020-8537-6; confidence: high\n### Input variable `dp_dx`\n- entry_id: pq_pressure_gradient; canonical_quantity: pressure gradient; symbols: dp/dx; dpdx; grad_p; ∇p; aliases: applied pressure gradient; streamwise pressure gradient; pressure drop per unit length; definition: Spatial derivative of pressure.; si_dimension: M L^-2 T^-2; dimension_vector: [1, -2, -2, 0, 0, 0, 0]; si_unit: Pa m^-1; domain: fluid mechanics; ambiguity_notes: Do not confuse pressure gradient with pressure.; source: NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions; source_identifier: https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html; confidence: curated\n- entry_id: pq_mean_flow_velocity; canonical_quantity: mean flow velocity; symbols: U; U_m; Umean; V; aliases: bulk velocity; mean velocity; average flow velocity; definition: Mean or bulk velocity used to characterize a flow.; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: fluid mechanics; ambiguity_notes: ; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_velocity; canonical_quantity: velocity; symbols: u; U; v; V; aliases: speed; flow velocity; fluid velocity; definition: Rate of displacement with time.; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: mechanics; fluid mechanics; ambiguity_notes: ; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n### Input variable `B`\n- entry_id: pq_magnetic_flux_density; canonical_quantity: magnetic flux density; symbols: B; aliases: magnetic induction; magnetic field magnitude; definition: Magnetic flux per unit area; the quantity whose SI unit is tesla.; si_dimension: M T^-2 I^-1; dimension_vector: [1, 0, -2, -1, 0, 0, 0]; si_unit: T; domain: electromagnetism; magnetohydrodynamics; ambiguity_notes: Many fluid and engineering papers informally call B the magnetic field. Distinguish B from magnetic field strength H, whose SI unit is A m^-1.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: curated\n- entry_id: pq_buoyancy; canonical_quantity: buoyancy variable; symbols: b; aliases: reduced-gravity acceleration; buoyancy acceleration; definition: Acceleration-like scalar representing density-induced buoyancy.; si_dimension: L T^-2; dimension_vector: [0, 1, -2, 0, 0, 0, 0]; si_unit: m s^-2; domain: geophysical fluid dynamics; ambiguity_notes: ; source: Hauke, An Introduction to Fluid Mechanics and Transport Phenomena; source_identifier: doi:10.1007/978-1-4020-8537-6; confidence: high\n- entry_id: pq_molality; canonical_quantity: molality; symbols: b; m_mol; aliases: amount per mass of solvent; definition: Amount of solute divided by mass of solvent.; si_dimension: N M^-1; dimension_vector: [-1, 0, 0, 0, 0, 1, 0]; si_unit: mol kg^-1; domain: solution chemistry; ambiguity_notes: ; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high",
+        "evidence_records_visible_by_variable": {
+          "h": [
+            "pq_duct_side_length",
+            "pq_channel_half_height",
+            "pq_heat_transfer_coefficient"
+          ],
+          "mu": [
+            "pq_dynamic_viscosity",
+            "pq_magnetic_permeability",
+            "pq_electrical_resistivity"
+          ],
+          "rho": [
+            "pq_mass_density",
+            "pq_electrical_resistivity",
+            "pq_magnetic_permeability"
+          ],
+          "eta": [
+            "pq_electrical_resistivity",
+            "pq_dynamic_viscosity",
+            "pq_coriolis_parameter"
+          ],
+          "dp_dx": [
+            "pq_pressure_gradient",
+            "pq_mean_flow_velocity",
+            "pq_velocity"
+          ],
+          "B": [
+            "pq_magnetic_flux_density",
+            "pq_buoyancy",
+            "pq_molality"
+          ]
+        },
+        "queries_by_variable": {
+          "h": "Target CSV variable: h\nLocal problem description: the side length of the square duct (h), the dynamic viscosity (μ), the fluid density (ρ), the fluid's proportionality coefficient η in E = η J, where E is the electric field and J is electric current density, the applied pressure gradient (dp/dx), and the magnetic field magnitude (B).\nProblem domain/context: Perform dimensional analysis for a magnetohydrodynamics (MHD) generator to derive the dimensionless form of the average flow velocity (denoted as u*).\nAnalyzer interpretation: exact_column: h; quantity_name: length; physical_definition: side length of the square duct",
+          "mu": "Target CSV variable: mu\nLocal problem description: the side length of the square duct (h), the dynamic viscosity (μ), the fluid density (ρ), the fluid's proportionality coefficient η in E = η J, where E is the electric field and J is electric current density, the applied pressure gradient (dp/dx), and the magnetic field magnitude (B).\nProblem domain/context: Perform dimensional analysis for a magnetohydrodynamics (MHD) generator to derive the dimensionless form of the average flow velocity (denoted as u*).\nAnalyzer interpretation: exact_column: mu; quantity_name: dynamic_viscosity; physical_definition: dynamic viscosity of the fluid",
+          "rho": "Target CSV variable: rho\nLocal problem description: the side length of the square duct (h), the dynamic viscosity (μ), the fluid density (ρ), the fluid's proportionality coefficient η in E = η J, where E is the electric field and J is electric current density, the applied pressure gradient (dp/dx), and the magnetic field magnitude (B).\nProblem domain/context: Perform dimensional analysis for a magnetohydrodynamics (MHD) generator to derive the dimensionless form of the average flow velocity (denoted as u*).\nAnalyzer interpretation: exact_column: rho; quantity_name: density; physical_definition: fluid density",
+          "eta": "Target CSV variable: eta\nLocal problem description: the side length of the square duct (h), the dynamic viscosity (μ), the fluid density (ρ), the fluid's proportionality coefficient η in E = η J, where E is the electric field and J is electric current density, the applied pressure gradient (dp/dx), and the magnetic field magnitude (B).\nProblem domain/context: Perform dimensional analysis for a magnetohydrodynamics (MHD) generator to derive the dimensionless form of the average flow velocity (denoted as u*).\nAnalyzer interpretation: exact_column: eta; quantity_name: electric_proportionality_coefficient; physical_definition: fluid's proportionality coefficient in E = eta J relating electric field and current density",
+          "dp_dx": "Target CSV variable: dp_dx\nLocal problem description: \nProblem domain/context: Perform dimensional analysis for a magnetohydrodynamics (MHD) generator to derive the dimensionless form of the average flow velocity (denoted as u*).\nAnalyzer interpretation: exact_column: dp_dx; quantity_name: pressure_gradient; physical_definition: applied pressure gradient",
+          "B": "Target CSV variable: B\nLocal problem description: the side length of the square duct (h), the dynamic viscosity (μ), the fluid density (ρ), the fluid's proportionality coefficient η in E = η J, where E is the electric field and J is electric current density, the applied pressure gradient (dp/dx), and the magnetic field magnitude (B).\nProblem domain/context: Perform dimensional analysis for a magnetohydrodynamics (MHD) generator to derive the dimensionless form of the average flow velocity (denoted as u*).\nAnalyzer interpretation: exact_column: B; quantity_name: magnetic_field; physical_definition: magnetic field magnitude"
+        },
+        "query_sha256_by_variable": {
+          "h": "10ce5fb4020c6838c614af50bd485aa495bd0a625c592a39972a22c33ebd9e66",
+          "mu": "4ca502ac0cd8624100bf59798b75a8f6bcd0f1915020bcff7a976609ffb0854a",
+          "rho": "d5cc1535ec2048f184d48bf5b94a2369fa74f409368b8ad04a34d9975c54a47b",
+          "eta": "4a02011500e9f6b9514cb96e8be536c1e1733583b765109d13f6951b09352ab2",
+          "dp_dx": "508b7342e6ba065524bc53688de418078783b2d80c1e32f9b48d9c8959c3794c",
+          "B": "6d9dad157235ab878791bd2f3f6e3a550aedd83c782a4fec8df53c00ed294ac4"
+        },
+        "query_observed_in_retriever_by_variable": {
+          "h": true,
+          "mu": true,
+          "rho": true,
+          "eta": true,
+          "dp_dx": true,
+          "B": true
+        },
+        "query_scope": "Candidate SI powers excluded. Original problem and typed quantity/definition provide semantic context; they still require physical interpretation."
+      },
+      "provisional_zero_coordinates": [],
+      "checker_response": {
+        "ledger_sha256": "86c65ecffd41c24d84ba448207d4f22ba83e95801e4481124c3f8e52d60a133c",
+        "variables": [
+          {
+            "csv_name": "h",
+            "before_si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "decision": "PASSED",
+            "suggested_si_exponents": null,
+            "support_mode": "KB_RECORD",
+            "evidence_entry_ids": [
+              "pq_duct_side_length"
+            ],
+            "reason": "The problem statement defines h as the side length of the square duct. The cited record pq_duct_side_length has canonical_quantity 'square-duct side length' and definition 'Side length of a square duct cross-section.' Its si_dimension is L (dimension_vector [0,1,0,0,0,0,0]), which directly matches the role and units of h in the original problem."
+          },
+          {
+            "csv_name": "mu",
+            "before_si_exponents": {
+              "M": "1",
+              "L": "-1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "decision": "PASSED",
+            "suggested_si_exponents": null,
+            "support_mode": "KB_RECORD",
+            "evidence_entry_ids": [
+              "pq_dynamic_viscosity"
+            ],
+            "reason": "The ledger labels mu as dynamic viscosity. The cited record pq_dynamic_viscosity defines dynamic viscosity (coefficient relating viscous shear stress to velocity gradient) with SI dimension M L^-1 T^-1 (dimension_vector [1,-1,-1,0,0,0,0]). That matches the physical definition and usage of μ in the MHD flow problem."
+          },
+          {
+            "csv_name": "rho",
+            "before_si_exponents": {
+              "M": "1",
+              "L": "-3",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "decision": "PASSED",
+            "suggested_si_exponents": null,
+            "support_mode": "KB_RECORD",
+            "evidence_entry_ids": [
+              "pq_mass_density"
+            ],
+            "reason": "The problem names ρ as fluid density. The cited record pq_mass_density has canonical_quantity 'mass density' with definition 'Mass per unit volume' and SI dimension M L^-3 (dimension_vector [1,-3,0,0,0,0,0]). This is the standard interpretation of ρ in the given fluid-mechanics context."
+          },
+          {
+            "csv_name": "eta",
+            "before_si_exponents": {
+              "M": "1",
+              "L": "3",
+              "T": "-3",
+              "I": "-2",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "decision": "PASSED",
+            "suggested_si_exponents": null,
+            "support_mode": "KB_RECORD",
+            "evidence_entry_ids": [
+              "pq_electrical_resistivity"
+            ],
+            "reason": "The prompt explicitly defines η as the proportionality in E = η J (electric field = η × current density). That is the constitutive definition of electrical resistivity in MHD. The cited record pq_electrical_resistivity has that canonical_quantity and SI dimension M L^3 T^-3 I^-2 (dimension_vector [1,3,-3,-2,0,0,0]), and its ambiguity_notes state that in an MHD prompt explicitly saying electrical resistivity, use this record. Thus the record directly applies."
+          },
+          {
+            "csv_name": "dp_dx",
+            "before_si_exponents": {
+              "M": "1",
+              "L": "-3",
+              "T": "-2",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "decision": "CONFLICT",
+            "suggested_si_exponents": {
+              "M": "1",
+              "L": "-2",
+              "T": "-2",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "support_mode": "KB_RECORD",
+            "evidence_entry_ids": [
+              "pq_pressure_gradient"
+            ],
+            "reason": "The candidate vector given in the ledger uses L^-3 for dp/dx, but the physics of a pressure gradient (spatial derivative of pressure) has SI dimension of pressure per length: pressure is M L^-1 T^-2, so pressure gradient is M L^-2 T^-2. The cited record pq_pressure_gradient explicitly defines 'pressure gradient' and gives SI dimension M L^-2 T^-2 (dimension_vector [1,-2,-2,0,0,0,0]). Therefore the ledger's L exponent is incorrect and the corrected full SI exponent vector is provided above."
+          },
+          {
+            "csv_name": "B",
+            "before_si_exponents": {
+              "M": "1",
+              "L": "0",
+              "T": "-2",
+              "I": "-1",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "decision": "PASSED",
+            "suggested_si_exponents": null,
+            "support_mode": "KB_RECORD",
+            "evidence_entry_ids": [
+              "pq_magnetic_flux_density"
+            ],
+            "reason": "The problem names B as the magnetic field magnitude (magnetic flux density). The cited record pq_magnetic_flux_density defines magnetic flux density (tesla) with SI dimension M T^-2 I^-1 (dimension_vector [1,0,-2,-1,0,0,0]). This matches the intended physical quantity and usage of B in the MHD generator problem."
+          }
+        ]
+      },
+      "checker_elapsed_s": 20.060226600035094,
+      "checker_tokens": {
+        "input": 4406,
+        "output": 2673
+      },
+      "embedding_tokens": {
+        "input": 879,
+        "output": 0
+      },
+      "checker_call": {
+        "parsed_response": {
+          "ledger_sha256": "86c65ecffd41c24d84ba448207d4f22ba83e95801e4481124c3f8e52d60a133c",
+          "variables": [
+            {
+              "csv_name": "h",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "0",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_duct_side_length"
+              ],
+              "reason": "The problem statement defines h as the side length of the square duct. The cited record pq_duct_side_length has canonical_quantity 'square-duct side length' and definition 'Side length of a square duct cross-section.' Its si_dimension is L (dimension_vector [0,1,0,0,0,0,0]), which directly matches the role and units of h in the original problem."
+            },
+            {
+              "csv_name": "mu",
+              "before_si_exponents": {
+                "M": "1",
+                "L": "-1",
+                "T": "-1",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_dynamic_viscosity"
+              ],
+              "reason": "The ledger labels mu as dynamic viscosity. The cited record pq_dynamic_viscosity defines dynamic viscosity (coefficient relating viscous shear stress to velocity gradient) with SI dimension M L^-1 T^-1 (dimension_vector [1,-1,-1,0,0,0,0]). That matches the physical definition and usage of μ in the MHD flow problem."
+            },
+            {
+              "csv_name": "rho",
+              "before_si_exponents": {
+                "M": "1",
+                "L": "-3",
+                "T": "0",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_mass_density"
+              ],
+              "reason": "The problem names ρ as fluid density. The cited record pq_mass_density has canonical_quantity 'mass density' with definition 'Mass per unit volume' and SI dimension M L^-3 (dimension_vector [1,-3,0,0,0,0,0]). This is the standard interpretation of ρ in the given fluid-mechanics context."
+            },
+            {
+              "csv_name": "eta",
+              "before_si_exponents": {
+                "M": "1",
+                "L": "3",
+                "T": "-3",
+                "I": "-2",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_electrical_resistivity"
+              ],
+              "reason": "The prompt explicitly defines η as the proportionality in E = η J (electric field = η × current density). That is the constitutive definition of electrical resistivity in MHD. The cited record pq_electrical_resistivity has that canonical_quantity and SI dimension M L^3 T^-3 I^-2 (dimension_vector [1,3,-3,-2,0,0,0]), and its ambiguity_notes state that in an MHD prompt explicitly saying electrical resistivity, use this record. Thus the record directly applies."
+            },
+            {
+              "csv_name": "dp_dx",
+              "before_si_exponents": {
+                "M": "1",
+                "L": "-3",
+                "T": "-2",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "CONFLICT",
+              "suggested_si_exponents": {
+                "M": "1",
+                "L": "-2",
+                "T": "-2",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_pressure_gradient"
+              ],
+              "reason": "The candidate vector given in the ledger uses L^-3 for dp/dx, but the physics of a pressure gradient (spatial derivative of pressure) has SI dimension of pressure per length: pressure is M L^-1 T^-2, so pressure gradient is M L^-2 T^-2. The cited record pq_pressure_gradient explicitly defines 'pressure gradient' and gives SI dimension M L^-2 T^-2 (dimension_vector [1,-2,-2,0,0,0,0]). Therefore the ledger's L exponent is incorrect and the corrected full SI exponent vector is provided above."
+            },
+            {
+              "csv_name": "B",
+              "before_si_exponents": {
+                "M": "1",
+                "L": "0",
+                "T": "-2",
+                "I": "-1",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_magnetic_flux_density"
+              ],
+              "reason": "The problem names B as the magnetic field magnitude (magnetic flux density). The cited record pq_magnetic_flux_density defines magnetic flux density (tesla) with SI dimension M T^-2 I^-1 (dimension_vector [1,0,-2,-1,0,0,0]). This matches the intended physical quantity and usage of B in the MHD generator problem."
+            }
+          ]
+        },
+        "raw_tool_calls": [
+          {
+            "id": "call_fk1Hq3yp4xQc3ZpUs0Wn3Vt5",
+            "type": "function",
+            "function": {
+              "name": "CheckerDimensionAudit",
+              "arguments": "{\"ledger_sha256\":\"86c65ecffd41c24d84ba448207d4f22ba83e95801e4481124c3f8e52d60a133c\",\"variables\":[{\"csv_name\":\"h\",\"before_si_exponents\":{\"M\":\"0\",\"L\":\"1\",\"T\":\"0\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"},\"decision\":\"PASSED\",\"suggested_si_exponents\":null,\"support_mode\":\"KB_RECORD\",\"evidence_entry_ids\":[\"pq_duct_side_length\"],\"reason\":\"The problem statement defines h as the side length of the square duct. The cited record pq_duct_side_length has canonical_quantity 'square-duct side length' and definition 'Side length of a square duct cross-section.' Its si_dimension is L (dimension_vector [0,1,0,0,0,0,0]), which directly matches the role and units of h in the original problem.\"},{\"csv_name\":\"mu\",\"before_si_exponents\":{\"M\":\"1\",\"L\":\"-1\",\"T\":\"-1\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"},\"decision\":\"PASSED\",\"suggested_si_exponents\":null,\"support_mode\":\"KB_RECORD\",\"evidence_entry_ids\":[\"pq_dynamic_viscosity\"],\"reason\":\"The ledger labels mu as dynamic viscosity. The cited record pq_dynamic_viscosity defines dynamic viscosity (coefficient relating viscous shear stress to velocity gradient) with SI dimension M L^-1 T^-1 (dimension_vector [1,-1,-1,0,0,0,0]). That matches the physical definition and usage of μ in the MHD flow problem.\"},{\"csv_name\":\"rho\",\"before_si_exponents\":{\"M\":\"1\",\"L\":\"-3\",\"T\":\"0\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"},\"decision\":\"PASSED\",\"suggested_si_exponents\":null,\"support_mode\":\"KB_RECORD\",\"evidence_entry_ids\":[\"pq_mass_density\"],\"reason\":\"The problem names ρ as fluid density. The cited record pq_mass_density has canonical_quantity 'mass density' with definition 'Mass per unit volume' and SI dimension M L^-3 (dimension_vector [1,-3,0,0,0,0,0]). This is the standard interpretation of ρ in the given fluid-mechanics context.\"},{\"csv_name\":\"eta\",\"before_si_exponents\":{\"M\":\"1\",\"L\":\"3\",\"T\":\"-3\",\"I\":\"-2\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"},\"decision\":\"PASSED\",\"suggested_si_exponents\":null,\"support_mode\":\"KB_RECORD\",\"evidence_entry_ids\":[\"pq_electrical_resistivity\"],\"reason\":\"The prompt explicitly defines η as the proportionality in E = η J (electric field = η × current density). That is the constitutive definition of electrical resistivity in MHD. The cited record pq_electrical_resistivity has that canonical_quantity and SI dimension M L^3 T^-3 I^-2 (dimension_vector [1,3,-3,-2,0,0,0]), and its ambiguity_notes state that in an MHD prompt explicitly saying electrical resistivity, use this record. Thus the record directly applies.\"},{\"csv_name\":\"dp_dx\",\"before_si_exponents\":{\"M\":\"1\",\"L\":\"-3\",\"T\":\"-2\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"},\"decision\":\"CONFLICT\",\"suggested_si_exponents\":{\"M\":\"1\",\"L\":\"-2\",\"T\":\"-2\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"},\"support_mode\":\"KB_RECORD\",\"evidence_entry_ids\":[\"pq_pressure_gradient\"],\"reason\":\"The candidate vector given in the ledger uses L^-3 for dp/dx, but the physics of a pressure gradient (spatial derivative of pressure) has SI dimension of pressure per length: pressure is M L^-1 T^-2, so pressure gradient is M L^-2 T^-2. The cited record pq_pressure_gradient explicitly defines 'pressure gradient' and gives SI dimension M L^-2 T^-2 (dimension_vector [1,-2,-2,0,0,0,0]). Therefore the ledger's L exponent is incorrect and the corrected full SI exponent vector is provided above.\"},{\"csv_name\":\"B\",\"before_si_exponents\":{\"M\":\"1\",\"L\":\"0\",\"T\":\"-2\",\"I\":\"-1\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"},\"decision\":\"PASSED\",\"suggested_si_exponents\":null,\"support_mode\":\"KB_RECORD\",\"evidence_entry_ids\":[\"pq_magnetic_flux_density\"],\"reason\":\"The problem names B as the magnetic field magnitude (magnetic flux density). The cited record pq_magnetic_flux_density defines magnetic flux density (tesla) with SI dimension M T^-2 I^-1 (dimension_vector [1,0,-2,-1,0,0,0]). This matches the intended physical quantity and usage of B in the MHD generator problem.\"}]}"
+            }
+          }
+        ],
+        "model_messages": [
+          {
+            "type": "system",
+            "content": "Audit every named physical input in this exact typed ledger, including literal SI coordinate values. Do not substitute the correct definition or a KB vector for a wrong candidate and then claim PASSED. Return ledger_sha256 and each csv_name exactly once; before_si_exponents must copy the actual candidate. PASSED confirms the actual vector, CONFLICT requires a complete corrected suggested vector, and UNCERTAIN does not permit numerical execution. KB_RECORD requires actual entry_id citations from that variable's retrieved records. Canonical entity names are read by the program from the selected IDs; do not echo another quantity-name field. Your reason must explain why each cited record applies to this variable in the original problem, not merely why its vector matches. Cited vectors must support all known coordinates of the proposed/confirmed SI vector. INTERNAL_REASONING uses no IDs and must explain the physical meaning. Retrieval rank is relevance, not truth. Resolve symbol ambiguity from the original problem; do not choose an unrelated matching symbol. Known absent base dimensions must be explicit '0'; null means genuinely unknown, not unused. If any current coordinate is unknown, request revision or report UNCERTAIN; never call a partly known vector PASSED. Give a complete correction when physically justified. If a correction remains partly unknown, preserve null and explain what remains unresolved; the program will request revision rather than invent zeros. Lack of KB alone is not a physical contradiction. Matrix compilation and n/r/k are program tasks, not audit tasks."
+          },
+          {
+            "type": "human",
+            "content": "Problem:\nPerform dimensional analysis for a magnetohydrodynamics (MHD) generator to derive the dimensionless form of the average flow velocity (denoted as u*). \nThis analysis uses ONLY the following 6 physical quantities as input parameters: \nthe side length of the square duct (h), the dynamic viscosity (μ), the fluid density (ρ), the fluid's proportionality coefficient η in E = η J, where E is the electric field and J is electric current density, the applied pressure gradient (dp/dx), and the magnetic field magnitude (B).\n\nTyped ledger SHA256: 86c65ecffd41c24d84ba448207d4f22ba83e95801e4481124c3f8e52d60a133c\nTyped candidate ledger:\n{\"input_variable_names\": [\"h\", \"mu\", \"rho\", \"eta\", \"dp_dx\", \"B\"], \"output_variable_confidence\": \"high\", \"output_variable_name\": \"u*\", \"output_variable_reasoning\": \"The dimensionless average flow velocity u* is derived from the given physical quantities by dimensional analysis in magnetohydrodynamics. Each input quantity's physical dimension is identified and used to form dimensionless groups, including u* as a dimensionless velocity ratio.\", \"variables\": [{\"csv_name\": \"h\", \"physical_definition\": \"side length of the square duct\", \"quantity_name\": \"length\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"1\", \"M\": \"0\", \"N\": \"0\", \"T\": \"0\", \"Theta\": \"0\"}}, {\"csv_name\": \"mu\", \"physical_definition\": \"dynamic viscosity of the fluid\", \"quantity_name\": \"dynamic_viscosity\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"-1\", \"M\": \"1\", \"N\": \"0\", \"T\": \"-1\", \"Theta\": \"0\"}}, {\"csv_name\": \"rho\", \"physical_definition\": \"fluid density\", \"quantity_name\": \"density\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"-3\", \"M\": \"1\", \"N\": \"0\", \"T\": \"0\", \"Theta\": \"0\"}}, {\"csv_name\": \"eta\", \"physical_definition\": \"fluid's proportionality coefficient in E = eta J relating electric field and current density\", \"quantity_name\": \"electric_proportionality_coefficient\", \"si_exponents\": {\"I\": \"-2\", \"J\": \"0\", \"L\": \"3\", \"M\": \"1\", \"N\": \"0\", \"T\": \"-3\", \"Theta\": \"0\"}}, {\"csv_name\": \"dp_dx\", \"physical_definition\": \"applied pressure gradient\", \"quantity_name\": \"pressure_gradient\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"-3\", \"M\": \"1\", \"N\": \"0\", \"T\": \"-2\", \"Theta\": \"0\"}}, {\"csv_name\": \"B\", \"physical_definition\": \"magnetic field magnitude\", \"quantity_name\": \"magnetic_field\", \"si_exponents\": {\"I\": \"-1\", \"J\": \"0\", \"L\": \"0\", \"M\": \"1\", \"N\": \"0\", \"T\": \"-2\", \"Theta\": \"0\"}}]}\n\nRetrieved dimensional evidence:\n### Input variable `h`\n- entry_id: pq_duct_side_length; canonical_quantity: square-duct side length; symbols: h; aliases: duct side length; side length of square duct; definition: Side length of a square duct cross-section.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: duct flow; magnetohydrodynamics; ambiguity_notes: The symbol h is also used for channel half-height or full container height; all are length quantities.; source: MHD Flow in Simple Cubic Periodic Array Geometry, Journal of Fusion Energy (2023); source_identifier: doi:10.1007/s10894-023-00390-8; confidence: high\n- entry_id: pq_channel_half_height; canonical_quantity: channel half-height; symbols: h; delta; δ; aliases: channel half-height; half-gap; definition: Distance from a channel wall to its centerline for a symmetric plane channel.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: channel flow; ambiguity_notes: The symbol h is also used for full height, enthalpy, or heat-transfer coefficient in other contexts.; source: Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling; source_identifier: https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8; confidence: high\n- entry_id: pq_heat_transfer_coefficient; canonical_quantity: convective heat-transfer coefficient; symbols: h_c; h; aliases: film coefficient; convection coefficient; definition: Heat flux divided by a driving temperature difference.; si_dimension: M T^-3 Theta^-1; dimension_vector: [1, 0, -3, 0, -1, 0, 0]; si_unit: W m^-2 K^-1; domain: heat transfer; ambiguity_notes: h is also used for length or enthalpy in some contexts.; source: Lupi, Heat Transfer, in Fundamentals of Electroheat; source_identifier: doi:10.1007/978-3-319-46015-4_1; confidence: high\n### Input variable `mu`\n- entry_id: pq_dynamic_viscosity; canonical_quantity: dynamic viscosity; symbols: mu; μ; eta; η; aliases: absolute viscosity; viscosity coefficient; dynamic viscosity coefficient; definition: Coefficient relating Newtonian viscous shear stress to velocity gradient.; si_dimension: M L^-1 T^-1; dimension_vector: [1, -1, -1, 0, 0, 0, 0]; si_unit: Pa s; domain: fluid mechanics; rheology; ambiguity_notes: Symbols eta/η can instead denote electrical resistivity, magnetic diffusivity, or other quantities; symbols mu/μ are also used for magnetic permeability in some contexts.; source: NIST SP 811, Guide for the Use of the International System of Units (SI); source_identifier: doi:10.6028/NIST.SP.811e2008; confidence: curated\n- entry_id: pq_magnetic_permeability; canonical_quantity: magnetic permeability; symbols: mu_m; μ; mu0; μ0; aliases: permeability; magnetic permeability; definition: Constitutive coefficient relating magnetic flux density and magnetic field strength in a linear medium.; si_dimension: M L T^-2 I^-2; dimension_vector: [1, 1, -2, -2, 0, 0, 0]; si_unit: H m^-1; domain: electromagnetism; ambiguity_notes: The symbol mu/μ is also the standard symbol for dynamic viscosity in fluid mechanics.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_electrical_resistivity; canonical_quantity: electrical resistivity; symbols: eta; η; rho_e; ρ_e; aliases: resistivity; specific electrical resistance; rho notation for electrical resistivity; ρ notation for electrical resistivity; definition: Material property relating electric field to current density; equivalently electrical resistance times a length scale divided by area.; si_dimension: M L^3 T^-3 I^-2; dimension_vector: [1, 3, -3, -2, 0, 0, 0]; si_unit: ohm m; domain: electromagnetism; magnetohydrodynamics; ambiguity_notes: Eta/η may denote dynamic viscosity or magnetic diffusivity; rho/ρ may denote mass density. In an MHD prompt explicitly saying electrical resistivity, use this record.; source: MHD Flow in Simple Cubic Periodic Array Geometry, Journal of Fusion Energy (2023); source_identifier: doi:10.1007/s10894-023-00390-8; confidence: curated\n### Input variable `rho`\n- entry_id: pq_mass_density; canonical_quantity: mass density; symbols: rho; ρ; aliases: density; fluid density; material density; wall density; definition: Mass per unit volume.; si_dimension: M L^-3; dimension_vector: [1, -3, 0, 0, 0, 0, 0]; si_unit: kg m^-3; domain: continuum mechanics; fluid mechanics; materials; ambiguity_notes: The symbol rho/ρ may also denote electrical resistivity in electromagnetism; resolve by physical context.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_electrical_resistivity; canonical_quantity: electrical resistivity; symbols: eta; η; rho_e; ρ_e; aliases: resistivity; specific electrical resistance; rho notation for electrical resistivity; ρ notation for electrical resistivity; definition: Material property relating electric field to current density; equivalently electrical resistance times a length scale divided by area.; si_dimension: M L^3 T^-3 I^-2; dimension_vector: [1, 3, -3, -2, 0, 0, 0]; si_unit: ohm m; domain: electromagnetism; magnetohydrodynamics; ambiguity_notes: Eta/η may denote dynamic viscosity or magnetic diffusivity; rho/ρ may denote mass density. In an MHD prompt explicitly saying electrical resistivity, use this record.; source: MHD Flow in Simple Cubic Periodic Array Geometry, Journal of Fusion Energy (2023); source_identifier: doi:10.1007/s10894-023-00390-8; confidence: curated\n- entry_id: pq_magnetic_permeability; canonical_quantity: magnetic permeability; symbols: mu_m; μ; mu0; μ0; aliases: permeability; magnetic permeability; definition: Constitutive coefficient relating magnetic flux density and magnetic field strength in a linear medium.; si_dimension: M L T^-2 I^-2; dimension_vector: [1, 1, -2, -2, 0, 0, 0]; si_unit: H m^-1; domain: electromagnetism; ambiguity_notes: The symbol mu/μ is also the standard symbol for dynamic viscosity in fluid mechanics.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n### Input variable `eta`\n- entry_id: pq_electrical_resistivity; canonical_quantity: electrical resistivity; symbols: eta; η; rho_e; ρ_e; aliases: resistivity; specific electrical resistance; rho notation for electrical resistivity; ρ notation for electrical resistivity; definition: Material property relating electric field to current density; equivalently electrical resistance times a length scale divided by area.; si_dimension: M L^3 T^-3 I^-2; dimension_vector: [1, 3, -3, -2, 0, 0, 0]; si_unit: ohm m; domain: electromagnetism; magnetohydrodynamics; ambiguity_notes: Eta/η may denote dynamic viscosity or magnetic diffusivity; rho/ρ may denote mass density. In an MHD prompt explicitly saying electrical resistivity, use this record.; source: MHD Flow in Simple Cubic Periodic Array Geometry, Journal of Fusion Energy (2023); source_identifier: doi:10.1007/s10894-023-00390-8; confidence: curated\n- entry_id: pq_dynamic_viscosity; canonical_quantity: dynamic viscosity; symbols: mu; μ; eta; η; aliases: absolute viscosity; viscosity coefficient; dynamic viscosity coefficient; definition: Coefficient relating Newtonian viscous shear stress to velocity gradient.; si_dimension: M L^-1 T^-1; dimension_vector: [1, -1, -1, 0, 0, 0, 0]; si_unit: Pa s; domain: fluid mechanics; rheology; ambiguity_notes: Symbols eta/η can instead denote electrical resistivity, magnetic diffusivity, or other quantities; symbols mu/μ are also used for magnetic permeability in some contexts.; source: NIST SP 811, Guide for the Use of the International System of Units (SI); source_identifier: doi:10.6028/NIST.SP.811e2008; confidence: curated\n- entry_id: pq_coriolis_parameter; canonical_quantity: Coriolis parameter; symbols: f_c; f; aliases: planetary vorticity parameter; definition: Twice the component of rotation normal to the local horizontal plane.; si_dimension: T^-1; dimension_vector: [0, 0, -1, 0, 0, 0, 0]; si_unit: s^-1; domain: geophysical fluid dynamics; ambiguity_notes: ; source: Hauke, An Introduction to Fluid Mechanics and Transport Phenomena; source_identifier: doi:10.1007/978-1-4020-8537-6; confidence: high\n### Input variable `dp_dx`\n- entry_id: pq_pressure_gradient; canonical_quantity: pressure gradient; symbols: dp/dx; dpdx; grad_p; ∇p; aliases: applied pressure gradient; streamwise pressure gradient; pressure drop per unit length; definition: Spatial derivative of pressure.; si_dimension: M L^-2 T^-2; dimension_vector: [1, -2, -2, 0, 0, 0, 0]; si_unit: Pa m^-1; domain: fluid mechanics; ambiguity_notes: Do not confuse pressure gradient with pressure.; source: NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions; source_identifier: https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html; confidence: curated\n- entry_id: pq_mean_flow_velocity; canonical_quantity: mean flow velocity; symbols: U; U_m; Umean; V; aliases: bulk velocity; mean velocity; average flow velocity; definition: Mean or bulk velocity used to characterize a flow.; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: fluid mechanics; ambiguity_notes: ; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_velocity; canonical_quantity: velocity; symbols: u; U; v; V; aliases: speed; flow velocity; fluid velocity; definition: Rate of displacement with time.; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: mechanics; fluid mechanics; ambiguity_notes: ; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n### Input variable `B`\n- entry_id: pq_magnetic_flux_density; canonical_quantity: magnetic flux density; symbols: B; aliases: magnetic induction; magnetic field magnitude; definition: Magnetic flux per unit area; the quantity whose SI unit is tesla.; si_dimension: M T^-2 I^-1; dimension_vector: [1, 0, -2, -1, 0, 0, 0]; si_unit: T; domain: electromagnetism; magnetohydrodynamics; ambiguity_notes: Many fluid and engineering papers informally call B the magnetic field. Distinguish B from magnetic field strength H, whose SI unit is A m^-1.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: curated\n- entry_id: pq_buoyancy; canonical_quantity: buoyancy variable; symbols: b; aliases: reduced-gravity acceleration; buoyancy acceleration; definition: Acceleration-like scalar representing density-induced buoyancy.; si_dimension: L T^-2; dimension_vector: [0, 1, -2, 0, 0, 0, 0]; si_unit: m s^-2; domain: geophysical fluid dynamics; ambiguity_notes: ; source: Hauke, An Introduction to Fluid Mechanics and Transport Phenomena; source_identifier: doi:10.1007/978-1-4020-8537-6; confidence: high\n- entry_id: pq_molality; canonical_quantity: molality; symbols: b; m_mol; aliases: amount per mass of solvent; definition: Amount of solute divided by mass of solvent.; si_dimension: N M^-1; dimension_vector: [-1, 0, 0, 0, 0, 1, 0]; si_unit: mol kg^-1; domain: solution chemistry; ambiguity_notes: ; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high"
+          }
+        ],
+        "elapsed_s": 20.060226600035094
+      },
+      "retrieval_elapsed_s": 39.13138789997902
+    }
+  ],
+  "final_ledger": {
+    "output_variable_name": "u*",
+    "output_variable_reasoning": "The dimensionless average flow velocity u* is derived from the given physical quantities by dimensional analysis in magnetohydrodynamics. Each input quantity's physical dimension is identified and used to form dimensionless groups, including u* as a dimensionless velocity ratio.",
+    "output_variable_confidence": "high",
+    "input_variable_names": [
+      "h",
+      "mu",
+      "rho",
+      "eta",
+      "dp_dx",
+      "B"
+    ],
+    "variables": [
+      {
+        "csv_name": "h",
+        "quantity_name": "length",
+        "physical_definition": "side length of the square duct",
+        "si_exponents": {
+          "M": "0",
+          "L": "1",
+          "T": "0",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "mu",
+        "quantity_name": "dynamic_viscosity",
+        "physical_definition": "dynamic viscosity of the fluid",
+        "si_exponents": {
+          "M": "1",
+          "L": "-1",
+          "T": "-1",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "rho",
+        "quantity_name": "density",
+        "physical_definition": "fluid density",
+        "si_exponents": {
+          "M": "1",
+          "L": "-3",
+          "T": "0",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "eta",
+        "quantity_name": "electric_proportionality_coefficient",
+        "physical_definition": "fluid's proportionality coefficient in E = eta J relating electric field and current density",
+        "si_exponents": {
+          "M": "1",
+          "L": "3",
+          "T": "-3",
+          "I": "-2",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "dp_dx",
+        "quantity_name": "pressure_gradient",
+        "physical_definition": "applied pressure gradient",
+        "si_exponents": {
+          "M": "1",
+          "L": "-3",
+          "T": "-2",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "B",
+        "quantity_name": "magnetic_field",
+        "physical_definition": "magnetic field magnitude",
+        "si_exponents": {
+          "M": "1",
+          "L": "0",
+          "T": "-2",
+          "I": "-1",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      }
+    ]
+  },
+  "workflow_status": "frontend_revision_requested",
+  "basis_built": false,
+  "basis": null,
+  "revision_calls": [
+    {
+      "parsed_response": {
+        "output_variable_name": "u*",
+        "output_variable_reasoning": "The dimensionless average flow velocity u* is derived from the given physical quantities by performing dimensional analysis. Each input quantity's SI base dimension exponents are identified and used to form dimensionless groups. The output u* is dimensionless, so its SI exponents are all zero.",
+        "output_variable_confidence": "high",
+        "input_variable_names": [
+          "h",
+          "mu",
+          "rho",
+          "eta",
+          "dp_dx",
+          "B"
+        ],
+        "variables": [
+          {
+            "csv_name": "h",
+            "quantity_name": "square-duct side length",
+            "physical_definition": "Side length of a square duct cross-section.",
+            "si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "mu",
+            "quantity_name": "dynamic viscosity",
+            "physical_definition": "Coefficient relating Newtonian viscous shear stress to velocity gradient (dynamic viscosity).",
+            "si_exponents": {
+              "M": "1",
+              "L": "-1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "rho",
+            "quantity_name": "mass density",
+            "physical_definition": "Mass per unit volume (fluid density).",
+            "si_exponents": {
+              "M": "1",
+              "L": "-3",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "eta",
+            "quantity_name": "electrical resistivity",
+            "physical_definition": "Material property relating electric field to current density (electrical resistivity).",
+            "si_exponents": {
+              "M": "1",
+              "L": "3",
+              "T": "-3",
+              "I": "-2",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "dp_dx",
+            "quantity_name": "pressure gradient",
+            "physical_definition": "Spatial derivative of pressure (applied pressure gradient).",
+            "si_exponents": {
+              "M": "1",
+              "L": "-2",
+              "T": "-2",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "B",
+            "quantity_name": "magnetic flux density",
+            "physical_definition": "Magnetic flux density (magnetic field magnitude).",
+            "si_exponents": {
+              "M": "1",
+              "L": "0",
+              "T": "-2",
+              "I": "-1",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "u",
+            "quantity_name": "velocity",
+            "physical_definition": "Average flow velocity in the duct.",
+            "si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "u*",
+            "quantity_name": "dimensionless average flow velocity",
+            "physical_definition": "Dimensionless average flow velocity derived from the given physical quantities.",
+            "si_exponents": {
+              "M": "0",
+              "L": "0",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          }
+        ]
+      },
+      "raw_tool_calls": [
+        {
+          "id": "call_7Oo5oDpXhcEgqrr6a9QU5hVb",
+          "type": "function",
+          "function": {
+            "name": "AnalyzerDimensionLedger",
+            "arguments": "{\"input_variable_names\":[\"h\",\"mu\",\"rho\",\"eta\",\"dp_dx\",\"B\"],\"output_variable_confidence\":\"high\",\"output_variable_name\":\"u*\",\"output_variable_reasoning\":\"The dimensionless average flow velocity u* is derived from the given physical quantities by performing dimensional analysis. Each input quantity's SI base dimension exponents are identified and used to form dimensionless groups. The output u* is dimensionless, so its SI exponents are all zero.\",\"variables\":[{\"csv_name\":\"h\",\"physical_definition\":\"Side length of a square duct cross-section.\",\"quantity_name\":\"square-duct side length\",\"si_exponents\":{\"M\":\"0\",\"L\":\"1\",\"T\":\"0\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"}},{\"csv_name\":\"mu\",\"physical_definition\":\"Coefficient relating Newtonian viscous shear stress to velocity gradient (dynamic viscosity).\",\"quantity_name\":\"dynamic viscosity\",\"si_exponents\":{\"M\":\"1\",\"L\":\"-1\",\"T\":\"-1\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"}},{\"csv_name\":\"rho\",\"physical_definition\":\"Mass per unit volume (fluid density).\",\"quantity_name\":\"mass density\",\"si_exponents\":{\"M\":\"1\",\"L\":\"-3\",\"T\":\"0\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"}},{\"csv_name\":\"eta\",\"physical_definition\":\"Material property relating electric field to current density (electrical resistivity).\",\"quantity_name\":\"electrical resistivity\",\"si_exponents\":{\"M\":\"1\",\"L\":\"3\",\"T\":\"-3\",\"I\":\"-2\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"}},{\"csv_name\":\"dp_dx\",\"physical_definition\":\"Spatial derivative of pressure (applied pressure gradient).\",\"quantity_name\":\"pressure gradient\",\"si_exponents\":{\"M\":\"1\",\"L\":\"-2\",\"T\":\"-2\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"}},{\"csv_name\":\"B\",\"physical_definition\":\"Magnetic flux density (magnetic field magnitude).\",\"quantity_name\":\"magnetic flux density\",\"si_exponents\":{\"M\":\"1\",\"L\":\"0\",\"T\":\"-2\",\"I\":\"-1\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"}},{\"csv_name\":\"u\",\"physical_definition\":\"Average flow velocity in the duct.\",\"quantity_name\":\"velocity\",\"si_exponents\":{\"M\":\"0\",\"L\":\"1\",\"T\":\"-1\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"}},{\"csv_name\":\"u*\",\"physical_definition\":\"Dimensionless average flow velocity derived from the given physical quantities.\",\"quantity_name\":\"dimensionless average flow velocity\",\"si_exponents\":{\"M\":\"0\",\"L\":\"0\",\"T\":\"0\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"}}]}"
+          }
+        }
+      ],
+      "model_messages": [
+        {
+          "type": "system",
+          "content": "Infer one typed physical-input ledger. Exact CSV names and explicit input order are binding. Return each input exactly once with its physical quantity name, a plain-language physical_definition, and all seven named SI exponents M,L,T,I,Theta,N,J as rational strings. Use null for unknown coordinates. For a base quantity known not to participate, explicitly return '0'; this is known absence, not uncertainty. Use null only when the exponent is genuinely unknown. Never infer unknown as0. Exclude the output and metadata/unused/derived columns. quantity_name and physical_definition are retrieval meaning fields: do not put assigned SI units, dimension vectors or exponent formulas there. Do not output a separate dimensional matrix or n/r/k. They are generated deterministically from this ledger. A confident name is not proof of its SI vector."
+        },
+        {
+          "type": "human",
+          "content": "Problem statement:\nPerform dimensional analysis for a magnetohydrodynamics (MHD) generator to derive the dimensionless form of the average flow velocity (denoted as u*). \nThis analysis uses ONLY the following 6 physical quantities as input parameters: \nthe side length of the square duct (h), the dynamic viscosity (μ), the fluid density (ρ), the fluid's proportionality coefficient η in E = η J, where E is the electric field and J is electric current density, the applied pressure gradient (dp/dx), and the magnetic field magnitude (B).\n\nCSV columns: ['h', 'mu', 'rho', 'eta', 'dp_dx', 'B', 'u', 'u*']\nCSV preview:\n     h        mu       rho       eta     dp_dx         B         u           u*\n0  1.0  0.003796  1.795653  0.190233  0.336464  0.519534  2.975824  1407.644504\n1  1.0  0.002086  0.829033  0.207090  0.203551  0.342603  3.296463  1310.265843\n2  1.0  0.003463  8.409369  7.049725  0.269627  0.340468  2.602570  6319.721274\n3  1.0  0.009424  0.196781  0.143414  0.243261  0.659231  0.795035    16.600832\n4  1.0  0.003821  0.102123  0.665484  0.153139  0.934103  1.220455    32.619786\n\nExplicit manual input-role/order override: None\nExplicit manual output override: None\n\nPrevious physics-audit feedback (exact coordinate differences and cited original KB records):\nAudit round 1:\nTyped ledger 86c65ecffd41c24d84ba448207d4f22ba83e95801e4481124c3f8e52d60a133c; program gate=RETRY\nVariable h: decision=PASSED; reason=The problem statement defines h as the side length of the square duct. The cited record pq_duct_side_length has canonical_quantity 'square-duct side length' and definition 'Side length of a square duct cross-section.' Its si_dimension is L (dimension_vector [0,1,0,0,0,0,0]), which directly matches the role and units of h in the original problem.\nActual named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_duct_side_length\", \"canonical_quantity\": \"square-duct side length\", \"source_identifier\": \"doi:10.1007/s10894-023-00390-8\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for h:\n{\"aliases\": \"duct side length; side length of square duct\", \"ambiguity_notes\": \"The symbol h is also used for channel half-height or full container height; all are length quantities.\", \"canonical_quantity\": \"square-duct side length\", \"confidence\": \"high\", \"definition\": \"Side length of a square duct cross-section.\", \"dimension_vector\": \"[0, 1, 0, 0, 0, 0, 0]\", \"domain\": \"duct flow; magnetohydrodynamics\", \"entry_id\": \"pq_duct_side_length\", \"hybrid_score\": 0.8585183047948315, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.5957665851280901, \"si_dimension\": \"L\", \"si_unit\": \"m\", \"source\": \"MHD Flow in Simple Cubic Periodic Array Geometry, Journal of Fusion Energy (2023)\", \"source_identifier\": \"doi:10.1007/s10894-023-00390-8\", \"symbols\": \"h\", \"variable_name\": \"h\"}\n\nVariable mu: decision=PASSED; reason=The ledger labels mu as dynamic viscosity. The cited record pq_dynamic_viscosity defines dynamic viscosity (coefficient relating viscous shear stress to velocity gradient) with SI dimension M L^-1 T^-1 (dimension_vector [1,-1,-1,0,0,0,0]). That matches the physical definition and usage of μ in the MHD flow problem.\nActual named SI={\"M\": \"1\", \"L\": \"-1\", \"T\": \"-1\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"1\", \"L\": \"-1\", \"T\": \"-1\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_dynamic_viscosity\", \"canonical_quantity\": \"dynamic viscosity\", \"source_identifier\": \"doi:10.6028/NIST.SP.811e2008\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for mu:\n{\"aliases\": \"absolute viscosity; viscosity coefficient; dynamic viscosity coefficient\", \"ambiguity_notes\": \"Symbols eta/η can instead denote electrical resistivity, magnetic diffusivity, or other quantities; symbols mu/μ are also used for magnetic permeability in some contexts.\", \"canonical_quantity\": \"dynamic viscosity\", \"confidence\": \"curated\", \"definition\": \"Coefficient relating Newtonian viscous shear stress to velocity gradient.\", \"dimension_vector\": \"[1, -1, -1, 0, 0, 0, 0]\", \"domain\": \"fluid mechanics; rheology\", \"entry_id\": \"pq_dynamic_viscosity\", \"hybrid_score\": 0.8389402742389429, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.5398293549684083, \"si_dimension\": \"M L^-1 T^-1\", \"si_unit\": \"Pa s\", \"source\": \"NIST SP 811, Guide for the Use of the International System of Units (SI)\", \"source_identifier\": \"doi:10.6028/NIST.SP.811e2008\", \"symbols\": \"mu; μ; eta; η\", \"variable_name\": \"mu\"}\n\nVariable rho: decision=PASSED; reason=The problem names ρ as fluid density. The cited record pq_mass_density has canonical_quantity 'mass density' with definition 'Mass per unit volume' and SI dimension M L^-3 (dimension_vector [1,-3,0,0,0,0,0]). This is the standard interpretation of ρ in the given fluid-mechanics context.\nActual named SI={\"M\": \"1\", \"L\": \"-3\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"1\", \"L\": \"-3\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_mass_density\", \"canonical_quantity\": \"mass density\", \"source_identifier\": \"doi:10.59161/AUEZ1291\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for rho:\n{\"aliases\": \"density; fluid density; material density; wall density\", \"ambiguity_notes\": \"The symbol rho/ρ may also denote electrical resistivity in electromagnetism; resolve by physical context.\", \"canonical_quantity\": \"mass density\", \"confidence\": \"high\", \"definition\": \"Mass per unit volume.\", \"dimension_vector\": \"[1, -3, 0, 0, 0, 0, 0]\", \"domain\": \"continuum mechanics; fluid mechanics; materials\", \"entry_id\": \"pq_mass_density\", \"hybrid_score\": 0.8363029293123498, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.5322940837495709, \"si_dimension\": \"M L^-3\", \"si_unit\": \"kg m^-3\", \"source\": \"BIPM SI Brochure, 9th ed. (updated 2026)\", \"source_identifier\": \"doi:10.59161/AUEZ1291\", \"symbols\": \"rho; ρ\", \"variable_name\": \"rho\"}\n\nVariable eta: decision=PASSED; reason=The prompt explicitly defines η as the proportionality in E = η J (electric field = η × current density). That is the constitutive definition of electrical resistivity in MHD. The cited record pq_electrical_resistivity has that canonical_quantity and SI dimension M L^3 T^-3 I^-2 (dimension_vector [1,3,-3,-2,0,0,0]), and its ambiguity_notes state that in an MHD prompt explicitly saying electrical resistivity, use this record. Thus the record directly applies.\nActual named SI={\"M\": \"1\", \"L\": \"3\", \"T\": \"-3\", \"I\": \"-2\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"1\", \"L\": \"3\", \"T\": \"-3\", \"I\": \"-2\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_electrical_resistivity\", \"canonical_quantity\": \"electrical resistivity\", \"source_identifier\": \"doi:10.1007/s10894-023-00390-8\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for eta:\n{\"aliases\": \"resistivity; specific electrical resistance; rho notation for electrical resistivity; ρ notation for electrical resistivity\", \"ambiguity_notes\": \"Eta/η may denote dynamic viscosity or magnetic diffusivity; rho/ρ may denote mass density. In an MHD prompt explicitly saying electrical resistivity, use this record.\", \"canonical_quantity\": \"electrical resistivity\", \"confidence\": \"curated\", \"definition\": \"Material property relating electric field to current density; equivalently electrical resistance times a length scale divided by area.\", \"dimension_vector\": \"[1, 3, -3, -2, 0, 0, 0]\", \"domain\": \"electromagnetism; magnetohydrodynamics\", \"entry_id\": \"pq_electrical_resistivity\", \"hybrid_score\": 0.8275115578469274, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.5071758795626496, \"si_dimension\": \"M L^3 T^-3 I^-2\", \"si_unit\": \"ohm m\", \"source\": \"MHD Flow in Simple Cubic Periodic Array Geometry, Journal of Fusion Energy (2023)\", \"source_identifier\": \"doi:10.1007/s10894-023-00390-8\", \"symbols\": \"eta; η; rho_e; ρ_e\", \"variable_name\": \"eta\"}\n\nVariable dp_dx: decision=CONFLICT; reason=The candidate vector given in the ledger uses L^-3 for dp/dx, but the physics of a pressure gradient (spatial derivative of pressure) has SI dimension of pressure per length: pressure is M L^-1 T^-2, so pressure gradient is M L^-2 T^-2. The cited record pq_pressure_gradient explicitly defines 'pressure gradient' and gives SI dimension M L^-2 T^-2 (dimension_vector [1,-2,-2,0,0,0,0]). Therefore the ledger's L exponent is incorrect and the corrected full SI exponent vector is provided above.\nActual named SI={\"M\": \"1\", \"L\": \"-3\", \"T\": \"-2\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"1\", \"L\": \"-2\", \"T\": \"-2\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={\"L\": {\"before\": \"-3\", \"suggested\": \"-2\"}}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_pressure_gradient\", \"canonical_quantity\": \"pressure gradient\", \"source_identifier\": \"https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[\"Checker decision CONFLICT\"]\n\nReferenced KB original record for dp_dx:\n{\"aliases\": \"applied pressure gradient; streamwise pressure gradient; pressure drop per unit length\", \"ambiguity_notes\": \"Do not confuse pressure gradient with pressure.\", \"canonical_quantity\": \"pressure gradient\", \"confidence\": \"curated\", \"definition\": \"Spatial derivative of pressure.\", \"dimension_vector\": \"[1, -2, -2, 0, 0, 0, 0]\", \"domain\": \"fluid mechanics\", \"entry_id\": \"pq_pressure_gradient\", \"hybrid_score\": 0.3722789071424273, \"lexical_score\": 0.2692307692307693, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.5636540204069349, \"si_dimension\": \"M L^-2 T^-2\", \"si_unit\": \"Pa m^-1\", \"source\": \"NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions\", \"source_identifier\": \"https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html\", \"symbols\": \"dp/dx; dpdx; grad_p; ∇p\", \"variable_name\": \"dp_dx\"}\n\nVariable B: decision=PASSED; reason=The problem names B as the magnetic field magnitude (magnetic flux density). The cited record pq_magnetic_flux_density defines magnetic flux density (tesla) with SI dimension M T^-2 I^-1 (dimension_vector [1,0,-2,-1,0,0,0]). This matches the intended physical quantity and usage of B in the MHD generator problem.\nActual named SI={\"M\": \"1\", \"L\": \"0\", \"T\": \"-2\", \"I\": \"-1\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"1\", \"L\": \"0\", \"T\": \"-2\", \"I\": \"-1\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_magnetic_flux_density\", \"canonical_quantity\": \"magnetic flux density\", \"source_identifier\": \"doi:10.59161/AUEZ1291\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for B:\n{\"aliases\": \"magnetic induction; magnetic field magnitude\", \"ambiguity_notes\": \"Many fluid and engineering papers informally call B the magnetic field. Distinguish B from magnetic field strength H, whose SI unit is A m^-1.\", \"canonical_quantity\": \"magnetic flux density\", \"confidence\": \"curated\", \"definition\": \"Magnetic flux per unit area; the quantity whose SI unit is tesla.\", \"dimension_vector\": \"[1, 0, -2, -1, 0, 0, 0]\", \"domain\": \"electromagnetism; magnetohydrodynamics\", \"entry_id\": \"pq_magnetic_flux_density\", \"hybrid_score\": 0.838659921255525, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.5390283464443573, \"si_dimension\": \"M T^-2 I^-1\", \"si_unit\": \"T\", \"source\": \"BIPM SI Brochure, 9th ed. (updated 2026)\", \"source_identifier\": \"doi:10.59161/AUEZ1291\", \"symbols\": \"B\", \"variable_name\": \"B\"}"
+        }
+      ],
+      "elapsed_s": 5.007917299983092,
+      "tokens": {
+        "input": 4043,
+        "output": 584
+      }
+    }
+  ],
+  "elapsed_s": 64.24449970002752,
+  "error": {
+    "type": "FrontendContractError",
+    "message": "Variable records must cover exactly the explicitly ordered input names"
+  },
+  "infrastructure_error": [],
+  "node_sequence": [
+    "Analyzer",
+    "Hallu_Checker"
+  ],
+  "provenance": {
+    "run_id": "043e3a80-792a-4884-b874-4638bdb32025",
+    "release": "run-provenance-2026-11-09",
+    "engine_sha256": "ae9a03710f9685d3be863b98acc1880d72c9ea3f04450af039b92f5459ee1ea9",
+    "started_utc": "2026-11-15T15:52:14Z",
+    "finished_utc": "2026-11-15T15:53:18Z",
+    "status": "failed",
+    "dataset": {
+      "name": "dataset_mhd.csv",
+      "sha256": "1a0b1a751a9f1d9d3b70f234b4e753c7bddfc7400d794a7972be9cdba90a2a4f"
+    },
+    "problem_sha256": "38c374bd5b20df50d5934da55307d61be17a2983213206a60a24eabeb7fed31e",
+    "manual_hyperparams_sha256": "1a77ac90efe4bc0a9be8c57fdd1e148af3616f2ddcc5fada158148b929b1e8a7",
+    "model_configuration": {
+      "analyzer": "gpt-4.1-mini",
+      "checker": "gpt-5-mini",
+      "planner": "gpt-5-mini",
+      "interpretation": "gpt-5-mini"
+    },
+    "package_versions": {
+      "numpy": "2.4.0",
+      "pandas": "2.3.3",
+      "scipy": "1.16.3",
+      "sympy": "1.14.0",
+      "scikit-learn": "1.8.0",
+      "cma": "4.4.4",
+      "pydantic": "2.12.5",
+      "openai": "2.14.0",
+      "httpx": "0.28.1",
+      "langchain-core": "1.2.5",
+      "langchain-openai": "1.1.6",
+      "langgraph": "1.0.5"
+    },
+    "tracing_enabled": false,
+    "wall_seconds": 64.24214049999136,
+    "node_timings": [
+      {
+        "node": "Analyzer",
+        "visit": 1,
+        "duration_seconds": 0.025678900012280792,
+        "status": "returned",
+        "error_type": null
+      },
+      {
+        "node": "Hallu_Checker",
+        "visit": 1,
+        "duration_seconds": 59.20196030003717,
+        "status": "returned",
+        "error_type": null
+      },
+      {
+        "node": "Analyzer",
+        "visit": 2,
+        "duration_seconds": 5.013099999981932,
+        "status": "failed",
+        "error_type": "FrontendContractError"
+      }
+    ],
+    "http_attempts": [
+      {
+        "attempt_id": "026b8b8f-ca4c-4d8c-9c24-9dc72d5da50a",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 3.742347899999004,
+        "started_utc": "2026-11-15T15:52:14Z",
+        "input_tokens": 153,
+        "output_tokens": 0,
+        "total_tokens": 153,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "1997e4e851ed0d673bb85f2160ec52e673a972de6c7dc845172e638e3be35366",
+        "response_id": null
+      },
+      {
+        "attempt_id": "95cb738c-3f18-4dee-8d6c-4bcaf7f2e4ef",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 14.011381200049073,
+        "started_utc": "2026-11-15T15:52:18Z",
+        "input_tokens": 158,
+        "output_tokens": 0,
+        "total_tokens": 158,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "d0280f95800aa19a140d970b1c766173b7da9fec858be98a73df13979f990895",
+        "response_id": null
+      },
+      {
+        "attempt_id": "9956d947-e143-4092-a468-3c45755ed94a",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 4.388623000006191,
+        "started_utc": "2026-11-15T15:52:32Z",
+        "input_tokens": 151,
+        "output_tokens": 0,
+        "total_tokens": 151,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "d80df8259c9eeaa65d9559d62eb15d1a8b263629eba82e3794fc229571fb3437",
+        "response_id": null
+      },
+      {
+        "attempt_id": "02485d9c-7731-47a6-8fbe-0732919847df",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 3.5262861999799497,
+        "started_utc": "2026-11-15T15:52:36Z",
+        "input_tokens": 175,
+        "output_tokens": 0,
+        "total_tokens": 175,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "677dbb25884b8109678685d72c069d2179c36b08a824d08c214ba9d38f79e46c",
+        "response_id": null
+      },
+      {
+        "attempt_id": "865b1bce-3a2c-4887-93c0-0aa50e7c6de1",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 11.33274420001544,
+        "started_utc": "2026-11-15T15:52:40Z",
+        "input_tokens": 90,
+        "output_tokens": 0,
+        "total_tokens": 90,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "7ff31974fb0a697ddad6c83a92a7c0402608cc852d33ce27417f6fc393646f40",
+        "response_id": null
+      },
+      {
+        "attempt_id": "41e35c02-47dc-430b-9875-0a52f2b1704a",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 1.9562381000141613,
+        "started_utc": "2026-11-15T15:52:51Z",
+        "input_tokens": 152,
+        "output_tokens": 0,
+        "total_tokens": 152,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "951ae88ff232eba65fecb32b0ed9e31d261bac7e0afad4b984329e69a3f65f15",
+        "response_id": null
+      },
+      {
+        "attempt_id": "c8683f78-f118-4ee6-a75a-7b3a6fe462b0",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "llm",
+        "requested_model": "gpt-5-mini",
+        "response_model": "gpt-5-mini",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 20.056661700014956,
+        "started_utc": "2026-11-15T15:52:53Z",
+        "input_tokens": 4406,
+        "output_tokens": 2673,
+        "total_tokens": 7079,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 0,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "e10bf79749f7411ef258f9df62d68a92bb5e9bf45ff032eb4d42a50ba8eee654",
+        "response_id": "chatcmpl-202611151552548037307788268d9d6Q64vtry2"
+      },
+      {
+        "attempt_id": "29bcad49-c7d8-4b36-bfeb-f098d995b61a",
+        "node": "Analyzer",
+        "node_visit": 2,
+        "kind": "llm",
+        "requested_model": "gpt-4.1-mini",
+        "response_model": "gpt-4.1-mini-2025-04-14",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 5.004351300012786,
+        "started_utc": "2026-11-15T15:53:13Z",
+        "input_tokens": 4043,
+        "output_tokens": 584,
+        "total_tokens": 4627,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 0,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "ba350fabc0c3f960be1d8b9de92a6d6ee54f7360712c1cacd7958f786d170d64",
+        "response_id": "chatcmpl-EkWpW4Gr9KfNv0RNLLNe0oZh4I8PV"
+      }
+    ],
+    "observation_warnings": [],
+    "workflow_status": "frontend_revision_requested",
+    "scientific_status": null,
+    "totals": {
+      "http_attempt_count": 8,
+      "llm_http_attempt_count": 2,
+      "embedding_http_attempt_count": 6,
+      "usage_missing_attempt_count": 0,
+      "http_duration_seconds_sum": 64.01863360009156,
+      "node_duration_seconds_sum": 64.24073920003138,
+      "http_success_count": 8,
+      "http_error_count": 0,
+      "transport_error_count": 0,
+      "known_input_tokens": 9328,
+      "input_tokens_missing_count": 0,
+      "known_output_tokens": 3257,
+      "output_tokens_missing_count": 0,
+      "known_total_tokens": 12585,
+      "total_tokens_missing_count": 0,
+      "known_cached_input_tokens": 0,
+      "cached_input_tokens_missing_count": 6,
+      "known_reasoning_tokens": 0,
+      "reasoning_tokens_missing_count": 6
+    }
+  }
+}

@@ -1,121 +1,152 @@
-<div align="center">
-
 # AI Buckingham
 
-**Agentic data-driven physics and dimensionless learning**
+**Agentic discovery of dimensionless scaling laws across physical regimes.**
 
-Ao Cheng · Lei Zhang · Guowei He
+AI Buckingham combines LLM-guided problem formulation and planning with fixed symbolic and numerical tools: retrieval-grounded dimensional checking, Buckingham–Pi bases, gradient-based regime identification, mutual-information optimization, simplification, and collapse validation.
 
-[Streamlit app](#streamlit-app) · [Research figures](#selected-results) · [Parameters](docs/PARAMETERS.md) · [Deployment](docs/DEPLOYMENT.md)
+The repository contains the ten supplied case datasets, small executable LangGraph notebooks, recorded run bundles, an interactive Streamlit evidence browser, and four independent reproduction packages. It does not contain unpublished manuscripts or copies of reference publications.
 
-</div>
+## Start here
 
-Discover physical scaling laws through LLM-based orchestration, gradient-based physical-regime identification and mutual-information-based dimensionless learning. AI Buckingham bridges global and multiple physical regimes and identifies Type I and Type II similarity.
-
-## Streamlit app
-
-[![AI Buckingham Streamlit explorer: scaling, physical regimes and dimensionless learning](docs/assets/streamlit-explorer.png)](docs/assets/streamlit-explorer.png)
-
-- **Methods:** analytical GPR gradients, eigenpair clustering, MI estimators and searchable physical knowledge bases.
-- **Explorer:** nine physical systems, response collapse, dimensional bases, regime geometry, contour/surface views, convergence and validation.
-- **Run:** autonomous discovery or inference with a supplied Π basis; upload a CSV, edit the problem and configure scientific settings, models and API endpoints.
+Use **Python 3.12** in a fresh environment, then run these commands from the repository root:
 
 ```bash
 python -m venv .venv
-# Git Bash on Windows: source .venv/Scripts/activate
-# macOS / Linux: source .venv/bin/activate
-python -m pip install -e ".[app]"
-python -m streamlit run app.py
+# Windows PowerShell: .venv\Scripts\Activate.ps1
+# macOS/Linux: source .venv/bin/activate
+python -m pip install -e ".[app,notebooks,dev]"
+streamlit run streamlit_app.py
 ```
 
-Offline exploration requires no API keys. To host the app, connect this repository to **Streamlit Community Cloud**, select **`app.py`**, and follow the [deployment guide](docs/DEPLOYMENT.md#streamlit-community-cloud). GitHub Pages presents the static research site; Streamlit runs the interactive Python application.
+Browsing recorded evidence does not require API credentials. Numerical and historical reproduction have separate commands below. Complete new agent runs require the configured LLM and embedding services.
 
-## Framework
-
-![Original AI Buckingham framework artwork](docs/assets/framework-original.png)
-
-Retrieval-grounded physical reasoning establishes the variables and dimensional basis. Analytical GPR gradients identify physical regimes. MI-based optimization learns compact groups, followed by sparsification, rationalization and conditional predictive evaluation.
-
-## Selected results
-
-Original result artwork from the authors. Select an image to inspect it at full resolution.
-
-<table>
-<tr>
-<td width="50%" valign="top"><a href="docs/assets/results/mhd.png"><img src="docs/assets/results/mhd.png" alt="MHD dimensional learning, optimization and validation" width="520"></a><br><strong>MHD duct flow</strong><br>Dimensional learning, MI optimization and compact scaling.</td>
-<td width="50%" valign="top"><a href="docs/assets/results/complete-similarity.png"><img src="docs/assets/results/complete-similarity.png" alt="Complete-similarity results for four physical systems" width="520"></a><br><strong>Complete similarity</strong><br>Pressure-gradient friction, convection, keyhole depth and the Blasius boundary layer.</td>
-</tr>
-<tr>
-<td width="50%" valign="top"><a href="docs/assets/results/incomplete-similarity.png"><img src="docs/assets/results/incomplete-similarity.png" alt="Incomplete-similarity results for compressible velocity and rough-pipe scaling" width="520"></a><br><strong>Incomplete similarity</strong><br>Compressible velocity and Goldenfeld rough-pipe scaling.</td>
-<td width="50%" valign="top"><a href="docs/assets/results/multiple-regimes.png"><img src="docs/assets/results/multiple-regimes.png" alt="Gradient clustering and regime-wise scaling for Cess and rough-pipe systems" width="520"></a><br><strong>Multiple physical regimes</strong><br>Gradient geometry and regime-wise learning in the Cess and rough-pipe systems.</td>
-</tr>
-</table>
-
-The [GitHub Pages presentation](docs/index.html) adds interactive response plots, MI landscapes, search trajectories and validation values. Publish its `docs/` directory using the included [Pages workflow](.github/workflows/pages.yml).
-
-## Physical systems
-
-| Similarity | Systems | Raw observations |
-|---|---|---:|
-| Type I | MHD duct flow; pressure-gradient friction; Rayleigh–Bénard convection; laser keyhole depth; Blasius boundary layer | 1,099 |
-| Type II | Compressible velocity; Goldenfeld rough-pipe scaling | 1,523 |
-| Multiple regimes | Cess eddy viscosity; rough circular pipe | 2,200 |
-
-Total: **4,822 observations** across nine systems. The original near-zero filter leaves 196 Blasius and 1,103 compressible-velocity samples. Original CSVs and knowledge bases retain their SHA-256 records. See [data sources](docs/DATA_SOURCES.md).
-
-## Configuration and execution
-
-The supplied article and supplementary settings take precedence over inconsistent source-code defaults. Complete resolved case configurations are in [`configs/paper/`](configs/paper/).
-
-| Component | Setting |
+| Task | Entry point |
 |---|---|
-| LLM | `gpt-5-mini`; requested temperature 0 |
-| CMA-ES | seed 42; 3 runs; population 300; maximum 30,000 generations |
-| MI | KSG below N=800, histogram otherwise; default neighbors=5 / bins=40 |
-| GPR | 5 optimizer restarts; maximum 500 optimizer iterations |
-| Regimes | K in {2,3,4}; ≥60 samples; ≥5% fraction; eigenvalue ratio ≥50 |
-| Directional support | K=2 absolute cosine <0.90; coarsest admissible partition |
-| Type I/II screen | k=1; relative MI-loss limit 0.15 |
-| Group count | minimum absolute decrease in exp(−MI): 0.10 |
-| Simplification | exponent cutoff 0.05; rationalization relative MI-loss limit 0.10 |
-| Validation | three 80/20 splits; maximum 800 samples; mean R² ≥0.90 |
+| Explore results and diagnostics | `streamlit run streamlit_app.py` |
+| Read an executed case | [`notebooks/cases/`](notebooks/cases/) |
+| Browse evidence without API access | [`notebooks/quickstart.ipynb`](notebooks/quickstart.ipynb) |
+| Inspect machine-readable run evidence | [`results/cases/`](results/cases/) |
+| List cases without model access | `ai-buckingham --list` |
+| Check all supplied input/evidence hashes | `python reproduction/verify_integrity.py` |
+| Understand package boundaries and changes | [`docs/refactoring.md`](docs/refactoring.md) |
+| Understand evidence and scientific limits | [`docs/evidence.md`](docs/evidence.md) |
+| Inspect case exceptions and native thread profiles | [`docs/configuration.md`](docs/configuration.md) |
+| Check saved results against reported numerical tables | `python scripts/check_publication.py` |
+| Use or deploy the web app | [`docs/app.md`](docs/app.md) |
 
-[Full settings and case overrides](docs/PARAMETERS.md) · [Code parameter inventory](configs/parameter_inventory.csv) · [Reproducibility](docs/REPRODUCIBILITY.md)
+## Ten cases
 
-```bash
-# Numerical inference with the supplied dimensional basis; no API calls
-ai-buckingham numerical --case mhd --output results/local/mhd.json
-ai-buckingham regimes --case cess --output results/local/cess.json
+| Case | Class in the supplied study | Notebook |
+|---|---|---|
+| Magnetohydrodynamic duct flow | Type I | [mhd](notebooks/cases/mhd.ipynb) |
+| Pressure-gradient wall friction | Type I | [pressure_gradient](notebooks/cases/pressure_gradient.ipynb) |
+| Rayleigh–Bénard convection | Type I | [rayleigh_benard](notebooks/cases/rayleigh_benard.ipynb) |
+| Laser keyhole depth | Type I | [laser_keyhole](notebooks/cases/laser_keyhole.ipynb) |
+| Blasius boundary layer | Type I | [blasius](notebooks/cases/blasius.ipynb) |
+| Equivalent sand-grain roughness | Type I, two informative groups | [sandgrain](notebooks/cases/sandgrain.ipynb) |
+| Compressible velocity scaling | Type II | [velocity_scaling](notebooks/cases/velocity_scaling.ipynb) |
+| Goldenfeld rough-pipe scaling | Type II | [goldenfeld](notebooks/cases/goldenfeld.ipynb) |
+| Cess channel eddy viscosity | Multiple regimes | [cess_channel](notebooks/cases/cess_channel.ipynb) |
+| Rough circular pipe | Multiple regimes | [rough_pipe](notebooks/cases/rough_pipe.ipynb) |
 
-# Autonomous discovery; configure credentials locally first
-ai-buckingham agent --case mhd --output results/local/agent.json
+The ten CSVs contain 4,926 observations. The exact bytes and column orders are preserved from the supplied current data package. Some stages exclude zero responses; original row counts and eligible counts are recorded separately. Source descriptions, generation methods, preprocessing and licenses are documented in [`data/README.md`](data/README.md). Each case has its own [configuration](configs/cases/), rather than replacing its settings with uniform defaults.
+
+## Run a complete agent analysis
+
+Set credentials **in your process environment**, using the variable names in [`.env.example`](.env.example). The application does not automatically execute or load credential files. The LLM defaults are GPT-5 mini and the embedding model is GLM-Embedding-3. An OpenAI-compatible LLM endpoint can be selected with `OPENAI_BASE_URL`; the embedding endpoint uses `PARATERA_BASE_URL`.
+
+```python
+from ai_buckingham import initialize_models, run_case
+
+initialize_models()
+state = run_case("mhd")
 ```
 
-Copy `.env.example` to an untracked `.env` for API runs. Chat defaults to `https://api.chatanywhere.tech/v1`; embeddings use `GLM-Embedding-3` at `https://llmapi.paratera.com/v1`. `OPENAI_BASE_URL` takes precedence over `OPENAI_API_BASE`. LangSmith tracing is opt-in. The app also accepts credentials and endpoints in Run. No real credentials are distributed.
-
-## Results and reproducibility
-
-- `results/reference/`: supplied result values, including uncertainty and validation outcomes.
-- `results/computed/`: configured gradient diagnostics for all nine cases.
-- `results/previews/`: computed MI slices and reduced-budget search trajectories, with exact subset records.
-- `results/local/`: ignored local runs, including effective settings, seed and dataset hash.
-
-The seven global systems have 81 × 81 two-coefficient MI slices and recorded CMA-ES paths. Cess and pipe have separate slices and searches for each computed physical regime. These are fixed objective slices; full 30,000-generation discovery has not been rerun for every case. Original agent sessions and row-level reference labels were not supplied. The current pipe partition has 971/229 samples, compared with the supplied 975/225 result; the two records remain distinguishable.
-
-The rationalized pipe regime with supplied **R² = −3.079** remains visible as a failed validation. Held-out R² evaluates the selected representation, not the entire discovery process. Offline retrieval uses the labeled lexical path; autonomous runs expose their actual retrieval records.
-
-## Development
+Or initialize and execute explicitly through the CLI:
 
 ```bash
-python -m pip install -e ".[app,dev]"
+ai-buckingham mhd
+```
+
+New runs go to `generated/cases/<case_id>/<run_id>/` by default. A run directory is never overwritten. Package import, case listing, graph construction, and evidence browsing do not make API calls. Tracing to external telemetry is disabled unless explicitly enabled in the environment.
+
+For custom data, pass a configuration with `case_id`, `dataset`, `prompt` and `manual_hyperparams` to `ai_buckingham.cli.run_analysis`, or use the web app's **Run new analysis** page. Expected dimensions in the supplied configurations are reference metadata; they do not replace the Analyzer/Checker workflow.
+
+## Results are a shared evidence bundle
+
+Each run stores:
+
+```text
+manifest.json                  # execution identity, status, hashes and environment
+resolved_config.json           # case settings, actual plan and resolved parameters
+state.json                     # complete serializable scientific state
+events.jsonl                   # actual node updates, including revision attempts
+evidence/                      # retrieval, dimensions and numerical diagnostics
+evidence/optimization_trace.jsonl
+tables/                        # numerical exports
+figures/                       # original plots, with vector exports where available
+report.html                    # actual recorded stage cards, readable without Jupyter
+report.md
+```
+
+The CMA-ES viewer shows **actual generations**: best and population objective, step size, evaluations, coefficient vectors and search identity. The objective includes the original penalties and must not automatically be interpreted as mutual information. Scalar or direct searches have endpoints, not invented generations. See [`docs/evidence.md`](docs/evidence.md).
+
+Included new executions are identified as new runs. They are not relabeled as the original manuscript executions. Every available historical comparison remains separately identified and hash-locked.
+
+This prepared snapshot includes **10 verified completed live case runs and 9,853 actual CMA-ES generations**. It contains one reviewed execution per case. All 309 numerical-publication acceptance checks pass, covering reported stage MI, epsilon, combined uncertainty, R², group counts and candidate partition counts. The final input assignments match the reference SI dimensions, and the dimensional bases pass null-space checks. See [`docs/validation/publication_alignment.json`](docs/validation/publication_alignment.json), [`results/validation.json`](results/validation.json) and the per-mechanism [`results/summary.csv`](results/summary.csv).
+
+Five MI landscapes are included in [`results/mi_landscapes/`](results/mi_landscapes/). Four are fresh searches with the supplied notebook budgets; the MHD grid overlays its actual recorded pre-sparsification trajectory. The [Sandgrain prediction comparison](results/sandgrain_prediction/) uses the same recorded 83/21 split for seven original predictors and the learned representation, with its offline refit identified separately.
+
+The [pressure-gradient Reynolds-number baseline](results/pressure_gradient_baseline/) additionally preserves all 144 source observations and their original ZPG/APG/FPG classes.
+
+Figure source tables contain the actual per-sample collapse coordinates and recorded gradient fields. Reusable offline exporters are provided as `scripts/export_plot_data.py`, `scripts/embed_saved_figures.py` and `scripts/index_results.py`; they read saved evidence without new discovery or API calls. Candidate memberships reconstructed from saved gradients are explicitly marked as offline recalculation in `results/regime_candidates/`.
+
+## Offline reproduction
+
+These commands preserve historical snapshots and write newly generated files under `generated/`:
+
+```bash
+python reproduction/verify_integrity.py
+python reproduction/rag_ablation/reproduce.py
+python reproduction/regime_comparison/reproduce.py
+python reproduction/velocity_comparison/reproduce.py
+```
+
+The MI-landscape package performs fresh optimizer searches. See its README for case names and budgets:
+
+```bash
+python reproduction/mi_landscapes/reproduce.py --help
+```
+
+Use [`environments/`](environments/) when exact historical dependency versions are needed. The dimensional-checking archive was recorded with different NumPy/Pandas versions from the numerical comparisons; upgrading or merging those environments is not part of the refactor.
+
+Reproduction coverage and the preparation-time checks are recorded in [`reproduction/publication_validation.json`](reproduction/publication_validation.json). In particular, the archive contains 600 scheduled dimensional-checking trials and 730 Checker rounds. It compares initial and revised outcomes; it is not a paired full-pipeline RAG-on/RAG-off causal experiment.
+
+## Knowledge indexes
+
+Two curated Markdown knowledge bases retain entry-level source citations. Their GLM-Embedding-3 NPZ indexes are provided under [`knowledge/indexes/`](knowledge/indexes/), with model, record count, source hash and embedding dimension metadata. Cached record vectors eliminate repeated document embedding; new semantic queries still require embedding API access.
+
+To explicitly regenerate both distributable indexes:
+
+```bash
+python scripts/build_indexes.py
+```
+
+Runtime retrieval treats supplied inputs and indexes as read-only. Missing or stale caches rebuild under `generated/cache/`; the explicit index-authoring command validates and promotes them into `knowledge/indexes/`.
+
+## Checks
+
+```bash
 python -m pytest -q
-python scripts/validate_repository.py
+python reproduction/verify_integrity.py
+python scripts/validate_results.py
+python scripts/check_app.py
 ```
 
-See [architecture](docs/ARCHITECTURE.md) and [deployment](docs/DEPLOYMENT.md). `requirements-lock.txt` records the Windows/Python 3.13 preparation environment.
+CI performs offline checks only. Complete new runs and fresh full-budget MI searches are explicit, potentially long-running operations and are not triggered by opening a page or running the tests.
 
-The public release includes source code, benchmark data, selected original figure images and an app preview. **Full manuscript documents, editable slides, authoring notebooks, credentials, environments and internal delivery files are excluded.** The release builder uses an explicit file allowlist and generates a SHA-256 manifest.
+The [preparation checks](docs/validation/) include the scientific result validation, package-install check, unit checks and API-blocked web interactions. These are local preparation results; the GitHub workflow itself has not been run on a remote repository.
 
-## Citation and rights
+## Citation and terms
 
-Use [CITATION.cff](CITATION.cff) for the software authors and title. No publication DOI is claimed. [LICENSE](LICENSE) records the current rights notice; data and third-party source material retain their existing rights.
+Use [`CITATION.cff`](CITATION.cff) to cite the software and cite the original sources of datasets you use. Original project code is under the MIT license. Third-party code and datasets retain their respective terms; see [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md). No manuscript PDFs, publisher templates, reference PDFs, or local credential files are distributed here.

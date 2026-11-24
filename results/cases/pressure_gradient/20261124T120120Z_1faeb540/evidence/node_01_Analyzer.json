@@ -1,0 +1,302 @@
+{
+  "problem_description": "Perform dimensional analysis for turbulent boundary layers under pressure gradient effects to derive the dimensionless form of the friction velocity (denoted as U_tau/U_inf). \nThis analysis uses ONLY the following 6 physical quantities as input parameters: \nthe free-stream velocity (U_inf), the kinematic viscosity (nu), the integrated mean-flow kinetic energy (MKE, defined by the integral: ∫(0 to delta) U^2 dy), the boundary layer thickness at 99% of free-stream (delta), the boundary layer displacement thickness (delta*), and the boundary layer momentum thickness (theta).",
+  "analyzed_output_var": "U_tau/U_inf",
+  "analyzed_output_reasoning": "The friction velocity normalized by free-stream velocity (U_tau/U_inf) is dimensionless; the chosen six inputs provide independent mechanical length/time scales and an integrated kinetic-energy measure sufficient for Buckingham Pi analysis.",
+  "analyzed_output_confidence": "high",
+  "analyzed_input_vars": [
+    "U_inf",
+    "nu",
+    "MKE",
+    "delta",
+    "delta*",
+    "theta"
+  ],
+  "dimension_detect": "U_inf: free_stream_velocity; Free-stream velocity magnitude far from the boundary layer (reference velocity).; named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"-1\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nnu: kinematic_viscosity; Kinematic viscosity of the fluid (momentum diffusivity per unit density).; named SI={\"M\": \"0\", \"L\": \"2\", \"T\": \"-1\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nMKE: integrated_mean_flow_kinetic_energy; Integrated mean-flow kinetic energy across the boundary layer: integral from 0 to delta of U(y)^2 dy.; named SI={\"M\": \"0\", \"L\": \"3\", \"T\": \"-2\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\ndelta: boundary_layer_thickness; Boundary-layer thickness defined at 99% of the free-stream velocity.; named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\ndelta*: displacement_thickness; Displacement thickness of the boundary layer (integral measure of mass flow deficit).; named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\ntheta: momentum_thickness; Momentum thickness of the boundary layer (integral measure of momentum deficit).; named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}",
+  "dimension_mat": "Rows = ['L', 'T']\nColumns = ['U_inf', 'nu', 'MKE', 'delta', 'delta*', 'theta']\nL: ['1', '2', '3', '1', '1', '1']\nT: ['-1', '-1', '-2', '0', '0', '0']",
+  "dimension_numK": "n=6, exact rank r=2, k=n-r=4",
+  "dimension_ledger": {
+    "output_variable_name": "U_tau/U_inf",
+    "output_variable_reasoning": "The friction velocity normalized by free-stream velocity (U_tau/U_inf) is dimensionless; the chosen six inputs provide independent mechanical length/time scales and an integrated kinetic-energy measure sufficient for Buckingham Pi analysis.",
+    "output_variable_confidence": "high",
+    "input_variable_names": [
+      "U_inf",
+      "nu",
+      "MKE",
+      "delta",
+      "delta*",
+      "theta"
+    ],
+    "variables": [
+      {
+        "csv_name": "U_inf",
+        "quantity_name": "free_stream_velocity",
+        "physical_definition": "Free-stream velocity magnitude far from the boundary layer (reference velocity).",
+        "si_exponents": {
+          "M": "0",
+          "L": "1",
+          "T": "-1",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "nu",
+        "quantity_name": "kinematic_viscosity",
+        "physical_definition": "Kinematic viscosity of the fluid (momentum diffusivity per unit density).",
+        "si_exponents": {
+          "M": "0",
+          "L": "2",
+          "T": "-1",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "MKE",
+        "quantity_name": "integrated_mean_flow_kinetic_energy",
+        "physical_definition": "Integrated mean-flow kinetic energy across the boundary layer: integral from 0 to delta of U(y)^2 dy.",
+        "si_exponents": {
+          "M": "0",
+          "L": "3",
+          "T": "-2",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "delta",
+        "quantity_name": "boundary_layer_thickness",
+        "physical_definition": "Boundary-layer thickness defined at 99% of the free-stream velocity.",
+        "si_exponents": {
+          "M": "0",
+          "L": "1",
+          "T": "0",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "delta*",
+        "quantity_name": "displacement_thickness",
+        "physical_definition": "Displacement thickness of the boundary layer (integral measure of mass flow deficit).",
+        "si_exponents": {
+          "M": "0",
+          "L": "1",
+          "T": "0",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "theta",
+        "quantity_name": "momentum_thickness",
+        "physical_definition": "Momentum thickness of the boundary layer (integral measure of momentum deficit).",
+        "si_exponents": {
+          "M": "0",
+          "L": "1",
+          "T": "0",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      }
+    ]
+  },
+  "dimension_ledger_sha256": "32e7bebed44aff7ac841e63852b7f3b8d390c15dc10e7d1b72d029cd2186553c",
+  "dimension_contract": {
+    "ledger_sha256": "32e7bebed44aff7ac841e63852b7f3b8d390c15dc10e7d1b72d029cd2186553c",
+    "status": "complete",
+    "var_names": [
+      "U_inf",
+      "nu",
+      "MKE",
+      "delta",
+      "delta*",
+      "theta"
+    ],
+    "output_var": "U_tau/U_inf",
+    "n": 6,
+    "r": 2,
+    "k": 4,
+    "row_order": [
+      "L",
+      "T"
+    ],
+    "D_exact": [
+      [
+        "1",
+        "2",
+        "3",
+        "1",
+        "1",
+        "1"
+      ],
+      [
+        "-1",
+        "-1",
+        "-2",
+        "0",
+        "0",
+        "0"
+      ]
+    ],
+    "D_in": [
+      [
+        1.0,
+        2.0,
+        3.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      [
+        -1.0,
+        -1.0,
+        -2.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    ],
+    "unknown_coordinates": [],
+    "physical_correctness_scope": "Structure/rank only; physical assignments require audit and evidence."
+  },
+  "dimension_audit": null,
+  "run_provenance": {
+    "run_id": "b0bc3b9f-f84a-467b-a56d-533e99b6d726",
+    "release": "ai-buckingham",
+    "engine_sha256": "b48541e45921683807e5cf92167464e02f0a0c759127fceeab8ec9494e77c114",
+    "started_utc": "2026-11-24T12:01:24Z",
+    "finished_utc": null,
+    "status": "running",
+    "dataset": {
+      "name": "pressure_gradient.csv",
+      "sha256": "a0fb4fc72d148bad914a890c96c163703695412008b757defbe72cd9e277c818"
+    },
+    "problem_sha256": "2a030f4a0bbe581b67c3bb6386da68cb3bcdb0a197a46774893c2db6acfcbf5b",
+    "manual_hyperparams_sha256": "ca7fec1ab00ac052512f93eccec8235f7e6a3ac8bc34ff28f2f8363f0c9ca05c",
+    "model_configuration": {
+      "analyzer": "gpt-5-mini",
+      "checker": "gpt-5-mini",
+      "planner": "gpt-5-mini",
+      "interpretation": "gpt-5-mini",
+      "output_binding_checker": "gpt-5-mini"
+    },
+    "package_versions": {
+      "numpy": "2.4.0",
+      "pandas": "2.3.3",
+      "scipy": "1.16.3",
+      "sympy": "1.14.0",
+      "scikit-learn": "1.8.0",
+      "cma": "4.4.4",
+      "pydantic": "2.12.5",
+      "openai": "2.14.0",
+      "httpx": "0.28.1",
+      "langchain-core": "1.2.5",
+      "langchain-openai": "1.1.6",
+      "langgraph": "1.0.5"
+    },
+    "tracing_enabled": false,
+    "wall_seconds": 23.976854699999876,
+    "node_timings": [
+      {
+        "node": "Analyzer",
+        "visit": 1,
+        "duration_seconds": 23.97679620000008,
+        "status": "returned",
+        "error_type": null
+      }
+    ],
+    "http_attempts": [
+      {
+        "attempt_id": "f819797f-7518-4d67-b376-4b705dd3b1bd",
+        "node": "Analyzer",
+        "node_visit": 1,
+        "kind": "llm",
+        "requested_model": "gpt-5-mini",
+        "response_model": "gpt-5-mini-2025-08-07",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 16.087210199999845,
+        "started_utc": "2026-11-24T12:01:24Z",
+        "input_tokens": 881,
+        "output_tokens": 1532,
+        "total_tokens": 2413,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 1024,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "a417213d6624e5df1bf874ef19cb7f61cdda5da68aa837aa57c4216f5f7399eb",
+        "response_id": "chatcmpl-EnjV5qvOZqLPPZRIESFAqhFk8GY9C"
+      },
+      {
+        "attempt_id": "abc55d04-919e-4b67-b5d8-ca643b1cb7df",
+        "node": "Output_Binding_Checker",
+        "node_visit": 1,
+        "kind": "llm",
+        "requested_model": "gpt-5-mini",
+        "response_model": "gpt-5-mini-2025-08-07",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 7.824710300000106,
+        "started_utc": "2026-11-24T12:01:40Z",
+        "input_tokens": 368,
+        "output_tokens": 857,
+        "total_tokens": 1225,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 832,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "f287cbb3c2eacda49f977f9480406613dd1862bff88740d0ef79a744bd32705c",
+        "response_id": "chatcmpl-EnjVLfz11ZNWQayIDK2ETJhvFkGcX"
+      }
+    ],
+    "observation_warnings": [],
+    "output_binding_events": [
+      {
+        "action": "verify",
+        "submitted": "U_tau/U_inf",
+        "selected": "U_tau/U_inf",
+        "status": "confirmed",
+        "duration_seconds": 7.826994100000093,
+        "analyzer_visit": 1
+      }
+    ],
+    "workflow_status": null,
+    "scientific_status": null,
+    "totals": {
+      "http_attempt_count": 2,
+      "llm_http_attempt_count": 2,
+      "embedding_http_attempt_count": 0,
+      "usage_missing_attempt_count": 0,
+      "http_duration_seconds_sum": 23.91192049999995,
+      "node_duration_seconds_sum": 23.97679620000008,
+      "http_success_count": 2,
+      "http_error_count": 0,
+      "transport_error_count": 0,
+      "known_input_tokens": 1249,
+      "input_tokens_missing_count": 0,
+      "known_output_tokens": 2389,
+      "output_tokens_missing_count": 0,
+      "known_total_tokens": 3638,
+      "total_tokens_missing_count": 0,
+      "known_cached_input_tokens": 0,
+      "cached_input_tokens_missing_count": 0,
+      "known_reasoning_tokens": 1856,
+      "reasoning_tokens_missing_count": 0
+    }
+  }
+}

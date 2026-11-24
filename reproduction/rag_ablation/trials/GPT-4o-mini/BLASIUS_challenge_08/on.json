@@ -1,0 +1,2841 @@
+{
+  "pair_id": "BLASIUS_challenge_08",
+  "arm": "on",
+  "analyzer_origin": "live_fresh_checkpoint",
+  "initial_ledger_sha256": "21b31e3d261d39a597800403d1c81452062ccf45b1159e239ba5fda7f1e52d8a",
+  "checker_rounds": [
+    {
+      "gate": {
+        "gate_status": "RETRY",
+        "ledger_sha256": "21b31e3d261d39a597800403d1c81452062ccf45b1159e239ba5fda7f1e52d8a",
+        "checker_audit": {
+          "ledger_sha256": "21b31e3d261d39a597800403d1c81452062ccf45b1159e239ba5fda7f1e52d8a",
+          "variables": [
+            {
+              "csv_name": "U",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "-1",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_free_stream_velocity",
+                "pq_velocity"
+              ],
+              "reason": "The problem defines U explicitly as the free-stream velocity (velocity of the undisturbed flow outside the boundary layer). The KB record pq_free_stream_velocity is the canonical entry for free-stream/edge velocity and gives si_dimension L T^-1 (dimension_vector [0,1,-1,0,0,0,0]), which matches the candidate exponents (L=1, T=-1, all other base exponents 0). pq_velocity is the general velocity entry that corroborates the same base dimensions. These records directly apply because they define the physical quantity named U in the original boundary-layer problem, not a different quantity."
+            },
+            {
+              "csv_name": "nu",
+              "before_si_exponents": {
+                "M": "1",
+                "L": "2",
+                "T": "-1",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "CONFLICT",
+              "suggested_si_exponents": {
+                "M": "0",
+                "L": "2",
+                "T": "-1",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_kinematic_viscosity"
+              ],
+              "reason": "The problem statement defines nu as the kinematic viscosity (dynamic viscosity divided by mass density). The KB record pq_kinematic_viscosity explicitly defines kinematic viscosity with si_dimension L^2 T^-1 and dimension_vector [0,2,-1,0,0,0,0]. This record applies because it is the canonical definition for the symbol nu used in fluid mechanics and boundary-layer theory. The candidate ledger incorrectly includes a mass exponent M=1, which conflicts with the kinematic-viscosity definition. All known coordinates (L=2, T=-1, and zero for other base dimensions) are provided by pq_kinematic_viscosity."
+            },
+            {
+              "csv_name": "x",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "0",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_streamwise_distance"
+              ],
+              "reason": "The variable x in the original problem is the streamwise distance from the leading edge. The KB record pq_streamwise_distance is the canonical entry for that coordinate and gives si_dimension L (dimension_vector [0,1,0,0,0,0,0]), matching the candidate exponents (L=1, all other base exponents 0). This record is directly applicable because it defines the same geometric coordinate used in boundary-layer formulations."
+            },
+            {
+              "csv_name": "y",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "0",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_wall_normal_distance"
+              ],
+              "reason": "The variable y is defined in the problem as the wall-normal distance. The KB record pq_wall_normal_distance is the canonical entry for the distance measured normal to a wall and gives si_dimension L (dimension_vector [0,1,0,0,0,0,0]), which matches the candidate exponents. This entry applies directly to the wall-normal coordinate used in boundary-layer theory."
+            }
+          ]
+        },
+        "variable_results": [
+          {
+            "csv_name": "U",
+            "decision": "PASSED",
+            "before": {
+              "M": "0",
+              "L": "1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "suggested": {
+              "M": "0",
+              "L": "1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "coordinate_diff": {},
+            "issues": [],
+            "referenced_entry_ids": [
+              "pq_free_stream_velocity",
+              "pq_velocity"
+            ],
+            "selected_entities": [
+              {
+                "entry_id": "pq_free_stream_velocity",
+                "canonical_quantity": "free-stream velocity",
+                "source_identifier": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/"
+              },
+              {
+                "entry_id": "pq_velocity",
+                "canonical_quantity": "velocity",
+                "source_identifier": "doi:10.59161/AUEZ1291"
+              }
+            ],
+            "cited_reference_si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "known_coordinate_conflicts_with_reference": {}
+          },
+          {
+            "csv_name": "nu",
+            "decision": "CONFLICT",
+            "before": {
+              "M": "1",
+              "L": "2",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "suggested": {
+              "M": "0",
+              "L": "2",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "coordinate_diff": {
+              "M": {
+                "before": "1",
+                "suggested": "0"
+              }
+            },
+            "issues": [
+              "Checker decision CONFLICT"
+            ],
+            "referenced_entry_ids": [
+              "pq_kinematic_viscosity"
+            ],
+            "selected_entities": [
+              {
+                "entry_id": "pq_kinematic_viscosity",
+                "canonical_quantity": "kinematic viscosity",
+                "source_identifier": "doi:10.6028/NIST.SP.811e2008"
+              }
+            ],
+            "cited_reference_si_exponents": {
+              "M": "0",
+              "L": "2",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "known_coordinate_conflicts_with_reference": {}
+          },
+          {
+            "csv_name": "x",
+            "decision": "PASSED",
+            "before": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "suggested": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "coordinate_diff": {},
+            "issues": [],
+            "referenced_entry_ids": [
+              "pq_streamwise_distance"
+            ],
+            "selected_entities": [
+              {
+                "entry_id": "pq_streamwise_distance",
+                "canonical_quantity": "streamwise distance",
+                "source_identifier": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/"
+              }
+            ],
+            "cited_reference_si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "known_coordinate_conflicts_with_reference": {}
+          },
+          {
+            "csv_name": "y",
+            "decision": "PASSED",
+            "before": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "suggested": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "coordinate_diff": {},
+            "issues": [],
+            "referenced_entry_ids": [
+              "pq_wall_normal_distance"
+            ],
+            "selected_entities": [
+              {
+                "entry_id": "pq_wall_normal_distance",
+                "canonical_quantity": "wall-normal distance",
+                "source_identifier": "https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html"
+              }
+            ],
+            "cited_reference_si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "known_coordinate_conflicts_with_reference": {}
+          }
+        ],
+        "issues": [
+          "nu: Checker decision CONFLICT"
+        ],
+        "referenced_records": [
+          {
+            "csv_name": "U",
+            "record": {
+              "variable_name": "U",
+              "entry_id": "pq_free_stream_velocity",
+              "canonical_quantity": "free-stream velocity",
+              "symbols": "U_inf; U∞; U_e; Ue",
+              "aliases": "external velocity; edge velocity; freestream speed",
+              "definition": "Velocity of the undisturbed flow outside a boundary layer.",
+              "si_dimension": "L T^-1",
+              "dimension_vector": "[0, 1, -1, 0, 0, 0, 0]",
+              "si_unit": "m s^-1",
+              "domain": "fluid mechanics; boundary layers",
+              "ambiguity_notes": "",
+              "source": "NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer",
+              "source_identifier": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/",
+              "confidence": "high",
+              "lexical_score": 0.3246753246753247,
+              "semantic_score": 0.6028424398298569,
+              "hybrid_score": 0.42203381497941095,
+              "retrieval_mode": "hybrid"
+            }
+          },
+          {
+            "csv_name": "U",
+            "record": {
+              "variable_name": "U",
+              "entry_id": "pq_velocity",
+              "canonical_quantity": "velocity",
+              "symbols": "u; U; v; V",
+              "aliases": "speed; flow velocity; fluid velocity",
+              "definition": "Rate of displacement with time.",
+              "si_dimension": "L T^-1",
+              "dimension_vector": "[0, 1, -1, 0, 0, 0, 0]",
+              "si_unit": "m s^-1",
+              "domain": "mechanics; fluid mechanics",
+              "ambiguity_notes": "",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5607894227979386,
+              "hybrid_score": 0.8462762979792785,
+              "retrieval_mode": "hybrid"
+            }
+          },
+          {
+            "csv_name": "nu",
+            "record": {
+              "variable_name": "nu",
+              "entry_id": "pq_kinematic_viscosity",
+              "canonical_quantity": "kinematic viscosity",
+              "symbols": "nu; ν",
+              "aliases": "momentum diffusivity",
+              "definition": "Dynamic viscosity divided by mass density.",
+              "si_dimension": "L^2 T^-1",
+              "dimension_vector": "[0, 2, -1, 0, 0, 0, 0]",
+              "si_unit": "m^2 s^-1",
+              "domain": "fluid mechanics",
+              "ambiguity_notes": "Do not confuse lowercase nu/ν with the Nusselt number Nu or a generic frequency symbol.",
+              "source": "NIST SP 811, Guide for the Use of the International System of Units (SI)",
+              "source_identifier": "doi:10.6028/NIST.SP.811e2008",
+              "confidence": "curated",
+              "lexical_score": 1.0,
+              "semantic_score": 0.6074641734894954,
+              "hybrid_score": 0.8626124607213235,
+              "retrieval_mode": "hybrid"
+            }
+          },
+          {
+            "csv_name": "x",
+            "record": {
+              "variable_name": "x",
+              "entry_id": "pq_streamwise_distance",
+              "canonical_quantity": "streamwise distance",
+              "symbols": "x",
+              "aliases": "distance from leading edge; streamwise coordinate",
+              "definition": "Distance measured along the mean flow direction.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "boundary layers; fluid mechanics",
+              "ambiguity_notes": "",
+              "source": "NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer",
+              "source_identifier": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.6169092818519966,
+              "hybrid_score": 0.8659182486481988,
+              "retrieval_mode": "hybrid"
+            }
+          },
+          {
+            "csv_name": "y",
+            "record": {
+              "variable_name": "y",
+              "entry_id": "pq_wall_normal_distance",
+              "canonical_quantity": "wall-normal distance",
+              "symbols": "y",
+              "aliases": "distance from wall; wall-normal coordinate",
+              "definition": "Distance measured normal to a wall.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "wall-bounded flows",
+              "ambiguity_notes": "",
+              "source": "NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions",
+              "source_identifier": "https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5756441186962156,
+              "hybrid_score": 0.8514754415436755,
+              "retrieval_mode": "hybrid"
+            }
+          }
+        ],
+        "feedback": "Typed ledger 21b31e3d261d39a597800403d1c81452062ccf45b1159e239ba5fda7f1e52d8a; program gate=RETRY\nVariable U: decision=PASSED; reason=The problem defines U explicitly as the free-stream velocity (velocity of the undisturbed flow outside the boundary layer). The KB record pq_free_stream_velocity is the canonical entry for free-stream/edge velocity and gives si_dimension L T^-1 (dimension_vector [0,1,-1,0,0,0,0]), which matches the candidate exponents (L=1, T=-1, all other base exponents 0). pq_velocity is the general velocity entry that corroborates the same base dimensions. These records directly apply because they define the physical quantity named U in the original boundary-layer problem, not a different quantity.\nActual named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"-1\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"-1\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_free_stream_velocity\", \"canonical_quantity\": \"free-stream velocity\", \"source_identifier\": \"https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/\"}, {\"entry_id\": \"pq_velocity\", \"canonical_quantity\": \"velocity\", \"source_identifier\": \"doi:10.59161/AUEZ1291\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for U:\n{\"aliases\": \"external velocity; edge velocity; freestream speed\", \"ambiguity_notes\": \"\", \"canonical_quantity\": \"free-stream velocity\", \"confidence\": \"high\", \"definition\": \"Velocity of the undisturbed flow outside a boundary layer.\", \"dimension_vector\": \"[0, 1, -1, 0, 0, 0, 0]\", \"domain\": \"fluid mechanics; boundary layers\", \"entry_id\": \"pq_free_stream_velocity\", \"hybrid_score\": 0.42203381497941095, \"lexical_score\": 0.3246753246753247, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.6028424398298569, \"si_dimension\": \"L T^-1\", \"si_unit\": \"m s^-1\", \"source\": \"NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer\", \"source_identifier\": \"https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/\", \"symbols\": \"U_inf; U∞; U_e; Ue\", \"variable_name\": \"U\"}\n\nReferenced KB original record for U:\n{\"aliases\": \"speed; flow velocity; fluid velocity\", \"ambiguity_notes\": \"\", \"canonical_quantity\": \"velocity\", \"confidence\": \"high\", \"definition\": \"Rate of displacement with time.\", \"dimension_vector\": \"[0, 1, -1, 0, 0, 0, 0]\", \"domain\": \"mechanics; fluid mechanics\", \"entry_id\": \"pq_velocity\", \"hybrid_score\": 0.8462762979792785, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.5607894227979386, \"si_dimension\": \"L T^-1\", \"si_unit\": \"m s^-1\", \"source\": \"BIPM SI Brochure, 9th ed. (updated 2026)\", \"source_identifier\": \"doi:10.59161/AUEZ1291\", \"symbols\": \"u; U; v; V\", \"variable_name\": \"U\"}\n\nVariable nu: decision=CONFLICT; reason=The problem statement defines nu as the kinematic viscosity (dynamic viscosity divided by mass density). The KB record pq_kinematic_viscosity explicitly defines kinematic viscosity with si_dimension L^2 T^-1 and dimension_vector [0,2,-1,0,0,0,0]. This record applies because it is the canonical definition for the symbol nu used in fluid mechanics and boundary-layer theory. The candidate ledger incorrectly includes a mass exponent M=1, which conflicts with the kinematic-viscosity definition. All known coordinates (L=2, T=-1, and zero for other base dimensions) are provided by pq_kinematic_viscosity.\nActual named SI={\"M\": \"1\", \"L\": \"2\", \"T\": \"-1\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"0\", \"L\": \"2\", \"T\": \"-1\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={\"M\": {\"before\": \"1\", \"suggested\": \"0\"}}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_kinematic_viscosity\", \"canonical_quantity\": \"kinematic viscosity\", \"source_identifier\": \"doi:10.6028/NIST.SP.811e2008\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[\"Checker decision CONFLICT\"]\n\nReferenced KB original record for nu:\n{\"aliases\": \"momentum diffusivity\", \"ambiguity_notes\": \"Do not confuse lowercase nu/ν with the Nusselt number Nu or a generic frequency symbol.\", \"canonical_quantity\": \"kinematic viscosity\", \"confidence\": \"curated\", \"definition\": \"Dynamic viscosity divided by mass density.\", \"dimension_vector\": \"[0, 2, -1, 0, 0, 0, 0]\", \"domain\": \"fluid mechanics\", \"entry_id\": \"pq_kinematic_viscosity\", \"hybrid_score\": 0.8626124607213235, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.6074641734894954, \"si_dimension\": \"L^2 T^-1\", \"si_unit\": \"m^2 s^-1\", \"source\": \"NIST SP 811, Guide for the Use of the International System of Units (SI)\", \"source_identifier\": \"doi:10.6028/NIST.SP.811e2008\", \"symbols\": \"nu; ν\", \"variable_name\": \"nu\"}\n\nVariable x: decision=PASSED; reason=The variable x in the original problem is the streamwise distance from the leading edge. The KB record pq_streamwise_distance is the canonical entry for that coordinate and gives si_dimension L (dimension_vector [0,1,0,0,0,0,0]), matching the candidate exponents (L=1, all other base exponents 0). This record is directly applicable because it defines the same geometric coordinate used in boundary-layer formulations.\nActual named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_streamwise_distance\", \"canonical_quantity\": \"streamwise distance\", \"source_identifier\": \"https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for x:\n{\"aliases\": \"distance from leading edge; streamwise coordinate\", \"ambiguity_notes\": \"\", \"canonical_quantity\": \"streamwise distance\", \"confidence\": \"high\", \"definition\": \"Distance measured along the mean flow direction.\", \"dimension_vector\": \"[0, 1, 0, 0, 0, 0, 0]\", \"domain\": \"boundary layers; fluid mechanics\", \"entry_id\": \"pq_streamwise_distance\", \"hybrid_score\": 0.8659182486481988, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.6169092818519966, \"si_dimension\": \"L\", \"si_unit\": \"m\", \"source\": \"NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer\", \"source_identifier\": \"https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/\", \"symbols\": \"x\", \"variable_name\": \"x\"}\n\nVariable y: decision=PASSED; reason=The variable y is defined in the problem as the wall-normal distance. The KB record pq_wall_normal_distance is the canonical entry for the distance measured normal to a wall and gives si_dimension L (dimension_vector [0,1,0,0,0,0,0]), which matches the candidate exponents. This entry applies directly to the wall-normal coordinate used in boundary-layer theory.\nActual named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_wall_normal_distance\", \"canonical_quantity\": \"wall-normal distance\", \"source_identifier\": \"https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for y:\n{\"aliases\": \"distance from wall; wall-normal coordinate\", \"ambiguity_notes\": \"\", \"canonical_quantity\": \"wall-normal distance\", \"confidence\": \"high\", \"definition\": \"Distance measured normal to a wall.\", \"dimension_vector\": \"[0, 1, 0, 0, 0, 0, 0]\", \"domain\": \"wall-bounded flows\", \"entry_id\": \"pq_wall_normal_distance\", \"hybrid_score\": 0.8514754415436755, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.5756441186962156, \"si_dimension\": \"L\", \"si_unit\": \"m\", \"source\": \"NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions\", \"source_identifier\": \"https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html\", \"symbols\": \"y\", \"variable_name\": \"y\"}",
+        "entity_policy": "Only Checker-selected visible record IDs identify cited canonical entities; no unselected-record or Analyzer-name anchor. Equal vectors do not establish equal physical entities.",
+        "physical_correctness_scope": "A passed contract is not a theorem of physical correctness. Record ID and coordinate checks establish citation consistency; semantic relevance/applicability in the reason and internal-reasoning physics remain model judgements."
+      },
+      "gate_status": "RETRY",
+      "candidate_ledger": {
+        "output_variable_name": "u/U",
+        "output_variable_reasoning": "The output variable u/U is a dimensionless ratio of the streamwise velocity to the free-stream velocity, which is derived from the input parameters.",
+        "output_variable_confidence": "high",
+        "input_variable_names": [
+          "U",
+          "nu",
+          "x",
+          "y"
+        ],
+        "variables": [
+          {
+            "csv_name": "U",
+            "quantity_name": "free-stream velocity",
+            "physical_definition": "The velocity of the fluid far from the boundary layer.",
+            "si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "nu",
+            "quantity_name": "kinematic viscosity",
+            "physical_definition": "The kinematic viscosity of the fluid, defined as dynamic viscosity divided by fluid density.",
+            "si_exponents": {
+              "M": "1",
+              "L": "2",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "x",
+            "quantity_name": "streamwise distance",
+            "physical_definition": "The distance from the leading edge of the flat plate.",
+            "si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "y",
+            "quantity_name": "wall-normal distance",
+            "physical_definition": "The distance normal to the wall of the flat plate.",
+            "si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          }
+        ]
+      },
+      "ledger_sha256": "21b31e3d261d39a597800403d1c81452062ccf45b1159e239ba5fda7f1e52d8a",
+      "retrieval": {
+        "status": "success",
+        "kb_path": "Q:\\Chengao_File\\CodeX_\\RAG_ablation\\261117_RAG_ablation\\reference\\Data_csv\\dimensional_physical_quantities.md",
+        "kb_sha256": "64d8ebb7988c9157401c6b023add3ed8681651bc6d4d1d1bbb7a7aa452fc9f60",
+        "embedding_cache_path": "Q:\\Chengao_File\\CodeX_\\RAG_ablation\\261117_RAG_ablation\\private_blasius_rerun\\GPT-4o-mini\\.work\\physical_quantity_index.npz",
+        "embedding_cache_source": null,
+        "embedding_model": "GLM-Embedding-3",
+        "embedding_provider": "Paratera",
+        "embedding_base_url": "https://llmapi.paratera.com/v1",
+        "embedding_status": "cache",
+        "retrieval_modes": [
+          "hybrid"
+        ],
+        "retrieved_variables": [
+          "U",
+          "nu",
+          "x",
+          "y"
+        ],
+        "n_retrieved_records": 12,
+        "top_k_per_variable": 3,
+        "max_evidence_rows": 30,
+        "lexical_weight": 0.65,
+        "semantic_weight": 0.35,
+        "min_hybrid_score": 0.22,
+        "allow_lexical_fallback": false,
+        "matches_by_variable": {
+          "U": [
+            {
+              "variable_name": "U",
+              "entry_id": "pq_mean_flow_velocity",
+              "canonical_quantity": "mean flow velocity",
+              "symbols": "U; U_m; Umean; V",
+              "aliases": "bulk velocity; mean velocity; average flow velocity",
+              "definition": "Mean or bulk velocity used to characterize a flow.",
+              "si_dimension": "L T^-1",
+              "dimension_vector": "[0, 1, -1, 0, 0, 0, 0]",
+              "si_unit": "m s^-1",
+              "domain": "fluid mechanics",
+              "ambiguity_notes": "",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5669097392837952,
+              "hybrid_score": 0.8484184087493283,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "U",
+              "entry_id": "pq_velocity",
+              "canonical_quantity": "velocity",
+              "symbols": "u; U; v; V",
+              "aliases": "speed; flow velocity; fluid velocity",
+              "definition": "Rate of displacement with time.",
+              "si_dimension": "L T^-1",
+              "dimension_vector": "[0, 1, -1, 0, 0, 0, 0]",
+              "si_unit": "m s^-1",
+              "domain": "mechanics; fluid mechanics",
+              "ambiguity_notes": "",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5607894227979386,
+              "hybrid_score": 0.8462762979792785,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "U",
+              "entry_id": "pq_free_stream_velocity",
+              "canonical_quantity": "free-stream velocity",
+              "symbols": "U_inf; U∞; U_e; Ue",
+              "aliases": "external velocity; edge velocity; freestream speed",
+              "definition": "Velocity of the undisturbed flow outside a boundary layer.",
+              "si_dimension": "L T^-1",
+              "dimension_vector": "[0, 1, -1, 0, 0, 0, 0]",
+              "si_unit": "m s^-1",
+              "domain": "fluid mechanics; boundary layers",
+              "ambiguity_notes": "",
+              "source": "NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer",
+              "source_identifier": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/",
+              "confidence": "high",
+              "lexical_score": 0.3246753246753247,
+              "semantic_score": 0.6028424398298569,
+              "hybrid_score": 0.42203381497941095,
+              "retrieval_mode": "hybrid"
+            }
+          ],
+          "nu": [
+            {
+              "variable_name": "nu",
+              "entry_id": "pq_kinematic_viscosity",
+              "canonical_quantity": "kinematic viscosity",
+              "symbols": "nu; ν",
+              "aliases": "momentum diffusivity",
+              "definition": "Dynamic viscosity divided by mass density.",
+              "si_dimension": "L^2 T^-1",
+              "dimension_vector": "[0, 2, -1, 0, 0, 0, 0]",
+              "si_unit": "m^2 s^-1",
+              "domain": "fluid mechanics",
+              "ambiguity_notes": "Do not confuse lowercase nu/ν with the Nusselt number Nu or a generic frequency symbol.",
+              "source": "NIST SP 811, Guide for the Use of the International System of Units (SI)",
+              "source_identifier": "doi:10.6028/NIST.SP.811e2008",
+              "confidence": "curated",
+              "lexical_score": 1.0,
+              "semantic_score": 0.6074641734894954,
+              "hybrid_score": 0.8626124607213235,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "nu",
+              "entry_id": "pq_free_stream_velocity",
+              "canonical_quantity": "free-stream velocity",
+              "symbols": "U_inf; U∞; U_e; Ue",
+              "aliases": "external velocity; edge velocity; freestream speed",
+              "definition": "Velocity of the undisturbed flow outside a boundary layer.",
+              "si_dimension": "L T^-1",
+              "dimension_vector": "[0, 1, -1, 0, 0, 0, 0]",
+              "si_unit": "m s^-1",
+              "domain": "fluid mechanics; boundary layers",
+              "ambiguity_notes": "",
+              "source": "NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer",
+              "source_identifier": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/",
+              "confidence": "high",
+              "lexical_score": 0.3246753246753247,
+              "semantic_score": 0.6085059312392973,
+              "hybrid_score": 0.42401603697271506,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "nu",
+              "entry_id": "pq_streamwise_distance",
+              "canonical_quantity": "streamwise distance",
+              "symbols": "x",
+              "aliases": "distance from leading edge; streamwise coordinate",
+              "definition": "Distance measured along the mean flow direction.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "boundary layers; fluid mechanics",
+              "ambiguity_notes": "",
+              "source": "NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer",
+              "source_identifier": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/",
+              "confidence": "high",
+              "lexical_score": 0.31690140845070425,
+              "semantic_score": 0.5683899914808885,
+              "hybrid_score": 0.40492241251126876,
+              "retrieval_mode": "hybrid"
+            }
+          ],
+          "x": [
+            {
+              "variable_name": "x",
+              "entry_id": "pq_streamwise_distance",
+              "canonical_quantity": "streamwise distance",
+              "symbols": "x",
+              "aliases": "distance from leading edge; streamwise coordinate",
+              "definition": "Distance measured along the mean flow direction.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "boundary layers; fluid mechanics",
+              "ambiguity_notes": "",
+              "source": "NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer",
+              "source_identifier": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.6169092818519966,
+              "hybrid_score": 0.8659182486481988,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "x",
+              "entry_id": "pq_free_stream_velocity",
+              "canonical_quantity": "free-stream velocity",
+              "symbols": "U_inf; U∞; U_e; Ue",
+              "aliases": "external velocity; edge velocity; freestream speed",
+              "definition": "Velocity of the undisturbed flow outside a boundary layer.",
+              "si_dimension": "L T^-1",
+              "dimension_vector": "[0, 1, -1, 0, 0, 0, 0]",
+              "si_unit": "m s^-1",
+              "domain": "fluid mechanics; boundary layers",
+              "ambiguity_notes": "",
+              "source": "NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer",
+              "source_identifier": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/",
+              "confidence": "high",
+              "lexical_score": 0.3289473684210526,
+              "semantic_score": 0.5933197486648794,
+              "hybrid_score": 0.42147770150639197,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "x",
+              "entry_id": "pq_boundary_layer_thickness",
+              "canonical_quantity": "boundary-layer thickness",
+              "symbols": "delta; δ; delta99; δ99",
+              "aliases": "99-percent boundary-layer thickness; velocity boundary-layer thickness",
+              "definition": "Characteristic distance from a wall to the boundary-layer edge; a common operational definition is the 99-percent free-stream-velocity thickness.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "boundary layers",
+              "ambiguity_notes": "Do not confuse delta/δ with a generic increment or temperature difference.",
+              "source": "NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions",
+              "source_identifier": "https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html",
+              "confidence": "curated",
+              "lexical_score": 0.31645569620253167,
+              "semantic_score": 0.4781592641157698,
+              "hybrid_score": 0.373051944972165,
+              "retrieval_mode": "hybrid"
+            }
+          ],
+          "y": [
+            {
+              "variable_name": "y",
+              "entry_id": "pq_wall_normal_distance",
+              "canonical_quantity": "wall-normal distance",
+              "symbols": "y",
+              "aliases": "distance from wall; wall-normal coordinate",
+              "definition": "Distance measured normal to a wall.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "wall-bounded flows",
+              "ambiguity_notes": "",
+              "source": "NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions",
+              "source_identifier": "https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5756441186962156,
+              "hybrid_score": 0.8514754415436755,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "y",
+              "entry_id": "pq_mass_fraction",
+              "canonical_quantity": "mass fraction",
+              "symbols": "Y; w",
+              "aliases": "mass fraction",
+              "definition": "Ratio of constituent mass to total mass.",
+              "si_dimension": "1",
+              "dimension_vector": "[0, 0, 0, 0, 0, 0, 0]",
+              "si_unit": "1",
+              "domain": "mixtures; chemistry",
+              "ambiguity_notes": "Dimensionless ratio.",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "high",
+              "lexical_score": 0.9,
+              "semantic_score": 0.42460196579627313,
+              "hybrid_score": 0.7336106880286957,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "y",
+              "entry_id": "pq_free_stream_velocity",
+              "canonical_quantity": "free-stream velocity",
+              "symbols": "U_inf; U∞; U_e; Ue",
+              "aliases": "external velocity; edge velocity; freestream speed",
+              "definition": "Velocity of the undisturbed flow outside a boundary layer.",
+              "si_dimension": "L T^-1",
+              "dimension_vector": "[0, 1, -1, 0, 0, 0, 0]",
+              "si_unit": "m s^-1",
+              "domain": "fluid mechanics; boundary layers",
+              "ambiguity_notes": "",
+              "source": "NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer",
+              "source_identifier": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/",
+              "confidence": "high",
+              "lexical_score": 0.3289473684210526,
+              "semantic_score": 0.59031025662443,
+              "hybrid_score": 0.42042437929223475,
+              "retrieval_mode": "hybrid"
+            }
+          ]
+        },
+        "evidence_markdown": "### Input variable `U`\n- entry_id: pq_mean_flow_velocity; canonical_quantity: mean flow velocity; symbols: U; U_m; Umean; V; aliases: bulk velocity; mean velocity; average flow velocity; definition: Mean or bulk velocity used to characterize a flow.; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: fluid mechanics; ambiguity_notes: ; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_velocity; canonical_quantity: velocity; symbols: u; U; v; V; aliases: speed; flow velocity; fluid velocity; definition: Rate of displacement with time.; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: mechanics; fluid mechanics; ambiguity_notes: ; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_free_stream_velocity; canonical_quantity: free-stream velocity; symbols: U_inf; U∞; U_e; Ue; aliases: external velocity; edge velocity; freestream speed; definition: Velocity of the undisturbed flow outside a boundary layer.; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: fluid mechanics; boundary layers; ambiguity_notes: ; source: NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer; source_identifier: https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/; confidence: high\n### Input variable `nu`\n- entry_id: pq_kinematic_viscosity; canonical_quantity: kinematic viscosity; symbols: nu; ν; aliases: momentum diffusivity; definition: Dynamic viscosity divided by mass density.; si_dimension: L^2 T^-1; dimension_vector: [0, 2, -1, 0, 0, 0, 0]; si_unit: m^2 s^-1; domain: fluid mechanics; ambiguity_notes: Do not confuse lowercase nu/ν with the Nusselt number Nu or a generic frequency symbol.; source: NIST SP 811, Guide for the Use of the International System of Units (SI); source_identifier: doi:10.6028/NIST.SP.811e2008; confidence: curated\n- entry_id: pq_free_stream_velocity; canonical_quantity: free-stream velocity; symbols: U_inf; U∞; U_e; Ue; aliases: external velocity; edge velocity; freestream speed; definition: Velocity of the undisturbed flow outside a boundary layer.; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: fluid mechanics; boundary layers; ambiguity_notes: ; source: NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer; source_identifier: https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/; confidence: high\n- entry_id: pq_streamwise_distance; canonical_quantity: streamwise distance; symbols: x; aliases: distance from leading edge; streamwise coordinate; definition: Distance measured along the mean flow direction.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: boundary layers; fluid mechanics; ambiguity_notes: ; source: NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer; source_identifier: https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/; confidence: high\n### Input variable `x`\n- entry_id: pq_streamwise_distance; canonical_quantity: streamwise distance; symbols: x; aliases: distance from leading edge; streamwise coordinate; definition: Distance measured along the mean flow direction.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: boundary layers; fluid mechanics; ambiguity_notes: ; source: NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer; source_identifier: https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/; confidence: high\n- entry_id: pq_free_stream_velocity; canonical_quantity: free-stream velocity; symbols: U_inf; U∞; U_e; Ue; aliases: external velocity; edge velocity; freestream speed; definition: Velocity of the undisturbed flow outside a boundary layer.; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: fluid mechanics; boundary layers; ambiguity_notes: ; source: NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer; source_identifier: https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/; confidence: high\n- entry_id: pq_boundary_layer_thickness; canonical_quantity: boundary-layer thickness; symbols: delta; δ; delta99; δ99; aliases: 99-percent boundary-layer thickness; velocity boundary-layer thickness; definition: Characteristic distance from a wall to the boundary-layer edge; a common operational definition is the 99-percent free-stream-velocity thickness.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: boundary layers; ambiguity_notes: Do not confuse delta/δ with a generic increment or temperature difference.; source: NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions; source_identifier: https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html; confidence: curated\n### Input variable `y`\n- entry_id: pq_wall_normal_distance; canonical_quantity: wall-normal distance; symbols: y; aliases: distance from wall; wall-normal coordinate; definition: Distance measured normal to a wall.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: wall-bounded flows; ambiguity_notes: ; source: NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions; source_identifier: https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html; confidence: high\n- entry_id: pq_mass_fraction; canonical_quantity: mass fraction; symbols: Y; w; aliases: mass fraction; definition: Ratio of constituent mass to total mass.; si_dimension: 1; dimension_vector: [0, 0, 0, 0, 0, 0, 0]; si_unit: 1; domain: mixtures; chemistry; ambiguity_notes: Dimensionless ratio.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_free_stream_velocity; canonical_quantity: free-stream velocity; symbols: U_inf; U∞; U_e; Ue; aliases: external velocity; edge velocity; freestream speed; definition: Velocity of the undisturbed flow outside a boundary layer.; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: fluid mechanics; boundary layers; ambiguity_notes: ; source: NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer; source_identifier: https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/; confidence: high",
+        "evidence_records_visible_by_variable": {
+          "U": [
+            "pq_mean_flow_velocity",
+            "pq_velocity",
+            "pq_free_stream_velocity"
+          ],
+          "nu": [
+            "pq_kinematic_viscosity",
+            "pq_free_stream_velocity",
+            "pq_streamwise_distance"
+          ],
+          "x": [
+            "pq_streamwise_distance",
+            "pq_free_stream_velocity",
+            "pq_boundary_layer_thickness"
+          ],
+          "y": [
+            "pq_wall_normal_distance",
+            "pq_mass_fraction",
+            "pq_free_stream_velocity"
+          ]
+        },
+        "queries_by_variable": {
+          "U": "Target CSV variable: U\nLocal problem description: Perform dimensional analysis for the Blasius laminar boundary layer over a flat plate to derive the dimensionless form of the streamwise velocity (denoted as u/U). the free-stream velocity (U), the transport coefficient nu defined as dynamic viscosity divided by the fluid density, the streamwise distance from the leading edge (x), and the wall-normal distance (y).\nProblem domain/context: Perform dimensional analysis for the Blasius laminar boundary layer over a flat plate to derive the dimensionless form of the streamwise velocity (denoted as u/U).\nAnalyzer interpretation: exact_column: U; quantity_name: free-stream velocity; physical_definition: The velocity of the fluid far from the boundary layer.",
+          "nu": "Target CSV variable: nu\nLocal problem description: the free-stream velocity (U), the transport coefficient nu defined as dynamic viscosity divided by the fluid density, the streamwise distance from the leading edge (x), and the wall-normal distance (y).\nProblem domain/context: Perform dimensional analysis for the Blasius laminar boundary layer over a flat plate to derive the dimensionless form of the streamwise velocity (denoted as u/U).\nAnalyzer interpretation: exact_column: nu; quantity_name: kinematic viscosity; physical_definition: The kinematic viscosity of the fluid, defined as dynamic viscosity divided by fluid density.",
+          "x": "Target CSV variable: x\nLocal problem description: the free-stream velocity (U), the transport coefficient nu defined as dynamic viscosity divided by the fluid density, the streamwise distance from the leading edge (x), and the wall-normal distance (y).\nProblem domain/context: Perform dimensional analysis for the Blasius laminar boundary layer over a flat plate to derive the dimensionless form of the streamwise velocity (denoted as u/U).\nAnalyzer interpretation: exact_column: x; quantity_name: streamwise distance; physical_definition: The distance from the leading edge of the flat plate.",
+          "y": "Target CSV variable: y\nLocal problem description: the free-stream velocity (U), the transport coefficient nu defined as dynamic viscosity divided by the fluid density, the streamwise distance from the leading edge (x), and the wall-normal distance (y).\nProblem domain/context: Perform dimensional analysis for the Blasius laminar boundary layer over a flat plate to derive the dimensionless form of the streamwise velocity (denoted as u/U).\nAnalyzer interpretation: exact_column: y; quantity_name: wall-normal distance; physical_definition: The distance normal to the wall of the flat plate."
+        },
+        "query_sha256_by_variable": {
+          "U": "f668ba9eeb6659ae3c8acc6615918e61e4f466469a6c009710f05e57675c3373",
+          "nu": "78d97309d0e5948d9733418252f7865d15b2e09a8a51c4f015d835b96f6aa505",
+          "x": "b4ab34625d5a4b8ef3f5d63278e71be2e5e8a70247d9051f7460b7542a3de9fe",
+          "y": "a3b6244cdafdfadba05faace878640ec6a2d4a652673f612c8ae6d9b856b0b71"
+        },
+        "query_observed_in_retriever_by_variable": {
+          "U": true,
+          "nu": true,
+          "x": true,
+          "y": true
+        },
+        "query_scope": "Candidate SI powers excluded. Original problem and typed quantity/definition provide semantic context; they still require physical interpretation."
+      },
+      "provisional_zero_coordinates": [],
+      "checker_call": {
+        "parsed_response": {
+          "ledger_sha256": "21b31e3d261d39a597800403d1c81452062ccf45b1159e239ba5fda7f1e52d8a",
+          "variables": [
+            {
+              "csv_name": "U",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "-1",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_free_stream_velocity",
+                "pq_velocity"
+              ],
+              "reason": "The problem defines U explicitly as the free-stream velocity (velocity of the undisturbed flow outside the boundary layer). The KB record pq_free_stream_velocity is the canonical entry for free-stream/edge velocity and gives si_dimension L T^-1 (dimension_vector [0,1,-1,0,0,0,0]), which matches the candidate exponents (L=1, T=-1, all other base exponents 0). pq_velocity is the general velocity entry that corroborates the same base dimensions. These records directly apply because they define the physical quantity named U in the original boundary-layer problem, not a different quantity."
+            },
+            {
+              "csv_name": "nu",
+              "before_si_exponents": {
+                "M": "1",
+                "L": "2",
+                "T": "-1",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "CONFLICT",
+              "suggested_si_exponents": {
+                "M": "0",
+                "L": "2",
+                "T": "-1",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_kinematic_viscosity"
+              ],
+              "reason": "The problem statement defines nu as the kinematic viscosity (dynamic viscosity divided by mass density). The KB record pq_kinematic_viscosity explicitly defines kinematic viscosity with si_dimension L^2 T^-1 and dimension_vector [0,2,-1,0,0,0,0]. This record applies because it is the canonical definition for the symbol nu used in fluid mechanics and boundary-layer theory. The candidate ledger incorrectly includes a mass exponent M=1, which conflicts with the kinematic-viscosity definition. All known coordinates (L=2, T=-1, and zero for other base dimensions) are provided by pq_kinematic_viscosity."
+            },
+            {
+              "csv_name": "x",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "0",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_streamwise_distance"
+              ],
+              "reason": "The variable x in the original problem is the streamwise distance from the leading edge. The KB record pq_streamwise_distance is the canonical entry for that coordinate and gives si_dimension L (dimension_vector [0,1,0,0,0,0,0]), matching the candidate exponents (L=1, all other base exponents 0). This record is directly applicable because it defines the same geometric coordinate used in boundary-layer formulations."
+            },
+            {
+              "csv_name": "y",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "0",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_wall_normal_distance"
+              ],
+              "reason": "The variable y is defined in the problem as the wall-normal distance. The KB record pq_wall_normal_distance is the canonical entry for the distance measured normal to a wall and gives si_dimension L (dimension_vector [0,1,0,0,0,0,0]), which matches the candidate exponents. This entry applies directly to the wall-normal coordinate used in boundary-layer theory."
+            }
+          ]
+        },
+        "raw_tool_calls": [
+          {
+            "function": {
+              "arguments": "{\n  \"ledger_sha256\": \"21b31e3d261d39a597800403d1c81452062ccf45b1159e239ba5fda7f1e52d8a\",\n  \"variables\": [\n    {\n      \"before_si_exponents\": {\n        \"I\": \"0\",\n        \"J\": \"0\",\n        \"L\": \"1\",\n        \"M\": \"0\",\n        \"N\": \"0\",\n        \"T\": \"-1\",\n        \"Theta\": \"0\"\n      },\n      \"csv_name\": \"U\",\n      \"decision\": \"PASSED\",\n      \"evidence_entry_ids\": [\n        \"pq_free_stream_velocity\",\n        \"pq_velocity\"\n      ],\n      \"reason\": \"The problem defines U explicitly as the free-stream velocity (velocity of the undisturbed flow outside the boundary layer). The KB record pq_free_stream_velocity is the canonical entry for free-stream/edge velocity and gives si_dimension L T^-1 (dimension_vector [0,1,-1,0,0,0,0]), which matches the candidate exponents (L=1, T=-1, all other base exponents 0). pq_velocity is the general velocity entry that corroborates the same base dimensions. These records directly apply because they define the physical quantity named U in the original boundary-layer problem, not a different quantity.\",\n      \"suggested_si_exponents\": null,\n      \"support_mode\": \"KB_RECORD\"\n    },\n    {\n      \"before_si_exponents\": {\n        \"I\": \"0\",\n        \"J\": \"0\",\n        \"L\": \"2\",\n        \"M\": \"1\",\n        \"N\": \"0\",\n        \"T\": \"-1\",\n        \"Theta\": \"0\"\n      },\n      \"csv_name\": \"nu\",\n      \"decision\": \"CONFLICT\",\n      \"evidence_entry_ids\": [\n        \"pq_kinematic_viscosity\"\n      ],\n      \"reason\": \"The problem statement defines nu as the kinematic viscosity (dynamic viscosity divided by mass density). The KB record pq_kinematic_viscosity explicitly defines kinematic viscosity with si_dimension L^2 T^-1 and dimension_vector [0,2,-1,0,0,0,0]. This record applies because it is the canonical definition for the symbol nu used in fluid mechanics and boundary-layer theory. The candidate ledger incorrectly includes a mass exponent M=1, which conflicts with the kinematic-viscosity definition. All known coordinates (L=2, T=-1, and zero for other base dimensions) are provided by pq_kinematic_viscosity.\",\n      \"suggested_si_exponents\": {\n        \"I\": \"0\",\n        \"J\": \"0\",\n        \"L\": \"2\",\n        \"M\": \"0\",\n        \"N\": \"0\",\n        \"T\": \"-1\",\n        \"Theta\": \"0\"\n      },\n      \"support_mode\": \"KB_RECORD\"\n    },\n    {\n      \"before_si_exponents\": {\n        \"I\": \"0\",\n        \"J\": \"0\",\n        \"L\": \"1\",\n        \"M\": \"0\",\n        \"N\": \"0\",\n        \"T\": \"0\",\n        \"Theta\": \"0\"\n      },\n      \"csv_name\": \"x\",\n      \"decision\": \"PASSED\",\n      \"evidence_entry_ids\": [\n        \"pq_streamwise_distance\"\n      ],\n      \"reason\": \"The variable x in the original problem is the streamwise distance from the leading edge. The KB record pq_streamwise_distance is the canonical entry for that coordinate and gives si_dimension L (dimension_vector [0,1,0,0,0,0,0]), matching the candidate exponents (L=1, all other base exponents 0). This record is directly applicable because it defines the same geometric coordinate used in boundary-layer formulations.\",\n      \"suggested_si_exponents\": null,\n      \"support_mode\": \"KB_RECORD\"\n    },\n    {\n      \"before_si_exponents\": {\n        \"I\": \"0\",\n        \"J\": \"0\",\n        \"L\": \"1\",\n        \"M\": \"0\",\n        \"N\": \"0\",\n        \"T\": \"0\",\n        \"Theta\": \"0\"\n      },\n      \"csv_name\": \"y\",\n      \"decision\": \"PASSED\",\n      \"evidence_entry_ids\": [\n        \"pq_wall_normal_distance\"\n      ],\n      \"reason\": \"The variable y is defined in the problem as the wall-normal distance. The KB record pq_wall_normal_distance is the canonical entry for the distance measured normal to a wall and gives si_dimension L (dimension_vector [0,1,0,0,0,0,0]), which matches the candidate exponents. This entry applies directly to the wall-normal coordinate used in boundary-layer theory.\",\n      \"suggested_si_exponents\": null,\n      \"support_mode\": \"KB_RECORD\"\n    }\n  ]\n}",
+              "name": "CheckerDimensionAudit"
+            },
+            "id": "call_0oBeKriar6gM62FsoP82nuRE",
+            "type": "function"
+          }
+        ],
+        "model_messages": [
+          {
+            "type": "system",
+            "content": "Audit every named physical input in this exact typed ledger, including literal SI coordinate values. Do not substitute the correct definition or a KB vector for a wrong candidate and then claim PASSED. Return ledger_sha256 and each csv_name exactly once; before_si_exponents must copy the actual candidate. PASSED confirms the actual vector, CONFLICT requires a complete corrected suggested vector, and UNCERTAIN does not permit numerical execution. KB_RECORD requires actual entry_id citations from that variable's retrieved records. Canonical entity names are read by the program from the selected IDs; do not echo another quantity-name field. Your reason must explain why each cited record applies to this variable in the original problem, not merely why its vector matches. Cited vectors must support all known coordinates of the proposed/confirmed SI vector. INTERNAL_REASONING uses no IDs and must explain the physical meaning. Retrieval rank is relevance, not truth. Resolve symbol ambiguity from the original problem; do not choose an unrelated matching symbol. Known absent base dimensions must be explicit '0'; null means genuinely unknown, not unused. If any current coordinate is unknown, request revision or report UNCERTAIN; never call a partly known vector PASSED. Give a complete correction when physically justified. If a correction remains partly unknown, preserve null and explain what remains unresolved; the program will request revision rather than invent zeros. Lack of KB alone is not a physical contradiction. Matrix compilation and n/r/k are program tasks, not audit tasks."
+          },
+          {
+            "type": "human",
+            "content": "Problem:\nPerform dimensional analysis for the Blasius laminar boundary layer over a flat plate to derive the dimensionless form of the streamwise velocity (denoted as u/U). \nThis analysis uses ONLY the following 4 physical quantities as input parameters: \nthe free-stream velocity (U), the transport coefficient nu defined as dynamic viscosity divided by the fluid density, the streamwise distance from the leading edge (x), and the wall-normal distance (y).\n\nTyped ledger SHA256: 21b31e3d261d39a597800403d1c81452062ccf45b1159e239ba5fda7f1e52d8a\nTyped candidate ledger:\n{\"input_variable_names\": [\"U\", \"nu\", \"x\", \"y\"], \"output_variable_confidence\": \"high\", \"output_variable_name\": \"u/U\", \"output_variable_reasoning\": \"The output variable u/U is a dimensionless ratio of the streamwise velocity to the free-stream velocity, which is derived from the input parameters.\", \"variables\": [{\"csv_name\": \"U\", \"physical_definition\": \"The velocity of the fluid far from the boundary layer.\", \"quantity_name\": \"free-stream velocity\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"1\", \"M\": \"0\", \"N\": \"0\", \"T\": \"-1\", \"Theta\": \"0\"}}, {\"csv_name\": \"nu\", \"physical_definition\": \"The kinematic viscosity of the fluid, defined as dynamic viscosity divided by fluid density.\", \"quantity_name\": \"kinematic viscosity\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"2\", \"M\": \"1\", \"N\": \"0\", \"T\": \"-1\", \"Theta\": \"0\"}}, {\"csv_name\": \"x\", \"physical_definition\": \"The distance from the leading edge of the flat plate.\", \"quantity_name\": \"streamwise distance\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"1\", \"M\": \"0\", \"N\": \"0\", \"T\": \"0\", \"Theta\": \"0\"}}, {\"csv_name\": \"y\", \"physical_definition\": \"The distance normal to the wall of the flat plate.\", \"quantity_name\": \"wall-normal distance\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"1\", \"M\": \"0\", \"N\": \"0\", \"T\": \"0\", \"Theta\": \"0\"}}]}\n\nRetrieved dimensional evidence:\n### Input variable `U`\n- entry_id: pq_mean_flow_velocity; canonical_quantity: mean flow velocity; symbols: U; U_m; Umean; V; aliases: bulk velocity; mean velocity; average flow velocity; definition: Mean or bulk velocity used to characterize a flow.; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: fluid mechanics; ambiguity_notes: ; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_velocity; canonical_quantity: velocity; symbols: u; U; v; V; aliases: speed; flow velocity; fluid velocity; definition: Rate of displacement with time.; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: mechanics; fluid mechanics; ambiguity_notes: ; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_free_stream_velocity; canonical_quantity: free-stream velocity; symbols: U_inf; U∞; U_e; Ue; aliases: external velocity; edge velocity; freestream speed; definition: Velocity of the undisturbed flow outside a boundary layer.; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: fluid mechanics; boundary layers; ambiguity_notes: ; source: NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer; source_identifier: https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/; confidence: high\n### Input variable `nu`\n- entry_id: pq_kinematic_viscosity; canonical_quantity: kinematic viscosity; symbols: nu; ν; aliases: momentum diffusivity; definition: Dynamic viscosity divided by mass density.; si_dimension: L^2 T^-1; dimension_vector: [0, 2, -1, 0, 0, 0, 0]; si_unit: m^2 s^-1; domain: fluid mechanics; ambiguity_notes: Do not confuse lowercase nu/ν with the Nusselt number Nu or a generic frequency symbol.; source: NIST SP 811, Guide for the Use of the International System of Units (SI); source_identifier: doi:10.6028/NIST.SP.811e2008; confidence: curated\n- entry_id: pq_free_stream_velocity; canonical_quantity: free-stream velocity; symbols: U_inf; U∞; U_e; Ue; aliases: external velocity; edge velocity; freestream speed; definition: Velocity of the undisturbed flow outside a boundary layer.; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: fluid mechanics; boundary layers; ambiguity_notes: ; source: NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer; source_identifier: https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/; confidence: high\n- entry_id: pq_streamwise_distance; canonical_quantity: streamwise distance; symbols: x; aliases: distance from leading edge; streamwise coordinate; definition: Distance measured along the mean flow direction.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: boundary layers; fluid mechanics; ambiguity_notes: ; source: NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer; source_identifier: https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/; confidence: high\n### Input variable `x`\n- entry_id: pq_streamwise_distance; canonical_quantity: streamwise distance; symbols: x; aliases: distance from leading edge; streamwise coordinate; definition: Distance measured along the mean flow direction.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: boundary layers; fluid mechanics; ambiguity_notes: ; source: NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer; source_identifier: https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/; confidence: high\n- entry_id: pq_free_stream_velocity; canonical_quantity: free-stream velocity; symbols: U_inf; U∞; U_e; Ue; aliases: external velocity; edge velocity; freestream speed; definition: Velocity of the undisturbed flow outside a boundary layer.; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: fluid mechanics; boundary layers; ambiguity_notes: ; source: NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer; source_identifier: https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/; confidence: high\n- entry_id: pq_boundary_layer_thickness; canonical_quantity: boundary-layer thickness; symbols: delta; δ; delta99; δ99; aliases: 99-percent boundary-layer thickness; velocity boundary-layer thickness; definition: Characteristic distance from a wall to the boundary-layer edge; a common operational definition is the 99-percent free-stream-velocity thickness.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: boundary layers; ambiguity_notes: Do not confuse delta/δ with a generic increment or temperature difference.; source: NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions; source_identifier: https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html; confidence: curated\n### Input variable `y`\n- entry_id: pq_wall_normal_distance; canonical_quantity: wall-normal distance; symbols: y; aliases: distance from wall; wall-normal coordinate; definition: Distance measured normal to a wall.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: wall-bounded flows; ambiguity_notes: ; source: NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions; source_identifier: https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html; confidence: high\n- entry_id: pq_mass_fraction; canonical_quantity: mass fraction; symbols: Y; w; aliases: mass fraction; definition: Ratio of constituent mass to total mass.; si_dimension: 1; dimension_vector: [0, 0, 0, 0, 0, 0, 0]; si_unit: 1; domain: mixtures; chemistry; ambiguity_notes: Dimensionless ratio.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_free_stream_velocity; canonical_quantity: free-stream velocity; symbols: U_inf; U∞; U_e; Ue; aliases: external velocity; edge velocity; freestream speed; definition: Velocity of the undisturbed flow outside a boundary layer.; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: fluid mechanics; boundary layers; ambiguity_notes: ; source: NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer; source_identifier: https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/; confidence: high"
+          }
+        ],
+        "elapsed_s": 25.09043370001018
+      },
+      "checker_response": {
+        "ledger_sha256": "21b31e3d261d39a597800403d1c81452062ccf45b1159e239ba5fda7f1e52d8a",
+        "variables": [
+          {
+            "csv_name": "U",
+            "before_si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "decision": "PASSED",
+            "suggested_si_exponents": null,
+            "support_mode": "KB_RECORD",
+            "evidence_entry_ids": [
+              "pq_free_stream_velocity",
+              "pq_velocity"
+            ],
+            "reason": "The problem defines U explicitly as the free-stream velocity (velocity of the undisturbed flow outside the boundary layer). The KB record pq_free_stream_velocity is the canonical entry for free-stream/edge velocity and gives si_dimension L T^-1 (dimension_vector [0,1,-1,0,0,0,0]), which matches the candidate exponents (L=1, T=-1, all other base exponents 0). pq_velocity is the general velocity entry that corroborates the same base dimensions. These records directly apply because they define the physical quantity named U in the original boundary-layer problem, not a different quantity."
+          },
+          {
+            "csv_name": "nu",
+            "before_si_exponents": {
+              "M": "1",
+              "L": "2",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "decision": "CONFLICT",
+            "suggested_si_exponents": {
+              "M": "0",
+              "L": "2",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "support_mode": "KB_RECORD",
+            "evidence_entry_ids": [
+              "pq_kinematic_viscosity"
+            ],
+            "reason": "The problem statement defines nu as the kinematic viscosity (dynamic viscosity divided by mass density). The KB record pq_kinematic_viscosity explicitly defines kinematic viscosity with si_dimension L^2 T^-1 and dimension_vector [0,2,-1,0,0,0,0]. This record applies because it is the canonical definition for the symbol nu used in fluid mechanics and boundary-layer theory. The candidate ledger incorrectly includes a mass exponent M=1, which conflicts with the kinematic-viscosity definition. All known coordinates (L=2, T=-1, and zero for other base dimensions) are provided by pq_kinematic_viscosity."
+          },
+          {
+            "csv_name": "x",
+            "before_si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "decision": "PASSED",
+            "suggested_si_exponents": null,
+            "support_mode": "KB_RECORD",
+            "evidence_entry_ids": [
+              "pq_streamwise_distance"
+            ],
+            "reason": "The variable x in the original problem is the streamwise distance from the leading edge. The KB record pq_streamwise_distance is the canonical entry for that coordinate and gives si_dimension L (dimension_vector [0,1,0,0,0,0,0]), matching the candidate exponents (L=1, all other base exponents 0). This record is directly applicable because it defines the same geometric coordinate used in boundary-layer formulations."
+          },
+          {
+            "csv_name": "y",
+            "before_si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "decision": "PASSED",
+            "suggested_si_exponents": null,
+            "support_mode": "KB_RECORD",
+            "evidence_entry_ids": [
+              "pq_wall_normal_distance"
+            ],
+            "reason": "The variable y is defined in the problem as the wall-normal distance. The KB record pq_wall_normal_distance is the canonical entry for the distance measured normal to a wall and gives si_dimension L (dimension_vector [0,1,0,0,0,0,0]), which matches the candidate exponents. This entry applies directly to the wall-normal coordinate used in boundary-layer theory."
+          }
+        ]
+      },
+      "retrieval_origin": "live",
+      "checker_elapsed_s": 25.09043370001018,
+      "retrieval_elapsed_s": 20.981099800032098,
+      "checker_tokens": {
+        "input": 2925,
+        "output": 2709
+      },
+      "embedding_tokens": {
+        "input": 600,
+        "output": 0
+      }
+    },
+    {
+      "gate": {
+        "gate_status": "PASSED",
+        "ledger_sha256": "fe6b9d093e14fd4853cd11447c333d8ce82d1e577be2cc32ca698431ca0934a7",
+        "checker_audit": {
+          "ledger_sha256": "fe6b9d093e14fd4853cd11447c333d8ce82d1e577be2cc32ca698431ca0934a7",
+          "variables": [
+            {
+              "csv_name": "U",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "-1",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_free_stream_velocity"
+              ],
+              "reason": "The problem's U is the free-stream velocity outside the boundary layer. The retrieved record pq_free_stream_velocity has canonical_quantity 'free-stream velocity' and definition 'Velocity of the undisturbed flow outside a boundary layer', which matches the ledger's physical_definition. Its reported dimension_vector is [0, 1, -1, 0, 0, 0, 0], which supplies length exponent = 1 and time exponent = -1 (all other base exponents zero). These coordinates exactly support the candidate SI exponents (L=1, T=-1; others 0) in the typed ledger, so the candidate vector is confirmed by this KB record."
+            },
+            {
+              "csv_name": "nu",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "2",
+                "T": "-1",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_kinematic_viscosity"
+              ],
+              "reason": "The ledger defines nu as kinematic viscosity (dynamic viscosity divided by density). The KB record pq_kinematic_viscosity has canonical_quantity 'kinematic viscosity' with that exact definition. Its dimension_vector is reported as [0, 2, -1, 0, 0, 0, 0], corresponding to length^2 time^-1 and zeros for other base dimensions, which matches the ledger's candidate exponents (L=2, T=-1; others 0). Therefore the candidate SI exponents are confirmed by this record."
+            },
+            {
+              "csv_name": "x",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "0",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_streamwise_distance"
+              ],
+              "reason": "The ledger's x is the streamwise distance from the leading edge. The KB record pq_streamwise_distance has canonical_quantity 'streamwise distance' with definition 'Distance measured along the mean flow direction', directly matching the ledger. Its dimension_vector is [0, 1, 0, 0, 0, 0, 0], providing length exponent = 1 and zeros elsewhere, which exactly supports the ledger's candidate exponents (L=1, others 0)."
+            },
+            {
+              "csv_name": "y",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "0",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_wall_normal_distance"
+              ],
+              "reason": "The ledger's y is the wall-normal distance. The KB record pq_wall_normal_distance has canonical_quantity 'wall-normal distance' and the definition 'Distance measured normal to a wall', which is the same quantity used in boundary-layer formulations. Its dimension_vector is [0, 1, 0, 0, 0, 0, 0], giving length exponent = 1 and zeros for other bases, matching the ledger's candidate exponents (L=1, others 0)."
+            }
+          ]
+        },
+        "variable_results": [
+          {
+            "csv_name": "U",
+            "decision": "PASSED",
+            "before": {
+              "M": "0",
+              "L": "1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "suggested": {
+              "M": "0",
+              "L": "1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "coordinate_diff": {},
+            "issues": [],
+            "referenced_entry_ids": [
+              "pq_free_stream_velocity"
+            ],
+            "selected_entities": [
+              {
+                "entry_id": "pq_free_stream_velocity",
+                "canonical_quantity": "free-stream velocity",
+                "source_identifier": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/"
+              }
+            ],
+            "cited_reference_si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "known_coordinate_conflicts_with_reference": {}
+          },
+          {
+            "csv_name": "nu",
+            "decision": "PASSED",
+            "before": {
+              "M": "0",
+              "L": "2",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "suggested": {
+              "M": "0",
+              "L": "2",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "coordinate_diff": {},
+            "issues": [],
+            "referenced_entry_ids": [
+              "pq_kinematic_viscosity"
+            ],
+            "selected_entities": [
+              {
+                "entry_id": "pq_kinematic_viscosity",
+                "canonical_quantity": "kinematic viscosity",
+                "source_identifier": "doi:10.6028/NIST.SP.811e2008"
+              }
+            ],
+            "cited_reference_si_exponents": {
+              "M": "0",
+              "L": "2",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "known_coordinate_conflicts_with_reference": {}
+          },
+          {
+            "csv_name": "x",
+            "decision": "PASSED",
+            "before": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "suggested": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "coordinate_diff": {},
+            "issues": [],
+            "referenced_entry_ids": [
+              "pq_streamwise_distance"
+            ],
+            "selected_entities": [
+              {
+                "entry_id": "pq_streamwise_distance",
+                "canonical_quantity": "streamwise distance",
+                "source_identifier": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/"
+              }
+            ],
+            "cited_reference_si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "known_coordinate_conflicts_with_reference": {}
+          },
+          {
+            "csv_name": "y",
+            "decision": "PASSED",
+            "before": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "suggested": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "coordinate_diff": {},
+            "issues": [],
+            "referenced_entry_ids": [
+              "pq_wall_normal_distance"
+            ],
+            "selected_entities": [
+              {
+                "entry_id": "pq_wall_normal_distance",
+                "canonical_quantity": "wall-normal distance",
+                "source_identifier": "https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html"
+              }
+            ],
+            "cited_reference_si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "known_coordinate_conflicts_with_reference": {}
+          }
+        ],
+        "issues": [],
+        "referenced_records": [
+          {
+            "csv_name": "U",
+            "record": {
+              "variable_name": "U",
+              "entry_id": "pq_free_stream_velocity",
+              "canonical_quantity": "free-stream velocity",
+              "symbols": "U_inf; U∞; U_e; Ue",
+              "aliases": "external velocity; edge velocity; freestream speed",
+              "definition": "Velocity of the undisturbed flow outside a boundary layer.",
+              "si_dimension": "L T^-1",
+              "dimension_vector": "[0, 1, -1, 0, 0, 0, 0]",
+              "si_unit": "m s^-1",
+              "domain": "fluid mechanics; boundary layers",
+              "ambiguity_notes": "",
+              "source": "NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer",
+              "source_identifier": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/",
+              "confidence": "high",
+              "lexical_score": 0.4276315789473684,
+              "semantic_score": 0.5998937406772351,
+              "hybrid_score": 0.48792333555282175,
+              "retrieval_mode": "hybrid"
+            }
+          },
+          {
+            "csv_name": "nu",
+            "record": {
+              "variable_name": "nu",
+              "entry_id": "pq_kinematic_viscosity",
+              "canonical_quantity": "kinematic viscosity",
+              "symbols": "nu; ν",
+              "aliases": "momentum diffusivity",
+              "definition": "Dynamic viscosity divided by mass density.",
+              "si_dimension": "L^2 T^-1",
+              "dimension_vector": "[0, 2, -1, 0, 0, 0, 0]",
+              "si_unit": "m^2 s^-1",
+              "domain": "fluid mechanics",
+              "ambiguity_notes": "Do not confuse lowercase nu/ν with the Nusselt number Nu or a generic frequency symbol.",
+              "source": "NIST SP 811, Guide for the Use of the International System of Units (SI)",
+              "source_identifier": "doi:10.6028/NIST.SP.811e2008",
+              "confidence": "curated",
+              "lexical_score": 1.0,
+              "semantic_score": 0.594790653049343,
+              "hybrid_score": 0.8581767285672701,
+              "retrieval_mode": "hybrid"
+            }
+          },
+          {
+            "csv_name": "x",
+            "record": {
+              "variable_name": "x",
+              "entry_id": "pq_streamwise_distance",
+              "canonical_quantity": "streamwise distance",
+              "symbols": "x",
+              "aliases": "distance from leading edge; streamwise coordinate",
+              "definition": "Distance measured along the mean flow direction.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "boundary layers; fluid mechanics",
+              "ambiguity_notes": "",
+              "source": "NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer",
+              "source_identifier": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.6296034151754041,
+              "hybrid_score": 0.8703611953113914,
+              "retrieval_mode": "hybrid"
+            }
+          },
+          {
+            "csv_name": "y",
+            "record": {
+              "variable_name": "y",
+              "entry_id": "pq_wall_normal_distance",
+              "canonical_quantity": "wall-normal distance",
+              "symbols": "y",
+              "aliases": "distance from wall; wall-normal coordinate",
+              "definition": "Distance measured normal to a wall.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "wall-bounded flows",
+              "ambiguity_notes": "",
+              "source": "NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions",
+              "source_identifier": "https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5806952194202164,
+              "hybrid_score": 0.8532433267970758,
+              "retrieval_mode": "hybrid"
+            }
+          }
+        ],
+        "feedback": "Typed ledger fe6b9d093e14fd4853cd11447c333d8ce82d1e577be2cc32ca698431ca0934a7; program gate=PASSED\nVariable U: decision=PASSED; reason=The problem's U is the free-stream velocity outside the boundary layer. The retrieved record pq_free_stream_velocity has canonical_quantity 'free-stream velocity' and definition 'Velocity of the undisturbed flow outside a boundary layer', which matches the ledger's physical_definition. Its reported dimension_vector is [0, 1, -1, 0, 0, 0, 0], which supplies length exponent = 1 and time exponent = -1 (all other base exponents zero). These coordinates exactly support the candidate SI exponents (L=1, T=-1; others 0) in the typed ledger, so the candidate vector is confirmed by this KB record.\nActual named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"-1\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"-1\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_free_stream_velocity\", \"canonical_quantity\": \"free-stream velocity\", \"source_identifier\": \"https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for U:\n{\"aliases\": \"external velocity; edge velocity; freestream speed\", \"ambiguity_notes\": \"\", \"canonical_quantity\": \"free-stream velocity\", \"confidence\": \"high\", \"definition\": \"Velocity of the undisturbed flow outside a boundary layer.\", \"dimension_vector\": \"[0, 1, -1, 0, 0, 0, 0]\", \"domain\": \"fluid mechanics; boundary layers\", \"entry_id\": \"pq_free_stream_velocity\", \"hybrid_score\": 0.48792333555282175, \"lexical_score\": 0.4276315789473684, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.5998937406772351, \"si_dimension\": \"L T^-1\", \"si_unit\": \"m s^-1\", \"source\": \"NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer\", \"source_identifier\": \"https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/\", \"symbols\": \"U_inf; U∞; U_e; Ue\", \"variable_name\": \"U\"}\n\nVariable nu: decision=PASSED; reason=The ledger defines nu as kinematic viscosity (dynamic viscosity divided by density). The KB record pq_kinematic_viscosity has canonical_quantity 'kinematic viscosity' with that exact definition. Its dimension_vector is reported as [0, 2, -1, 0, 0, 0, 0], corresponding to length^2 time^-1 and zeros for other base dimensions, which matches the ledger's candidate exponents (L=2, T=-1; others 0). Therefore the candidate SI exponents are confirmed by this record.\nActual named SI={\"M\": \"0\", \"L\": \"2\", \"T\": \"-1\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"0\", \"L\": \"2\", \"T\": \"-1\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_kinematic_viscosity\", \"canonical_quantity\": \"kinematic viscosity\", \"source_identifier\": \"doi:10.6028/NIST.SP.811e2008\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for nu:\n{\"aliases\": \"momentum diffusivity\", \"ambiguity_notes\": \"Do not confuse lowercase nu/ν with the Nusselt number Nu or a generic frequency symbol.\", \"canonical_quantity\": \"kinematic viscosity\", \"confidence\": \"curated\", \"definition\": \"Dynamic viscosity divided by mass density.\", \"dimension_vector\": \"[0, 2, -1, 0, 0, 0, 0]\", \"domain\": \"fluid mechanics\", \"entry_id\": \"pq_kinematic_viscosity\", \"hybrid_score\": 0.8581767285672701, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.594790653049343, \"si_dimension\": \"L^2 T^-1\", \"si_unit\": \"m^2 s^-1\", \"source\": \"NIST SP 811, Guide for the Use of the International System of Units (SI)\", \"source_identifier\": \"doi:10.6028/NIST.SP.811e2008\", \"symbols\": \"nu; ν\", \"variable_name\": \"nu\"}\n\nVariable x: decision=PASSED; reason=The ledger's x is the streamwise distance from the leading edge. The KB record pq_streamwise_distance has canonical_quantity 'streamwise distance' with definition 'Distance measured along the mean flow direction', directly matching the ledger. Its dimension_vector is [0, 1, 0, 0, 0, 0, 0], providing length exponent = 1 and zeros elsewhere, which exactly supports the ledger's candidate exponents (L=1, others 0).\nActual named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_streamwise_distance\", \"canonical_quantity\": \"streamwise distance\", \"source_identifier\": \"https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for x:\n{\"aliases\": \"distance from leading edge; streamwise coordinate\", \"ambiguity_notes\": \"\", \"canonical_quantity\": \"streamwise distance\", \"confidence\": \"high\", \"definition\": \"Distance measured along the mean flow direction.\", \"dimension_vector\": \"[0, 1, 0, 0, 0, 0, 0]\", \"domain\": \"boundary layers; fluid mechanics\", \"entry_id\": \"pq_streamwise_distance\", \"hybrid_score\": 0.8703611953113914, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.6296034151754041, \"si_dimension\": \"L\", \"si_unit\": \"m\", \"source\": \"NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer\", \"source_identifier\": \"https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/\", \"symbols\": \"x\", \"variable_name\": \"x\"}\n\nVariable y: decision=PASSED; reason=The ledger's y is the wall-normal distance. The KB record pq_wall_normal_distance has canonical_quantity 'wall-normal distance' and the definition 'Distance measured normal to a wall', which is the same quantity used in boundary-layer formulations. Its dimension_vector is [0, 1, 0, 0, 0, 0, 0], giving length exponent = 1 and zeros for other bases, matching the ledger's candidate exponents (L=1, others 0).\nActual named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_wall_normal_distance\", \"canonical_quantity\": \"wall-normal distance\", \"source_identifier\": \"https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for y:\n{\"aliases\": \"distance from wall; wall-normal coordinate\", \"ambiguity_notes\": \"\", \"canonical_quantity\": \"wall-normal distance\", \"confidence\": \"high\", \"definition\": \"Distance measured normal to a wall.\", \"dimension_vector\": \"[0, 1, 0, 0, 0, 0, 0]\", \"domain\": \"wall-bounded flows\", \"entry_id\": \"pq_wall_normal_distance\", \"hybrid_score\": 0.8532433267970758, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.5806952194202164, \"si_dimension\": \"L\", \"si_unit\": \"m\", \"source\": \"NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions\", \"source_identifier\": \"https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html\", \"symbols\": \"y\", \"variable_name\": \"y\"}",
+        "entity_policy": "Only Checker-selected visible record IDs identify cited canonical entities; no unselected-record or Analyzer-name anchor. Equal vectors do not establish equal physical entities.",
+        "physical_correctness_scope": "A passed contract is not a theorem of physical correctness. Record ID and coordinate checks establish citation consistency; semantic relevance/applicability in the reason and internal-reasoning physics remain model judgements."
+      },
+      "gate_status": "PASSED",
+      "candidate_ledger": {
+        "output_variable_name": "u/U",
+        "output_variable_reasoning": "The ratio of the streamwise velocity to the free-stream velocity is a dimensionless quantity, which is derived from the dimensional analysis of the other variables.",
+        "output_variable_confidence": "high",
+        "input_variable_names": [
+          "U",
+          "nu",
+          "x",
+          "y"
+        ],
+        "variables": [
+          {
+            "csv_name": "U",
+            "quantity_name": "free-stream velocity",
+            "physical_definition": "Velocity of the undisturbed flow outside a boundary layer.",
+            "si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "nu",
+            "quantity_name": "kinematic viscosity",
+            "physical_definition": "Dynamic viscosity divided by mass density, representing kinematic viscosity.",
+            "si_exponents": {
+              "M": "0",
+              "L": "2",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "x",
+            "quantity_name": "streamwise distance",
+            "physical_definition": "Distance measured along the mean flow direction from the leading edge.",
+            "si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "y",
+            "quantity_name": "wall-normal distance",
+            "physical_definition": "Distance measured normal to a wall.",
+            "si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          }
+        ]
+      },
+      "ledger_sha256": "fe6b9d093e14fd4853cd11447c333d8ce82d1e577be2cc32ca698431ca0934a7",
+      "retrieval": {
+        "status": "success",
+        "kb_path": "Q:\\Chengao_File\\CodeX_\\RAG_ablation\\261117_RAG_ablation\\reference\\Data_csv\\dimensional_physical_quantities.md",
+        "kb_sha256": "64d8ebb7988c9157401c6b023add3ed8681651bc6d4d1d1bbb7a7aa452fc9f60",
+        "embedding_cache_path": "Q:\\Chengao_File\\CodeX_\\RAG_ablation\\261117_RAG_ablation\\private_blasius_rerun\\GPT-4o-mini\\.work\\physical_quantity_index.npz",
+        "embedding_cache_source": null,
+        "embedding_model": "GLM-Embedding-3",
+        "embedding_provider": "Paratera",
+        "embedding_base_url": "https://llmapi.paratera.com/v1",
+        "embedding_status": "cache",
+        "retrieval_modes": [
+          "hybrid"
+        ],
+        "retrieved_variables": [
+          "U",
+          "nu",
+          "x",
+          "y"
+        ],
+        "n_retrieved_records": 12,
+        "top_k_per_variable": 3,
+        "max_evidence_rows": 30,
+        "lexical_weight": 0.65,
+        "semantic_weight": 0.35,
+        "min_hybrid_score": 0.22,
+        "allow_lexical_fallback": false,
+        "matches_by_variable": {
+          "U": [
+            {
+              "variable_name": "U",
+              "entry_id": "pq_mean_flow_velocity",
+              "canonical_quantity": "mean flow velocity",
+              "symbols": "U; U_m; Umean; V",
+              "aliases": "bulk velocity; mean velocity; average flow velocity",
+              "definition": "Mean or bulk velocity used to characterize a flow.",
+              "si_dimension": "L T^-1",
+              "dimension_vector": "[0, 1, -1, 0, 0, 0, 0]",
+              "si_unit": "m s^-1",
+              "domain": "fluid mechanics",
+              "ambiguity_notes": "",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5642971940191346,
+              "hybrid_score": 0.847504017906697,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "U",
+              "entry_id": "pq_velocity",
+              "canonical_quantity": "velocity",
+              "symbols": "u; U; v; V",
+              "aliases": "speed; flow velocity; fluid velocity",
+              "definition": "Rate of displacement with time.",
+              "si_dimension": "L T^-1",
+              "dimension_vector": "[0, 1, -1, 0, 0, 0, 0]",
+              "si_unit": "m s^-1",
+              "domain": "mechanics; fluid mechanics",
+              "ambiguity_notes": "",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.556504171519256,
+              "hybrid_score": 0.8447764600317396,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "U",
+              "entry_id": "pq_free_stream_velocity",
+              "canonical_quantity": "free-stream velocity",
+              "symbols": "U_inf; U∞; U_e; Ue",
+              "aliases": "external velocity; edge velocity; freestream speed",
+              "definition": "Velocity of the undisturbed flow outside a boundary layer.",
+              "si_dimension": "L T^-1",
+              "dimension_vector": "[0, 1, -1, 0, 0, 0, 0]",
+              "si_unit": "m s^-1",
+              "domain": "fluid mechanics; boundary layers",
+              "ambiguity_notes": "",
+              "source": "NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer",
+              "source_identifier": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/",
+              "confidence": "high",
+              "lexical_score": 0.4276315789473684,
+              "semantic_score": 0.5998937406772351,
+              "hybrid_score": 0.48792333555282175,
+              "retrieval_mode": "hybrid"
+            }
+          ],
+          "nu": [
+            {
+              "variable_name": "nu",
+              "entry_id": "pq_kinematic_viscosity",
+              "canonical_quantity": "kinematic viscosity",
+              "symbols": "nu; ν",
+              "aliases": "momentum diffusivity",
+              "definition": "Dynamic viscosity divided by mass density.",
+              "si_dimension": "L^2 T^-1",
+              "dimension_vector": "[0, 2, -1, 0, 0, 0, 0]",
+              "si_unit": "m^2 s^-1",
+              "domain": "fluid mechanics",
+              "ambiguity_notes": "Do not confuse lowercase nu/ν with the Nusselt number Nu or a generic frequency symbol.",
+              "source": "NIST SP 811, Guide for the Use of the International System of Units (SI)",
+              "source_identifier": "doi:10.6028/NIST.SP.811e2008",
+              "confidence": "curated",
+              "lexical_score": 1.0,
+              "semantic_score": 0.594790653049343,
+              "hybrid_score": 0.8581767285672701,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "nu",
+              "entry_id": "pq_free_stream_velocity",
+              "canonical_quantity": "free-stream velocity",
+              "symbols": "U_inf; U∞; U_e; Ue",
+              "aliases": "external velocity; edge velocity; freestream speed",
+              "definition": "Velocity of the undisturbed flow outside a boundary layer.",
+              "si_dimension": "L T^-1",
+              "dimension_vector": "[0, 1, -1, 0, 0, 0, 0]",
+              "si_unit": "m s^-1",
+              "domain": "fluid mechanics; boundary layers",
+              "ambiguity_notes": "",
+              "source": "NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer",
+              "source_identifier": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/",
+              "confidence": "high",
+              "lexical_score": 0.31645569620253167,
+              "semantic_score": 0.595470722537159,
+              "hybrid_score": 0.41411095541965126,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "nu",
+              "entry_id": "pq_streamwise_distance",
+              "canonical_quantity": "streamwise distance",
+              "symbols": "x",
+              "aliases": "distance from leading edge; streamwise coordinate",
+              "definition": "Distance measured along the mean flow direction.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "boundary layers; fluid mechanics",
+              "ambiguity_notes": "",
+              "source": "NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer",
+              "source_identifier": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/",
+              "confidence": "high",
+              "lexical_score": 0.3082191780821918,
+              "semantic_score": 0.5553595103901543,
+              "hybrid_score": 0.3947182943899787,
+              "retrieval_mode": "hybrid"
+            }
+          ],
+          "x": [
+            {
+              "variable_name": "x",
+              "entry_id": "pq_streamwise_distance",
+              "canonical_quantity": "streamwise distance",
+              "symbols": "x",
+              "aliases": "distance from leading edge; streamwise coordinate",
+              "definition": "Distance measured along the mean flow direction.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "boundary layers; fluid mechanics",
+              "ambiguity_notes": "",
+              "source": "NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer",
+              "source_identifier": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.6296034151754041,
+              "hybrid_score": 0.8703611953113914,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "x",
+              "entry_id": "pq_free_stream_velocity",
+              "canonical_quantity": "free-stream velocity",
+              "symbols": "U_inf; U∞; U_e; Ue",
+              "aliases": "external velocity; edge velocity; freestream speed",
+              "definition": "Velocity of the undisturbed flow outside a boundary layer.",
+              "si_dimension": "L T^-1",
+              "dimension_vector": "[0, 1, -1, 0, 0, 0, 0]",
+              "si_unit": "m s^-1",
+              "domain": "fluid mechanics; boundary layers",
+              "ambiguity_notes": "",
+              "source": "NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer",
+              "source_identifier": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/",
+              "confidence": "high",
+              "lexical_score": 0.34375,
+              "semantic_score": 0.6023455656568442,
+              "hybrid_score": 0.43425844797989543,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "x",
+              "entry_id": "pq_boundary_layer_thickness",
+              "canonical_quantity": "boundary-layer thickness",
+              "symbols": "delta; δ; delta99; δ99",
+              "aliases": "99-percent boundary-layer thickness; velocity boundary-layer thickness",
+              "definition": "Characteristic distance from a wall to the boundary-layer edge; a common operational definition is the 99-percent free-stream-velocity thickness.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "boundary layers",
+              "ambiguity_notes": "Do not confuse delta/δ with a generic increment or temperature difference.",
+              "source": "NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions",
+              "source_identifier": "https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html",
+              "confidence": "curated",
+              "lexical_score": 0.2976190476190476,
+              "semantic_score": 0.48392813556619796,
+              "hybrid_score": 0.36282722840055026,
+              "retrieval_mode": "hybrid"
+            }
+          ],
+          "y": [
+            {
+              "variable_name": "y",
+              "entry_id": "pq_wall_normal_distance",
+              "canonical_quantity": "wall-normal distance",
+              "symbols": "y",
+              "aliases": "distance from wall; wall-normal coordinate",
+              "definition": "Distance measured normal to a wall.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "wall-bounded flows",
+              "ambiguity_notes": "",
+              "source": "NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions",
+              "source_identifier": "https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5806952194202164,
+              "hybrid_score": 0.8532433267970758,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "y",
+              "entry_id": "pq_mass_fraction",
+              "canonical_quantity": "mass fraction",
+              "symbols": "Y; w",
+              "aliases": "mass fraction",
+              "definition": "Ratio of constituent mass to total mass.",
+              "si_dimension": "1",
+              "dimension_vector": "[0, 0, 0, 0, 0, 0, 0]",
+              "si_unit": "1",
+              "domain": "mixtures; chemistry",
+              "ambiguity_notes": "Dimensionless ratio.",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "high",
+              "lexical_score": 0.9,
+              "semantic_score": 0.4260344059317177,
+              "hybrid_score": 0.7341120420761013,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "y",
+              "entry_id": "pq_streamwise_distance",
+              "canonical_quantity": "streamwise distance",
+              "symbols": "x",
+              "aliases": "distance from leading edge; streamwise coordinate",
+              "definition": "Distance measured along the mean flow direction.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "boundary layers; fluid mechanics",
+              "ambiguity_notes": "",
+              "source": "NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer",
+              "source_identifier": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/",
+              "confidence": "high",
+              "lexical_score": 0.3571428571428571,
+              "semantic_score": 0.5808981412584846,
+              "hybrid_score": 0.43545720658332676,
+              "retrieval_mode": "hybrid"
+            }
+          ]
+        },
+        "evidence_markdown": "### Input variable `U`\n- entry_id: pq_mean_flow_velocity; canonical_quantity: mean flow velocity; symbols: U; U_m; Umean; V; aliases: bulk velocity; mean velocity; average flow velocity; definition: Mean or bulk velocity used to characterize a flow.; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: fluid mechanics; ambiguity_notes: ; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_velocity; canonical_quantity: velocity; symbols: u; U; v; V; aliases: speed; flow velocity; fluid velocity; definition: Rate of displacement with time.; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: mechanics; fluid mechanics; ambiguity_notes: ; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_free_stream_velocity; canonical_quantity: free-stream velocity; symbols: U_inf; U∞; U_e; Ue; aliases: external velocity; edge velocity; freestream speed; definition: Velocity of the undisturbed flow outside a boundary layer.; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: fluid mechanics; boundary layers; ambiguity_notes: ; source: NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer; source_identifier: https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/; confidence: high\n### Input variable `nu`\n- entry_id: pq_kinematic_viscosity; canonical_quantity: kinematic viscosity; symbols: nu; ν; aliases: momentum diffusivity; definition: Dynamic viscosity divided by mass density.; si_dimension: L^2 T^-1; dimension_vector: [0, 2, -1, 0, 0, 0, 0]; si_unit: m^2 s^-1; domain: fluid mechanics; ambiguity_notes: Do not confuse lowercase nu/ν with the Nusselt number Nu or a generic frequency symbol.; source: NIST SP 811, Guide for the Use of the International System of Units (SI); source_identifier: doi:10.6028/NIST.SP.811e2008; confidence: curated\n- entry_id: pq_free_stream_velocity; canonical_quantity: free-stream velocity; symbols: U_inf; U∞; U_e; Ue; aliases: external velocity; edge velocity; freestream speed; definition: Velocity of the undisturbed flow outside a boundary layer.; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: fluid mechanics; boundary layers; ambiguity_notes: ; source: NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer; source_identifier: https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/; confidence: high\n- entry_id: pq_streamwise_distance; canonical_quantity: streamwise distance; symbols: x; aliases: distance from leading edge; streamwise coordinate; definition: Distance measured along the mean flow direction.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: boundary layers; fluid mechanics; ambiguity_notes: ; source: NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer; source_identifier: https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/; confidence: high\n### Input variable `x`\n- entry_id: pq_streamwise_distance; canonical_quantity: streamwise distance; symbols: x; aliases: distance from leading edge; streamwise coordinate; definition: Distance measured along the mean flow direction.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: boundary layers; fluid mechanics; ambiguity_notes: ; source: NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer; source_identifier: https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/; confidence: high\n- entry_id: pq_free_stream_velocity; canonical_quantity: free-stream velocity; symbols: U_inf; U∞; U_e; Ue; aliases: external velocity; edge velocity; freestream speed; definition: Velocity of the undisturbed flow outside a boundary layer.; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: fluid mechanics; boundary layers; ambiguity_notes: ; source: NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer; source_identifier: https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/; confidence: high\n- entry_id: pq_boundary_layer_thickness; canonical_quantity: boundary-layer thickness; symbols: delta; δ; delta99; δ99; aliases: 99-percent boundary-layer thickness; velocity boundary-layer thickness; definition: Characteristic distance from a wall to the boundary-layer edge; a common operational definition is the 99-percent free-stream-velocity thickness.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: boundary layers; ambiguity_notes: Do not confuse delta/δ with a generic increment or temperature difference.; source: NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions; source_identifier: https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html; confidence: curated\n### Input variable `y`\n- entry_id: pq_wall_normal_distance; canonical_quantity: wall-normal distance; symbols: y; aliases: distance from wall; wall-normal coordinate; definition: Distance measured normal to a wall.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: wall-bounded flows; ambiguity_notes: ; source: NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions; source_identifier: https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html; confidence: high\n- entry_id: pq_mass_fraction; canonical_quantity: mass fraction; symbols: Y; w; aliases: mass fraction; definition: Ratio of constituent mass to total mass.; si_dimension: 1; dimension_vector: [0, 0, 0, 0, 0, 0, 0]; si_unit: 1; domain: mixtures; chemistry; ambiguity_notes: Dimensionless ratio.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_streamwise_distance; canonical_quantity: streamwise distance; symbols: x; aliases: distance from leading edge; streamwise coordinate; definition: Distance measured along the mean flow direction.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: boundary layers; fluid mechanics; ambiguity_notes: ; source: NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer; source_identifier: https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/; confidence: high",
+        "evidence_records_visible_by_variable": {
+          "U": [
+            "pq_mean_flow_velocity",
+            "pq_velocity",
+            "pq_free_stream_velocity"
+          ],
+          "nu": [
+            "pq_kinematic_viscosity",
+            "pq_free_stream_velocity",
+            "pq_streamwise_distance"
+          ],
+          "x": [
+            "pq_streamwise_distance",
+            "pq_free_stream_velocity",
+            "pq_boundary_layer_thickness"
+          ],
+          "y": [
+            "pq_wall_normal_distance",
+            "pq_mass_fraction",
+            "pq_streamwise_distance"
+          ]
+        },
+        "queries_by_variable": {
+          "U": "Target CSV variable: U\nLocal problem description: Perform dimensional analysis for the Blasius laminar boundary layer over a flat plate to derive the dimensionless form of the streamwise velocity (denoted as u/U). the free-stream velocity (U), the transport coefficient nu defined as dynamic viscosity divided by the fluid density, the streamwise distance from the leading edge (x), and the wall-normal distance (y).\nProblem domain/context: Perform dimensional analysis for the Blasius laminar boundary layer over a flat plate to derive the dimensionless form of the streamwise velocity (denoted as u/U).\nAnalyzer interpretation: exact_column: U; quantity_name: free-stream velocity; physical_definition: Velocity of the undisturbed flow outside a boundary layer.",
+          "nu": "Target CSV variable: nu\nLocal problem description: the free-stream velocity (U), the transport coefficient nu defined as dynamic viscosity divided by the fluid density, the streamwise distance from the leading edge (x), and the wall-normal distance (y).\nProblem domain/context: Perform dimensional analysis for the Blasius laminar boundary layer over a flat plate to derive the dimensionless form of the streamwise velocity (denoted as u/U).\nAnalyzer interpretation: exact_column: nu; quantity_name: kinematic viscosity; physical_definition: Dynamic viscosity divided by mass density, representing kinematic viscosity.",
+          "x": "Target CSV variable: x\nLocal problem description: the free-stream velocity (U), the transport coefficient nu defined as dynamic viscosity divided by the fluid density, the streamwise distance from the leading edge (x), and the wall-normal distance (y).\nProblem domain/context: Perform dimensional analysis for the Blasius laminar boundary layer over a flat plate to derive the dimensionless form of the streamwise velocity (denoted as u/U).\nAnalyzer interpretation: exact_column: x; quantity_name: streamwise distance; physical_definition: Distance measured along the mean flow direction from the leading edge.",
+          "y": "Target CSV variable: y\nLocal problem description: the free-stream velocity (U), the transport coefficient nu defined as dynamic viscosity divided by the fluid density, the streamwise distance from the leading edge (x), and the wall-normal distance (y).\nProblem domain/context: Perform dimensional analysis for the Blasius laminar boundary layer over a flat plate to derive the dimensionless form of the streamwise velocity (denoted as u/U).\nAnalyzer interpretation: exact_column: y; quantity_name: wall-normal distance; physical_definition: Distance measured normal to a wall."
+        },
+        "query_sha256_by_variable": {
+          "U": "defc8e4bcf3817b97bafa6c0148d63e87aec816fc4d699cfc8f5e1054c6ba5d8",
+          "nu": "9ffece1e4aa885a2a47b48d58c6b1d3396871dd761bf343cad13b984d2e4e971",
+          "x": "980ccfea0609fdcff74c8ddbe5083f51085f9b2a6a694f14dc9dad21e8e89e17",
+          "y": "1fb39a230b3edbdf099e89074b9f6ce55ef33ff63cf3399ecfa45d34adc7c499"
+        },
+        "query_observed_in_retriever_by_variable": {
+          "U": true,
+          "nu": true,
+          "x": true,
+          "y": true
+        },
+        "query_scope": "Candidate SI powers excluded. Original problem and typed quantity/definition provide semantic context; they still require physical interpretation."
+      },
+      "provisional_zero_coordinates": [],
+      "checker_call": {
+        "parsed_response": {
+          "ledger_sha256": "fe6b9d093e14fd4853cd11447c333d8ce82d1e577be2cc32ca698431ca0934a7",
+          "variables": [
+            {
+              "csv_name": "U",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "-1",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_free_stream_velocity"
+              ],
+              "reason": "The problem's U is the free-stream velocity outside the boundary layer. The retrieved record pq_free_stream_velocity has canonical_quantity 'free-stream velocity' and definition 'Velocity of the undisturbed flow outside a boundary layer', which matches the ledger's physical_definition. Its reported dimension_vector is [0, 1, -1, 0, 0, 0, 0], which supplies length exponent = 1 and time exponent = -1 (all other base exponents zero). These coordinates exactly support the candidate SI exponents (L=1, T=-1; others 0) in the typed ledger, so the candidate vector is confirmed by this KB record."
+            },
+            {
+              "csv_name": "nu",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "2",
+                "T": "-1",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_kinematic_viscosity"
+              ],
+              "reason": "The ledger defines nu as kinematic viscosity (dynamic viscosity divided by density). The KB record pq_kinematic_viscosity has canonical_quantity 'kinematic viscosity' with that exact definition. Its dimension_vector is reported as [0, 2, -1, 0, 0, 0, 0], corresponding to length^2 time^-1 and zeros for other base dimensions, which matches the ledger's candidate exponents (L=2, T=-1; others 0). Therefore the candidate SI exponents are confirmed by this record."
+            },
+            {
+              "csv_name": "x",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "0",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_streamwise_distance"
+              ],
+              "reason": "The ledger's x is the streamwise distance from the leading edge. The KB record pq_streamwise_distance has canonical_quantity 'streamwise distance' with definition 'Distance measured along the mean flow direction', directly matching the ledger. Its dimension_vector is [0, 1, 0, 0, 0, 0, 0], providing length exponent = 1 and zeros elsewhere, which exactly supports the ledger's candidate exponents (L=1, others 0)."
+            },
+            {
+              "csv_name": "y",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "0",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_wall_normal_distance"
+              ],
+              "reason": "The ledger's y is the wall-normal distance. The KB record pq_wall_normal_distance has canonical_quantity 'wall-normal distance' and the definition 'Distance measured normal to a wall', which is the same quantity used in boundary-layer formulations. Its dimension_vector is [0, 1, 0, 0, 0, 0, 0], giving length exponent = 1 and zeros for other bases, matching the ledger's candidate exponents (L=1, others 0)."
+            }
+          ]
+        },
+        "raw_tool_calls": [
+          {
+            "function": {
+              "arguments": "{\n  \"ledger_sha256\": \"fe6b9d093e14fd4853cd11447c333d8ce82d1e577be2cc32ca698431ca0934a7\",\n  \"variables\": [\n    {\n      \"before_si_exponents\": {\n        \"I\": \"0\",\n        \"J\": \"0\",\n        \"L\": \"1\",\n        \"M\": \"0\",\n        \"N\": \"0\",\n        \"T\": \"-1\",\n        \"Theta\": \"0\"\n      },\n      \"csv_name\": \"U\",\n      \"decision\": \"PASSED\",\n      \"evidence_entry_ids\": [\n        \"pq_free_stream_velocity\"\n      ],\n      \"reason\": \"The problem's U is the free-stream velocity outside the boundary layer. The retrieved record pq_free_stream_velocity has canonical_quantity 'free-stream velocity' and definition 'Velocity of the undisturbed flow outside a boundary layer', which matches the ledger's physical_definition. Its reported dimension_vector is [0, 1, -1, 0, 0, 0, 0], which supplies length exponent = 1 and time exponent = -1 (all other base exponents zero). These coordinates exactly support the candidate SI exponents (L=1, T=-1; others 0) in the typed ledger, so the candidate vector is confirmed by this KB record.\",\n      \"suggested_si_exponents\": null,\n      \"support_mode\": \"KB_RECORD\"\n    },\n    {\n      \"before_si_exponents\": {\n        \"I\": \"0\",\n        \"J\": \"0\",\n        \"L\": \"2\",\n        \"M\": \"0\",\n        \"N\": \"0\",\n        \"T\": \"-1\",\n        \"Theta\": \"0\"\n      },\n      \"csv_name\": \"nu\",\n      \"decision\": \"PASSED\",\n      \"evidence_entry_ids\": [\n        \"pq_kinematic_viscosity\"\n      ],\n      \"reason\": \"The ledger defines nu as kinematic viscosity (dynamic viscosity divided by density). The KB record pq_kinematic_viscosity has canonical_quantity 'kinematic viscosity' with that exact definition. Its dimension_vector is reported as [0, 2, -1, 0, 0, 0, 0], corresponding to length^2 time^-1 and zeros for other base dimensions, which matches the ledger's candidate exponents (L=2, T=-1; others 0). Therefore the candidate SI exponents are confirmed by this record.\",\n      \"suggested_si_exponents\": null,\n      \"support_mode\": \"KB_RECORD\"\n    },\n    {\n      \"before_si_exponents\": {\n        \"I\": \"0\",\n        \"J\": \"0\",\n        \"L\": \"1\",\n        \"M\": \"0\",\n        \"N\": \"0\",\n        \"T\": \"0\",\n        \"Theta\": \"0\"\n      },\n      \"csv_name\": \"x\",\n      \"decision\": \"PASSED\",\n      \"evidence_entry_ids\": [\n        \"pq_streamwise_distance\"\n      ],\n      \"reason\": \"The ledger's x is the streamwise distance from the leading edge. The KB record pq_streamwise_distance has canonical_quantity 'streamwise distance' with definition 'Distance measured along the mean flow direction', directly matching the ledger. Its dimension_vector is [0, 1, 0, 0, 0, 0, 0], providing length exponent = 1 and zeros elsewhere, which exactly supports the ledger's candidate exponents (L=1, others 0).\",\n      \"suggested_si_exponents\": null,\n      \"support_mode\": \"KB_RECORD\"\n    },\n    {\n      \"before_si_exponents\": {\n        \"I\": \"0\",\n        \"J\": \"0\",\n        \"L\": \"1\",\n        \"M\": \"0\",\n        \"N\": \"0\",\n        \"T\": \"0\",\n        \"Theta\": \"0\"\n      },\n      \"csv_name\": \"y\",\n      \"decision\": \"PASSED\",\n      \"evidence_entry_ids\": [\n        \"pq_wall_normal_distance\"\n      ],\n      \"reason\": \"The ledger's y is the wall-normal distance. The KB record pq_wall_normal_distance has canonical_quantity 'wall-normal distance' and the definition 'Distance measured normal to a wall', which is the same quantity used in boundary-layer formulations. Its dimension_vector is [0, 1, 0, 0, 0, 0, 0], giving length exponent = 1 and zeros for other bases, matching the ledger's candidate exponents (L=1, others 0).\",\n      \"suggested_si_exponents\": null,\n      \"support_mode\": \"KB_RECORD\"\n    }\n  ]\n}",
+              "name": "CheckerDimensionAudit"
+            },
+            "id": "call_Bv5MdxEblt7RskDYEmiVbCQP",
+            "type": "function"
+          }
+        ],
+        "model_messages": [
+          {
+            "type": "system",
+            "content": "Audit every named physical input in this exact typed ledger, including literal SI coordinate values. Do not substitute the correct definition or a KB vector for a wrong candidate and then claim PASSED. Return ledger_sha256 and each csv_name exactly once; before_si_exponents must copy the actual candidate. PASSED confirms the actual vector, CONFLICT requires a complete corrected suggested vector, and UNCERTAIN does not permit numerical execution. KB_RECORD requires actual entry_id citations from that variable's retrieved records. Canonical entity names are read by the program from the selected IDs; do not echo another quantity-name field. Your reason must explain why each cited record applies to this variable in the original problem, not merely why its vector matches. Cited vectors must support all known coordinates of the proposed/confirmed SI vector. INTERNAL_REASONING uses no IDs and must explain the physical meaning. Retrieval rank is relevance, not truth. Resolve symbol ambiguity from the original problem; do not choose an unrelated matching symbol. Known absent base dimensions must be explicit '0'; null means genuinely unknown, not unused. If any current coordinate is unknown, request revision or report UNCERTAIN; never call a partly known vector PASSED. Give a complete correction when physically justified. If a correction remains partly unknown, preserve null and explain what remains unresolved; the program will request revision rather than invent zeros. Lack of KB alone is not a physical contradiction. Matrix compilation and n/r/k are program tasks, not audit tasks."
+          },
+          {
+            "type": "human",
+            "content": "Problem:\nPerform dimensional analysis for the Blasius laminar boundary layer over a flat plate to derive the dimensionless form of the streamwise velocity (denoted as u/U). \nThis analysis uses ONLY the following 4 physical quantities as input parameters: \nthe free-stream velocity (U), the transport coefficient nu defined as dynamic viscosity divided by the fluid density, the streamwise distance from the leading edge (x), and the wall-normal distance (y).\n\nTyped ledger SHA256: fe6b9d093e14fd4853cd11447c333d8ce82d1e577be2cc32ca698431ca0934a7\nTyped candidate ledger:\n{\"input_variable_names\": [\"U\", \"nu\", \"x\", \"y\"], \"output_variable_confidence\": \"high\", \"output_variable_name\": \"u/U\", \"output_variable_reasoning\": \"The ratio of the streamwise velocity to the free-stream velocity is a dimensionless quantity, which is derived from the dimensional analysis of the other variables.\", \"variables\": [{\"csv_name\": \"U\", \"physical_definition\": \"Velocity of the undisturbed flow outside a boundary layer.\", \"quantity_name\": \"free-stream velocity\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"1\", \"M\": \"0\", \"N\": \"0\", \"T\": \"-1\", \"Theta\": \"0\"}}, {\"csv_name\": \"nu\", \"physical_definition\": \"Dynamic viscosity divided by mass density, representing kinematic viscosity.\", \"quantity_name\": \"kinematic viscosity\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"2\", \"M\": \"0\", \"N\": \"0\", \"T\": \"-1\", \"Theta\": \"0\"}}, {\"csv_name\": \"x\", \"physical_definition\": \"Distance measured along the mean flow direction from the leading edge.\", \"quantity_name\": \"streamwise distance\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"1\", \"M\": \"0\", \"N\": \"0\", \"T\": \"0\", \"Theta\": \"0\"}}, {\"csv_name\": \"y\", \"physical_definition\": \"Distance measured normal to a wall.\", \"quantity_name\": \"wall-normal distance\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"1\", \"M\": \"0\", \"N\": \"0\", \"T\": \"0\", \"Theta\": \"0\"}}]}\n\nRetrieved dimensional evidence:\n### Input variable `U`\n- entry_id: pq_mean_flow_velocity; canonical_quantity: mean flow velocity; symbols: U; U_m; Umean; V; aliases: bulk velocity; mean velocity; average flow velocity; definition: Mean or bulk velocity used to characterize a flow.; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: fluid mechanics; ambiguity_notes: ; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_velocity; canonical_quantity: velocity; symbols: u; U; v; V; aliases: speed; flow velocity; fluid velocity; definition: Rate of displacement with time.; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: mechanics; fluid mechanics; ambiguity_notes: ; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_free_stream_velocity; canonical_quantity: free-stream velocity; symbols: U_inf; U∞; U_e; Ue; aliases: external velocity; edge velocity; freestream speed; definition: Velocity of the undisturbed flow outside a boundary layer.; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: fluid mechanics; boundary layers; ambiguity_notes: ; source: NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer; source_identifier: https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/; confidence: high\n### Input variable `nu`\n- entry_id: pq_kinematic_viscosity; canonical_quantity: kinematic viscosity; symbols: nu; ν; aliases: momentum diffusivity; definition: Dynamic viscosity divided by mass density.; si_dimension: L^2 T^-1; dimension_vector: [0, 2, -1, 0, 0, 0, 0]; si_unit: m^2 s^-1; domain: fluid mechanics; ambiguity_notes: Do not confuse lowercase nu/ν with the Nusselt number Nu or a generic frequency symbol.; source: NIST SP 811, Guide for the Use of the International System of Units (SI); source_identifier: doi:10.6028/NIST.SP.811e2008; confidence: curated\n- entry_id: pq_free_stream_velocity; canonical_quantity: free-stream velocity; symbols: U_inf; U∞; U_e; Ue; aliases: external velocity; edge velocity; freestream speed; definition: Velocity of the undisturbed flow outside a boundary layer.; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: fluid mechanics; boundary layers; ambiguity_notes: ; source: NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer; source_identifier: https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/; confidence: high\n- entry_id: pq_streamwise_distance; canonical_quantity: streamwise distance; symbols: x; aliases: distance from leading edge; streamwise coordinate; definition: Distance measured along the mean flow direction.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: boundary layers; fluid mechanics; ambiguity_notes: ; source: NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer; source_identifier: https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/; confidence: high\n### Input variable `x`\n- entry_id: pq_streamwise_distance; canonical_quantity: streamwise distance; symbols: x; aliases: distance from leading edge; streamwise coordinate; definition: Distance measured along the mean flow direction.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: boundary layers; fluid mechanics; ambiguity_notes: ; source: NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer; source_identifier: https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/; confidence: high\n- entry_id: pq_free_stream_velocity; canonical_quantity: free-stream velocity; symbols: U_inf; U∞; U_e; Ue; aliases: external velocity; edge velocity; freestream speed; definition: Velocity of the undisturbed flow outside a boundary layer.; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: fluid mechanics; boundary layers; ambiguity_notes: ; source: NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer; source_identifier: https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/; confidence: high\n- entry_id: pq_boundary_layer_thickness; canonical_quantity: boundary-layer thickness; symbols: delta; δ; delta99; δ99; aliases: 99-percent boundary-layer thickness; velocity boundary-layer thickness; definition: Characteristic distance from a wall to the boundary-layer edge; a common operational definition is the 99-percent free-stream-velocity thickness.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: boundary layers; ambiguity_notes: Do not confuse delta/δ with a generic increment or temperature difference.; source: NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions; source_identifier: https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html; confidence: curated\n### Input variable `y`\n- entry_id: pq_wall_normal_distance; canonical_quantity: wall-normal distance; symbols: y; aliases: distance from wall; wall-normal coordinate; definition: Distance measured normal to a wall.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: wall-bounded flows; ambiguity_notes: ; source: NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions; source_identifier: https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html; confidence: high\n- entry_id: pq_mass_fraction; canonical_quantity: mass fraction; symbols: Y; w; aliases: mass fraction; definition: Ratio of constituent mass to total mass.; si_dimension: 1; dimension_vector: [0, 0, 0, 0, 0, 0, 0]; si_unit: 1; domain: mixtures; chemistry; ambiguity_notes: Dimensionless ratio.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_streamwise_distance; canonical_quantity: streamwise distance; symbols: x; aliases: distance from leading edge; streamwise coordinate; definition: Distance measured along the mean flow direction.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: boundary layers; fluid mechanics; ambiguity_notes: ; source: NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer; source_identifier: https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/; confidence: high"
+          }
+        ],
+        "elapsed_s": 28.37601170002017
+      },
+      "checker_response": {
+        "ledger_sha256": "fe6b9d093e14fd4853cd11447c333d8ce82d1e577be2cc32ca698431ca0934a7",
+        "variables": [
+          {
+            "csv_name": "U",
+            "before_si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "decision": "PASSED",
+            "suggested_si_exponents": null,
+            "support_mode": "KB_RECORD",
+            "evidence_entry_ids": [
+              "pq_free_stream_velocity"
+            ],
+            "reason": "The problem's U is the free-stream velocity outside the boundary layer. The retrieved record pq_free_stream_velocity has canonical_quantity 'free-stream velocity' and definition 'Velocity of the undisturbed flow outside a boundary layer', which matches the ledger's physical_definition. Its reported dimension_vector is [0, 1, -1, 0, 0, 0, 0], which supplies length exponent = 1 and time exponent = -1 (all other base exponents zero). These coordinates exactly support the candidate SI exponents (L=1, T=-1; others 0) in the typed ledger, so the candidate vector is confirmed by this KB record."
+          },
+          {
+            "csv_name": "nu",
+            "before_si_exponents": {
+              "M": "0",
+              "L": "2",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "decision": "PASSED",
+            "suggested_si_exponents": null,
+            "support_mode": "KB_RECORD",
+            "evidence_entry_ids": [
+              "pq_kinematic_viscosity"
+            ],
+            "reason": "The ledger defines nu as kinematic viscosity (dynamic viscosity divided by density). The KB record pq_kinematic_viscosity has canonical_quantity 'kinematic viscosity' with that exact definition. Its dimension_vector is reported as [0, 2, -1, 0, 0, 0, 0], corresponding to length^2 time^-1 and zeros for other base dimensions, which matches the ledger's candidate exponents (L=2, T=-1; others 0). Therefore the candidate SI exponents are confirmed by this record."
+          },
+          {
+            "csv_name": "x",
+            "before_si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "decision": "PASSED",
+            "suggested_si_exponents": null,
+            "support_mode": "KB_RECORD",
+            "evidence_entry_ids": [
+              "pq_streamwise_distance"
+            ],
+            "reason": "The ledger's x is the streamwise distance from the leading edge. The KB record pq_streamwise_distance has canonical_quantity 'streamwise distance' with definition 'Distance measured along the mean flow direction', directly matching the ledger. Its dimension_vector is [0, 1, 0, 0, 0, 0, 0], providing length exponent = 1 and zeros elsewhere, which exactly supports the ledger's candidate exponents (L=1, others 0)."
+          },
+          {
+            "csv_name": "y",
+            "before_si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "decision": "PASSED",
+            "suggested_si_exponents": null,
+            "support_mode": "KB_RECORD",
+            "evidence_entry_ids": [
+              "pq_wall_normal_distance"
+            ],
+            "reason": "The ledger's y is the wall-normal distance. The KB record pq_wall_normal_distance has canonical_quantity 'wall-normal distance' and the definition 'Distance measured normal to a wall', which is the same quantity used in boundary-layer formulations. Its dimension_vector is [0, 1, 0, 0, 0, 0, 0], giving length exponent = 1 and zeros for other bases, matching the ledger's candidate exponents (L=1, others 0)."
+          }
+        ]
+      },
+      "retrieval_origin": "live",
+      "checker_elapsed_s": 28.37601170002017,
+      "retrieval_elapsed_s": 7.086686399998143,
+      "checker_tokens": {
+        "input": 2894,
+        "output": 2414
+      },
+      "embedding_tokens": {
+        "input": 595,
+        "output": 0
+      }
+    }
+  ],
+  "final_ledger": {
+    "output_variable_name": "u/U",
+    "output_variable_reasoning": "The ratio of the streamwise velocity to the free-stream velocity is a dimensionless quantity, which is derived from the dimensional analysis of the other variables.",
+    "output_variable_confidence": "high",
+    "input_variable_names": [
+      "U",
+      "nu",
+      "x",
+      "y"
+    ],
+    "variables": [
+      {
+        "csv_name": "U",
+        "quantity_name": "free-stream velocity",
+        "physical_definition": "Velocity of the undisturbed flow outside a boundary layer.",
+        "si_exponents": {
+          "M": "0",
+          "L": "1",
+          "T": "-1",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "nu",
+        "quantity_name": "kinematic viscosity",
+        "physical_definition": "Dynamic viscosity divided by mass density, representing kinematic viscosity.",
+        "si_exponents": {
+          "M": "0",
+          "L": "2",
+          "T": "-1",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "x",
+        "quantity_name": "streamwise distance",
+        "physical_definition": "Distance measured along the mean flow direction from the leading edge.",
+        "si_exponents": {
+          "M": "0",
+          "L": "1",
+          "T": "0",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "y",
+        "quantity_name": "wall-normal distance",
+        "physical_definition": "Distance measured normal to a wall.",
+        "si_exponents": {
+          "M": "0",
+          "L": "1",
+          "T": "0",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      }
+    ]
+  },
+  "compiled_ledgers": [
+    {
+      "ledger": {
+        "output_variable_name": "u/U",
+        "output_variable_reasoning": "The output variable u/U is a dimensionless ratio of the streamwise velocity to the free-stream velocity, which is derived from the input parameters.",
+        "output_variable_confidence": "high",
+        "input_variable_names": [
+          "U",
+          "nu",
+          "x",
+          "y"
+        ],
+        "variables": [
+          {
+            "csv_name": "U",
+            "quantity_name": "free-stream velocity",
+            "physical_definition": "The velocity of the fluid far from the boundary layer.",
+            "si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "nu",
+            "quantity_name": "kinematic viscosity",
+            "physical_definition": "The kinematic viscosity of the fluid, defined as dynamic viscosity divided by fluid density.",
+            "si_exponents": {
+              "M": "1",
+              "L": "2",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "x",
+            "quantity_name": "streamwise distance",
+            "physical_definition": "The distance from the leading edge of the flat plate.",
+            "si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "y",
+            "quantity_name": "wall-normal distance",
+            "physical_definition": "The distance normal to the wall of the flat plate.",
+            "si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          }
+        ]
+      },
+      "ledger_sha256": "21b31e3d261d39a597800403d1c81452062ccf45b1159e239ba5fda7f1e52d8a",
+      "provisional_zero_coordinates": []
+    },
+    {
+      "ledger": {
+        "output_variable_name": "u/U",
+        "output_variable_reasoning": "The ratio of the streamwise velocity to the free-stream velocity is a dimensionless quantity, which is derived from the dimensional analysis of the other variables.",
+        "output_variable_confidence": "high",
+        "input_variable_names": [
+          "U",
+          "nu",
+          "x",
+          "y"
+        ],
+        "variables": [
+          {
+            "csv_name": "U",
+            "quantity_name": "free-stream velocity",
+            "physical_definition": "Velocity of the undisturbed flow outside a boundary layer.",
+            "si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "nu",
+            "quantity_name": "kinematic viscosity",
+            "physical_definition": "Dynamic viscosity divided by mass density, representing kinematic viscosity.",
+            "si_exponents": {
+              "M": "0",
+              "L": "2",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "x",
+            "quantity_name": "streamwise distance",
+            "physical_definition": "Distance measured along the mean flow direction from the leading edge.",
+            "si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "y",
+            "quantity_name": "wall-normal distance",
+            "physical_definition": "Distance measured normal to a wall.",
+            "si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          }
+        ]
+      },
+      "ledger_sha256": "fe6b9d093e14fd4853cd11447c333d8ce82d1e577be2cc32ca698431ca0934a7",
+      "provisional_zero_coordinates": []
+    }
+  ],
+  "workflow_status": "basis_ready",
+  "basis": {
+    "workflow_status": "basis_ready",
+    "input_vars": [
+      "U",
+      "nu",
+      "x",
+      "y"
+    ],
+    "output_var": "u/U",
+    "basis_pi_formulas": {
+      "Pi_1": "(U * x) / (nu)",
+      "Pi_2": "(U * y) / (nu)"
+    },
+    "basis_pi_matrices": [
+      [
+        1.0,
+        -1.0,
+        1.0,
+        0.0
+      ],
+      [
+        1.0,
+        -1.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "basis_tool_history": [
+      {
+        "args": {
+          "D_in": [
+            [
+              1.0,
+              2.0,
+              1.0,
+              1.0
+            ],
+            [
+              -1.0,
+              -1.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "var_names": [
+            "U",
+            "nu",
+            "x",
+            "y"
+          ]
+        },
+        "result": {
+          "status": "success",
+          "pi_formulas": {
+            "Pi_1": "(U * x) / (nu)",
+            "Pi_2": "(U * y) / (nu)"
+          },
+          "basis_matrices": [
+            [
+              1.0,
+              -1.0,
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              -1.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "basis_matrices_display": [
+            [
+              1.0,
+              -1.0,
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              -1.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "null_space_residual_inf": 0.0,
+          "basis_precision_note": "basis_matrices stores full floating-point precision; basis_matrices_display is rounded for display only."
+        }
+      }
+    ],
+    "output_resolution": {
+      "status": "success",
+      "output_var": "u/U",
+      "source": "structured_analyzer",
+      "requested": "u/U",
+      "candidates": [
+        "u/U"
+      ]
+    }
+  },
+  "revision_calls": [
+    {
+      "parsed_response": {
+        "input_variable_names": [
+          "U",
+          "nu",
+          "x",
+          "y"
+        ],
+        "output_variable_confidence": "high",
+        "output_variable_name": "u/U",
+        "output_variable_reasoning": "The ratio of the streamwise velocity to the free-stream velocity is a dimensionless quantity, which is derived from the dimensional analysis of the other variables.",
+        "variables": [
+          {
+            "csv_name": "U",
+            "physical_definition": "Velocity of the undisturbed flow outside a boundary layer.",
+            "quantity_name": "free-stream velocity",
+            "si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "nu",
+            "physical_definition": "Dynamic viscosity divided by mass density, representing kinematic viscosity.",
+            "quantity_name": "kinematic viscosity",
+            "si_exponents": {
+              "M": "0",
+              "L": "2",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "x",
+            "physical_definition": "Distance measured along the mean flow direction from the leading edge.",
+            "quantity_name": "streamwise distance",
+            "si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "y",
+            "physical_definition": "Distance measured normal to a wall.",
+            "quantity_name": "wall-normal distance",
+            "si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          }
+        ]
+      },
+      "raw_tool_calls": [
+        {
+          "id": "call_ktfq8v4RFA2R1nwB9KVv0sYa",
+          "type": "function",
+          "function": {
+            "name": "AnalyzerDimensionLedger",
+            "arguments": "{\"input_variable_names\":[\"U\",\"nu\",\"x\",\"y\"],\"output_variable_confidence\":\"high\",\"output_variable_name\":\"u/U\",\"output_variable_reasoning\":\"The ratio of the streamwise velocity to the free-stream velocity is a dimensionless quantity, which is derived from the dimensional analysis of the other variables.\",\"variables\":[{\"csv_name\":\"U\",\"physical_definition\":\"Velocity of the undisturbed flow outside a boundary layer.\",\"quantity_name\":\"free-stream velocity\",\"si_exponents\":{\"M\":\"0\",\"L\":\"1\",\"T\":\"-1\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"}},{\"csv_name\":\"nu\",\"physical_definition\":\"Dynamic viscosity divided by mass density, representing kinematic viscosity.\",\"quantity_name\":\"kinematic viscosity\",\"si_exponents\":{\"M\":\"0\",\"L\":\"2\",\"T\":\"-1\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"}},{\"csv_name\":\"x\",\"physical_definition\":\"Distance measured along the mean flow direction from the leading edge.\",\"quantity_name\":\"streamwise distance\",\"si_exponents\":{\"M\":\"0\",\"L\":\"1\",\"T\":\"0\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"}},{\"csv_name\":\"y\",\"physical_definition\":\"Distance measured normal to a wall.\",\"quantity_name\":\"wall-normal distance\",\"si_exponents\":{\"M\":\"0\",\"L\":\"1\",\"T\":\"0\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"}}]}"
+          }
+        }
+      ],
+      "model_messages": [
+        {
+          "type": "system",
+          "content": "Infer one typed physical-input ledger. Exact CSV names and explicit input order are binding. Return each input exactly once with its physical quantity name, a plain-language physical_definition, and all seven named SI exponents M,L,T,I,Theta,N,J as rational strings. Use null for unknown coordinates. For a base quantity known not to participate, explicitly return '0'; this is known absence, not uncertainty. Use null only when the exponent is genuinely unknown. Never infer unknown as0. Exclude the output and metadata/unused/derived columns. quantity_name and physical_definition are retrieval meaning fields: do not put assigned SI units, dimension vectors or exponent formulas there. Do not output a separate dimensional matrix or n/r/k. They are generated deterministically from this ledger. A confident name is not proof of its SI vector."
+        },
+        {
+          "type": "human",
+          "content": "Problem statement:\nPerform dimensional analysis for the Blasius laminar boundary layer over a flat plate to derive the dimensionless form of the streamwise velocity (denoted as u/U). \nThis analysis uses ONLY the following 4 physical quantities as input parameters: \nthe free-stream velocity (U), the transport coefficient nu defined as dynamic viscosity divided by the fluid density, the streamwise distance from the leading edge (x), and the wall-normal distance (y).\n\nCSV columns: ['U', 'nu', 'x', 'y', 'u/U']\nCSV preview:\n      U        nu      x         y       u/U\n0  0.01  0.000001  0.071  0.005979  0.682889\n1  0.01  0.000001  0.005  0.004673  0.999672\n2  0.01  0.000001  0.040  0.005979  0.836079\n3  0.01  0.000001  0.023  0.009681  0.999522\n4  0.01  0.000001  0.032  0.010552  0.998524\n\nExplicit manual input-role/order override: None\nExplicit manual output override: None\n\nPrevious physics-audit feedback (exact coordinate differences and cited original KB records):\nAudit round 1:\nTyped ledger 21b31e3d261d39a597800403d1c81452062ccf45b1159e239ba5fda7f1e52d8a; program gate=RETRY\nVariable U: decision=PASSED; reason=The problem defines U explicitly as the free-stream velocity (velocity of the undisturbed flow outside the boundary layer). The KB record pq_free_stream_velocity is the canonical entry for free-stream/edge velocity and gives si_dimension L T^-1 (dimension_vector [0,1,-1,0,0,0,0]), which matches the candidate exponents (L=1, T=-1, all other base exponents 0). pq_velocity is the general velocity entry that corroborates the same base dimensions. These records directly apply because they define the physical quantity named U in the original boundary-layer problem, not a different quantity.\nActual named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"-1\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"-1\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_free_stream_velocity\", \"canonical_quantity\": \"free-stream velocity\", \"source_identifier\": \"https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/\"}, {\"entry_id\": \"pq_velocity\", \"canonical_quantity\": \"velocity\", \"source_identifier\": \"doi:10.59161/AUEZ1291\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for U:\n{\"aliases\": \"external velocity; edge velocity; freestream speed\", \"ambiguity_notes\": \"\", \"canonical_quantity\": \"free-stream velocity\", \"confidence\": \"high\", \"definition\": \"Velocity of the undisturbed flow outside a boundary layer.\", \"dimension_vector\": \"[0, 1, -1, 0, 0, 0, 0]\", \"domain\": \"fluid mechanics; boundary layers\", \"entry_id\": \"pq_free_stream_velocity\", \"hybrid_score\": 0.42203381497941095, \"lexical_score\": 0.3246753246753247, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.6028424398298569, \"si_dimension\": \"L T^-1\", \"si_unit\": \"m s^-1\", \"source\": \"NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer\", \"source_identifier\": \"https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/\", \"symbols\": \"U_inf; U∞; U_e; Ue\", \"variable_name\": \"U\"}\n\nReferenced KB original record for U:\n{\"aliases\": \"speed; flow velocity; fluid velocity\", \"ambiguity_notes\": \"\", \"canonical_quantity\": \"velocity\", \"confidence\": \"high\", \"definition\": \"Rate of displacement with time.\", \"dimension_vector\": \"[0, 1, -1, 0, 0, 0, 0]\", \"domain\": \"mechanics; fluid mechanics\", \"entry_id\": \"pq_velocity\", \"hybrid_score\": 0.8462762979792785, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.5607894227979386, \"si_dimension\": \"L T^-1\", \"si_unit\": \"m s^-1\", \"source\": \"BIPM SI Brochure, 9th ed. (updated 2026)\", \"source_identifier\": \"doi:10.59161/AUEZ1291\", \"symbols\": \"u; U; v; V\", \"variable_name\": \"U\"}\n\nVariable nu: decision=CONFLICT; reason=The problem statement defines nu as the kinematic viscosity (dynamic viscosity divided by mass density). The KB record pq_kinematic_viscosity explicitly defines kinematic viscosity with si_dimension L^2 T^-1 and dimension_vector [0,2,-1,0,0,0,0]. This record applies because it is the canonical definition for the symbol nu used in fluid mechanics and boundary-layer theory. The candidate ledger incorrectly includes a mass exponent M=1, which conflicts with the kinematic-viscosity definition. All known coordinates (L=2, T=-1, and zero for other base dimensions) are provided by pq_kinematic_viscosity.\nActual named SI={\"M\": \"1\", \"L\": \"2\", \"T\": \"-1\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"0\", \"L\": \"2\", \"T\": \"-1\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={\"M\": {\"before\": \"1\", \"suggested\": \"0\"}}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_kinematic_viscosity\", \"canonical_quantity\": \"kinematic viscosity\", \"source_identifier\": \"doi:10.6028/NIST.SP.811e2008\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[\"Checker decision CONFLICT\"]\n\nReferenced KB original record for nu:\n{\"aliases\": \"momentum diffusivity\", \"ambiguity_notes\": \"Do not confuse lowercase nu/ν with the Nusselt number Nu or a generic frequency symbol.\", \"canonical_quantity\": \"kinematic viscosity\", \"confidence\": \"curated\", \"definition\": \"Dynamic viscosity divided by mass density.\", \"dimension_vector\": \"[0, 2, -1, 0, 0, 0, 0]\", \"domain\": \"fluid mechanics\", \"entry_id\": \"pq_kinematic_viscosity\", \"hybrid_score\": 0.8626124607213235, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.6074641734894954, \"si_dimension\": \"L^2 T^-1\", \"si_unit\": \"m^2 s^-1\", \"source\": \"NIST SP 811, Guide for the Use of the International System of Units (SI)\", \"source_identifier\": \"doi:10.6028/NIST.SP.811e2008\", \"symbols\": \"nu; ν\", \"variable_name\": \"nu\"}\n\nVariable x: decision=PASSED; reason=The variable x in the original problem is the streamwise distance from the leading edge. The KB record pq_streamwise_distance is the canonical entry for that coordinate and gives si_dimension L (dimension_vector [0,1,0,0,0,0,0]), matching the candidate exponents (L=1, all other base exponents 0). This record is directly applicable because it defines the same geometric coordinate used in boundary-layer formulations.\nActual named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_streamwise_distance\", \"canonical_quantity\": \"streamwise distance\", \"source_identifier\": \"https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for x:\n{\"aliases\": \"distance from leading edge; streamwise coordinate\", \"ambiguity_notes\": \"\", \"canonical_quantity\": \"streamwise distance\", \"confidence\": \"high\", \"definition\": \"Distance measured along the mean flow direction.\", \"dimension_vector\": \"[0, 1, 0, 0, 0, 0, 0]\", \"domain\": \"boundary layers; fluid mechanics\", \"entry_id\": \"pq_streamwise_distance\", \"hybrid_score\": 0.8659182486481988, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.6169092818519966, \"si_dimension\": \"L\", \"si_unit\": \"m\", \"source\": \"NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer\", \"source_identifier\": \"https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/\", \"symbols\": \"x\", \"variable_name\": \"x\"}\n\nVariable y: decision=PASSED; reason=The variable y is defined in the problem as the wall-normal distance. The KB record pq_wall_normal_distance is the canonical entry for the distance measured normal to a wall and gives si_dimension L (dimension_vector [0,1,0,0,0,0,0]), which matches the candidate exponents. This entry applies directly to the wall-normal coordinate used in boundary-layer theory.\nActual named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_wall_normal_distance\", \"canonical_quantity\": \"wall-normal distance\", \"source_identifier\": \"https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for y:\n{\"aliases\": \"distance from wall; wall-normal coordinate\", \"ambiguity_notes\": \"\", \"canonical_quantity\": \"wall-normal distance\", \"confidence\": \"high\", \"definition\": \"Distance measured normal to a wall.\", \"dimension_vector\": \"[0, 1, 0, 0, 0, 0, 0]\", \"domain\": \"wall-bounded flows\", \"entry_id\": \"pq_wall_normal_distance\", \"hybrid_score\": 0.8514754415436755, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.5756441186962156, \"si_dimension\": \"L\", \"si_unit\": \"m\", \"source\": \"NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions\", \"source_identifier\": \"https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html\", \"symbols\": \"y\", \"variable_name\": \"y\"}"
+        }
+      ],
+      "elapsed_s": 5.803200000023935,
+      "original_schema_error": null,
+      "tokens": {
+        "input": 3061,
+        "output": 303
+      }
+    }
+  ],
+  "basis_built": true,
+  "elapsed_s": 96.93329370004358,
+  "error": null,
+  "infrastructure_error": [],
+  "node_sequence": [
+    "Analyzer",
+    "Hallu_Checker",
+    "Analyzer",
+    "Hallu_Checker",
+    "Basis_Decider",
+    "Basis_Executor"
+  ],
+  "provenance": {
+    "run_id": "a9749342-8200-4971-839f-3af9aa960d98",
+    "release": "run-provenance-2026-11-09",
+    "engine_sha256": "ae9a03710f9685d3be863b98acc1880d72c9ea3f04450af039b92f5459ee1ea9",
+    "started_utc": "2026-11-17T07:20:32Z",
+    "finished_utc": null,
+    "status": "running",
+    "dataset": {
+      "name": "dataset_blasius.csv",
+      "sha256": "32355f2ae6e1d9f305dbe8740a6a99662e41fb6efc086b8bf222624e8e49a53c"
+    },
+    "problem_sha256": "def8e6456b69ca837edce78be45f0f1a1d20ea65f9259f01921de7ab8d97659c",
+    "manual_hyperparams_sha256": "1a77ac90efe4bc0a9be8c57fdd1e148af3616f2ddcc5fada158148b929b1e8a7",
+    "model_configuration": {
+      "analyzer": "gpt-4o-mini",
+      "checker": "gpt-5-mini",
+      "planner": "gpt-5-mini",
+      "interpretation": "gpt-5-mini",
+      "output_binding_checker": "gpt-5-mini"
+    },
+    "package_versions": {
+      "numpy": "2.4.0",
+      "pandas": "2.3.3",
+      "scipy": "1.16.3",
+      "sympy": "1.14.0",
+      "scikit-learn": "1.8.0",
+      "cma": "4.4.4",
+      "pydantic": "2.12.5",
+      "openai": "2.14.0",
+      "httpx": "0.28.1",
+      "langchain-core": "1.2.5",
+      "langchain-openai": "1.1.6",
+      "langgraph": "1.0.5"
+    },
+    "tracing_enabled": false,
+    "wall_seconds": 96.93183479999425,
+    "node_timings": [
+      {
+        "node": "Analyzer",
+        "visit": 1,
+        "duration_seconds": 9.548334599996451,
+        "status": "returned",
+        "error_type": null
+      },
+      {
+        "node": "Hallu_Checker",
+        "visit": 1,
+        "duration_seconds": 46.07902800000738,
+        "status": "returned",
+        "error_type": null
+      },
+      {
+        "node": "Analyzer",
+        "visit": 2,
+        "duration_seconds": 5.81020060001174,
+        "status": "returned",
+        "error_type": null
+      },
+      {
+        "node": "Hallu_Checker",
+        "visit": 2,
+        "duration_seconds": 35.47019169997657,
+        "status": "returned",
+        "error_type": null
+      },
+      {
+        "node": "Basis_Decider",
+        "visit": 1,
+        "duration_seconds": 0.00510420004138723,
+        "status": "returned",
+        "error_type": null
+      },
+      {
+        "node": "Basis_Executor",
+        "visit": 1,
+        "duration_seconds": 0.013093199988361448,
+        "status": "returned",
+        "error_type": null
+      }
+    ],
+    "http_attempts": [
+      {
+        "attempt_id": "57978da7-b42e-4276-b414-3abcb78518ae",
+        "node": "Output_Binding_Checker",
+        "node_visit": 1,
+        "kind": "llm",
+        "requested_model": "gpt-5-mini",
+        "response_model": "gpt-5-mini-2025-08-07",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 9.524354299996048,
+        "started_utc": "2026-11-17T07:20:32Z",
+        "input_tokens": 316,
+        "output_tokens": 1177,
+        "total_tokens": 1493,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 1152,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "359e48c6416108596341e8e98cab95a1c46cbaf8d761dc3df8b00adc8601c526",
+        "response_id": "chatcmpl-El7mTrn7Uir5ghwZR6DS7xwkuF2NB"
+      },
+      {
+        "attempt_id": "66794f30-6a48-43b8-99c4-bf8b23a664fd",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 0.2992478999658488,
+        "started_utc": "2026-11-17T07:20:41Z",
+        "input_tokens": 174,
+        "output_tokens": 0,
+        "total_tokens": 174,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "1ddf1d1c34b047a8a49a669d6b0ea43d5e9fded9936962fd32711d84496e5252",
+        "response_id": null
+      },
+      {
+        "attempt_id": "63bd50ee-0ad8-43e9-8129-d465badd794e",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 3.8518029999686405,
+        "started_utc": "2026-11-17T07:20:42Z",
+        "input_tokens": 151,
+        "output_tokens": 0,
+        "total_tokens": 151,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "cc07523b644b883e8d42fa2b421765fcbe14973336d83544a4455d43abde37af",
+        "response_id": null
+      },
+      {
+        "attempt_id": "6931343b-fea2-4b03-8238-b3d6b6562437",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 2.493990599992685,
+        "started_utc": "2026-11-17T07:20:46Z",
+        "input_tokens": 137,
+        "output_tokens": 0,
+        "total_tokens": 137,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "e1cde8f285d4f804fb9c9b4e20901a803f551d5aa241de72179d3d844ff6dbb5",
+        "response_id": null
+      },
+      {
+        "attempt_id": "976b9635-2ae6-4273-851a-b0fe9709add6",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 14.2066631000489,
+        "started_utc": "2026-11-17T07:20:48Z",
+        "input_tokens": 138,
+        "output_tokens": 0,
+        "total_tokens": 138,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "094391c30c212c73ab1acc2712fb52edb057b147d8e80f2047df9ecdac1405ba",
+        "response_id": null
+      },
+      {
+        "attempt_id": "b7bf0dc4-84d0-4ba9-a596-7d21445bdf8d",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "llm",
+        "requested_model": "gpt-5-mini",
+        "response_model": "gpt-5-mini-2025-08-07",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 25.085117600043304,
+        "started_utc": "2026-11-17T07:21:02Z",
+        "input_tokens": 2925,
+        "output_tokens": 2709,
+        "total_tokens": 5634,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 1664,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "8c05ad0ee955dda32d02cfe8c9f414f540be88944e254b9386514185ea96a011",
+        "response_id": "chatcmpl-El7mzezn7kvIsanvSJoHBfyZfGZ3A"
+      },
+      {
+        "attempt_id": "eec84ef1-f4f7-4e73-8eab-e981c3fb4082",
+        "node": "Analyzer",
+        "node_visit": 2,
+        "kind": "llm",
+        "requested_model": "gpt-4o-mini",
+        "response_model": "gpt-4o-mini-2024-07-18",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 5.7977335000177845,
+        "started_utc": "2026-11-17T07:21:27Z",
+        "input_tokens": 3061,
+        "output_tokens": 303,
+        "total_tokens": 3364,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 0,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "16b0c241249fd33658352efae84f6d59192248d08d5b7c56d0cbd660f3d1ab7c",
+        "response_id": "chatcmpl-El7nOAi3TPlbyu0NLQpoiwUR3ExaC"
+      },
+      {
+        "attempt_id": "6bfb934e-52d8-4b61-80b0-26f511584684",
+        "node": "Hallu_Checker",
+        "node_visit": 2,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 1.4419393999851309,
+        "started_utc": "2026-11-17T07:21:33Z",
+        "input_tokens": 177,
+        "output_tokens": 0,
+        "total_tokens": 177,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "d6f9fb9dd470d58b72e2ef30c5d196563ca35391d18c86b6758e81c88526c648",
+        "response_id": null
+      },
+      {
+        "attempt_id": "237b114a-398b-4624-aec6-95082f7214c1",
+        "node": "Hallu_Checker",
+        "node_visit": 2,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 1.8500667000189424,
+        "started_utc": "2026-11-17T07:21:35Z",
+        "input_tokens": 146,
+        "output_tokens": 0,
+        "total_tokens": 146,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "288e1a6877c456c17894daf58e3d47ae102af3fc5b4661ea65e5dcf52071ba45",
+        "response_id": null
+      },
+      {
+        "attempt_id": "0cf1fcb7-a746-4b11-bae4-1ce9c3aa1286",
+        "node": "Hallu_Checker",
+        "node_visit": 2,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 2.9304081999580376,
+        "started_utc": "2026-11-17T07:21:37Z",
+        "input_tokens": 138,
+        "output_tokens": 0,
+        "total_tokens": 138,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "918bea2d8d083c39903a96cb1909571b98bbe6bc56dff92531250b0f97bbadde",
+        "response_id": null
+      },
+      {
+        "attempt_id": "f936fc60-e52a-414a-8393-0c4d01dc5c0c",
+        "node": "Hallu_Checker",
+        "node_visit": 2,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 0.7336286999634467,
+        "started_utc": "2026-11-17T07:21:40Z",
+        "input_tokens": 134,
+        "output_tokens": 0,
+        "total_tokens": 134,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "f6318be07e5b1c529ffd2f7f27c0964ea323598a1f3c41d0af1fde41cf26f47c",
+        "response_id": null
+      },
+      {
+        "attempt_id": "4f0c87da-c148-4d01-b92e-133979b57daf",
+        "node": "Hallu_Checker",
+        "node_visit": 2,
+        "kind": "llm",
+        "requested_model": "gpt-5-mini",
+        "response_model": null,
+        "http_status": null,
+        "outcome": "transport_error",
+        "duration_seconds": 5.030206200026441,
+        "started_utc": "2026-11-17T07:21:40Z",
+        "input_tokens": null,
+        "output_tokens": null,
+        "total_tokens": null,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": false,
+        "sdk_retry_index": 0,
+        "error_type": "ConnectError",
+        "request_sha256": "4208624fe1945372ea0e063f9abd580be5ea523f7ae743370621bb32bf45c73f",
+        "response_id": null
+      },
+      {
+        "attempt_id": "4423c154-4794-4114-8794-1d38450c641a",
+        "node": "Hallu_Checker",
+        "node_visit": 2,
+        "kind": "llm",
+        "requested_model": "gpt-5-mini",
+        "response_model": "gpt-5-mini-2025-08-07",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 22.90433019999182,
+        "started_utc": "2026-11-17T07:21:46Z",
+        "input_tokens": 2894,
+        "output_tokens": 2414,
+        "total_tokens": 5308,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 1408,
+        "usage_reported": true,
+        "sdk_retry_index": 1,
+        "error_type": null,
+        "request_sha256": "4208624fe1945372ea0e063f9abd580be5ea523f7ae743370621bb32bf45c73f",
+        "response_id": "chatcmpl-El7ngIKtemdIQUHhEE5l6YziIuZrf"
+      }
+    ],
+    "observation_warnings": [],
+    "output_binding_events": [
+      {
+        "action": "verify",
+        "submitted": "u/U",
+        "selected": "u/U",
+        "status": "confirmed",
+        "duration_seconds": 9.527099400002044,
+        "analyzer_visit": 1
+      }
+    ],
+    "workflow_status": "basis_ready",
+    "scientific_status": null,
+    "totals": {
+      "http_attempt_count": 13,
+      "llm_http_attempt_count": 5,
+      "embedding_http_attempt_count": 8,
+      "usage_missing_attempt_count": 1,
+      "http_duration_seconds_sum": 96.14948939997703,
+      "node_duration_seconds_sum": 96.92595230002189,
+      "http_success_count": 12,
+      "http_error_count": 0,
+      "transport_error_count": 1,
+      "known_input_tokens": 10391,
+      "input_tokens_missing_count": 1,
+      "known_output_tokens": 6603,
+      "output_tokens_missing_count": 1,
+      "known_total_tokens": 16994,
+      "total_tokens_missing_count": 1,
+      "known_cached_input_tokens": 0,
+      "cached_input_tokens_missing_count": 9,
+      "known_reasoning_tokens": 4224,
+      "reasoning_tokens_missing_count": 9
+    }
+  },
+  "archived_first_checker": false,
+  "column_verification": {
+    "model_invocations": 1,
+    "independent_request_verified": true,
+    "calls": [
+      {
+        "parsed_response": {
+          "column_index": 4
+        },
+        "raw_tool_calls": [
+          {
+            "function": {
+              "arguments": "{\"column_index\":4}",
+              "name": "OutputColumnSelection"
+            },
+            "id": "call_L79nb8bi8QSX4tLwc3NHVUqF",
+            "type": "function"
+          }
+        ],
+        "model_messages": [
+          {
+            "type": "system",
+            "content": "Independently identify the dependent response requested in the full problem. Distinguish the requested response from inputs, metadata, and other derived columns. Return its zero-based index from the CSV columns, or null if ambiguous. Check column binding only."
+          },
+          {
+            "type": "human",
+            "content": "{\"problem\": \"Perform dimensional analysis for the Blasius laminar boundary layer over a flat plate to derive the dimensionless form of the streamwise velocity (denoted as u/U). \\nThis analysis uses ONLY the following 4 physical quantities as input parameters: \\nthe free-stream velocity (U), the transport coefficient nu defined as dynamic viscosity divided by the fluid density, the streamwise distance from the leading edge (x), and the wall-normal distance (y).\", \"csv_columns_by_index\": {\"0\": \"U\", \"1\": \"nu\", \"2\": \"x\", \"3\": \"y\", \"4\": \"u/U\"}}"
+          }
+        ],
+        "elapsed_s": 9.5270531999995
+      }
+    ],
+    "wall_seconds": 9.5270531999995
+  },
+  "initial_sha256": "4896b51b13e822385c971b3a3e5c30a7fa5e2dafb929db688c66f7dd84bd74bc",
+  "verified_basis_stage": "after_revision"
+}

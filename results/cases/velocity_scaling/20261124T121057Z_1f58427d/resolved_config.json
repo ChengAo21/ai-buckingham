@@ -1,0 +1,499 @@
+{
+  "schema_version": 1,
+  "case_id": "velocity_scaling",
+  "title": "Compressible wall-bounded turbulence velocity scaling",
+  "dataset": "data/datasets/velocity_scaling.csv",
+  "prompt": "Perform dimensional analysis for compressible wall-bounded channel turbulence to derive the dimensionless form of the normalized mean velocity (denoted as u+). \nThis analysis uses ONLY the following 6 physical quantities as input parameters: \nthe wall-normal distance (y), the wall density (ρ_w), the wall dynamic viscosity (μ_w), the fluid density (ρ), the dynamic viscosity (μ), and the friction velocity (u_tau). \nTo ensure comparability with the log-law and uniqueness of results, the power of wall units must be constrained to 1 for the INPUT and 0 for the OUTPUT formula.",
+  "manual_hyperparams": {
+    "workflow_template": "auto_mechanism_adaptive",
+    "similarity_type": "auto",
+    "cma_init_position": 0.1,
+    "cma_init_stepsize": 0.2,
+    "use_collinearity_penalty": true,
+    "max_cosine_similarity": 0.8,
+    "penalty_opt_w_fixed": false,
+    "display_ipt_Pi": "none",
+    "mi_param_used": 50,
+    "mi_method_used": "binning"
+  },
+  "input_columns": [
+    "y",
+    "rho_w",
+    "mu_w",
+    "rho",
+    "mu",
+    "u_tau"
+  ],
+  "output_column": "u+",
+  "expected_dimensions": {
+    "dimension_order": [
+      "M",
+      "L",
+      "T",
+      "I",
+      "Theta",
+      "N",
+      "J"
+    ],
+    "inputs": {
+      "y": {
+        "M": 0,
+        "L": 1,
+        "T": 0,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "rho_w": {
+        "M": 1,
+        "L": -3,
+        "T": 0,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "mu_w": {
+        "M": 1,
+        "L": -1,
+        "T": -1,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "rho": {
+        "M": 1,
+        "L": -3,
+        "T": 0,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "mu": {
+        "M": 1,
+        "L": -1,
+        "T": -1,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "u_tau": {
+        "M": 0,
+        "L": 1,
+        "T": -1,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      }
+    },
+    "output": {
+      "M": 0,
+      "L": 0,
+      "T": 0,
+      "I": 0,
+      "Theta": 0,
+      "N": 0,
+      "J": 0
+    }
+  },
+  "data_metadata": {
+    "rows": 1109,
+    "columns": [
+      "y",
+      "rho_w",
+      "mu_w",
+      "rho",
+      "mu",
+      "u_tau",
+      "case",
+      "u+"
+    ],
+    "auxiliary_columns": [
+      "case"
+    ],
+    "sha256": "3eafad604ec0f661b3a74b1ecbad6f6d206a4f6dd826bdb9e47d3fadc0f33149",
+    "original_filename": "dataset_veloTrans.csv",
+    "original_column_order_preserved": true,
+    "response_log_eligible_rows": 1103
+  },
+  "provenance": {
+    "prompt_source": "author-supplied current agent definitions",
+    "manual_hyperparams_source": "author-supplied current agent definitions",
+    "source_sha256": "55a4a6f2c9c0b3424a83d3576517539128d6dc86fb2d9479bf1c86ab5f4794db",
+    "original_prompt_symbol": "velotrans_compTurb",
+    "original_hyperparams_symbol": "velotrans_compTurb_hparams",
+    "reference_dimensions_source": "reproduction/rag_ablation/reference/expected_dimensions.json",
+    "reference_case_id": "VELOTRANS",
+    "reference_dimensions_sha256": "72764f551ff87b286641978d8ed96addd0d80047028a351f06b0814329b04f98"
+  },
+  "formula_constraints": {
+    "input_wall_units_power": 1,
+    "output_wall_units_power": 0
+  },
+  "resolved_hyperparameters": {
+    "output_variable": "u+",
+    "output_resolution": {
+      "status": "success",
+      "output_var": "u+",
+      "source": "structured_analyzer",
+      "requested": "u+",
+      "candidates": [
+        "u+"
+      ]
+    },
+    "manual_hyperparams": {
+      "workflow_template": "auto_mechanism_adaptive",
+      "similarity_type": "auto",
+      "cma_init_position": 0.1,
+      "cma_init_stepsize": 0.2,
+      "use_collinearity_penalty": true,
+      "max_cosine_similarity": 0.8,
+      "penalty_opt_w_fixed": false,
+      "display_ipt_Pi": "none",
+      "mi_param_used": 50,
+      "mi_method_used": "binning"
+    },
+    "effective_workflow": {
+      "status": "compiled",
+      "template": "auto_mechanism_adaptive",
+      "rationale": "The user explicitly required constraining the wall-unit power (Pi_3) to 1 for inputs and 0 for outputs to ensure comparability with the log-law and uniqueness. That corresponds to incomplete-similarity / dependent-variable-scaling treatment (second-kind similarity), so optimize_output is enabled. With 1109 samples (>800) a binned MI estimator is preferred; mi_param=20 (number of bins) is chosen as a balance between resolution and sampling. The problem provides three independent base-Pi groups, so a single-regime adaptive workflow is appropriate. Regime detection uses the default single-regime policy (n_clusters=null) while allowing candidate cluster counts for validation if needed.",
+      "target_is_dimensionless": true,
+      "stages": [
+        "load_and_validate_data",
+        "gradient_regime_detection",
+        "validate_regime_partition",
+        "local_dominant_group_search",
+        "fan_out_local_workflows",
+        "aggregate_results",
+        "generate_report"
+      ],
+      "tool_ids": [
+        "calc_basis_tool",
+        "detect_gradient_regimes",
+        "run_local_dominant_group_workflow",
+        "rationalize_local_solution"
+      ],
+      "regime_detection": {
+        "n_clusters": null,
+        "candidate_cluster_counts": [
+          2,
+          3,
+          4
+        ],
+        "min_cluster_fraction": 0.05,
+        "min_cluster_samples": 60,
+        "max_intercluster_cosine": 0.9,
+        "eigenvalue_ratio_threshold": 50.0,
+        "require_convergence": true,
+        "exclude_low_confidence_points": false,
+        "assignment_confidence_threshold": 0.05
+      },
+      "resolved_gradient_regime_options": {
+        "surrogate": {
+          "mean_mode": "constant",
+          "max_train_samples": null,
+          "n_restarts_optimizer": 3,
+          "optimizer_maxiter": 2000,
+          "optimizer_ftol": 1e-10,
+          "optimizer_gtol": 1e-06,
+          "jitter": 1e-10,
+          "random_state": 42,
+          "log_sigma0_sq_bounds": [
+            -30.0,
+            30.0
+          ],
+          "log_sigma1_sq_bounds": [
+            -30.0,
+            30.0
+          ],
+          "log_sigma_u_sq_bounds": [
+            -30.0,
+            30.0
+          ],
+          "mean_parameter_bounds": [
+            null,
+            null
+          ],
+          "initial_noise_fraction": 1e-06,
+          "require_optimizer_success": false,
+          "regime_target_transform": "log"
+        },
+        "clustering": {
+          "n_clusters": null,
+          "candidate_cluster_counts": [
+            2,
+            3,
+            4
+          ],
+          "min_cluster_fraction": 0.05,
+          "min_cluster_samples": 60,
+          "max_intercluster_cosine": 0.9,
+          "eigenvalue_ratio_threshold": 50.0,
+          "n_init": 30,
+          "max_iter": 200,
+          "random_state": 42,
+          "initialization": "random_eigenpairs",
+          "max_initialization_attempts": 100,
+          "require_convergence": true,
+          "gradient_norm_tolerance": 1e-12,
+          "exclude_low_confidence_points": false,
+          "assignment_confidence_threshold": 0.05
+        }
+      },
+      "regime_configuration_precedence": [
+        "library_defaults",
+        "workflow_plan",
+        "nested_manual",
+        "flat_manual"
+      ],
+      "resolved_manual_regime_overrides": {},
+      "local_workflow": {
+        "start_count": 1,
+        "max_count": 3,
+        "absolute_score_drop_threshold": 0.08,
+        "require_two_counts_when_possible": true,
+        "similarity_type": "auto",
+        "optimize_output": null,
+        "output_scaling_reason": "Authoritative manual similarity_type='auto'; runtime numerical screening required.",
+        "output_scaling_confidence": "medium",
+        "similarity_screening_max_relative_mi_change": 0.15,
+        "similarity_screening_max_cosine_similarity": 0.7,
+        "mi_method": "binning",
+        "mi_param": 50,
+        "cma_restarts": 3,
+        "minimum_samples": 20,
+        "minimum_samples_per_mi_dimension": 20,
+        "minimum_samples_for_second_count": 40,
+        "fixed_in_power": {
+          "Pi_3": 1.0
+        },
+        "fixed_out_power": {
+          "Pi_3": 0.0
+        },
+        "sparsification_enabled": true,
+        "sparsify_exponent_threshold": 0.05,
+        "sparsify_max_score_increase": 0.05,
+        "rationalization_enabled": true,
+        "max_rational_denominator": 5,
+        "validate_after_rationalization": true
+      },
+      "replanning_triggers": [],
+      "max_replans": 2
+    },
+    "policy": "library defaults < LLM planner < manual_hyperparams"
+  },
+  "hyperparameter_provenance": {
+    "precedence": [
+      "library_defaults",
+      "llm_workflow_plan",
+      "manual_hyperparams"
+    ],
+    "manual_overrides": {
+      "template": "auto_mechanism_adaptive",
+      "local_analysis.mi_method": "binning",
+      "local_analysis.mi_param": 50,
+      "local_analysis.similarity_type": "auto",
+      "local_analysis.optimize_output": null
+    },
+    "passthrough_manual_hyperparameters": {
+      "cma_init_position": 0.1,
+      "cma_init_stepsize": 0.2,
+      "use_collinearity_penalty": true,
+      "max_cosine_similarity": 0.8,
+      "penalty_opt_w_fixed": false,
+      "display_ipt_Pi": "none"
+    }
+  },
+  "workflow_plan": {
+    "template": "auto_mechanism_adaptive",
+    "rationale": "The user explicitly required constraining the wall-unit power (Pi_3) to 1 for inputs and 0 for outputs to ensure comparability with the log-law and uniqueness. That corresponds to incomplete-similarity / dependent-variable-scaling treatment (second-kind similarity), so optimize_output is enabled. With 1109 samples (>800) a binned MI estimator is preferred; mi_param=20 (number of bins) is chosen as a balance between resolution and sampling. The problem provides three independent base-Pi groups, so a single-regime adaptive workflow is appropriate. Regime detection uses the default single-regime policy (n_clusters=null) while allowing candidate cluster counts for validation if needed.",
+    "target_is_dimensionless": true,
+    "stages": [
+      "load_and_validate_data",
+      "gradient_regime_detection",
+      "validate_regime_partition",
+      "local_dominant_group_search",
+      "fan_out_local_workflows",
+      "aggregate_results",
+      "generate_report"
+    ],
+    "regime_detection": {
+      "n_clusters": null,
+      "candidate_cluster_counts": [
+        2,
+        3,
+        4
+      ],
+      "min_cluster_fraction": 0.05,
+      "min_cluster_samples": 60,
+      "max_intercluster_cosine": 0.9,
+      "eigenvalue_ratio_threshold": 50.0,
+      "require_convergence": true,
+      "exclude_low_confidence_points": false,
+      "assignment_confidence_threshold": 0.05
+    },
+    "local_analysis": {
+      "start_count": 1,
+      "max_count": null,
+      "absolute_score_drop_threshold": 0.08,
+      "require_two_counts_when_possible": true,
+      "similarity_type": "auto",
+      "optimize_output": null,
+      "output_scaling_reason": "Authoritative manual similarity_type='auto'; runtime numerical screening required.",
+      "output_scaling_confidence": "medium",
+      "similarity_screening_max_relative_mi_change": 0.15,
+      "similarity_screening_max_cosine_similarity": 0.7,
+      "mi_method": "binning",
+      "mi_param": 50,
+      "cma_restarts": 3,
+      "minimum_samples": 20,
+      "minimum_samples_per_mi_dimension": 20,
+      "minimum_samples_for_second_count": 40,
+      "fixed_in_power": {
+        "Pi_3": 1.0
+      },
+      "fixed_out_power": {
+        "Pi_3": 0.0
+      },
+      "sparsification_enabled": true,
+      "sparsify_exponent_threshold": 0.05,
+      "sparsify_max_score_increase": 0.05,
+      "rationalization_enabled": true,
+      "max_rational_denominator": 5,
+      "validate_after_rationalization": true
+    },
+    "replanning_triggers": []
+  },
+  "compiled_workflow": {
+    "status": "compiled",
+    "template": "auto_mechanism_adaptive",
+    "rationale": "The user explicitly required constraining the wall-unit power (Pi_3) to 1 for inputs and 0 for outputs to ensure comparability with the log-law and uniqueness. That corresponds to incomplete-similarity / dependent-variable-scaling treatment (second-kind similarity), so optimize_output is enabled. With 1109 samples (>800) a binned MI estimator is preferred; mi_param=20 (number of bins) is chosen as a balance between resolution and sampling. The problem provides three independent base-Pi groups, so a single-regime adaptive workflow is appropriate. Regime detection uses the default single-regime policy (n_clusters=null) while allowing candidate cluster counts for validation if needed.",
+    "target_is_dimensionless": true,
+    "stages": [
+      "load_and_validate_data",
+      "gradient_regime_detection",
+      "validate_regime_partition",
+      "local_dominant_group_search",
+      "fan_out_local_workflows",
+      "aggregate_results",
+      "generate_report"
+    ],
+    "tool_ids": [
+      "calc_basis_tool",
+      "detect_gradient_regimes",
+      "run_local_dominant_group_workflow",
+      "rationalize_local_solution"
+    ],
+    "regime_detection": {
+      "n_clusters": null,
+      "candidate_cluster_counts": [
+        2,
+        3,
+        4
+      ],
+      "min_cluster_fraction": 0.05,
+      "min_cluster_samples": 60,
+      "max_intercluster_cosine": 0.9,
+      "eigenvalue_ratio_threshold": 50.0,
+      "require_convergence": true,
+      "exclude_low_confidence_points": false,
+      "assignment_confidence_threshold": 0.05
+    },
+    "resolved_gradient_regime_options": {
+      "surrogate": {
+        "mean_mode": "constant",
+        "max_train_samples": null,
+        "n_restarts_optimizer": 3,
+        "optimizer_maxiter": 2000,
+        "optimizer_ftol": 1e-10,
+        "optimizer_gtol": 1e-06,
+        "jitter": 1e-10,
+        "random_state": 42,
+        "log_sigma0_sq_bounds": [
+          -30.0,
+          30.0
+        ],
+        "log_sigma1_sq_bounds": [
+          -30.0,
+          30.0
+        ],
+        "log_sigma_u_sq_bounds": [
+          -30.0,
+          30.0
+        ],
+        "mean_parameter_bounds": [
+          null,
+          null
+        ],
+        "initial_noise_fraction": 1e-06,
+        "require_optimizer_success": false,
+        "regime_target_transform": "log"
+      },
+      "clustering": {
+        "n_clusters": null,
+        "candidate_cluster_counts": [
+          2,
+          3,
+          4
+        ],
+        "min_cluster_fraction": 0.05,
+        "min_cluster_samples": 60,
+        "max_intercluster_cosine": 0.9,
+        "eigenvalue_ratio_threshold": 50.0,
+        "n_init": 30,
+        "max_iter": 200,
+        "random_state": 42,
+        "initialization": "random_eigenpairs",
+        "max_initialization_attempts": 100,
+        "require_convergence": true,
+        "gradient_norm_tolerance": 1e-12,
+        "exclude_low_confidence_points": false,
+        "assignment_confidence_threshold": 0.05
+      }
+    },
+    "regime_configuration_precedence": [
+      "library_defaults",
+      "workflow_plan",
+      "nested_manual",
+      "flat_manual"
+    ],
+    "resolved_manual_regime_overrides": {},
+    "local_workflow": {
+      "start_count": 1,
+      "max_count": 3,
+      "absolute_score_drop_threshold": 0.08,
+      "require_two_counts_when_possible": true,
+      "similarity_type": "auto",
+      "optimize_output": null,
+      "output_scaling_reason": "Authoritative manual similarity_type='auto'; runtime numerical screening required.",
+      "output_scaling_confidence": "medium",
+      "similarity_screening_max_relative_mi_change": 0.15,
+      "similarity_screening_max_cosine_similarity": 0.7,
+      "mi_method": "binning",
+      "mi_param": 50,
+      "cma_restarts": 3,
+      "minimum_samples": 20,
+      "minimum_samples_per_mi_dimension": 20,
+      "minimum_samples_for_second_count": 40,
+      "fixed_in_power": {
+        "Pi_3": 1.0
+      },
+      "fixed_out_power": {
+        "Pi_3": 0.0
+      },
+      "sparsification_enabled": true,
+      "sparsify_exponent_threshold": 0.05,
+      "sparsify_max_score_increase": 0.05,
+      "rationalization_enabled": true,
+      "max_rational_denominator": 5,
+      "validate_after_rationalization": true
+    },
+    "replanning_triggers": [],
+    "max_replans": 2
+  }
+}

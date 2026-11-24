@@ -1,0 +1,154 @@
+{
+  "dimension_ledger": {
+    "output_variable_name": "nu_t/nu",
+    "output_variable_reasoning": "Using the Buckingham Pi theorem with the dependent dimensionless target nu_t/nu and the four input physical quantities (u_tau, h, y, nu), the independent dimensionless groups can be chosen as y/h (geometric location) and Re_tau = u_tau * h / nu (friction Reynolds number). Therefore nu_t/nu = F( y/h, Re_tau ). This is a high-confidence, standard dimensional reduction for eddy-viscosity models in wall-bounded turbulent flow.",
+    "output_variable_confidence": "high",
+    "input_variable_names": [
+      "u_tau",
+      "h",
+      "y",
+      "nu"
+    ],
+    "variables": [
+      {
+        "csv_name": "u_tau",
+        "quantity_name": "friction velocity",
+        "physical_definition": "Friction (shear) velocity characterizing the velocity scale set by wall shear stress.",
+        "si_exponents": {
+          "M": "0",
+          "L": "1",
+          "T": "-1",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "h",
+        "quantity_name": "channel half-height",
+        "physical_definition": "Channel half-height measured from the channel centerline to the wall; a geometric length scale.",
+        "si_exponents": {
+          "M": "0",
+          "L": "1",
+          "T": "0",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "y",
+        "quantity_name": "distance from wall",
+        "physical_definition": "Distance from the wall to the point of interest; a local wall-normal length coordinate.",
+        "si_exponents": {
+          "M": "0",
+          "L": "1",
+          "T": "0",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "nu",
+        "quantity_name": "kinematic viscosity",
+        "physical_definition": "Fluid kinematic viscosity (momentum diffusivity), equal to dynamic viscosity divided by density.",
+        "si_exponents": {
+          "M": "0",
+          "L": "2",
+          "T": "-1",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      }
+    ]
+  },
+  "dimension_contract": {
+    "ledger_sha256": "253221faa184d77d41ec4b0c08193a33e180377727d6b175955ffbb5e9590b1e",
+    "status": "complete",
+    "var_names": [
+      "u_tau",
+      "h",
+      "y",
+      "nu"
+    ],
+    "output_var": "nu_t/nu",
+    "n": 4,
+    "r": 2,
+    "k": 2,
+    "row_order": [
+      "L",
+      "T"
+    ],
+    "D_exact": [
+      [
+        "1",
+        "1",
+        "1",
+        "2"
+      ],
+      [
+        "-1",
+        "0",
+        "0",
+        "-1"
+      ]
+    ],
+    "D_in": [
+      [
+        1.0,
+        1.0,
+        1.0,
+        2.0
+      ],
+      [
+        -1.0,
+        0.0,
+        0.0,
+        -1.0
+      ]
+    ],
+    "unknown_coordinates": [],
+    "physical_correctness_scope": "Structure/rank only; physical assignments require audit and evidence."
+  },
+  "dimension_mat": "Rows = ['L', 'T']\nColumns = ['u_tau', 'h', 'y', 'nu']\nL: ['1', '1', '1', '2']\nT: ['-1', '0', '0', '-1']",
+  "basis_pi_formulas": {
+    "Pi_1": "(y) / (h)",
+    "Pi_2": "(nu) / (u_tau * h)"
+  },
+  "basis_pi_matrices": [
+    [
+      0.0,
+      -1.0,
+      1.0,
+      0.0
+    ],
+    [
+      -1.0,
+      -1.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "input_vars": [
+    "u_tau",
+    "h",
+    "y",
+    "nu"
+  ],
+  "output_var": "nu_t/nu",
+  "output_resolution": {
+    "status": "success",
+    "output_var": "nu_t/nu",
+    "source": "structured_analyzer",
+    "requested": "nu_t/nu",
+    "candidates": [
+      "nu_t/nu"
+    ]
+  }
+}

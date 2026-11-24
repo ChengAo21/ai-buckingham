@@ -1,0 +1,737 @@
+{
+  "workflow_plan": {
+    "template": "auto_mechanism_adaptive",
+    "rationale": "Use single_regime_adaptive because the problem statement gives a single physical scenario (no explicit multiple mechanisms requested). Use first-kind similarity (default) because the prompt did not request incomplete similarity, dependent-variable scaling, or automatic similarity screening. Kraskov mutual-information estimator is chosen because the sample size (104) is <= 800; k=3 is a conservative nearest-neighbor choice for MI estimation at this sample size. Both fixed_in_power and fixed_out_power are included (empty) to preserve any explicit exponent constraints from the problem (none were given). The analysis will search for dominant Pi groups built from the provided base-Pi generators Pi_1..Pi_6 and will rationalize exponents where appropriate, validating results after rationalization.",
+    "target_is_dimensionless": true,
+    "stages": [
+      "load_and_validate_data",
+      "gradient_regime_detection",
+      "validate_regime_partition",
+      "local_dominant_group_search",
+      "fan_out_local_workflows",
+      "aggregate_results",
+      "generate_report"
+    ],
+    "regime_detection": {
+      "n_clusters": null,
+      "candidate_cluster_counts": [
+        2,
+        3,
+        4
+      ],
+      "min_cluster_fraction": 0.05,
+      "min_cluster_samples": 60,
+      "max_intercluster_cosine": 0.9,
+      "eigenvalue_ratio_threshold": 50.0,
+      "require_convergence": true,
+      "exclude_low_confidence_points": false,
+      "assignment_confidence_threshold": 0.05
+    },
+    "local_analysis": {
+      "start_count": 1,
+      "max_count": null,
+      "absolute_score_drop_threshold": 0.08,
+      "require_two_counts_when_possible": true,
+      "similarity_type": "first_kind",
+      "optimize_output": false,
+      "output_scaling_reason": "Authoritative manual similarity_type override.",
+      "output_scaling_confidence": "high",
+      "similarity_screening_max_relative_mi_change": 0.15,
+      "similarity_screening_max_cosine_similarity": 0.7,
+      "mi_method": "kraskov",
+      "mi_param": 5,
+      "cma_restarts": 3,
+      "minimum_samples": 20,
+      "minimum_samples_per_mi_dimension": 20,
+      "minimum_samples_for_second_count": 40,
+      "fixed_in_power": {},
+      "fixed_out_power": {},
+      "sparsification_enabled": true,
+      "sparsify_exponent_threshold": 0.05,
+      "sparsify_max_score_increase": 0.05,
+      "rationalization_enabled": true,
+      "max_rational_denominator": 5,
+      "validate_after_rationalization": true
+    },
+    "replanning_triggers": [
+      "insufficient_effective_samples",
+      "nonconvergent_rationalization",
+      "flat_mutual_information_trend"
+    ]
+  },
+  "compiled_workflow": {
+    "status": "compiled",
+    "template": "auto_mechanism_adaptive",
+    "rationale": "Use single_regime_adaptive because the problem statement gives a single physical scenario (no explicit multiple mechanisms requested). Use first-kind similarity (default) because the prompt did not request incomplete similarity, dependent-variable scaling, or automatic similarity screening. Kraskov mutual-information estimator is chosen because the sample size (104) is <= 800; k=3 is a conservative nearest-neighbor choice for MI estimation at this sample size. Both fixed_in_power and fixed_out_power are included (empty) to preserve any explicit exponent constraints from the problem (none were given). The analysis will search for dominant Pi groups built from the provided base-Pi generators Pi_1..Pi_6 and will rationalize exponents where appropriate, validating results after rationalization.",
+    "target_is_dimensionless": true,
+    "stages": [
+      "load_and_validate_data",
+      "gradient_regime_detection",
+      "validate_regime_partition",
+      "local_dominant_group_search",
+      "fan_out_local_workflows",
+      "aggregate_results",
+      "generate_report"
+    ],
+    "tool_ids": [
+      "calc_basis_tool",
+      "detect_gradient_regimes",
+      "run_local_dominant_group_workflow",
+      "rationalize_local_solution"
+    ],
+    "regime_detection": {
+      "n_clusters": null,
+      "candidate_cluster_counts": [
+        2,
+        3,
+        4
+      ],
+      "min_cluster_fraction": 0.05,
+      "min_cluster_samples": 60,
+      "max_intercluster_cosine": 0.9,
+      "eigenvalue_ratio_threshold": 50.0,
+      "require_convergence": true,
+      "exclude_low_confidence_points": false,
+      "assignment_confidence_threshold": 0.05
+    },
+    "resolved_gradient_regime_options": {
+      "surrogate": {
+        "mean_mode": "constant",
+        "max_train_samples": null,
+        "n_restarts_optimizer": 3,
+        "optimizer_maxiter": 2000,
+        "optimizer_ftol": 1e-10,
+        "optimizer_gtol": 1e-06,
+        "jitter": 1e-10,
+        "random_state": 42,
+        "log_sigma0_sq_bounds": [
+          -30.0,
+          30.0
+        ],
+        "log_sigma1_sq_bounds": [
+          -30.0,
+          30.0
+        ],
+        "log_sigma_u_sq_bounds": [
+          -30.0,
+          30.0
+        ],
+        "mean_parameter_bounds": [
+          null,
+          null
+        ],
+        "initial_noise_fraction": 1e-06,
+        "require_optimizer_success": false,
+        "regime_target_transform": "log"
+      },
+      "clustering": {
+        "n_clusters": null,
+        "candidate_cluster_counts": [
+          2,
+          3,
+          4
+        ],
+        "min_cluster_fraction": 0.05,
+        "min_cluster_samples": 60,
+        "max_intercluster_cosine": 0.9,
+        "eigenvalue_ratio_threshold": 50.0,
+        "n_init": 30,
+        "max_iter": 200,
+        "random_state": 42,
+        "initialization": "random_eigenpairs",
+        "max_initialization_attempts": 100,
+        "require_convergence": true,
+        "gradient_norm_tolerance": 1e-12,
+        "exclude_low_confidence_points": false,
+        "assignment_confidence_threshold": 0.05
+      }
+    },
+    "regime_configuration_precedence": [
+      "library_defaults",
+      "workflow_plan",
+      "nested_manual",
+      "flat_manual"
+    ],
+    "resolved_manual_regime_overrides": {},
+    "local_workflow": {
+      "start_count": 1,
+      "max_count": 6,
+      "absolute_score_drop_threshold": 0.08,
+      "require_two_counts_when_possible": true,
+      "similarity_type": "first_kind",
+      "optimize_output": false,
+      "output_scaling_reason": "Authoritative manual similarity_type override.",
+      "output_scaling_confidence": "high",
+      "similarity_screening_max_relative_mi_change": 0.15,
+      "similarity_screening_max_cosine_similarity": 0.7,
+      "mi_method": "kraskov",
+      "mi_param": 5,
+      "cma_restarts": 3,
+      "minimum_samples": 20,
+      "minimum_samples_per_mi_dimension": 20,
+      "minimum_samples_for_second_count": 40,
+      "fixed_in_power": {},
+      "fixed_out_power": {},
+      "sparsification_enabled": true,
+      "sparsify_exponent_threshold": 0.05,
+      "sparsify_max_score_increase": 0.05,
+      "rationalization_enabled": true,
+      "max_rational_denominator": 5,
+      "validate_after_rationalization": true
+    },
+    "replanning_triggers": [
+      "insufficient_effective_samples",
+      "nonconvergent_rationalization",
+      "flat_mutual_information_trend"
+    ],
+    "max_replans": 2
+  },
+  "resolved_hyperparameters": {
+    "output_variable": "ks/Ra",
+    "output_resolution": {
+      "status": "success",
+      "output_var": "ks/Ra",
+      "source": "structured_analyzer",
+      "requested": "ks/Ra",
+      "candidates": [
+        "ks",
+        "ks/Ra"
+      ]
+    },
+    "manual_hyperparams": {
+      "workflow_template": "auto_mechanism_adaptive",
+      "cma_maxiter": 240,
+      "cma_popsize": 60,
+      "max_rational_denominator": 5,
+      "mi_param_used": 5,
+      "mi_method_used": "kraskov",
+      "dimensionless_input_preprocessing": {
+        "Sk": {
+          "transform": "shift",
+          "offset": 2.0
+        }
+      },
+      "display_ipt_Pi": "none",
+      "enable_score_uq": true,
+      "gpr_log_features": false,
+      "gpr_log_target": false,
+      "gpr_n_splits": 1,
+      "gpr_n_restarts_optimizer": 1,
+      "gpr_stratify_column": "case",
+      "similarity_type": "first_kind"
+    },
+    "effective_workflow": {
+      "status": "compiled",
+      "template": "auto_mechanism_adaptive",
+      "rationale": "Use single_regime_adaptive because the problem statement gives a single physical scenario (no explicit multiple mechanisms requested). Use first-kind similarity (default) because the prompt did not request incomplete similarity, dependent-variable scaling, or automatic similarity screening. Kraskov mutual-information estimator is chosen because the sample size (104) is <= 800; k=3 is a conservative nearest-neighbor choice for MI estimation at this sample size. Both fixed_in_power and fixed_out_power are included (empty) to preserve any explicit exponent constraints from the problem (none were given). The analysis will search for dominant Pi groups built from the provided base-Pi generators Pi_1..Pi_6 and will rationalize exponents where appropriate, validating results after rationalization.",
+      "target_is_dimensionless": true,
+      "stages": [
+        "load_and_validate_data",
+        "gradient_regime_detection",
+        "validate_regime_partition",
+        "local_dominant_group_search",
+        "fan_out_local_workflows",
+        "aggregate_results",
+        "generate_report"
+      ],
+      "tool_ids": [
+        "calc_basis_tool",
+        "detect_gradient_regimes",
+        "run_local_dominant_group_workflow",
+        "rationalize_local_solution"
+      ],
+      "regime_detection": {
+        "n_clusters": null,
+        "candidate_cluster_counts": [
+          2,
+          3,
+          4
+        ],
+        "min_cluster_fraction": 0.05,
+        "min_cluster_samples": 60,
+        "max_intercluster_cosine": 0.9,
+        "eigenvalue_ratio_threshold": 50.0,
+        "require_convergence": true,
+        "exclude_low_confidence_points": false,
+        "assignment_confidence_threshold": 0.05
+      },
+      "resolved_gradient_regime_options": {
+        "surrogate": {
+          "mean_mode": "constant",
+          "max_train_samples": null,
+          "n_restarts_optimizer": 3,
+          "optimizer_maxiter": 2000,
+          "optimizer_ftol": 1e-10,
+          "optimizer_gtol": 1e-06,
+          "jitter": 1e-10,
+          "random_state": 42,
+          "log_sigma0_sq_bounds": [
+            -30.0,
+            30.0
+          ],
+          "log_sigma1_sq_bounds": [
+            -30.0,
+            30.0
+          ],
+          "log_sigma_u_sq_bounds": [
+            -30.0,
+            30.0
+          ],
+          "mean_parameter_bounds": [
+            null,
+            null
+          ],
+          "initial_noise_fraction": 1e-06,
+          "require_optimizer_success": false,
+          "regime_target_transform": "log"
+        },
+        "clustering": {
+          "n_clusters": null,
+          "candidate_cluster_counts": [
+            2,
+            3,
+            4
+          ],
+          "min_cluster_fraction": 0.05,
+          "min_cluster_samples": 60,
+          "max_intercluster_cosine": 0.9,
+          "eigenvalue_ratio_threshold": 50.0,
+          "n_init": 30,
+          "max_iter": 200,
+          "random_state": 42,
+          "initialization": "random_eigenpairs",
+          "max_initialization_attempts": 100,
+          "require_convergence": true,
+          "gradient_norm_tolerance": 1e-12,
+          "exclude_low_confidence_points": false,
+          "assignment_confidence_threshold": 0.05
+        }
+      },
+      "regime_configuration_precedence": [
+        "library_defaults",
+        "workflow_plan",
+        "nested_manual",
+        "flat_manual"
+      ],
+      "resolved_manual_regime_overrides": {},
+      "local_workflow": {
+        "start_count": 1,
+        "max_count": 6,
+        "absolute_score_drop_threshold": 0.08,
+        "require_two_counts_when_possible": true,
+        "similarity_type": "first_kind",
+        "optimize_output": false,
+        "output_scaling_reason": "Authoritative manual similarity_type override.",
+        "output_scaling_confidence": "high",
+        "similarity_screening_max_relative_mi_change": 0.15,
+        "similarity_screening_max_cosine_similarity": 0.7,
+        "mi_method": "kraskov",
+        "mi_param": 5,
+        "cma_restarts": 3,
+        "minimum_samples": 20,
+        "minimum_samples_per_mi_dimension": 20,
+        "minimum_samples_for_second_count": 40,
+        "fixed_in_power": {},
+        "fixed_out_power": {},
+        "sparsification_enabled": true,
+        "sparsify_exponent_threshold": 0.05,
+        "sparsify_max_score_increase": 0.05,
+        "rationalization_enabled": true,
+        "max_rational_denominator": 5,
+        "validate_after_rationalization": true
+      },
+      "replanning_triggers": [
+        "insufficient_effective_samples",
+        "nonconvergent_rationalization",
+        "flat_mutual_information_trend"
+      ],
+      "max_replans": 2
+    },
+    "policy": "library defaults < LLM planner < manual_hyperparams"
+  },
+  "hyperparameter_provenance": {
+    "precedence": [
+      "library_defaults",
+      "llm_workflow_plan",
+      "manual_hyperparams"
+    ],
+    "manual_overrides": {
+      "template": "auto_mechanism_adaptive",
+      "local_analysis.mi_method": "kraskov",
+      "local_analysis.mi_param": 5,
+      "local_analysis.max_rational_denominator": 5,
+      "local_analysis.similarity_type": "first_kind",
+      "local_analysis.optimize_output": false
+    },
+    "passthrough_manual_hyperparameters": {
+      "cma_maxiter": 240,
+      "cma_popsize": 60,
+      "dimensionless_input_preprocessing": {
+        "Sk": {
+          "transform": "shift",
+          "offset": 2.0
+        }
+      },
+      "display_ipt_Pi": "none",
+      "enable_score_uq": true,
+      "gpr_log_features": false,
+      "gpr_log_target": false,
+      "gpr_n_splits": 1,
+      "gpr_n_restarts_optimizer": 1,
+      "gpr_stratify_column": "case"
+    }
+  },
+  "workflow_status": "workflow_compiled",
+  "run_provenance": {
+    "run_id": "468b7754-24ab-42ab-beb1-dcc5519ff006",
+    "release": "ai-buckingham",
+    "engine_sha256": "156ba98fdeb39cb115e61c78ab5aa78b50a2b4f23478a793f3ac56aa83e62406",
+    "started_utc": "2026-11-24T12:09:16Z",
+    "finished_utc": null,
+    "status": "running",
+    "dataset": {
+      "name": "sandgrain.csv",
+      "sha256": "0bd235aa92db381dacdc6c176396efe5fbf2f0a9c84ccf1d468410321203a175"
+    },
+    "problem_sha256": "0b18db09fedaf0f1d76a6f1ebcb7621227bcdcc6634a1cc5fc38747bb3ac89ac",
+    "manual_hyperparams_sha256": "12dba1839f4267779186159bf757e4fcaafb3e24ecb97029e6764b2a77803f3e",
+    "model_configuration": {
+      "analyzer": "gpt-5-mini",
+      "checker": "gpt-5-mini",
+      "planner": "gpt-5-mini",
+      "interpretation": "gpt-5-mini",
+      "output_binding_checker": "gpt-5-mini"
+    },
+    "package_versions": {
+      "numpy": "2.4.0",
+      "pandas": "2.3.3",
+      "scipy": "1.16.3",
+      "sympy": "1.14.0",
+      "scikit-learn": "1.8.0",
+      "cma": "4.4.4",
+      "pydantic": "2.12.5",
+      "openai": "2.14.0",
+      "httpx": "0.28.1",
+      "langchain-core": "1.2.5",
+      "langchain-openai": "1.1.6",
+      "langgraph": "1.0.5"
+    },
+    "tracing_enabled": false,
+    "wall_seconds": 70.93397600000003,
+    "node_timings": [
+      {
+        "node": "Analyzer",
+        "visit": 1,
+        "duration_seconds": 27.755770800000164,
+        "status": "returned",
+        "error_type": null
+      },
+      {
+        "node": "Hallu_Checker",
+        "visit": 1,
+        "duration_seconds": 27.95116690000009,
+        "status": "returned",
+        "error_type": null
+      },
+      {
+        "node": "Basis_Decider",
+        "visit": 1,
+        "duration_seconds": 0.0041492999998808955,
+        "status": "returned",
+        "error_type": null
+      },
+      {
+        "node": "Basis_Executor",
+        "visit": 1,
+        "duration_seconds": 0.011116200000060417,
+        "status": "returned",
+        "error_type": null
+      },
+      {
+        "node": "Workflow_Planner",
+        "visit": 1,
+        "duration_seconds": 14.357461300000068,
+        "status": "returned",
+        "error_type": null
+      }
+    ],
+    "http_attempts": [
+      {
+        "attempt_id": "5c50ed87-b9e4-4409-a47b-e9b4f935bf16",
+        "node": "Analyzer",
+        "node_visit": 1,
+        "kind": "llm",
+        "requested_model": "gpt-5-mini",
+        "response_model": "gpt-5-mini-2025-08-07",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 19.418494399999872,
+        "started_utc": "2026-11-24T12:09:16Z",
+        "input_tokens": 998,
+        "output_tokens": 2167,
+        "total_tokens": 3165,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 1216,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "3baa4f91c1299fa6f29706c8135fbacbf615d56dec846a7a7e394d96fe616dd7",
+        "response_id": "chatcmpl-EnjchzItUhV0idn51bMPNyPcLLBuO"
+      },
+      {
+        "attempt_id": "2ce6ce1e-9987-4615-9683-ce394277206d",
+        "node": "Output_Binding_Checker",
+        "node_visit": 1,
+        "kind": "llm",
+        "requested_model": "gpt-5-mini",
+        "response_model": "gpt-5-mini-2025-08-07",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 8.28654030000007,
+        "started_utc": "2026-11-24T12:09:35Z",
+        "input_tokens": 391,
+        "output_tokens": 921,
+        "total_tokens": 1312,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 896,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "77ee26a48bb40a3b8acc7618ae4e627b2c277e95fed9ddd23ace869a98b86d45",
+        "response_id": "chatcmpl-Enjd1lc6Tw3gy94ueX0r2uBCVZ10y"
+      },
+      {
+        "attempt_id": "336c97fd-7fe5-4052-8628-4f90ea68d582",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 0.2712037000001146,
+        "started_utc": "2026-11-24T12:09:43Z",
+        "input_tokens": 167,
+        "output_tokens": 0,
+        "total_tokens": 167,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "59426b277171a5070070574136f8449dc995562c89dc999dd05fdf95224e40e1",
+        "response_id": null
+      },
+      {
+        "attempt_id": "9076e8f8-0fd6-4202-8be1-d38a7c9c9fa9",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 0.1865743000000748,
+        "started_utc": "2026-11-24T12:09:44Z",
+        "input_tokens": 125,
+        "output_tokens": 0,
+        "total_tokens": 125,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "267acedac834d85649c60d80ad43d233c67471122ced06d3add1dcde9fd3c39b",
+        "response_id": null
+      },
+      {
+        "attempt_id": "27e76cc3-1f03-4130-b54d-977b2f8af3f6",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 0.2035631999999623,
+        "started_utc": "2026-11-24T12:09:44Z",
+        "input_tokens": 122,
+        "output_tokens": 0,
+        "total_tokens": 122,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "bcb07794ecf35bda5ecf46f732ea80411d431f7bcab18f24ac06c575a430458e",
+        "response_id": null
+      },
+      {
+        "attempt_id": "e03a1b25-6448-4a8b-9f1a-425d72f1da72",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 0.2311259999999038,
+        "started_utc": "2026-11-24T12:09:44Z",
+        "input_tokens": 127,
+        "output_tokens": 0,
+        "total_tokens": 127,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "75837482766a4f129df4a4b6622a7f388c55845c0ebe34fbb039148e7723ade9",
+        "response_id": null
+      },
+      {
+        "attempt_id": "3169132a-416b-4c42-845a-1863cd4e5901",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 0.21434979999980897,
+        "started_utc": "2026-11-24T12:09:44Z",
+        "input_tokens": 132,
+        "output_tokens": 0,
+        "total_tokens": 132,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "391434cbb9df2ee68c195bf495c112746d61f6ea9b19e2e12a1610dfb243652a",
+        "response_id": null
+      },
+      {
+        "attempt_id": "3e2f3ab6-2215-49de-aafe-67bb3de44717",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 0.21100619999992887,
+        "started_utc": "2026-11-24T12:09:45Z",
+        "input_tokens": 126,
+        "output_tokens": 0,
+        "total_tokens": 126,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "9376e0ad8bcd0975a48bcc8f607b7c605dbfabd4fc750accf22a678ca44b9e7c",
+        "response_id": null
+      },
+      {
+        "attempt_id": "01868c71-cacb-4da9-894f-65ddb2419569",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 1.0296174000000065,
+        "started_utc": "2026-11-24T12:09:45Z",
+        "input_tokens": 113,
+        "output_tokens": 0,
+        "total_tokens": 113,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "5c96a1d2520d5766748af4c31c9bbc9ca1f160d33a62f4ea8c2ae4fe7104e217",
+        "response_id": null
+      },
+      {
+        "attempt_id": "3eac604f-11ba-4d26-9389-5b0b69a07a8f",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "llm",
+        "requested_model": "gpt-5-mini",
+        "response_model": "gpt-5-mini-2025-08-07",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 25.316815099999985,
+        "started_utc": "2026-11-24T12:09:46Z",
+        "input_tokens": 5069,
+        "output_tokens": 2961,
+        "total_tokens": 8030,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 1536,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "a152d7c208298bb90b98b4332971a207d4736faa968ff48c6e12ea72cd1744be",
+        "response_id": "chatcmpl-EnjdCmHOg10ycSHYr3KjgKhfQKnEZ"
+      },
+      {
+        "attempt_id": "47d0511e-83c1-413b-9bea-83d158bd1922",
+        "node": "Workflow_Planner",
+        "node_visit": 1,
+        "kind": "llm",
+        "requested_model": "gpt-5-mini",
+        "response_model": "gpt-5-mini-2025-08-07",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 14.349359999999933,
+        "started_utc": "2026-11-24T12:10:12Z",
+        "input_tokens": 1612,
+        "output_tokens": 1507,
+        "total_tokens": 3119,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 832,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "b619a9c77306b7c180f36d2cd7d4b10734eceadd7c112a2824fb42d65f06d9d0",
+        "response_id": "chatcmpl-EnjdbQB212Job1QrdzNtJEwqfvKqb"
+      }
+    ],
+    "observation_warnings": [],
+    "output_binding_events": [
+      {
+        "action": "verify",
+        "submitted": "typed_physical_input_ledger_for_roughness",
+        "selected": "ks/Ra",
+        "status": "repaired",
+        "duration_seconds": 8.289270299999998,
+        "analyzer_visit": 1
+      }
+    ],
+    "workflow_status": "workflow_compiled",
+    "scientific_status": null,
+    "totals": {
+      "http_attempt_count": 11,
+      "llm_http_attempt_count": 4,
+      "embedding_http_attempt_count": 7,
+      "usage_missing_attempt_count": 0,
+      "http_duration_seconds_sum": 69.71865039999966,
+      "node_duration_seconds_sum": 70.07966450000026,
+      "http_success_count": 11,
+      "http_error_count": 0,
+      "transport_error_count": 0,
+      "known_input_tokens": 8982,
+      "input_tokens_missing_count": 0,
+      "known_output_tokens": 7556,
+      "output_tokens_missing_count": 0,
+      "known_total_tokens": 16538,
+      "total_tokens_missing_count": 0,
+      "known_cached_input_tokens": 0,
+      "cached_input_tokens_missing_count": 7,
+      "known_reasoning_tokens": 4480,
+      "reasoning_tokens_missing_count": 7
+    }
+  }
+}

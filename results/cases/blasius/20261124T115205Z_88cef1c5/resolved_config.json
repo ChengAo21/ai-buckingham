@@ -1,0 +1,452 @@
+{
+  "schema_version": 1,
+  "case_id": "blasius",
+  "title": "Blasius laminar boundary layer",
+  "dataset": "data/datasets/blasius.csv",
+  "prompt": "Perform dimensional analysis for the Blasius laminar boundary layer over a flat plate to derive the dimensionless form of the streamwise velocity (denoted as u/U). \nThis analysis uses ONLY the following 4 physical quantities as input parameters: \nthe free-stream velocity (U), the kinematic viscosity (nu), the streamwise distance from the leading edge (x), and the wall-normal distance (y).",
+  "manual_hyperparams": {
+    "workflow_template": "auto_mechanism_adaptive",
+    "similarity_type": "auto",
+    "max_rational_denominator": 8,
+    "scatter_xscale": "linear",
+    "mi_param_used": 5,
+    "mi_method_used": "kraskov",
+    "cma_init_position": 0.6,
+    "cma_init_stepsize": 0.3
+  },
+  "input_columns": [
+    "U",
+    "nu",
+    "x",
+    "y"
+  ],
+  "output_column": "u/U",
+  "expected_dimensions": {
+    "dimension_order": [
+      "M",
+      "L",
+      "T",
+      "I",
+      "Theta",
+      "N",
+      "J"
+    ],
+    "inputs": {
+      "U": {
+        "M": 0,
+        "L": 1,
+        "T": -1,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "nu": {
+        "M": 0,
+        "L": 2,
+        "T": -1,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "x": {
+        "M": 0,
+        "L": 1,
+        "T": 0,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "y": {
+        "M": 0,
+        "L": 1,
+        "T": 0,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      }
+    },
+    "output": {
+      "M": 0,
+      "L": 0,
+      "T": 0,
+      "I": 0,
+      "Theta": 0,
+      "N": 0,
+      "J": 0
+    }
+  },
+  "data_metadata": {
+    "rows": 200,
+    "columns": [
+      "U",
+      "nu",
+      "x",
+      "y",
+      "u/U"
+    ],
+    "auxiliary_columns": [],
+    "sha256": "32355f2ae6e1d9f305dbe8740a6a99662e41fb6efc086b8bf222624e8e49a53c",
+    "original_filename": "dataset_blasius.csv",
+    "original_column_order_preserved": true,
+    "response_log_eligible_rows": 196
+  },
+  "provenance": {
+    "prompt_source": "author-supplied current agent definitions",
+    "manual_hyperparams_source": "author-supplied current agent definitions",
+    "source_sha256": "55a4a6f2c9c0b3424a83d3576517539128d6dc86fb2d9479bf1c86ab5f4794db",
+    "original_prompt_symbol": "blasius_",
+    "original_hyperparams_symbol": "blasius_hparams",
+    "reference_dimensions_source": "reproduction/rag_ablation/reference/expected_dimensions.json",
+    "reference_case_id": "BLASIUS",
+    "reference_dimensions_sha256": "72764f551ff87b286641978d8ed96addd0d80047028a351f06b0814329b04f98"
+  },
+  "resolved_hyperparameters": {
+    "output_variable": "u/U",
+    "output_resolution": {
+      "status": "success",
+      "output_var": "u/U",
+      "source": "structured_analyzer",
+      "requested": "u/U",
+      "candidates": [
+        "u/U"
+      ]
+    },
+    "manual_hyperparams": {
+      "workflow_template": "auto_mechanism_adaptive",
+      "similarity_type": "auto",
+      "max_rational_denominator": 8,
+      "scatter_xscale": "linear",
+      "mi_param_used": 5,
+      "mi_method_used": "kraskov",
+      "cma_init_position": 0.6,
+      "cma_init_stepsize": 0.3
+    },
+    "effective_workflow": {
+      "status": "compiled",
+      "template": "auto_mechanism_adaptive",
+      "rationale": "The problem specifies a single, classical Blasius mechanism (laminar flat-plate boundary layer) and requests only the four quantities U, nu, x, y with u/U as the dimensionless output. No request was made for incomplete similarity or automatic mechanism screening, so the default single-regime template with first-kind similarity is appropriate. Sample size (200) is in the kraskov estimator regime, so mi_method=kraskov with a moderate k=6 is selected. Fixed-power constraints were not specified by the user, so empty fixed_in_power and fixed_out_power dictionaries are provided per protocol. Regime detection is left flexible (n_clusters=null) because only one mechanism is expected; candidate cluster counts will be tested if needed. The workflow will search for a single dominant Pi-based similarity variable (start_count=1) and preserve the option to rationalize and validate the result.",
+      "target_is_dimensionless": true,
+      "stages": [
+        "load_and_validate_data",
+        "gradient_regime_detection",
+        "validate_regime_partition",
+        "local_dominant_group_search",
+        "fan_out_local_workflows",
+        "aggregate_results",
+        "generate_report"
+      ],
+      "tool_ids": [
+        "calc_basis_tool",
+        "detect_gradient_regimes",
+        "run_local_dominant_group_workflow",
+        "rationalize_local_solution"
+      ],
+      "regime_detection": {
+        "n_clusters": null,
+        "candidate_cluster_counts": [
+          2,
+          3,
+          4
+        ],
+        "min_cluster_fraction": 0.05,
+        "min_cluster_samples": 60,
+        "max_intercluster_cosine": 0.9,
+        "eigenvalue_ratio_threshold": 50.0,
+        "require_convergence": true,
+        "exclude_low_confidence_points": false,
+        "assignment_confidence_threshold": 0.05
+      },
+      "resolved_gradient_regime_options": {
+        "surrogate": {
+          "mean_mode": "constant",
+          "max_train_samples": null,
+          "n_restarts_optimizer": 3,
+          "optimizer_maxiter": 2000,
+          "optimizer_ftol": 1e-10,
+          "optimizer_gtol": 1e-06,
+          "jitter": 1e-10,
+          "random_state": 42,
+          "log_sigma0_sq_bounds": [
+            -30.0,
+            30.0
+          ],
+          "log_sigma1_sq_bounds": [
+            -30.0,
+            30.0
+          ],
+          "log_sigma_u_sq_bounds": [
+            -30.0,
+            30.0
+          ],
+          "mean_parameter_bounds": [
+            null,
+            null
+          ],
+          "initial_noise_fraction": 1e-06,
+          "require_optimizer_success": false,
+          "regime_target_transform": "log"
+        },
+        "clustering": {
+          "n_clusters": null,
+          "candidate_cluster_counts": [
+            2,
+            3,
+            4
+          ],
+          "min_cluster_fraction": 0.05,
+          "min_cluster_samples": 60,
+          "max_intercluster_cosine": 0.9,
+          "eigenvalue_ratio_threshold": 50.0,
+          "n_init": 30,
+          "max_iter": 200,
+          "random_state": 42,
+          "initialization": "random_eigenpairs",
+          "max_initialization_attempts": 100,
+          "require_convergence": true,
+          "gradient_norm_tolerance": 1e-12,
+          "exclude_low_confidence_points": false,
+          "assignment_confidence_threshold": 0.05
+        }
+      },
+      "regime_configuration_precedence": [
+        "library_defaults",
+        "workflow_plan",
+        "nested_manual",
+        "flat_manual"
+      ],
+      "resolved_manual_regime_overrides": {},
+      "local_workflow": {
+        "start_count": 1,
+        "max_count": 2,
+        "absolute_score_drop_threshold": 0.08,
+        "require_two_counts_when_possible": true,
+        "similarity_type": "auto",
+        "optimize_output": null,
+        "output_scaling_reason": "Authoritative manual similarity_type='auto'; runtime numerical screening required.",
+        "output_scaling_confidence": "medium",
+        "similarity_screening_max_relative_mi_change": 0.15,
+        "similarity_screening_max_cosine_similarity": 0.7,
+        "mi_method": "kraskov",
+        "mi_param": 5,
+        "cma_restarts": 3,
+        "minimum_samples": 20,
+        "minimum_samples_per_mi_dimension": 20,
+        "minimum_samples_for_second_count": 40,
+        "fixed_in_power": {},
+        "fixed_out_power": {},
+        "sparsification_enabled": true,
+        "sparsify_exponent_threshold": 0.05,
+        "sparsify_max_score_increase": 0.05,
+        "rationalization_enabled": true,
+        "max_rational_denominator": 8,
+        "validate_after_rationalization": true
+      },
+      "replanning_triggers": [],
+      "max_replans": 2
+    },
+    "policy": "library defaults < LLM planner < manual_hyperparams"
+  },
+  "hyperparameter_provenance": {
+    "precedence": [
+      "library_defaults",
+      "llm_workflow_plan",
+      "manual_hyperparams"
+    ],
+    "manual_overrides": {
+      "template": "auto_mechanism_adaptive",
+      "local_analysis.mi_method": "kraskov",
+      "local_analysis.mi_param": 5,
+      "local_analysis.max_rational_denominator": 8,
+      "local_analysis.similarity_type": "auto",
+      "local_analysis.optimize_output": null
+    },
+    "passthrough_manual_hyperparameters": {
+      "scatter_xscale": "linear",
+      "cma_init_position": 0.6,
+      "cma_init_stepsize": 0.3
+    }
+  },
+  "workflow_plan": {
+    "template": "auto_mechanism_adaptive",
+    "rationale": "The problem specifies a single, classical Blasius mechanism (laminar flat-plate boundary layer) and requests only the four quantities U, nu, x, y with u/U as the dimensionless output. No request was made for incomplete similarity or automatic mechanism screening, so the default single-regime template with first-kind similarity is appropriate. Sample size (200) is in the kraskov estimator regime, so mi_method=kraskov with a moderate k=6 is selected. Fixed-power constraints were not specified by the user, so empty fixed_in_power and fixed_out_power dictionaries are provided per protocol. Regime detection is left flexible (n_clusters=null) because only one mechanism is expected; candidate cluster counts will be tested if needed. The workflow will search for a single dominant Pi-based similarity variable (start_count=1) and preserve the option to rationalize and validate the result.",
+    "target_is_dimensionless": true,
+    "stages": [
+      "load_and_validate_data",
+      "gradient_regime_detection",
+      "validate_regime_partition",
+      "local_dominant_group_search",
+      "fan_out_local_workflows",
+      "aggregate_results",
+      "generate_report"
+    ],
+    "regime_detection": {
+      "n_clusters": null,
+      "candidate_cluster_counts": [
+        2,
+        3,
+        4
+      ],
+      "min_cluster_fraction": 0.05,
+      "min_cluster_samples": 60,
+      "max_intercluster_cosine": 0.9,
+      "eigenvalue_ratio_threshold": 50.0,
+      "require_convergence": true,
+      "exclude_low_confidence_points": false,
+      "assignment_confidence_threshold": 0.05
+    },
+    "local_analysis": {
+      "start_count": 1,
+      "max_count": null,
+      "absolute_score_drop_threshold": 0.08,
+      "require_two_counts_when_possible": true,
+      "similarity_type": "auto",
+      "optimize_output": null,
+      "output_scaling_reason": "Authoritative manual similarity_type='auto'; runtime numerical screening required.",
+      "output_scaling_confidence": "medium",
+      "similarity_screening_max_relative_mi_change": 0.15,
+      "similarity_screening_max_cosine_similarity": 0.7,
+      "mi_method": "kraskov",
+      "mi_param": 5,
+      "cma_restarts": 3,
+      "minimum_samples": 20,
+      "minimum_samples_per_mi_dimension": 20,
+      "minimum_samples_for_second_count": 40,
+      "fixed_in_power": {},
+      "fixed_out_power": {},
+      "sparsification_enabled": true,
+      "sparsify_exponent_threshold": 0.05,
+      "sparsify_max_score_increase": 0.05,
+      "rationalization_enabled": true,
+      "max_rational_denominator": 8,
+      "validate_after_rationalization": true
+    },
+    "replanning_triggers": []
+  },
+  "compiled_workflow": {
+    "status": "compiled",
+    "template": "auto_mechanism_adaptive",
+    "rationale": "The problem specifies a single, classical Blasius mechanism (laminar flat-plate boundary layer) and requests only the four quantities U, nu, x, y with u/U as the dimensionless output. No request was made for incomplete similarity or automatic mechanism screening, so the default single-regime template with first-kind similarity is appropriate. Sample size (200) is in the kraskov estimator regime, so mi_method=kraskov with a moderate k=6 is selected. Fixed-power constraints were not specified by the user, so empty fixed_in_power and fixed_out_power dictionaries are provided per protocol. Regime detection is left flexible (n_clusters=null) because only one mechanism is expected; candidate cluster counts will be tested if needed. The workflow will search for a single dominant Pi-based similarity variable (start_count=1) and preserve the option to rationalize and validate the result.",
+    "target_is_dimensionless": true,
+    "stages": [
+      "load_and_validate_data",
+      "gradient_regime_detection",
+      "validate_regime_partition",
+      "local_dominant_group_search",
+      "fan_out_local_workflows",
+      "aggregate_results",
+      "generate_report"
+    ],
+    "tool_ids": [
+      "calc_basis_tool",
+      "detect_gradient_regimes",
+      "run_local_dominant_group_workflow",
+      "rationalize_local_solution"
+    ],
+    "regime_detection": {
+      "n_clusters": null,
+      "candidate_cluster_counts": [
+        2,
+        3,
+        4
+      ],
+      "min_cluster_fraction": 0.05,
+      "min_cluster_samples": 60,
+      "max_intercluster_cosine": 0.9,
+      "eigenvalue_ratio_threshold": 50.0,
+      "require_convergence": true,
+      "exclude_low_confidence_points": false,
+      "assignment_confidence_threshold": 0.05
+    },
+    "resolved_gradient_regime_options": {
+      "surrogate": {
+        "mean_mode": "constant",
+        "max_train_samples": null,
+        "n_restarts_optimizer": 3,
+        "optimizer_maxiter": 2000,
+        "optimizer_ftol": 1e-10,
+        "optimizer_gtol": 1e-06,
+        "jitter": 1e-10,
+        "random_state": 42,
+        "log_sigma0_sq_bounds": [
+          -30.0,
+          30.0
+        ],
+        "log_sigma1_sq_bounds": [
+          -30.0,
+          30.0
+        ],
+        "log_sigma_u_sq_bounds": [
+          -30.0,
+          30.0
+        ],
+        "mean_parameter_bounds": [
+          null,
+          null
+        ],
+        "initial_noise_fraction": 1e-06,
+        "require_optimizer_success": false,
+        "regime_target_transform": "log"
+      },
+      "clustering": {
+        "n_clusters": null,
+        "candidate_cluster_counts": [
+          2,
+          3,
+          4
+        ],
+        "min_cluster_fraction": 0.05,
+        "min_cluster_samples": 60,
+        "max_intercluster_cosine": 0.9,
+        "eigenvalue_ratio_threshold": 50.0,
+        "n_init": 30,
+        "max_iter": 200,
+        "random_state": 42,
+        "initialization": "random_eigenpairs",
+        "max_initialization_attempts": 100,
+        "require_convergence": true,
+        "gradient_norm_tolerance": 1e-12,
+        "exclude_low_confidence_points": false,
+        "assignment_confidence_threshold": 0.05
+      }
+    },
+    "regime_configuration_precedence": [
+      "library_defaults",
+      "workflow_plan",
+      "nested_manual",
+      "flat_manual"
+    ],
+    "resolved_manual_regime_overrides": {},
+    "local_workflow": {
+      "start_count": 1,
+      "max_count": 2,
+      "absolute_score_drop_threshold": 0.08,
+      "require_two_counts_when_possible": true,
+      "similarity_type": "auto",
+      "optimize_output": null,
+      "output_scaling_reason": "Authoritative manual similarity_type='auto'; runtime numerical screening required.",
+      "output_scaling_confidence": "medium",
+      "similarity_screening_max_relative_mi_change": 0.15,
+      "similarity_screening_max_cosine_similarity": 0.7,
+      "mi_method": "kraskov",
+      "mi_param": 5,
+      "cma_restarts": 3,
+      "minimum_samples": 20,
+      "minimum_samples_per_mi_dimension": 20,
+      "minimum_samples_for_second_count": 40,
+      "fixed_in_power": {},
+      "fixed_out_power": {},
+      "sparsification_enabled": true,
+      "sparsify_exponent_threshold": 0.05,
+      "sparsify_max_score_increase": 0.05,
+      "rationalization_enabled": true,
+      "max_rational_denominator": 8,
+      "validate_after_rationalization": true
+    },
+    "replanning_triggers": [],
+    "max_replans": 2
+  }
+}

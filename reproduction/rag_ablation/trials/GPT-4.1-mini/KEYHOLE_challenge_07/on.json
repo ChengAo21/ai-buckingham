@@ -1,0 +1,2207 @@
+{
+  "pair_id": "KEYHOLE_challenge_07",
+  "arm": "on",
+  "initial_ledger_sha256": "47fc8f7ed6c9f72aa79713cfe4c883ad18a87a79eb946d45794d27ea2a64f6b9",
+  "checker_rounds": [
+    {
+      "candidate_ledger": {
+        "output_variable_name": "e*",
+        "output_variable_reasoning": "The dimensionless keyhole depth e* is derived from the given physical quantities related to material properties, laser parameters, and thermal properties. Each input quantity is well-known in physics and engineering, allowing confident assignment of their SI base dimension exponents.",
+        "output_variable_confidence": "high",
+        "input_variable_names": [
+          "rho",
+          "Tl-T0",
+          "r0",
+          "alpha",
+          "etaP",
+          "cp",
+          "Vs"
+        ],
+        "variables": [
+          {
+            "csv_name": "rho",
+            "quantity_name": "density",
+            "physical_definition": "Material density, mass per unit volume of the material",
+            "si_exponents": {
+              "M": "1",
+              "L": "-3",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "Tl-T0",
+            "quantity_name": "temperature_difference",
+            "physical_definition": "Temperature difference between melting temperature and ambient temperature",
+            "si_exponents": {
+              "M": "0",
+              "L": "0",
+              "T": "0",
+              "I": "0",
+              "Theta": "1",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "r0",
+            "quantity_name": "length",
+            "physical_definition": "Laser beam radius, a length scale of the laser spot",
+            "si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "alpha",
+            "quantity_name": "thermal_diffusivity",
+            "physical_definition": "Thermal diffusivity, rate of thermal diffusion in the material",
+            "si_exponents": {
+              "M": "0",
+              "L": "2",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "etaP",
+            "quantity_name": "power",
+            "physical_definition": "Effective laser power, energy per unit time delivered by the laser",
+            "si_exponents": {
+              "M": "1",
+              "L": "2",
+              "T": "-3",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "cp",
+            "quantity_name": "specific_heat_capacity",
+            "physical_definition": "Specific heat capacity per unit mass and temperature increase",
+            "si_exponents": {
+              "M": "0",
+              "L": "2",
+              "T": "-2",
+              "I": "0",
+              "Theta": "-1",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "Vs",
+            "quantity_name": "velocity",
+            "physical_definition": "Laser scan speed, velocity of the laser beam over the material surface",
+            "si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          }
+        ]
+      },
+      "ledger_sha256": "47fc8f7ed6c9f72aa79713cfe4c883ad18a87a79eb946d45794d27ea2a64f6b9",
+      "gate": {
+        "gate_status": "PASSED",
+        "ledger_sha256": "47fc8f7ed6c9f72aa79713cfe4c883ad18a87a79eb946d45794d27ea2a64f6b9",
+        "checker_audit": {
+          "ledger_sha256": "47fc8f7ed6c9f72aa79713cfe4c883ad18a87a79eb946d45794d27ea2a64f6b9",
+          "variables": [
+            {
+              "csv_name": "rho",
+              "before_si_exponents": {
+                "M": "1",
+                "L": "-3",
+                "T": "0",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_mass_density"
+              ],
+              "reason": "The problem names rho explicitly as material density (mass per unit volume). The KB record pq_mass_density defines canonical quantity 'mass density', symbol rho/ρ, with domain materials/continuum mechanics and si_dimension M L^-3 (vector [1,-3,0,0,0,0,0]). That record therefore applies directly to this variable in the original problem (same name, symbol, definition and physical domain) and supports all nonzero coordinates in the supplied vector."
+            },
+            {
+              "csv_name": "Tl-T0",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "0",
+                "T": "0",
+                "I": "0",
+                "Theta": "1",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_temperature_difference"
+              ],
+              "reason": "The ledger variable is the melting-to-ambient temperature difference (Tl-T0). The KB record pq_temperature_difference defines 'temperature difference' (symbols ΔT; Tl-T0) with si_dimension Theta (vector [0,0,0,0,1,0,0]). The definition matches the problem statement (difference of two thermodynamic temperatures), so this record justifies the Theta=1 coordinate and thus the provided vector."
+            },
+            {
+              "csv_name": "r0",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "0",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_laser_beam_radius"
+              ],
+              "reason": "The problem states r0 is the laser beam radius (a length scale). KB record pq_laser_beam_radius defines 'laser beam radius' (symbol r0) with si_dimension L (vector [0,1,0,0,0,0,0]) and the same domain of laser-material interaction. This directly supports the L=1 assignment."
+            },
+            {
+              "csv_name": "alpha",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "2",
+                "T": "-1",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_thermal_diffusivity"
+              ],
+              "reason": "The ledger names alpha as thermal diffusivity. KB record pq_thermal_diffusivity identifies alpha/α as thermal diffusivity (definition: k/(ρ c_p)) with si_dimension L^2 T^-1 (vector [0,2,-1,0,0,0,0]). The record's definition and domain (heat transfer) match the use in the problem, so the provided exponents are justified."
+            },
+            {
+              "csv_name": "etaP",
+              "before_si_exponents": {
+                "M": "1",
+                "L": "2",
+                "T": "-3",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_effective_laser_power"
+              ],
+              "reason": "The problem uses ηP as effective absorbed laser power. KB record pq_effective_laser_power documents 'effective absorbed laser power' (ηP, P_abs) with si_dimension M L^2 T^-3 (vector [1,2,-3,0,0,0,0]) and explicitly states absorptivity is dimensionless. The symbol and definition align with the ledger entry, so the power dimensions are confirmed."
+            },
+            {
+              "csv_name": "cp",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "2",
+                "T": "-2",
+                "I": "0",
+                "Theta": "-1",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_specific_heat_capacity"
+              ],
+              "reason": "The ledger labels cp as specific heat capacity per unit mass and temperature. KB record pq_specific_heat_capacity (c_p) defines specific heat capacity (heat capacity per unit mass) with si_dimension L^2 T^-2 Theta^-1 (vector [0,2,-2,0,-1,0,0]). The record matches the symbol and thermodynamic role in the problem (heat required per mass per K), so the provided exponents are correct."
+            },
+            {
+              "csv_name": "Vs",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "-1",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_scan_speed"
+              ],
+              "reason": "Vs is stated as laser scan speed (velocity). KB record pq_scan_speed defines 'laser scan speed' (Vs) with si_dimension L T^-1 (vector [0,1,-1,0,0,0,0]) in the same domain. The record therefore justifies the L=1, T=-1 coordinates in the provided vector."
+            }
+          ]
+        },
+        "variable_results": [
+          {
+            "csv_name": "rho",
+            "decision": "PASSED",
+            "before": {
+              "M": "1",
+              "L": "-3",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "suggested": {
+              "M": "1",
+              "L": "-3",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "coordinate_diff": {},
+            "issues": [],
+            "referenced_entry_ids": [
+              "pq_mass_density"
+            ],
+            "selected_entities": [
+              {
+                "entry_id": "pq_mass_density",
+                "canonical_quantity": "mass density",
+                "source_identifier": "doi:10.59161/AUEZ1291"
+              }
+            ],
+            "cited_reference_si_exponents": {
+              "M": "1",
+              "L": "-3",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "known_coordinate_conflicts_with_reference": {}
+          },
+          {
+            "csv_name": "Tl-T0",
+            "decision": "PASSED",
+            "before": {
+              "M": "0",
+              "L": "0",
+              "T": "0",
+              "I": "0",
+              "Theta": "1",
+              "N": "0",
+              "J": "0"
+            },
+            "suggested": {
+              "M": "0",
+              "L": "0",
+              "T": "0",
+              "I": "0",
+              "Theta": "1",
+              "N": "0",
+              "J": "0"
+            },
+            "coordinate_diff": {},
+            "issues": [],
+            "referenced_entry_ids": [
+              "pq_temperature_difference"
+            ],
+            "selected_entities": [
+              {
+                "entry_id": "pq_temperature_difference",
+                "canonical_quantity": "temperature difference",
+                "source_identifier": "doi:10.59161/AUEZ1291"
+              }
+            ],
+            "cited_reference_si_exponents": {
+              "M": "0",
+              "L": "0",
+              "T": "0",
+              "I": "0",
+              "Theta": "1",
+              "N": "0",
+              "J": "0"
+            },
+            "known_coordinate_conflicts_with_reference": {}
+          },
+          {
+            "csv_name": "r0",
+            "decision": "PASSED",
+            "before": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "suggested": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "coordinate_diff": {},
+            "issues": [],
+            "referenced_entry_ids": [
+              "pq_laser_beam_radius"
+            ],
+            "selected_entities": [
+              {
+                "entry_id": "pq_laser_beam_radius",
+                "canonical_quantity": "laser beam radius",
+                "source_identifier": "doi:10.1038/s41467-021-22704-0"
+              }
+            ],
+            "cited_reference_si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "known_coordinate_conflicts_with_reference": {}
+          },
+          {
+            "csv_name": "alpha",
+            "decision": "PASSED",
+            "before": {
+              "M": "0",
+              "L": "2",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "suggested": {
+              "M": "0",
+              "L": "2",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "coordinate_diff": {},
+            "issues": [],
+            "referenced_entry_ids": [
+              "pq_thermal_diffusivity"
+            ],
+            "selected_entities": [
+              {
+                "entry_id": "pq_thermal_diffusivity",
+                "canonical_quantity": "thermal diffusivity",
+                "source_identifier": "doi:10.1351/goldbook.08697"
+              }
+            ],
+            "cited_reference_si_exponents": {
+              "M": "0",
+              "L": "2",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "known_coordinate_conflicts_with_reference": {}
+          },
+          {
+            "csv_name": "etaP",
+            "decision": "PASSED",
+            "before": {
+              "M": "1",
+              "L": "2",
+              "T": "-3",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "suggested": {
+              "M": "1",
+              "L": "2",
+              "T": "-3",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "coordinate_diff": {},
+            "issues": [],
+            "referenced_entry_ids": [
+              "pq_effective_laser_power"
+            ],
+            "selected_entities": [
+              {
+                "entry_id": "pq_effective_laser_power",
+                "canonical_quantity": "effective absorbed laser power",
+                "source_identifier": "doi:10.1038/s41467-021-22704-0"
+              }
+            ],
+            "cited_reference_si_exponents": {
+              "M": "1",
+              "L": "2",
+              "T": "-3",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "known_coordinate_conflicts_with_reference": {}
+          },
+          {
+            "csv_name": "cp",
+            "decision": "PASSED",
+            "before": {
+              "M": "0",
+              "L": "2",
+              "T": "-2",
+              "I": "0",
+              "Theta": "-1",
+              "N": "0",
+              "J": "0"
+            },
+            "suggested": {
+              "M": "0",
+              "L": "2",
+              "T": "-2",
+              "I": "0",
+              "Theta": "-1",
+              "N": "0",
+              "J": "0"
+            },
+            "coordinate_diff": {},
+            "issues": [],
+            "referenced_entry_ids": [
+              "pq_specific_heat_capacity"
+            ],
+            "selected_entities": [
+              {
+                "entry_id": "pq_specific_heat_capacity",
+                "canonical_quantity": "specific heat capacity",
+                "source_identifier": "doi:10.59161/AUEZ1291"
+              }
+            ],
+            "cited_reference_si_exponents": {
+              "M": "0",
+              "L": "2",
+              "T": "-2",
+              "I": "0",
+              "Theta": "-1",
+              "N": "0",
+              "J": "0"
+            },
+            "known_coordinate_conflicts_with_reference": {}
+          },
+          {
+            "csv_name": "Vs",
+            "decision": "PASSED",
+            "before": {
+              "M": "0",
+              "L": "1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "suggested": {
+              "M": "0",
+              "L": "1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "coordinate_diff": {},
+            "issues": [],
+            "referenced_entry_ids": [
+              "pq_scan_speed"
+            ],
+            "selected_entities": [
+              {
+                "entry_id": "pq_scan_speed",
+                "canonical_quantity": "laser scan speed",
+                "source_identifier": "doi:10.1038/s41467-021-22704-0"
+              }
+            ],
+            "cited_reference_si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "known_coordinate_conflicts_with_reference": {}
+          }
+        ],
+        "issues": [],
+        "referenced_records": [
+          {
+            "csv_name": "rho",
+            "record": {
+              "variable_name": "rho",
+              "entry_id": "pq_mass_density",
+              "canonical_quantity": "mass density",
+              "symbols": "rho; ρ",
+              "aliases": "density; fluid density; material density; wall density",
+              "definition": "Mass per unit volume.",
+              "si_dimension": "M L^-3",
+              "dimension_vector": "[1, -3, 0, 0, 0, 0, 0]",
+              "si_unit": "kg m^-3",
+              "domain": "continuum mechanics; fluid mechanics; materials",
+              "ambiguity_notes": "The symbol rho/ρ may also denote electrical resistivity in electromagnetism; resolve by physical context.",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5353726704899422,
+              "hybrid_score": 0.8373804346714797,
+              "retrieval_mode": "hybrid"
+            }
+          },
+          {
+            "csv_name": "Tl-T0",
+            "record": {
+              "variable_name": "Tl-T0",
+              "entry_id": "pq_temperature_difference",
+              "canonical_quantity": "temperature difference",
+              "symbols": "DeltaT; delta_T; ΔT; Tl-T0; T_l-T_0",
+              "aliases": "temperature gap; melting-to-ambient temperature difference",
+              "definition": "Difference between two thermodynamic temperatures.",
+              "si_dimension": "Theta",
+              "dimension_vector": "[0, 0, 0, 0, 1, 0, 0]",
+              "si_unit": "K",
+              "domain": "heat transfer; thermodynamics",
+              "ambiguity_notes": "A temperature difference has the same dimension as thermodynamic temperature.",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5285313547775474,
+              "hybrid_score": 0.8349859741721416,
+              "retrieval_mode": "hybrid"
+            }
+          },
+          {
+            "csv_name": "r0",
+            "record": {
+              "variable_name": "r0",
+              "entry_id": "pq_laser_beam_radius",
+              "canonical_quantity": "laser beam radius",
+              "symbols": "r0; r_0",
+              "aliases": "laser spot radius; beam radius",
+              "definition": "Characteristic radius of the incident laser beam.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "laser-material interaction; additive manufacturing",
+              "ambiguity_notes": "",
+              "source": "Gan et al., Universal scaling laws of keyhole stability and porosity in 3D printing of metals, Nature Communications (2021)",
+              "source_identifier": "doi:10.1038/s41467-021-22704-0",
+              "confidence": "curated",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5986472965460249,
+              "hybrid_score": 0.8595265537911088,
+              "retrieval_mode": "hybrid"
+            }
+          },
+          {
+            "csv_name": "alpha",
+            "record": {
+              "variable_name": "alpha",
+              "entry_id": "pq_thermal_diffusivity",
+              "canonical_quantity": "thermal diffusivity",
+              "symbols": "alpha; α; kappa; κ; a",
+              "aliases": "heat diffusivity",
+              "definition": "Thermal conductivity divided by the product of density and specific heat capacity.",
+              "si_dimension": "L^2 T^-1",
+              "dimension_vector": "[0, 2, -1, 0, 0, 0, 0]",
+              "si_unit": "m^2 s^-1",
+              "domain": "heat transfer",
+              "ambiguity_notes": "Alpha/α may instead denote a thermal expansion coefficient; kappa/κ may instead denote thermal conductivity or another diffusivity.",
+              "source": "IUPAC Gold Book: thermal diffusivity",
+              "source_identifier": "doi:10.1351/goldbook.08697",
+              "confidence": "curated",
+              "lexical_score": 1.0,
+              "semantic_score": 0.58979197896773,
+              "hybrid_score": 0.8564271926387055,
+              "retrieval_mode": "hybrid"
+            }
+          },
+          {
+            "csv_name": "etaP",
+            "record": {
+              "variable_name": "etaP",
+              "entry_id": "pq_effective_laser_power",
+              "canonical_quantity": "effective absorbed laser power",
+              "symbols": "etaP; ηP; P_abs",
+              "aliases": "absorbed laser power; effective laser power",
+              "definition": "Laser power after multiplication by an absorptivity factor; absorptivity is dimensionless, so etaP has power dimensions.",
+              "si_dimension": "M L^2 T^-3",
+              "dimension_vector": "[1, 2, -3, 0, 0, 0, 0]",
+              "si_unit": "W",
+              "domain": "laser-material interaction; additive manufacturing",
+              "ambiguity_notes": "Do not treat eta/η inside etaP as a dimensional viscosity or resistivity; here it is a dimensionless absorptivity.",
+              "source": "Gan et al., Universal scaling laws of keyhole stability and porosity in 3D printing of metals, Nature Communications (2021)",
+              "source_identifier": "doi:10.1038/s41467-021-22704-0",
+              "confidence": "curated",
+              "lexical_score": 1.0,
+              "semantic_score": 0.6771493358186602,
+              "hybrid_score": 0.8870022675365311,
+              "retrieval_mode": "hybrid"
+            }
+          },
+          {
+            "csv_name": "cp",
+            "record": {
+              "variable_name": "cp",
+              "entry_id": "pq_specific_heat_capacity",
+              "canonical_quantity": "specific heat capacity",
+              "symbols": "cp; c_p; C_p",
+              "aliases": "specific heat; heat capacity per unit mass",
+              "definition": "Heat capacity per unit mass.",
+              "si_dimension": "L^2 T^-2 Theta^-1",
+              "dimension_vector": "[0, 2, -2, 0, -1, 0, 0]",
+              "si_unit": "J kg^-1 K^-1",
+              "domain": "heat transfer; thermodynamics",
+              "ambiguity_notes": "Cp can also denote pressure coefficient in fluid mechanics; lowercase cp/c_p usually denotes specific heat capacity.",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "curated",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5689160223121721,
+              "hybrid_score": 0.8491206078092602,
+              "retrieval_mode": "hybrid"
+            }
+          },
+          {
+            "csv_name": "Vs",
+            "record": {
+              "variable_name": "Vs",
+              "entry_id": "pq_scan_speed",
+              "canonical_quantity": "laser scan speed",
+              "symbols": "Vs; V_s; v_s",
+              "aliases": "scanning speed; beam scan velocity",
+              "definition": "Translation speed of a laser beam relative to the material.",
+              "si_dimension": "L T^-1",
+              "dimension_vector": "[0, 1, -1, 0, 0, 0, 0]",
+              "si_unit": "m s^-1",
+              "domain": "laser-material interaction; additive manufacturing",
+              "ambiguity_notes": "",
+              "source": "Gan et al., Universal scaling laws of keyhole stability and porosity in 3D printing of metals, Nature Communications (2021)",
+              "source_identifier": "doi:10.1038/s41467-021-22704-0",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.6336853964474123,
+              "hybrid_score": 0.8717898887565942,
+              "retrieval_mode": "hybrid"
+            }
+          }
+        ],
+        "feedback": "Typed ledger 47fc8f7ed6c9f72aa79713cfe4c883ad18a87a79eb946d45794d27ea2a64f6b9; program gate=PASSED\nVariable rho: decision=PASSED; reason=The problem names rho explicitly as material density (mass per unit volume). The KB record pq_mass_density defines canonical quantity 'mass density', symbol rho/ρ, with domain materials/continuum mechanics and si_dimension M L^-3 (vector [1,-3,0,0,0,0,0]). That record therefore applies directly to this variable in the original problem (same name, symbol, definition and physical domain) and supports all nonzero coordinates in the supplied vector.\nActual named SI={\"M\": \"1\", \"L\": \"-3\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"1\", \"L\": \"-3\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_mass_density\", \"canonical_quantity\": \"mass density\", \"source_identifier\": \"doi:10.59161/AUEZ1291\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for rho:\n{\"aliases\": \"density; fluid density; material density; wall density\", \"ambiguity_notes\": \"The symbol rho/ρ may also denote electrical resistivity in electromagnetism; resolve by physical context.\", \"canonical_quantity\": \"mass density\", \"confidence\": \"high\", \"definition\": \"Mass per unit volume.\", \"dimension_vector\": \"[1, -3, 0, 0, 0, 0, 0]\", \"domain\": \"continuum mechanics; fluid mechanics; materials\", \"entry_id\": \"pq_mass_density\", \"hybrid_score\": 0.8373804346714797, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.5353726704899422, \"si_dimension\": \"M L^-3\", \"si_unit\": \"kg m^-3\", \"source\": \"BIPM SI Brochure, 9th ed. (updated 2026)\", \"source_identifier\": \"doi:10.59161/AUEZ1291\", \"symbols\": \"rho; ρ\", \"variable_name\": \"rho\"}\n\nVariable Tl-T0: decision=PASSED; reason=The ledger variable is the melting-to-ambient temperature difference (Tl-T0). The KB record pq_temperature_difference defines 'temperature difference' (symbols ΔT; Tl-T0) with si_dimension Theta (vector [0,0,0,0,1,0,0]). The definition matches the problem statement (difference of two thermodynamic temperatures), so this record justifies the Theta=1 coordinate and thus the provided vector.\nActual named SI={\"M\": \"0\", \"L\": \"0\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"1\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"0\", \"L\": \"0\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"1\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_temperature_difference\", \"canonical_quantity\": \"temperature difference\", \"source_identifier\": \"doi:10.59161/AUEZ1291\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for Tl-T0:\n{\"aliases\": \"temperature gap; melting-to-ambient temperature difference\", \"ambiguity_notes\": \"A temperature difference has the same dimension as thermodynamic temperature.\", \"canonical_quantity\": \"temperature difference\", \"confidence\": \"high\", \"definition\": \"Difference between two thermodynamic temperatures.\", \"dimension_vector\": \"[0, 0, 0, 0, 1, 0, 0]\", \"domain\": \"heat transfer; thermodynamics\", \"entry_id\": \"pq_temperature_difference\", \"hybrid_score\": 0.8349859741721416, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.5285313547775474, \"si_dimension\": \"Theta\", \"si_unit\": \"K\", \"source\": \"BIPM SI Brochure, 9th ed. (updated 2026)\", \"source_identifier\": \"doi:10.59161/AUEZ1291\", \"symbols\": \"DeltaT; delta_T; ΔT; Tl-T0; T_l-T_0\", \"variable_name\": \"Tl-T0\"}\n\nVariable r0: decision=PASSED; reason=The problem states r0 is the laser beam radius (a length scale). KB record pq_laser_beam_radius defines 'laser beam radius' (symbol r0) with si_dimension L (vector [0,1,0,0,0,0,0]) and the same domain of laser-material interaction. This directly supports the L=1 assignment.\nActual named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_laser_beam_radius\", \"canonical_quantity\": \"laser beam radius\", \"source_identifier\": \"doi:10.1038/s41467-021-22704-0\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for r0:\n{\"aliases\": \"laser spot radius; beam radius\", \"ambiguity_notes\": \"\", \"canonical_quantity\": \"laser beam radius\", \"confidence\": \"curated\", \"definition\": \"Characteristic radius of the incident laser beam.\", \"dimension_vector\": \"[0, 1, 0, 0, 0, 0, 0]\", \"domain\": \"laser-material interaction; additive manufacturing\", \"entry_id\": \"pq_laser_beam_radius\", \"hybrid_score\": 0.8595265537911088, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.5986472965460249, \"si_dimension\": \"L\", \"si_unit\": \"m\", \"source\": \"Gan et al., Universal scaling laws of keyhole stability and porosity in 3D printing of metals, Nature Communications (2021)\", \"source_identifier\": \"doi:10.1038/s41467-021-22704-0\", \"symbols\": \"r0; r_0\", \"variable_name\": \"r0\"}\n\nVariable alpha: decision=PASSED; reason=The ledger names alpha as thermal diffusivity. KB record pq_thermal_diffusivity identifies alpha/α as thermal diffusivity (definition: k/(ρ c_p)) with si_dimension L^2 T^-1 (vector [0,2,-1,0,0,0,0]). The record's definition and domain (heat transfer) match the use in the problem, so the provided exponents are justified.\nActual named SI={\"M\": \"0\", \"L\": \"2\", \"T\": \"-1\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"0\", \"L\": \"2\", \"T\": \"-1\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_thermal_diffusivity\", \"canonical_quantity\": \"thermal diffusivity\", \"source_identifier\": \"doi:10.1351/goldbook.08697\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for alpha:\n{\"aliases\": \"heat diffusivity\", \"ambiguity_notes\": \"Alpha/α may instead denote a thermal expansion coefficient; kappa/κ may instead denote thermal conductivity or another diffusivity.\", \"canonical_quantity\": \"thermal diffusivity\", \"confidence\": \"curated\", \"definition\": \"Thermal conductivity divided by the product of density and specific heat capacity.\", \"dimension_vector\": \"[0, 2, -1, 0, 0, 0, 0]\", \"domain\": \"heat transfer\", \"entry_id\": \"pq_thermal_diffusivity\", \"hybrid_score\": 0.8564271926387055, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.58979197896773, \"si_dimension\": \"L^2 T^-1\", \"si_unit\": \"m^2 s^-1\", \"source\": \"IUPAC Gold Book: thermal diffusivity\", \"source_identifier\": \"doi:10.1351/goldbook.08697\", \"symbols\": \"alpha; α; kappa; κ; a\", \"variable_name\": \"alpha\"}\n\nVariable etaP: decision=PASSED; reason=The problem uses ηP as effective absorbed laser power. KB record pq_effective_laser_power documents 'effective absorbed laser power' (ηP, P_abs) with si_dimension M L^2 T^-3 (vector [1,2,-3,0,0,0,0]) and explicitly states absorptivity is dimensionless. The symbol and definition align with the ledger entry, so the power dimensions are confirmed.\nActual named SI={\"M\": \"1\", \"L\": \"2\", \"T\": \"-3\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"1\", \"L\": \"2\", \"T\": \"-3\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_effective_laser_power\", \"canonical_quantity\": \"effective absorbed laser power\", \"source_identifier\": \"doi:10.1038/s41467-021-22704-0\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for etaP:\n{\"aliases\": \"absorbed laser power; effective laser power\", \"ambiguity_notes\": \"Do not treat eta/η inside etaP as a dimensional viscosity or resistivity; here it is a dimensionless absorptivity.\", \"canonical_quantity\": \"effective absorbed laser power\", \"confidence\": \"curated\", \"definition\": \"Laser power after multiplication by an absorptivity factor; absorptivity is dimensionless, so etaP has power dimensions.\", \"dimension_vector\": \"[1, 2, -3, 0, 0, 0, 0]\", \"domain\": \"laser-material interaction; additive manufacturing\", \"entry_id\": \"pq_effective_laser_power\", \"hybrid_score\": 0.8870022675365311, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.6771493358186602, \"si_dimension\": \"M L^2 T^-3\", \"si_unit\": \"W\", \"source\": \"Gan et al., Universal scaling laws of keyhole stability and porosity in 3D printing of metals, Nature Communications (2021)\", \"source_identifier\": \"doi:10.1038/s41467-021-22704-0\", \"symbols\": \"etaP; ηP; P_abs\", \"variable_name\": \"etaP\"}\n\nVariable cp: decision=PASSED; reason=The ledger labels cp as specific heat capacity per unit mass and temperature. KB record pq_specific_heat_capacity (c_p) defines specific heat capacity (heat capacity per unit mass) with si_dimension L^2 T^-2 Theta^-1 (vector [0,2,-2,0,-1,0,0]). The record matches the symbol and thermodynamic role in the problem (heat required per mass per K), so the provided exponents are correct.\nActual named SI={\"M\": \"0\", \"L\": \"2\", \"T\": \"-2\", \"I\": \"0\", \"Theta\": \"-1\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"0\", \"L\": \"2\", \"T\": \"-2\", \"I\": \"0\", \"Theta\": \"-1\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_specific_heat_capacity\", \"canonical_quantity\": \"specific heat capacity\", \"source_identifier\": \"doi:10.59161/AUEZ1291\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for cp:\n{\"aliases\": \"specific heat; heat capacity per unit mass\", \"ambiguity_notes\": \"Cp can also denote pressure coefficient in fluid mechanics; lowercase cp/c_p usually denotes specific heat capacity.\", \"canonical_quantity\": \"specific heat capacity\", \"confidence\": \"curated\", \"definition\": \"Heat capacity per unit mass.\", \"dimension_vector\": \"[0, 2, -2, 0, -1, 0, 0]\", \"domain\": \"heat transfer; thermodynamics\", \"entry_id\": \"pq_specific_heat_capacity\", \"hybrid_score\": 0.8491206078092602, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.5689160223121721, \"si_dimension\": \"L^2 T^-2 Theta^-1\", \"si_unit\": \"J kg^-1 K^-1\", \"source\": \"BIPM SI Brochure, 9th ed. (updated 2026)\", \"source_identifier\": \"doi:10.59161/AUEZ1291\", \"symbols\": \"cp; c_p; C_p\", \"variable_name\": \"cp\"}\n\nVariable Vs: decision=PASSED; reason=Vs is stated as laser scan speed (velocity). KB record pq_scan_speed defines 'laser scan speed' (Vs) with si_dimension L T^-1 (vector [0,1,-1,0,0,0,0]) in the same domain. The record therefore justifies the L=1, T=-1 coordinates in the provided vector.\nActual named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"-1\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"-1\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_scan_speed\", \"canonical_quantity\": \"laser scan speed\", \"source_identifier\": \"doi:10.1038/s41467-021-22704-0\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for Vs:\n{\"aliases\": \"scanning speed; beam scan velocity\", \"ambiguity_notes\": \"\", \"canonical_quantity\": \"laser scan speed\", \"confidence\": \"high\", \"definition\": \"Translation speed of a laser beam relative to the material.\", \"dimension_vector\": \"[0, 1, -1, 0, 0, 0, 0]\", \"domain\": \"laser-material interaction; additive manufacturing\", \"entry_id\": \"pq_scan_speed\", \"hybrid_score\": 0.8717898887565942, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.6336853964474123, \"si_dimension\": \"L T^-1\", \"si_unit\": \"m s^-1\", \"source\": \"Gan et al., Universal scaling laws of keyhole stability and porosity in 3D printing of metals, Nature Communications (2021)\", \"source_identifier\": \"doi:10.1038/s41467-021-22704-0\", \"symbols\": \"Vs; V_s; v_s\", \"variable_name\": \"Vs\"}",
+        "entity_policy": "Only Checker-selected visible record IDs identify cited canonical entities; no unselected-record or Analyzer-name anchor. Equal vectors do not establish equal physical entities.",
+        "physical_correctness_scope": "A passed contract is not a theorem of physical correctness. Record ID and coordinate checks establish citation consistency; semantic relevance/applicability in the reason and internal-reasoning physics remain model judgements."
+      },
+      "gate_status": "PASSED",
+      "retrieval": {
+        "status": "success",
+        "kb_path": "Q:\\Chengao_File\\CodeX_\\Dimsionless_learn\\1114_final\\Data_csv\\dimensional_physical_quantities.md",
+        "kb_sha256": "64d8ebb7988c9157401c6b023add3ed8681651bc6d4d1d1bbb7a7aa452fc9f60",
+        "embedding_cache_path": "Q:\\Chengao_File\\CodeX_\\Dimsionless_learn\\1114_final\\Codes_src\\RAG_ablation\\followup_live\\runs\\20261115_v2_paired_rag_rounds\\cache\\dimensional_physical_quantities-d1e3d1e7178395497e4f.npz",
+        "embedding_cache_source": null,
+        "embedding_model": "GLM-Embedding-3",
+        "embedding_provider": "Paratera",
+        "embedding_base_url": "https://llmapi.paratera.com/v1",
+        "embedding_status": "cache",
+        "retrieval_modes": [
+          "hybrid"
+        ],
+        "retrieved_variables": [
+          "rho",
+          "Tl-T0",
+          "r0",
+          "alpha",
+          "etaP",
+          "cp",
+          "Vs"
+        ],
+        "n_retrieved_records": 21,
+        "top_k_per_variable": 3,
+        "max_evidence_rows": 30,
+        "lexical_weight": 0.65,
+        "semantic_weight": 0.35,
+        "min_hybrid_score": 0.22,
+        "allow_lexical_fallback": false,
+        "matches_by_variable": {
+          "rho": [
+            {
+              "variable_name": "rho",
+              "entry_id": "pq_mass_density",
+              "canonical_quantity": "mass density",
+              "symbols": "rho; ρ",
+              "aliases": "density; fluid density; material density; wall density",
+              "definition": "Mass per unit volume.",
+              "si_dimension": "M L^-3",
+              "dimension_vector": "[1, -3, 0, 0, 0, 0, 0]",
+              "si_unit": "kg m^-3",
+              "domain": "continuum mechanics; fluid mechanics; materials",
+              "ambiguity_notes": "The symbol rho/ρ may also denote electrical resistivity in electromagnetism; resolve by physical context.",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5353726704899422,
+              "hybrid_score": 0.8373804346714797,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "rho",
+              "entry_id": "pq_electrical_resistivity",
+              "canonical_quantity": "electrical resistivity",
+              "symbols": "eta; η; rho_e; ρ_e",
+              "aliases": "resistivity; specific electrical resistance; rho notation for electrical resistivity; ρ notation for electrical resistivity",
+              "definition": "Material property relating electric field to current density; equivalently electrical resistance times a length scale divided by area.",
+              "si_dimension": "M L^3 T^-3 I^-2",
+              "dimension_vector": "[1, 3, -3, -2, 0, 0, 0]",
+              "si_unit": "ohm m",
+              "domain": "electromagnetism; magnetohydrodynamics",
+              "ambiguity_notes": "Eta/η may denote dynamic viscosity or magnetic diffusivity; rho/ρ may denote mass density. In an MHD prompt explicitly saying electrical resistivity, use this record.",
+              "source": "MHD Flow in Simple Cubic Periodic Array Geometry, Journal of Fusion Energy (2023)",
+              "source_identifier": "doi:10.1007/s10894-023-00390-8",
+              "confidence": "curated",
+              "lexical_score": 0.74,
+              "semantic_score": 0.503827786082095,
+              "hybrid_score": 0.6573397251287332,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "rho",
+              "entry_id": "pq_keyhole_depth",
+              "canonical_quantity": "keyhole depth",
+              "symbols": "e; D_k",
+              "aliases": "laser keyhole depth",
+              "definition": "Depth of the vapor depression or keyhole formed during intense laser-metal interaction.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "laser-material interaction; additive manufacturing",
+              "ambiguity_notes": "",
+              "source": "Gan et al., Universal scaling laws of keyhole stability and porosity in 3D printing of metals, Nature Communications (2021)",
+              "source_identifier": "doi:10.1038/s41467-021-22704-0",
+              "confidence": "curated",
+              "lexical_score": 0.29411764705882354,
+              "semantic_score": 0.5321889855831136,
+              "hybrid_score": 0.37744261554232506,
+              "retrieval_mode": "hybrid"
+            }
+          ],
+          "Tl-T0": [
+            {
+              "variable_name": "Tl-T0",
+              "entry_id": "pq_temperature_difference",
+              "canonical_quantity": "temperature difference",
+              "symbols": "DeltaT; delta_T; ΔT; Tl-T0; T_l-T_0",
+              "aliases": "temperature gap; melting-to-ambient temperature difference",
+              "definition": "Difference between two thermodynamic temperatures.",
+              "si_dimension": "Theta",
+              "dimension_vector": "[0, 0, 0, 0, 1, 0, 0]",
+              "si_unit": "K",
+              "domain": "heat transfer; thermodynamics",
+              "ambiguity_notes": "A temperature difference has the same dimension as thermodynamic temperature.",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5285313547775474,
+              "hybrid_score": 0.8349859741721416,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "Tl-T0",
+              "entry_id": "pq_keyhole_depth",
+              "canonical_quantity": "keyhole depth",
+              "symbols": "e; D_k",
+              "aliases": "laser keyhole depth",
+              "definition": "Depth of the vapor depression or keyhole formed during intense laser-metal interaction.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "laser-material interaction; additive manufacturing",
+              "ambiguity_notes": "",
+              "source": "Gan et al., Universal scaling laws of keyhole stability and porosity in 3D printing of metals, Nature Communications (2021)",
+              "source_identifier": "doi:10.1038/s41467-021-22704-0",
+              "confidence": "curated",
+              "lexical_score": 0.3448275862068966,
+              "semantic_score": 0.4880384439503239,
+              "hybrid_score": 0.39495138641709615,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "Tl-T0",
+              "entry_id": "pq_thermal_resistance",
+              "canonical_quantity": "thermal resistance",
+              "symbols": "R_th",
+              "aliases": "heat-transfer resistance",
+              "definition": "Temperature difference divided by heat-transfer rate.",
+              "si_dimension": "M^-1 L^-2 T^3 Theta",
+              "dimension_vector": "[-1, -2, 3, 0, 1, 0, 0]",
+              "si_unit": "K W^-1",
+              "domain": "heat transfer",
+              "ambiguity_notes": "",
+              "source": "Lupi, Heat Transfer, in Fundamentals of Electroheat",
+              "source_identifier": "doi:10.1007/978-3-319-46015-4_1",
+              "confidence": "high",
+              "lexical_score": 0.20161290322580644,
+              "semantic_score": 0.4314487134122996,
+              "hybrid_score": 0.28205543679107903,
+              "retrieval_mode": "hybrid"
+            }
+          ],
+          "r0": [
+            {
+              "variable_name": "r0",
+              "entry_id": "pq_laser_beam_radius",
+              "canonical_quantity": "laser beam radius",
+              "symbols": "r0; r_0",
+              "aliases": "laser spot radius; beam radius",
+              "definition": "Characteristic radius of the incident laser beam.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "laser-material interaction; additive manufacturing",
+              "ambiguity_notes": "",
+              "source": "Gan et al., Universal scaling laws of keyhole stability and porosity in 3D printing of metals, Nature Communications (2021)",
+              "source_identifier": "doi:10.1038/s41467-021-22704-0",
+              "confidence": "curated",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5986472965460249,
+              "hybrid_score": 0.8595265537911088,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "r0",
+              "entry_id": "pq_radius",
+              "canonical_quantity": "radius",
+              "symbols": "r; r0; r_0",
+              "aliases": "radius; characteristic radius; beam radius",
+              "definition": "Radial geometric length.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "geometry",
+              "ambiguity_notes": "r may represent pipe roughness height in some datasets; use the physical description.",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5672422683623684,
+              "hybrid_score": 0.848534793926829,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "r0",
+              "entry_id": "pq_keyhole_depth",
+              "canonical_quantity": "keyhole depth",
+              "symbols": "e; D_k",
+              "aliases": "laser keyhole depth",
+              "definition": "Depth of the vapor depression or keyhole formed during intense laser-metal interaction.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "laser-material interaction; additive manufacturing",
+              "ambiguity_notes": "",
+              "source": "Gan et al., Universal scaling laws of keyhole stability and porosity in 3D printing of metals, Nature Communications (2021)",
+              "source_identifier": "doi:10.1038/s41467-021-22704-0",
+              "confidence": "curated",
+              "lexical_score": 0.2616279069767442,
+              "semantic_score": 0.553764801969878,
+              "hybrid_score": 0.36387582022434106,
+              "retrieval_mode": "hybrid"
+            }
+          ],
+          "alpha": [
+            {
+              "variable_name": "alpha",
+              "entry_id": "pq_thermal_diffusivity",
+              "canonical_quantity": "thermal diffusivity",
+              "symbols": "alpha; α; kappa; κ; a",
+              "aliases": "heat diffusivity",
+              "definition": "Thermal conductivity divided by the product of density and specific heat capacity.",
+              "si_dimension": "L^2 T^-1",
+              "dimension_vector": "[0, 2, -1, 0, 0, 0, 0]",
+              "si_unit": "m^2 s^-1",
+              "domain": "heat transfer",
+              "ambiguity_notes": "Alpha/α may instead denote a thermal expansion coefficient; kappa/κ may instead denote thermal conductivity or another diffusivity.",
+              "source": "IUPAC Gold Book: thermal diffusivity",
+              "source_identifier": "doi:10.1351/goldbook.08697",
+              "confidence": "curated",
+              "lexical_score": 1.0,
+              "semantic_score": 0.58979197896773,
+              "hybrid_score": 0.8564271926387055,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "alpha",
+              "entry_id": "pq_thermal_expansion_coefficient",
+              "canonical_quantity": "thermal expansion coefficient",
+              "symbols": "alpha; α; beta; β",
+              "aliases": "coefficient of thermal expansion; thermal expansivity",
+              "definition": "Fractional change of a characteristic length or volume per unit temperature change, according to the chosen convention.",
+              "si_dimension": "Theta^-1",
+              "dimension_vector": "[0, 0, 0, 0, -1, 0, 0]",
+              "si_unit": "K^-1",
+              "domain": "thermodynamics; convection",
+              "ambiguity_notes": "Alpha/α is also widely used for thermal diffusivity. The Rayleigh-Benard context usually uses alpha for thermal expansion coefficient and kappa for thermal diffusivity.",
+              "source": "NIST SP 260-173, thermal-property nomenclature",
+              "source_identifier": "https://www.nist.gov/document/sp260-173pdf",
+              "confidence": "curated",
+              "lexical_score": 1.0,
+              "semantic_score": 0.582361884858176,
+              "hybrid_score": 0.8538266597003616,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "alpha",
+              "entry_id": "pq_keyhole_depth",
+              "canonical_quantity": "keyhole depth",
+              "symbols": "e; D_k",
+              "aliases": "laser keyhole depth",
+              "definition": "Depth of the vapor depression or keyhole formed during intense laser-metal interaction.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "laser-material interaction; additive manufacturing",
+              "ambiguity_notes": "",
+              "source": "Gan et al., Universal scaling laws of keyhole stability and porosity in 3D printing of metals, Nature Communications (2021)",
+              "source_identifier": "doi:10.1038/s41467-021-22704-0",
+              "confidence": "curated",
+              "lexical_score": 0.2647058823529412,
+              "semantic_score": 0.5246503253572057,
+              "hybrid_score": 0.35568643740443373,
+              "retrieval_mode": "hybrid"
+            }
+          ],
+          "etaP": [
+            {
+              "variable_name": "etaP",
+              "entry_id": "pq_effective_laser_power",
+              "canonical_quantity": "effective absorbed laser power",
+              "symbols": "etaP; ηP; P_abs",
+              "aliases": "absorbed laser power; effective laser power",
+              "definition": "Laser power after multiplication by an absorptivity factor; absorptivity is dimensionless, so etaP has power dimensions.",
+              "si_dimension": "M L^2 T^-3",
+              "dimension_vector": "[1, 2, -3, 0, 0, 0, 0]",
+              "si_unit": "W",
+              "domain": "laser-material interaction; additive manufacturing",
+              "ambiguity_notes": "Do not treat eta/η inside etaP as a dimensional viscosity or resistivity; here it is a dimensionless absorptivity.",
+              "source": "Gan et al., Universal scaling laws of keyhole stability and porosity in 3D printing of metals, Nature Communications (2021)",
+              "source_identifier": "doi:10.1038/s41467-021-22704-0",
+              "confidence": "curated",
+              "lexical_score": 1.0,
+              "semantic_score": 0.6771493358186602,
+              "hybrid_score": 0.8870022675365311,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "etaP",
+              "entry_id": "pq_keyhole_depth",
+              "canonical_quantity": "keyhole depth",
+              "symbols": "e; D_k",
+              "aliases": "laser keyhole depth",
+              "definition": "Depth of the vapor depression or keyhole formed during intense laser-metal interaction.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "laser-material interaction; additive manufacturing",
+              "ambiguity_notes": "",
+              "source": "Gan et al., Universal scaling laws of keyhole stability and porosity in 3D printing of metals, Nature Communications (2021)",
+              "source_identifier": "doi:10.1038/s41467-021-22704-0",
+              "confidence": "curated",
+              "lexical_score": 0.28735632183908044,
+              "semantic_score": 0.5400761371423097,
+              "hybrid_score": 0.3758082571952107,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "etaP",
+              "entry_id": "pq_temperature_difference",
+              "canonical_quantity": "temperature difference",
+              "symbols": "DeltaT; delta_T; ΔT; Tl-T0; T_l-T_0",
+              "aliases": "temperature gap; melting-to-ambient temperature difference",
+              "definition": "Difference between two thermodynamic temperatures.",
+              "si_dimension": "Theta",
+              "dimension_vector": "[0, 0, 0, 0, 1, 0, 0]",
+              "si_unit": "K",
+              "domain": "heat transfer; thermodynamics",
+              "ambiguity_notes": "A temperature difference has the same dimension as thermodynamic temperature.",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "high",
+              "lexical_score": 0.3021978021978022,
+              "semantic_score": 0.4490470841385442,
+              "hybrid_score": 0.3535950508770619,
+              "retrieval_mode": "hybrid"
+            }
+          ],
+          "cp": [
+            {
+              "variable_name": "cp",
+              "entry_id": "pq_specific_heat_capacity",
+              "canonical_quantity": "specific heat capacity",
+              "symbols": "cp; c_p; C_p",
+              "aliases": "specific heat; heat capacity per unit mass",
+              "definition": "Heat capacity per unit mass.",
+              "si_dimension": "L^2 T^-2 Theta^-1",
+              "dimension_vector": "[0, 2, -2, 0, -1, 0, 0]",
+              "si_unit": "J kg^-1 K^-1",
+              "domain": "heat transfer; thermodynamics",
+              "ambiguity_notes": "Cp can also denote pressure coefficient in fluid mechanics; lowercase cp/c_p usually denotes specific heat capacity.",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "curated",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5689160223121721,
+              "hybrid_score": 0.8491206078092602,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "cp",
+              "entry_id": "pq_specific_heat_cp",
+              "canonical_quantity": "specific heat at constant pressure",
+              "symbols": "c_p; cp",
+              "aliases": "isobaric specific heat capacity",
+              "definition": "Specific heat capacity evaluated at constant pressure.",
+              "si_dimension": "L^2 T^-2 Theta^-1",
+              "dimension_vector": "[0, 2, -2, 0, -1, 0, 0]",
+              "si_unit": "J kg^-1 K^-1",
+              "domain": "thermodynamics; heat transfer",
+              "ambiguity_notes": "",
+              "source": "Lupi, Heat Transfer, in Fundamentals of Electroheat",
+              "source_identifier": "doi:10.1007/978-3-319-46015-4_1",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.546359306313799,
+              "hybrid_score": 0.8412257572098296,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "cp",
+              "entry_id": "pq_keyhole_depth",
+              "canonical_quantity": "keyhole depth",
+              "symbols": "e; D_k",
+              "aliases": "laser keyhole depth",
+              "definition": "Depth of the vapor depression or keyhole formed during intense laser-metal interaction.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "laser-material interaction; additive manufacturing",
+              "ambiguity_notes": "",
+              "source": "Gan et al., Universal scaling laws of keyhole stability and porosity in 3D printing of metals, Nature Communications (2021)",
+              "source_identifier": "doi:10.1038/s41467-021-22704-0",
+              "confidence": "curated",
+              "lexical_score": 0.29069767441860467,
+              "semantic_score": 0.5109934861944958,
+              "hybrid_score": 0.36780120854016657,
+              "retrieval_mode": "hybrid"
+            }
+          ],
+          "Vs": [
+            {
+              "variable_name": "Vs",
+              "entry_id": "pq_scan_speed",
+              "canonical_quantity": "laser scan speed",
+              "symbols": "Vs; V_s; v_s",
+              "aliases": "scanning speed; beam scan velocity",
+              "definition": "Translation speed of a laser beam relative to the material.",
+              "si_dimension": "L T^-1",
+              "dimension_vector": "[0, 1, -1, 0, 0, 0, 0]",
+              "si_unit": "m s^-1",
+              "domain": "laser-material interaction; additive manufacturing",
+              "ambiguity_notes": "",
+              "source": "Gan et al., Universal scaling laws of keyhole stability and porosity in 3D printing of metals, Nature Communications (2021)",
+              "source_identifier": "doi:10.1038/s41467-021-22704-0",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.6336853964474123,
+              "hybrid_score": 0.8717898887565942,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "Vs",
+              "entry_id": "pq_keyhole_depth",
+              "canonical_quantity": "keyhole depth",
+              "symbols": "e; D_k",
+              "aliases": "laser keyhole depth",
+              "definition": "Depth of the vapor depression or keyhole formed during intense laser-metal interaction.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "laser-material interaction; additive manufacturing",
+              "ambiguity_notes": "",
+              "source": "Gan et al., Universal scaling laws of keyhole stability and porosity in 3D printing of metals, Nature Communications (2021)",
+              "source_identifier": "doi:10.1038/s41467-021-22704-0",
+              "confidence": "curated",
+              "lexical_score": 0.2616279069767442,
+              "semantic_score": 0.5354270880266868,
+              "hybrid_score": 0.3574576203442241,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "Vs",
+              "entry_id": "pq_temperature_difference",
+              "canonical_quantity": "temperature difference",
+              "symbols": "DeltaT; delta_T; ΔT; Tl-T0; T_l-T_0",
+              "aliases": "temperature gap; melting-to-ambient temperature difference",
+              "definition": "Difference between two thermodynamic temperatures.",
+              "si_dimension": "Theta",
+              "dimension_vector": "[0, 0, 0, 0, 1, 0, 0]",
+              "si_unit": "K",
+              "domain": "heat transfer; thermodynamics",
+              "ambiguity_notes": "A temperature difference has the same dimension as thermodynamic temperature.",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "high",
+              "lexical_score": 0.2777777777777778,
+              "semantic_score": 0.4166947489279382,
+              "hybrid_score": 0.3263987176803339,
+              "retrieval_mode": "hybrid"
+            }
+          ]
+        },
+        "evidence_markdown": "### Input variable `rho`\n- entry_id: pq_mass_density; canonical_quantity: mass density; symbols: rho; ρ; aliases: density; fluid density; material density; wall density; definition: Mass per unit volume.; si_dimension: M L^-3; dimension_vector: [1, -3, 0, 0, 0, 0, 0]; si_unit: kg m^-3; domain: continuum mechanics; fluid mechanics; materials; ambiguity_notes: The symbol rho/ρ may also denote electrical resistivity in electromagnetism; resolve by physical context.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_electrical_resistivity; canonical_quantity: electrical resistivity; symbols: eta; η; rho_e; ρ_e; aliases: resistivity; specific electrical resistance; rho notation for electrical resistivity; ρ notation for electrical resistivity; definition: Material property relating electric field to current density; equivalently electrical resistance times a length scale divided by area.; si_dimension: M L^3 T^-3 I^-2; dimension_vector: [1, 3, -3, -2, 0, 0, 0]; si_unit: ohm m; domain: electromagnetism; magnetohydrodynamics; ambiguity_notes: Eta/η may denote dynamic viscosity or magnetic diffusivity; rho/ρ may denote mass density. In an MHD prompt explicitly saying electrical resistivity, use this record.; source: MHD Flow in Simple Cubic Periodic Array Geometry, Journal of Fusion Energy (2023); source_identifier: doi:10.1007/s10894-023-00390-8; confidence: curated\n- entry_id: pq_keyhole_depth; canonical_quantity: keyhole depth; symbols: e; D_k; aliases: laser keyhole depth; definition: Depth of the vapor depression or keyhole formed during intense laser-metal interaction.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: laser-material interaction; additive manufacturing; ambiguity_notes: ; source: Gan et al., Universal scaling laws of keyhole stability and porosity in 3D printing of metals, Nature Communications (2021); source_identifier: doi:10.1038/s41467-021-22704-0; confidence: curated\n### Input variable `Tl-T0`\n- entry_id: pq_temperature_difference; canonical_quantity: temperature difference; symbols: DeltaT; delta_T; ΔT; Tl-T0; T_l-T_0; aliases: temperature gap; melting-to-ambient temperature difference; definition: Difference between two thermodynamic temperatures.; si_dimension: Theta; dimension_vector: [0, 0, 0, 0, 1, 0, 0]; si_unit: K; domain: heat transfer; thermodynamics; ambiguity_notes: A temperature difference has the same dimension as thermodynamic temperature.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_keyhole_depth; canonical_quantity: keyhole depth; symbols: e; D_k; aliases: laser keyhole depth; definition: Depth of the vapor depression or keyhole formed during intense laser-metal interaction.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: laser-material interaction; additive manufacturing; ambiguity_notes: ; source: Gan et al., Universal scaling laws of keyhole stability and porosity in 3D printing of metals, Nature Communications (2021); source_identifier: doi:10.1038/s41467-021-22704-0; confidence: curated\n- entry_id: pq_thermal_resistance; canonical_quantity: thermal resistance; symbols: R_th; aliases: heat-transfer resistance; definition: Temperature difference divided by heat-transfer rate.; si_dimension: M^-1 L^-2 T^3 Theta; dimension_vector: [-1, -2, 3, 0, 1, 0, 0]; si_unit: K W^-1; domain: heat transfer; ambiguity_notes: ; source: Lupi, Heat Transfer, in Fundamentals of Electroheat; source_identifier: doi:10.1007/978-3-319-46015-4_1; confidence: high\n### Input variable `r0`\n- entry_id: pq_laser_beam_radius; canonical_quantity: laser beam radius; symbols: r0; r_0; aliases: laser spot radius; beam radius; definition: Characteristic radius of the incident laser beam.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: laser-material interaction; additive manufacturing; ambiguity_notes: ; source: Gan et al., Universal scaling laws of keyhole stability and porosity in 3D printing of metals, Nature Communications (2021); source_identifier: doi:10.1038/s41467-021-22704-0; confidence: curated\n- entry_id: pq_radius; canonical_quantity: radius; symbols: r; r0; r_0; aliases: radius; characteristic radius; beam radius; definition: Radial geometric length.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: geometry; ambiguity_notes: r may represent pipe roughness height in some datasets; use the physical description.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_keyhole_depth; canonical_quantity: keyhole depth; symbols: e; D_k; aliases: laser keyhole depth; definition: Depth of the vapor depression or keyhole formed during intense laser-metal interaction.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: laser-material interaction; additive manufacturing; ambiguity_notes: ; source: Gan et al., Universal scaling laws of keyhole stability and porosity in 3D printing of metals, Nature Communications (2021); source_identifier: doi:10.1038/s41467-021-22704-0; confidence: curated\n### Input variable `alpha`\n- entry_id: pq_thermal_diffusivity; canonical_quantity: thermal diffusivity; symbols: alpha; α; kappa; κ; a; aliases: heat diffusivity; definition: Thermal conductivity divided by the product of density and specific heat capacity.; si_dimension: L^2 T^-1; dimension_vector: [0, 2, -1, 0, 0, 0, 0]; si_unit: m^2 s^-1; domain: heat transfer; ambiguity_notes: Alpha/α may instead denote a thermal expansion coefficient; kappa/κ may instead denote thermal conductivity or another diffusivity.; source: IUPAC Gold Book: thermal diffusivity; source_identifier: doi:10.1351/goldbook.08697; confidence: curated\n- entry_id: pq_thermal_expansion_coefficient; canonical_quantity: thermal expansion coefficient; symbols: alpha; α; beta; β; aliases: coefficient of thermal expansion; thermal expansivity; definition: Fractional change of a characteristic length or volume per unit temperature change, according to the chosen convention.; si_dimension: Theta^-1; dimension_vector: [0, 0, 0, 0, -1, 0, 0]; si_unit: K^-1; domain: thermodynamics; convection; ambiguity_notes: Alpha/α is also widely used for thermal diffusivity. The Rayleigh-Benard context usually uses alpha for thermal expansion coefficient and kappa for thermal diffusivity.; source: NIST SP 260-173, thermal-property nomenclature; source_identifier: https://www.nist.gov/document/sp260-173pdf; confidence: curated\n- entry_id: pq_keyhole_depth; canonical_quantity: keyhole depth; symbols: e; D_k; aliases: laser keyhole depth; definition: Depth of the vapor depression or keyhole formed during intense laser-metal interaction.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: laser-material interaction; additive manufacturing; ambiguity_notes: ; source: Gan et al., Universal scaling laws of keyhole stability and porosity in 3D printing of metals, Nature Communications (2021); source_identifier: doi:10.1038/s41467-021-22704-0; confidence: curated\n### Input variable `etaP`\n- entry_id: pq_effective_laser_power; canonical_quantity: effective absorbed laser power; symbols: etaP; ηP; P_abs; aliases: absorbed laser power; effective laser power; definition: Laser power after multiplication by an absorptivity factor; absorptivity is dimensionless, so etaP has power dimensions.; si_dimension: M L^2 T^-3; dimension_vector: [1, 2, -3, 0, 0, 0, 0]; si_unit: W; domain: laser-material interaction; additive manufacturing; ambiguity_notes: Do not treat eta/η inside etaP as a dimensional viscosity or resistivity; here it is a dimensionless absorptivity.; source: Gan et al., Universal scaling laws of keyhole stability and porosity in 3D printing of metals, Nature Communications (2021); source_identifier: doi:10.1038/s41467-021-22704-0; confidence: curated\n- entry_id: pq_keyhole_depth; canonical_quantity: keyhole depth; symbols: e; D_k; aliases: laser keyhole depth; definition: Depth of the vapor depression or keyhole formed during intense laser-metal interaction.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: laser-material interaction; additive manufacturing; ambiguity_notes: ; source: Gan et al., Universal scaling laws of keyhole stability and porosity in 3D printing of metals, Nature Communications (2021); source_identifier: doi:10.1038/s41467-021-22704-0; confidence: curated\n- entry_id: pq_temperature_difference; canonical_quantity: temperature difference; symbols: DeltaT; delta_T; ΔT; Tl-T0; T_l-T_0; aliases: temperature gap; melting-to-ambient temperature difference; definition: Difference between two thermodynamic temperatures.; si_dimension: Theta; dimension_vector: [0, 0, 0, 0, 1, 0, 0]; si_unit: K; domain: heat transfer; thermodynamics; ambiguity_notes: A temperature difference has the same dimension as thermodynamic temperature.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n### Input variable `cp`\n- entry_id: pq_specific_heat_capacity; canonical_quantity: specific heat capacity; symbols: cp; c_p; C_p; aliases: specific heat; heat capacity per unit mass; definition: Heat capacity per unit mass.; si_dimension: L^2 T^-2 Theta^-1; dimension_vector: [0, 2, -2, 0, -1, 0, 0]; si_unit: J kg^-1 K^-1; domain: heat transfer; thermodynamics; ambiguity_notes: Cp can also denote pressure coefficient in fluid mechanics; lowercase cp/c_p usually denotes specific heat capacity.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: curated\n- entry_id: pq_specific_heat_cp; canonical_quantity: specific heat at constant pressure; symbols: c_p; cp; aliases: isobaric specific heat capacity; definition: Specific heat capacity evaluated at constant pressure.; si_dimension: L^2 T^-2 Theta^-1; dimension_vector: [0, 2, -2, 0, -1, 0, 0]; si_unit: J kg^-1 K^-1; domain: thermodynamics; heat transfer; ambiguity_notes: ; source: Lupi, Heat Transfer, in Fundamentals of Electroheat; source_identifier: doi:10.1007/978-3-319-46015-4_1; confidence: high\n- entry_id: pq_keyhole_depth; canonical_quantity: keyhole depth; symbols: e; D_k; aliases: laser keyhole depth; definition: Depth of the vapor depression or keyhole formed during intense laser-metal interaction.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: laser-material interaction; additive manufacturing; ambiguity_notes: ; source: Gan et al., Universal scaling laws of keyhole stability and porosity in 3D printing of metals, Nature Communications (2021); source_identifier: doi:10.1038/s41467-021-22704-0; confidence: curated\n### Input variable `Vs`\n- entry_id: pq_scan_speed; canonical_quantity: laser scan speed; symbols: Vs; V_s; v_s; aliases: scanning speed; beam scan velocity; definition: Translation speed of a laser beam relative to the material.; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: laser-material interaction; additive manufacturing; ambiguity_notes: ; source: Gan et al., Universal scaling laws of keyhole stability and porosity in 3D printing of metals, Nature Communications (2021); source_identifier: doi:10.1038/s41467-021-22704-0; confidence: high\n- entry_id: pq_keyhole_depth; canonical_quantity: keyhole depth; symbols: e; D_k; aliases: laser keyhole depth; definition: Depth of the vapor depression or keyhole formed during intense laser-metal interaction.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: laser-material interaction; additive manufacturing; ambiguity_notes: ; source: Gan et al., Universal scaling laws of keyhole stability and porosity in 3D printing of metals, Nature Communications (2021); source_identifier: doi:10.1038/s41467-021-22704-0; confidence: curated\n- entry_id: pq_temperature_difference; canonical_quantity: temperature difference; symbols: DeltaT; delta_T; ΔT; Tl-T0; T_l-T_0; aliases: temperature gap; melting-to-ambient temperature difference; definition: Difference between two thermodynamic temperatures.; si_dimension: Theta; dimension_vector: [0, 0, 0, 0, 1, 0, 0]; si_unit: K; domain: heat transfer; thermodynamics; ambiguity_notes: A temperature difference has the same dimension as thermodynamic temperature.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high",
+        "evidence_records_visible_by_variable": {
+          "rho": [
+            "pq_mass_density",
+            "pq_electrical_resistivity",
+            "pq_keyhole_depth"
+          ],
+          "Tl-T0": [
+            "pq_temperature_difference",
+            "pq_keyhole_depth",
+            "pq_thermal_resistance"
+          ],
+          "r0": [
+            "pq_laser_beam_radius",
+            "pq_radius",
+            "pq_keyhole_depth"
+          ],
+          "alpha": [
+            "pq_thermal_diffusivity",
+            "pq_thermal_expansion_coefficient",
+            "pq_keyhole_depth"
+          ],
+          "etaP": [
+            "pq_effective_laser_power",
+            "pq_keyhole_depth",
+            "pq_temperature_difference"
+          ],
+          "cp": [
+            "pq_specific_heat_capacity",
+            "pq_specific_heat_cp",
+            "pq_keyhole_depth"
+          ],
+          "Vs": [
+            "pq_scan_speed",
+            "pq_keyhole_depth",
+            "pq_temperature_difference"
+          ]
+        },
+        "queries_by_variable": {
+          "rho": "Target CSV variable: rho\nLocal problem description: the material density (ρ), the temperature difference between melting temperature and ambient temperature (Tl − T0), the laser beam radius (r0), and the thermal diffusivity (α), the effective laser power (ηP), the coefficient cp obtained by dividing the heat needed to raise the material temperature by both the mass heated and the temperature increase, the laser scan speed (Vs).\nProblem domain/context: Perform dimensional analysis for laser-melted liquid metal to derive the dimensionless form of the keyhole depth (denoted as e*).\nAnalyzer interpretation: exact_column: rho; quantity_name: density; physical_definition: Material density, mass per unit volume of the material",
+          "Tl-T0": "Target CSV variable: Tl-T0\nLocal problem description: \nProblem domain/context: Perform dimensional analysis for laser-melted liquid metal to derive the dimensionless form of the keyhole depth (denoted as e*).\nAnalyzer interpretation: exact_column: Tl-T0; quantity_name: temperature_difference; physical_definition: Temperature difference between melting temperature and ambient temperature",
+          "r0": "Target CSV variable: r0\nLocal problem description: the material density (ρ), the temperature difference between melting temperature and ambient temperature (Tl − T0), the laser beam radius (r0), and the thermal diffusivity (α), the effective laser power (ηP), the coefficient cp obtained by dividing the heat needed to raise the material temperature by both the mass heated and the temperature increase, the laser scan speed (Vs).\nProblem domain/context: Perform dimensional analysis for laser-melted liquid metal to derive the dimensionless form of the keyhole depth (denoted as e*).\nAnalyzer interpretation: exact_column: r0; quantity_name: length; physical_definition: Laser beam radius, a length scale of the laser spot",
+          "alpha": "Target CSV variable: alpha\nLocal problem description: the material density (ρ), the temperature difference between melting temperature and ambient temperature (Tl − T0), the laser beam radius (r0), and the thermal diffusivity (α), the effective laser power (ηP), the coefficient cp obtained by dividing the heat needed to raise the material temperature by both the mass heated and the temperature increase, the laser scan speed (Vs).\nProblem domain/context: Perform dimensional analysis for laser-melted liquid metal to derive the dimensionless form of the keyhole depth (denoted as e*).\nAnalyzer interpretation: exact_column: alpha; quantity_name: thermal_diffusivity; physical_definition: Thermal diffusivity, rate of thermal diffusion in the material",
+          "etaP": "Target CSV variable: etaP\nLocal problem description: the material density (ρ), the temperature difference between melting temperature and ambient temperature (Tl − T0), the laser beam radius (r0), and the thermal diffusivity (α), the effective laser power (ηP), the coefficient cp obtained by dividing the heat needed to raise the material temperature by both the mass heated and the temperature increase, the laser scan speed (Vs).\nProblem domain/context: Perform dimensional analysis for laser-melted liquid metal to derive the dimensionless form of the keyhole depth (denoted as e*).\nAnalyzer interpretation: exact_column: etaP; quantity_name: power; physical_definition: Effective laser power, energy per unit time delivered by the laser",
+          "cp": "Target CSV variable: cp\nLocal problem description: the material density (ρ), the temperature difference between melting temperature and ambient temperature (Tl − T0), the laser beam radius (r0), and the thermal diffusivity (α), the effective laser power (ηP), the coefficient cp obtained by dividing the heat needed to raise the material temperature by both the mass heated and the temperature increase, the laser scan speed (Vs).\nProblem domain/context: Perform dimensional analysis for laser-melted liquid metal to derive the dimensionless form of the keyhole depth (denoted as e*).\nAnalyzer interpretation: exact_column: cp; quantity_name: specific_heat_capacity; physical_definition: Specific heat capacity per unit mass and temperature increase",
+          "Vs": "Target CSV variable: Vs\nLocal problem description: the material density (ρ), the temperature difference between melting temperature and ambient temperature (Tl − T0), the laser beam radius (r0), and the thermal diffusivity (α), the effective laser power (ηP), the coefficient cp obtained by dividing the heat needed to raise the material temperature by both the mass heated and the temperature increase, the laser scan speed (Vs).\nProblem domain/context: Perform dimensional analysis for laser-melted liquid metal to derive the dimensionless form of the keyhole depth (denoted as e*).\nAnalyzer interpretation: exact_column: Vs; quantity_name: velocity; physical_definition: Laser scan speed, velocity of the laser beam over the material surface"
+        },
+        "query_sha256_by_variable": {
+          "rho": "c4bd597b3dec0058b0ea3ecb7fd1a90b289b818d2f2b8386de192d5507e8daf9",
+          "Tl-T0": "c78469e3fab45ab32d66d3ed24cc9449c0cf6b6cfc7b72bb205fbecadb35c230",
+          "r0": "01709bbd912fd798127e9892739c4925cc5974b0f267d8dade44ba2afa46a808",
+          "alpha": "85038f271cfda6c914ee05397868f6ba8f2b055fbea3c112abe8465795b60b6c",
+          "etaP": "35b62f4fc2864fa09332acaa73abd7d8a06dc4c6577ce9fa05734b60860fa901",
+          "cp": "80ed623e7ff90e89225006f8b4704ef5251a19b7a62dfa1b363fa3a07ff7c21e",
+          "Vs": "4216d69daedcd1d5400a106307a140962bf1a35c19a1f7655e25099a67744dfa"
+        },
+        "query_observed_in_retriever_by_variable": {
+          "rho": true,
+          "Tl-T0": true,
+          "r0": true,
+          "alpha": true,
+          "etaP": true,
+          "cp": true,
+          "Vs": true
+        },
+        "query_scope": "Candidate SI powers excluded. Original problem and typed quantity/definition provide semantic context; they still require physical interpretation."
+      },
+      "provisional_zero_coordinates": [],
+      "checker_response": {
+        "ledger_sha256": "47fc8f7ed6c9f72aa79713cfe4c883ad18a87a79eb946d45794d27ea2a64f6b9",
+        "variables": [
+          {
+            "csv_name": "rho",
+            "before_si_exponents": {
+              "M": "1",
+              "L": "-3",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "decision": "PASSED",
+            "suggested_si_exponents": null,
+            "support_mode": "KB_RECORD",
+            "evidence_entry_ids": [
+              "pq_mass_density"
+            ],
+            "reason": "The problem names rho explicitly as material density (mass per unit volume). The KB record pq_mass_density defines canonical quantity 'mass density', symbol rho/ρ, with domain materials/continuum mechanics and si_dimension M L^-3 (vector [1,-3,0,0,0,0,0]). That record therefore applies directly to this variable in the original problem (same name, symbol, definition and physical domain) and supports all nonzero coordinates in the supplied vector."
+          },
+          {
+            "csv_name": "Tl-T0",
+            "before_si_exponents": {
+              "M": "0",
+              "L": "0",
+              "T": "0",
+              "I": "0",
+              "Theta": "1",
+              "N": "0",
+              "J": "0"
+            },
+            "decision": "PASSED",
+            "suggested_si_exponents": null,
+            "support_mode": "KB_RECORD",
+            "evidence_entry_ids": [
+              "pq_temperature_difference"
+            ],
+            "reason": "The ledger variable is the melting-to-ambient temperature difference (Tl-T0). The KB record pq_temperature_difference defines 'temperature difference' (symbols ΔT; Tl-T0) with si_dimension Theta (vector [0,0,0,0,1,0,0]). The definition matches the problem statement (difference of two thermodynamic temperatures), so this record justifies the Theta=1 coordinate and thus the provided vector."
+          },
+          {
+            "csv_name": "r0",
+            "before_si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "decision": "PASSED",
+            "suggested_si_exponents": null,
+            "support_mode": "KB_RECORD",
+            "evidence_entry_ids": [
+              "pq_laser_beam_radius"
+            ],
+            "reason": "The problem states r0 is the laser beam radius (a length scale). KB record pq_laser_beam_radius defines 'laser beam radius' (symbol r0) with si_dimension L (vector [0,1,0,0,0,0,0]) and the same domain of laser-material interaction. This directly supports the L=1 assignment."
+          },
+          {
+            "csv_name": "alpha",
+            "before_si_exponents": {
+              "M": "0",
+              "L": "2",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "decision": "PASSED",
+            "suggested_si_exponents": null,
+            "support_mode": "KB_RECORD",
+            "evidence_entry_ids": [
+              "pq_thermal_diffusivity"
+            ],
+            "reason": "The ledger names alpha as thermal diffusivity. KB record pq_thermal_diffusivity identifies alpha/α as thermal diffusivity (definition: k/(ρ c_p)) with si_dimension L^2 T^-1 (vector [0,2,-1,0,0,0,0]). The record's definition and domain (heat transfer) match the use in the problem, so the provided exponents are justified."
+          },
+          {
+            "csv_name": "etaP",
+            "before_si_exponents": {
+              "M": "1",
+              "L": "2",
+              "T": "-3",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "decision": "PASSED",
+            "suggested_si_exponents": null,
+            "support_mode": "KB_RECORD",
+            "evidence_entry_ids": [
+              "pq_effective_laser_power"
+            ],
+            "reason": "The problem uses ηP as effective absorbed laser power. KB record pq_effective_laser_power documents 'effective absorbed laser power' (ηP, P_abs) with si_dimension M L^2 T^-3 (vector [1,2,-3,0,0,0,0]) and explicitly states absorptivity is dimensionless. The symbol and definition align with the ledger entry, so the power dimensions are confirmed."
+          },
+          {
+            "csv_name": "cp",
+            "before_si_exponents": {
+              "M": "0",
+              "L": "2",
+              "T": "-2",
+              "I": "0",
+              "Theta": "-1",
+              "N": "0",
+              "J": "0"
+            },
+            "decision": "PASSED",
+            "suggested_si_exponents": null,
+            "support_mode": "KB_RECORD",
+            "evidence_entry_ids": [
+              "pq_specific_heat_capacity"
+            ],
+            "reason": "The ledger labels cp as specific heat capacity per unit mass and temperature. KB record pq_specific_heat_capacity (c_p) defines specific heat capacity (heat capacity per unit mass) with si_dimension L^2 T^-2 Theta^-1 (vector [0,2,-2,0,-1,0,0]). The record matches the symbol and thermodynamic role in the problem (heat required per mass per K), so the provided exponents are correct."
+          },
+          {
+            "csv_name": "Vs",
+            "before_si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "decision": "PASSED",
+            "suggested_si_exponents": null,
+            "support_mode": "KB_RECORD",
+            "evidence_entry_ids": [
+              "pq_scan_speed"
+            ],
+            "reason": "Vs is stated as laser scan speed (velocity). KB record pq_scan_speed defines 'laser scan speed' (Vs) with si_dimension L T^-1 (vector [0,1,-1,0,0,0,0]) in the same domain. The record therefore justifies the L=1, T=-1 coordinates in the provided vector."
+          }
+        ]
+      },
+      "checker_elapsed_s": 52.79608629998984,
+      "checker_tokens": {
+        "input": 4801,
+        "output": 6265
+      },
+      "embedding_tokens": {
+        "input": 1101,
+        "output": 0
+      },
+      "checker_call": {
+        "parsed_response": {
+          "ledger_sha256": "47fc8f7ed6c9f72aa79713cfe4c883ad18a87a79eb946d45794d27ea2a64f6b9",
+          "variables": [
+            {
+              "csv_name": "rho",
+              "before_si_exponents": {
+                "M": "1",
+                "L": "-3",
+                "T": "0",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_mass_density"
+              ],
+              "reason": "The problem names rho explicitly as material density (mass per unit volume). The KB record pq_mass_density defines canonical quantity 'mass density', symbol rho/ρ, with domain materials/continuum mechanics and si_dimension M L^-3 (vector [1,-3,0,0,0,0,0]). That record therefore applies directly to this variable in the original problem (same name, symbol, definition and physical domain) and supports all nonzero coordinates in the supplied vector."
+            },
+            {
+              "csv_name": "Tl-T0",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "0",
+                "T": "0",
+                "I": "0",
+                "Theta": "1",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_temperature_difference"
+              ],
+              "reason": "The ledger variable is the melting-to-ambient temperature difference (Tl-T0). The KB record pq_temperature_difference defines 'temperature difference' (symbols ΔT; Tl-T0) with si_dimension Theta (vector [0,0,0,0,1,0,0]). The definition matches the problem statement (difference of two thermodynamic temperatures), so this record justifies the Theta=1 coordinate and thus the provided vector."
+            },
+            {
+              "csv_name": "r0",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "0",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_laser_beam_radius"
+              ],
+              "reason": "The problem states r0 is the laser beam radius (a length scale). KB record pq_laser_beam_radius defines 'laser beam radius' (symbol r0) with si_dimension L (vector [0,1,0,0,0,0,0]) and the same domain of laser-material interaction. This directly supports the L=1 assignment."
+            },
+            {
+              "csv_name": "alpha",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "2",
+                "T": "-1",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_thermal_diffusivity"
+              ],
+              "reason": "The ledger names alpha as thermal diffusivity. KB record pq_thermal_diffusivity identifies alpha/α as thermal diffusivity (definition: k/(ρ c_p)) with si_dimension L^2 T^-1 (vector [0,2,-1,0,0,0,0]). The record's definition and domain (heat transfer) match the use in the problem, so the provided exponents are justified."
+            },
+            {
+              "csv_name": "etaP",
+              "before_si_exponents": {
+                "M": "1",
+                "L": "2",
+                "T": "-3",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_effective_laser_power"
+              ],
+              "reason": "The problem uses ηP as effective absorbed laser power. KB record pq_effective_laser_power documents 'effective absorbed laser power' (ηP, P_abs) with si_dimension M L^2 T^-3 (vector [1,2,-3,0,0,0,0]) and explicitly states absorptivity is dimensionless. The symbol and definition align with the ledger entry, so the power dimensions are confirmed."
+            },
+            {
+              "csv_name": "cp",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "2",
+                "T": "-2",
+                "I": "0",
+                "Theta": "-1",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_specific_heat_capacity"
+              ],
+              "reason": "The ledger labels cp as specific heat capacity per unit mass and temperature. KB record pq_specific_heat_capacity (c_p) defines specific heat capacity (heat capacity per unit mass) with si_dimension L^2 T^-2 Theta^-1 (vector [0,2,-2,0,-1,0,0]). The record matches the symbol and thermodynamic role in the problem (heat required per mass per K), so the provided exponents are correct."
+            },
+            {
+              "csv_name": "Vs",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "-1",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_scan_speed"
+              ],
+              "reason": "Vs is stated as laser scan speed (velocity). KB record pq_scan_speed defines 'laser scan speed' (Vs) with si_dimension L T^-1 (vector [0,1,-1,0,0,0,0]) in the same domain. The record therefore justifies the L=1, T=-1 coordinates in the provided vector."
+            }
+          ]
+        },
+        "raw_tool_calls": [
+          {
+            "id": "call_5cQlzSAtjXwej152hXjlDwPd",
+            "type": "function",
+            "function": {
+              "name": "CheckerDimensionAudit",
+              "arguments": "{\"ledger_sha256\":\"47fc8f7ed6c9f72aa79713cfe4c883ad18a87a79eb946d45794d27ea2a64f6b9\",\"variables\":[{\"csv_name\":\"rho\",\"before_si_exponents\":{\"M\":\"1\",\"L\":\"-3\",\"T\":\"0\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"},\"decision\":\"PASSED\",\"suggested_si_exponents\":null,\"support_mode\":\"KB_RECORD\",\"evidence_entry_ids\":[\"pq_mass_density\"],\"reason\":\"The problem names rho explicitly as material density (mass per unit volume). The KB record pq_mass_density defines canonical quantity 'mass density', symbol rho/ρ, with domain materials/continuum mechanics and si_dimension M L^-3 (vector [1,-3,0,0,0,0,0]). That record therefore applies directly to this variable in the original problem (same name, symbol, definition and physical domain) and supports all nonzero coordinates in the supplied vector.\"},{\"csv_name\":\"Tl-T0\",\"before_si_exponents\":{\"M\":\"0\",\"L\":\"0\",\"T\":\"0\",\"I\":\"0\",\"Theta\":\"1\",\"N\":\"0\",\"J\":\"0\"},\"decision\":\"PASSED\",\"suggested_si_exponents\":null,\"support_mode\":\"KB_RECORD\",\"evidence_entry_ids\":[\"pq_temperature_difference\"],\"reason\":\"The ledger variable is the melting-to-ambient temperature difference (Tl-T0). The KB record pq_temperature_difference defines 'temperature difference' (symbols ΔT; Tl-T0) with si_dimension Theta (vector [0,0,0,0,1,0,0]). The definition matches the problem statement (difference of two thermodynamic temperatures), so this record justifies the Theta=1 coordinate and thus the provided vector.\"},{\"csv_name\":\"r0\",\"before_si_exponents\":{\"M\":\"0\",\"L\":\"1\",\"T\":\"0\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"},\"decision\":\"PASSED\",\"suggested_si_exponents\":null,\"support_mode\":\"KB_RECORD\",\"evidence_entry_ids\":[\"pq_laser_beam_radius\"],\"reason\":\"The problem states r0 is the laser beam radius (a length scale). KB record pq_laser_beam_radius defines 'laser beam radius' (symbol r0) with si_dimension L (vector [0,1,0,0,0,0,0]) and the same domain of laser-material interaction. This directly supports the L=1 assignment.\"},{\"csv_name\":\"alpha\",\"before_si_exponents\":{\"M\":\"0\",\"L\":\"2\",\"T\":\"-1\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"},\"decision\":\"PASSED\",\"suggested_si_exponents\":null,\"support_mode\":\"KB_RECORD\",\"evidence_entry_ids\":[\"pq_thermal_diffusivity\"],\"reason\":\"The ledger names alpha as thermal diffusivity. KB record pq_thermal_diffusivity identifies alpha/α as thermal diffusivity (definition: k/(ρ c_p)) with si_dimension L^2 T^-1 (vector [0,2,-1,0,0,0,0]). The record's definition and domain (heat transfer) match the use in the problem, so the provided exponents are justified.\"},{\"csv_name\":\"etaP\",\"before_si_exponents\":{\"M\":\"1\",\"L\":\"2\",\"T\":\"-3\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"},\"decision\":\"PASSED\",\"suggested_si_exponents\":null,\"support_mode\":\"KB_RECORD\",\"evidence_entry_ids\":[\"pq_effective_laser_power\"],\"reason\":\"The problem uses ηP as effective absorbed laser power. KB record pq_effective_laser_power documents 'effective absorbed laser power' (ηP, P_abs) with si_dimension M L^2 T^-3 (vector [1,2,-3,0,0,0,0]) and explicitly states absorptivity is dimensionless. The symbol and definition align with the ledger entry, so the power dimensions are confirmed.\"},{\"csv_name\":\"cp\",\"before_si_exponents\":{\"M\":\"0\",\"L\":\"2\",\"T\":\"-2\",\"I\":\"0\",\"Theta\":\"-1\",\"N\":\"0\",\"J\":\"0\"},\"decision\":\"PASSED\",\"suggested_si_exponents\":null,\"support_mode\":\"KB_RECORD\",\"evidence_entry_ids\":[\"pq_specific_heat_capacity\"],\"reason\":\"The ledger labels cp as specific heat capacity per unit mass and temperature. KB record pq_specific_heat_capacity (c_p) defines specific heat capacity (heat capacity per unit mass) with si_dimension L^2 T^-2 Theta^-1 (vector [0,2,-2,0,-1,0,0]). The record matches the symbol and thermodynamic role in the problem (heat required per mass per K), so the provided exponents are correct.\"},{\"csv_name\":\"Vs\",\"before_si_exponents\":{\"M\":\"0\",\"L\":\"1\",\"T\":\"-1\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"},\"decision\":\"PASSED\",\"suggested_si_exponents\":null,\"support_mode\":\"KB_RECORD\",\"evidence_entry_ids\":[\"pq_scan_speed\"],\"reason\":\"Vs is stated as laser scan speed (velocity). KB record pq_scan_speed defines 'laser scan speed' (Vs) with si_dimension L T^-1 (vector [0,1,-1,0,0,0,0]) in the same domain. The record therefore justifies the L=1, T=-1 coordinates in the provided vector.\"}]}"
+            }
+          }
+        ],
+        "model_messages": [
+          {
+            "type": "system",
+            "content": "Audit every named physical input in this exact typed ledger, including literal SI coordinate values. Do not substitute the correct definition or a KB vector for a wrong candidate and then claim PASSED. Return ledger_sha256 and each csv_name exactly once; before_si_exponents must copy the actual candidate. PASSED confirms the actual vector, CONFLICT requires a complete corrected suggested vector, and UNCERTAIN does not permit numerical execution. KB_RECORD requires actual entry_id citations from that variable's retrieved records. Canonical entity names are read by the program from the selected IDs; do not echo another quantity-name field. Your reason must explain why each cited record applies to this variable in the original problem, not merely why its vector matches. Cited vectors must support all known coordinates of the proposed/confirmed SI vector. INTERNAL_REASONING uses no IDs and must explain the physical meaning. Retrieval rank is relevance, not truth. Resolve symbol ambiguity from the original problem; do not choose an unrelated matching symbol. Known absent base dimensions must be explicit '0'; null means genuinely unknown, not unused. If any current coordinate is unknown, request revision or report UNCERTAIN; never call a partly known vector PASSED. Give a complete correction when physically justified. If a correction remains partly unknown, preserve null and explain what remains unresolved; the program will request revision rather than invent zeros. Lack of KB alone is not a physical contradiction. Matrix compilation and n/r/k are program tasks, not audit tasks."
+          },
+          {
+            "type": "human",
+            "content": "Problem:\nPerform dimensional analysis for laser-melted liquid metal to derive the dimensionless form of the keyhole depth (denoted as e*). \nThis analysis uses ONLY the following 7 physical quantities as input parameters: \nthe material density (ρ), the temperature difference between melting temperature and ambient temperature (Tl − T0), the laser beam radius (r0), and the thermal diffusivity (α), the effective laser power (ηP), the coefficient cp obtained by dividing the heat needed to raise the material temperature by both the mass heated and the temperature increase, the laser scan speed (Vs).\n\nTyped ledger SHA256: 47fc8f7ed6c9f72aa79713cfe4c883ad18a87a79eb946d45794d27ea2a64f6b9\nTyped candidate ledger:\n{\"input_variable_names\": [\"rho\", \"Tl-T0\", \"r0\", \"alpha\", \"etaP\", \"cp\", \"Vs\"], \"output_variable_confidence\": \"high\", \"output_variable_name\": \"e*\", \"output_variable_reasoning\": \"The dimensionless keyhole depth e* is derived from the given physical quantities related to material properties, laser parameters, and thermal properties. Each input quantity is well-known in physics and engineering, allowing confident assignment of their SI base dimension exponents.\", \"variables\": [{\"csv_name\": \"rho\", \"physical_definition\": \"Material density, mass per unit volume of the material\", \"quantity_name\": \"density\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"-3\", \"M\": \"1\", \"N\": \"0\", \"T\": \"0\", \"Theta\": \"0\"}}, {\"csv_name\": \"Tl-T0\", \"physical_definition\": \"Temperature difference between melting temperature and ambient temperature\", \"quantity_name\": \"temperature_difference\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"0\", \"M\": \"0\", \"N\": \"0\", \"T\": \"0\", \"Theta\": \"1\"}}, {\"csv_name\": \"r0\", \"physical_definition\": \"Laser beam radius, a length scale of the laser spot\", \"quantity_name\": \"length\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"1\", \"M\": \"0\", \"N\": \"0\", \"T\": \"0\", \"Theta\": \"0\"}}, {\"csv_name\": \"alpha\", \"physical_definition\": \"Thermal diffusivity, rate of thermal diffusion in the material\", \"quantity_name\": \"thermal_diffusivity\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"2\", \"M\": \"0\", \"N\": \"0\", \"T\": \"-1\", \"Theta\": \"0\"}}, {\"csv_name\": \"etaP\", \"physical_definition\": \"Effective laser power, energy per unit time delivered by the laser\", \"quantity_name\": \"power\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"2\", \"M\": \"1\", \"N\": \"0\", \"T\": \"-3\", \"Theta\": \"0\"}}, {\"csv_name\": \"cp\", \"physical_definition\": \"Specific heat capacity per unit mass and temperature increase\", \"quantity_name\": \"specific_heat_capacity\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"2\", \"M\": \"0\", \"N\": \"0\", \"T\": \"-2\", \"Theta\": \"-1\"}}, {\"csv_name\": \"Vs\", \"physical_definition\": \"Laser scan speed, velocity of the laser beam over the material surface\", \"quantity_name\": \"velocity\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"1\", \"M\": \"0\", \"N\": \"0\", \"T\": \"-1\", \"Theta\": \"0\"}}]}\n\nRetrieved dimensional evidence:\n### Input variable `rho`\n- entry_id: pq_mass_density; canonical_quantity: mass density; symbols: rho; ρ; aliases: density; fluid density; material density; wall density; definition: Mass per unit volume.; si_dimension: M L^-3; dimension_vector: [1, -3, 0, 0, 0, 0, 0]; si_unit: kg m^-3; domain: continuum mechanics; fluid mechanics; materials; ambiguity_notes: The symbol rho/ρ may also denote electrical resistivity in electromagnetism; resolve by physical context.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_electrical_resistivity; canonical_quantity: electrical resistivity; symbols: eta; η; rho_e; ρ_e; aliases: resistivity; specific electrical resistance; rho notation for electrical resistivity; ρ notation for electrical resistivity; definition: Material property relating electric field to current density; equivalently electrical resistance times a length scale divided by area.; si_dimension: M L^3 T^-3 I^-2; dimension_vector: [1, 3, -3, -2, 0, 0, 0]; si_unit: ohm m; domain: electromagnetism; magnetohydrodynamics; ambiguity_notes: Eta/η may denote dynamic viscosity or magnetic diffusivity; rho/ρ may denote mass density. In an MHD prompt explicitly saying electrical resistivity, use this record.; source: MHD Flow in Simple Cubic Periodic Array Geometry, Journal of Fusion Energy (2023); source_identifier: doi:10.1007/s10894-023-00390-8; confidence: curated\n- entry_id: pq_keyhole_depth; canonical_quantity: keyhole depth; symbols: e; D_k; aliases: laser keyhole depth; definition: Depth of the vapor depression or keyhole formed during intense laser-metal interaction.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: laser-material interaction; additive manufacturing; ambiguity_notes: ; source: Gan et al., Universal scaling laws of keyhole stability and porosity in 3D printing of metals, Nature Communications (2021); source_identifier: doi:10.1038/s41467-021-22704-0; confidence: curated\n### Input variable `Tl-T0`\n- entry_id: pq_temperature_difference; canonical_quantity: temperature difference; symbols: DeltaT; delta_T; ΔT; Tl-T0; T_l-T_0; aliases: temperature gap; melting-to-ambient temperature difference; definition: Difference between two thermodynamic temperatures.; si_dimension: Theta; dimension_vector: [0, 0, 0, 0, 1, 0, 0]; si_unit: K; domain: heat transfer; thermodynamics; ambiguity_notes: A temperature difference has the same dimension as thermodynamic temperature.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_keyhole_depth; canonical_quantity: keyhole depth; symbols: e; D_k; aliases: laser keyhole depth; definition: Depth of the vapor depression or keyhole formed during intense laser-metal interaction.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: laser-material interaction; additive manufacturing; ambiguity_notes: ; source: Gan et al., Universal scaling laws of keyhole stability and porosity in 3D printing of metals, Nature Communications (2021); source_identifier: doi:10.1038/s41467-021-22704-0; confidence: curated\n- entry_id: pq_thermal_resistance; canonical_quantity: thermal resistance; symbols: R_th; aliases: heat-transfer resistance; definition: Temperature difference divided by heat-transfer rate.; si_dimension: M^-1 L^-2 T^3 Theta; dimension_vector: [-1, -2, 3, 0, 1, 0, 0]; si_unit: K W^-1; domain: heat transfer; ambiguity_notes: ; source: Lupi, Heat Transfer, in Fundamentals of Electroheat; source_identifier: doi:10.1007/978-3-319-46015-4_1; confidence: high\n### Input variable `r0`\n- entry_id: pq_laser_beam_radius; canonical_quantity: laser beam radius; symbols: r0; r_0; aliases: laser spot radius; beam radius; definition: Characteristic radius of the incident laser beam.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: laser-material interaction; additive manufacturing; ambiguity_notes: ; source: Gan et al., Universal scaling laws of keyhole stability and porosity in 3D printing of metals, Nature Communications (2021); source_identifier: doi:10.1038/s41467-021-22704-0; confidence: curated\n- entry_id: pq_radius; canonical_quantity: radius; symbols: r; r0; r_0; aliases: radius; characteristic radius; beam radius; definition: Radial geometric length.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: geometry; ambiguity_notes: r may represent pipe roughness height in some datasets; use the physical description.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_keyhole_depth; canonical_quantity: keyhole depth; symbols: e; D_k; aliases: laser keyhole depth; definition: Depth of the vapor depression or keyhole formed during intense laser-metal interaction.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: laser-material interaction; additive manufacturing; ambiguity_notes: ; source: Gan et al., Universal scaling laws of keyhole stability and porosity in 3D printing of metals, Nature Communications (2021); source_identifier: doi:10.1038/s41467-021-22704-0; confidence: curated\n### Input variable `alpha`\n- entry_id: pq_thermal_diffusivity; canonical_quantity: thermal diffusivity; symbols: alpha; α; kappa; κ; a; aliases: heat diffusivity; definition: Thermal conductivity divided by the product of density and specific heat capacity.; si_dimension: L^2 T^-1; dimension_vector: [0, 2, -1, 0, 0, 0, 0]; si_unit: m^2 s^-1; domain: heat transfer; ambiguity_notes: Alpha/α may instead denote a thermal expansion coefficient; kappa/κ may instead denote thermal conductivity or another diffusivity.; source: IUPAC Gold Book: thermal diffusivity; source_identifier: doi:10.1351/goldbook.08697; confidence: curated\n- entry_id: pq_thermal_expansion_coefficient; canonical_quantity: thermal expansion coefficient; symbols: alpha; α; beta; β; aliases: coefficient of thermal expansion; thermal expansivity; definition: Fractional change of a characteristic length or volume per unit temperature change, according to the chosen convention.; si_dimension: Theta^-1; dimension_vector: [0, 0, 0, 0, -1, 0, 0]; si_unit: K^-1; domain: thermodynamics; convection; ambiguity_notes: Alpha/α is also widely used for thermal diffusivity. The Rayleigh-Benard context usually uses alpha for thermal expansion coefficient and kappa for thermal diffusivity.; source: NIST SP 260-173, thermal-property nomenclature; source_identifier: https://www.nist.gov/document/sp260-173pdf; confidence: curated\n- entry_id: pq_keyhole_depth; canonical_quantity: keyhole depth; symbols: e; D_k; aliases: laser keyhole depth; definition: Depth of the vapor depression or keyhole formed during intense laser-metal interaction.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: laser-material interaction; additive manufacturing; ambiguity_notes: ; source: Gan et al., Universal scaling laws of keyhole stability and porosity in 3D printing of metals, Nature Communications (2021); source_identifier: doi:10.1038/s41467-021-22704-0; confidence: curated\n### Input variable `etaP`\n- entry_id: pq_effective_laser_power; canonical_quantity: effective absorbed laser power; symbols: etaP; ηP; P_abs; aliases: absorbed laser power; effective laser power; definition: Laser power after multiplication by an absorptivity factor; absorptivity is dimensionless, so etaP has power dimensions.; si_dimension: M L^2 T^-3; dimension_vector: [1, 2, -3, 0, 0, 0, 0]; si_unit: W; domain: laser-material interaction; additive manufacturing; ambiguity_notes: Do not treat eta/η inside etaP as a dimensional viscosity or resistivity; here it is a dimensionless absorptivity.; source: Gan et al., Universal scaling laws of keyhole stability and porosity in 3D printing of metals, Nature Communications (2021); source_identifier: doi:10.1038/s41467-021-22704-0; confidence: curated\n- entry_id: pq_keyhole_depth; canonical_quantity: keyhole depth; symbols: e; D_k; aliases: laser keyhole depth; definition: Depth of the vapor depression or keyhole formed during intense laser-metal interaction.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: laser-material interaction; additive manufacturing; ambiguity_notes: ; source: Gan et al., Universal scaling laws of keyhole stability and porosity in 3D printing of metals, Nature Communications (2021); source_identifier: doi:10.1038/s41467-021-22704-0; confidence: curated\n- entry_id: pq_temperature_difference; canonical_quantity: temperature difference; symbols: DeltaT; delta_T; ΔT; Tl-T0; T_l-T_0; aliases: temperature gap; melting-to-ambient temperature difference; definition: Difference between two thermodynamic temperatures.; si_dimension: Theta; dimension_vector: [0, 0, 0, 0, 1, 0, 0]; si_unit: K; domain: heat transfer; thermodynamics; ambiguity_notes: A temperature difference has the same dimension as thermodynamic temperature.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n### Input variable `cp`\n- entry_id: pq_specific_heat_capacity; canonical_quantity: specific heat capacity; symbols: cp; c_p; C_p; aliases: specific heat; heat capacity per unit mass; definition: Heat capacity per unit mass.; si_dimension: L^2 T^-2 Theta^-1; dimension_vector: [0, 2, -2, 0, -1, 0, 0]; si_unit: J kg^-1 K^-1; domain: heat transfer; thermodynamics; ambiguity_notes: Cp can also denote pressure coefficient in fluid mechanics; lowercase cp/c_p usually denotes specific heat capacity.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: curated\n- entry_id: pq_specific_heat_cp; canonical_quantity: specific heat at constant pressure; symbols: c_p; cp; aliases: isobaric specific heat capacity; definition: Specific heat capacity evaluated at constant pressure.; si_dimension: L^2 T^-2 Theta^-1; dimension_vector: [0, 2, -2, 0, -1, 0, 0]; si_unit: J kg^-1 K^-1; domain: thermodynamics; heat transfer; ambiguity_notes: ; source: Lupi, Heat Transfer, in Fundamentals of Electroheat; source_identifier: doi:10.1007/978-3-319-46015-4_1; confidence: high\n- entry_id: pq_keyhole_depth; canonical_quantity: keyhole depth; symbols: e; D_k; aliases: laser keyhole depth; definition: Depth of the vapor depression or keyhole formed during intense laser-metal interaction.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: laser-material interaction; additive manufacturing; ambiguity_notes: ; source: Gan et al., Universal scaling laws of keyhole stability and porosity in 3D printing of metals, Nature Communications (2021); source_identifier: doi:10.1038/s41467-021-22704-0; confidence: curated\n### Input variable `Vs`\n- entry_id: pq_scan_speed; canonical_quantity: laser scan speed; symbols: Vs; V_s; v_s; aliases: scanning speed; beam scan velocity; definition: Translation speed of a laser beam relative to the material.; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: laser-material interaction; additive manufacturing; ambiguity_notes: ; source: Gan et al., Universal scaling laws of keyhole stability and porosity in 3D printing of metals, Nature Communications (2021); source_identifier: doi:10.1038/s41467-021-22704-0; confidence: high\n- entry_id: pq_keyhole_depth; canonical_quantity: keyhole depth; symbols: e; D_k; aliases: laser keyhole depth; definition: Depth of the vapor depression or keyhole formed during intense laser-metal interaction.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: laser-material interaction; additive manufacturing; ambiguity_notes: ; source: Gan et al., Universal scaling laws of keyhole stability and porosity in 3D printing of metals, Nature Communications (2021); source_identifier: doi:10.1038/s41467-021-22704-0; confidence: curated\n- entry_id: pq_temperature_difference; canonical_quantity: temperature difference; symbols: DeltaT; delta_T; ΔT; Tl-T0; T_l-T_0; aliases: temperature gap; melting-to-ambient temperature difference; definition: Difference between two thermodynamic temperatures.; si_dimension: Theta; dimension_vector: [0, 0, 0, 0, 1, 0, 0]; si_unit: K; domain: heat transfer; thermodynamics; ambiguity_notes: A temperature difference has the same dimension as thermodynamic temperature.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high"
+          }
+        ],
+        "elapsed_s": 52.79608629998984
+      },
+      "retrieval_elapsed_s": 33.98846690001665
+    }
+  ],
+  "final_ledger": {
+    "output_variable_name": "e*",
+    "output_variable_reasoning": "The dimensionless keyhole depth e* is derived from the given physical quantities related to material properties, laser parameters, and thermal properties. Each input quantity is well-known in physics and engineering, allowing confident assignment of their SI base dimension exponents.",
+    "output_variable_confidence": "high",
+    "input_variable_names": [
+      "rho",
+      "Tl-T0",
+      "r0",
+      "alpha",
+      "etaP",
+      "cp",
+      "Vs"
+    ],
+    "variables": [
+      {
+        "csv_name": "rho",
+        "quantity_name": "density",
+        "physical_definition": "Material density, mass per unit volume of the material",
+        "si_exponents": {
+          "M": "1",
+          "L": "-3",
+          "T": "0",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "Tl-T0",
+        "quantity_name": "temperature_difference",
+        "physical_definition": "Temperature difference between melting temperature and ambient temperature",
+        "si_exponents": {
+          "M": "0",
+          "L": "0",
+          "T": "0",
+          "I": "0",
+          "Theta": "1",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "r0",
+        "quantity_name": "length",
+        "physical_definition": "Laser beam radius, a length scale of the laser spot",
+        "si_exponents": {
+          "M": "0",
+          "L": "1",
+          "T": "0",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "alpha",
+        "quantity_name": "thermal_diffusivity",
+        "physical_definition": "Thermal diffusivity, rate of thermal diffusion in the material",
+        "si_exponents": {
+          "M": "0",
+          "L": "2",
+          "T": "-1",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "etaP",
+        "quantity_name": "power",
+        "physical_definition": "Effective laser power, energy per unit time delivered by the laser",
+        "si_exponents": {
+          "M": "1",
+          "L": "2",
+          "T": "-3",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "cp",
+        "quantity_name": "specific_heat_capacity",
+        "physical_definition": "Specific heat capacity per unit mass and temperature increase",
+        "si_exponents": {
+          "M": "0",
+          "L": "2",
+          "T": "-2",
+          "I": "0",
+          "Theta": "-1",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "Vs",
+        "quantity_name": "velocity",
+        "physical_definition": "Laser scan speed, velocity of the laser beam over the material surface",
+        "si_exponents": {
+          "M": "0",
+          "L": "1",
+          "T": "-1",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      }
+    ]
+  },
+  "workflow_status": "basis_ready",
+  "basis_built": true,
+  "basis": {
+    "workflow_status": "basis_ready",
+    "input_vars": [
+      "rho",
+      "Tl-T0",
+      "r0",
+      "alpha",
+      "etaP",
+      "cp",
+      "Vs"
+    ],
+    "output_var": "e*",
+    "basis_pi_formulas": {
+      "Pi_1": "(r0 * etaP) / (rho * alpha^{3})",
+      "Pi_2": "(Tl-T0 * r0^{2} * cp) / (alpha^{2})",
+      "Pi_3": "(r0 * Vs) / (alpha)"
+    },
+    "basis_pi_matrices": [
+      [
+        -1.0,
+        0.0,
+        1.0,
+        -3.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0,
+        2.0,
+        -2.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        -1.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "basis_tool_history": [
+      {
+        "args": {
+          "D_in": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              -3.0,
+              0.0,
+              1.0,
+              2.0,
+              2.0,
+              2.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              -1.0,
+              -3.0,
+              -2.0,
+              -1.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              -1.0,
+              0.0
+            ]
+          ],
+          "var_names": [
+            "rho",
+            "Tl-T0",
+            "r0",
+            "alpha",
+            "etaP",
+            "cp",
+            "Vs"
+          ]
+        },
+        "result": {
+          "status": "success",
+          "pi_formulas": {
+            "Pi_1": "(r0 * etaP) / (rho * alpha^{3})",
+            "Pi_2": "(Tl-T0 * r0^{2} * cp) / (alpha^{2})",
+            "Pi_3": "(r0 * Vs) / (alpha)"
+          },
+          "basis_matrices": [
+            [
+              -1.0,
+              0.0,
+              1.0,
+              -3.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              2.0,
+              -2.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              -1.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "basis_matrices_display": [
+            [
+              -1.0,
+              0.0,
+              1.0,
+              -3.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              2.0,
+              -2.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              -1.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "null_space_residual_inf": 0.0,
+          "basis_precision_note": "basis_matrices stores full floating-point precision; basis_matrices_display is rounded for display only."
+        }
+      }
+    ],
+    "output_resolution": {
+      "status": "success",
+      "output_var": "e*",
+      "source": "structured_analyzer",
+      "requested": "e*",
+      "candidates": [
+        "source",
+        "Tv-T0",
+        "Lv",
+        "Lm",
+        "e",
+        "Ke",
+        "e*"
+      ]
+    }
+  },
+  "revision_calls": [],
+  "elapsed_s": 86.85887840000214,
+  "error": null,
+  "infrastructure_error": [],
+  "node_sequence": [
+    "Analyzer",
+    "Hallu_Checker",
+    "Basis_Decider",
+    "Basis_Executor"
+  ],
+  "provenance": {
+    "run_id": "81cc9623-902d-4f1a-b823-0ca65e6b1c1f",
+    "release": "run-provenance-2026-11-09",
+    "engine_sha256": "ae9a03710f9685d3be863b98acc1880d72c9ea3f04450af039b92f5459ee1ea9",
+    "started_utc": "2026-11-15T16:04:43Z",
+    "finished_utc": null,
+    "status": "running",
+    "dataset": {
+      "name": "dataset_keyhole.csv",
+      "sha256": "138426b025a59a183f464fe88be7699839edd79f01a859f00df00137997476f5"
+    },
+    "problem_sha256": "db8824beba2c3b7c1097da8023e136d8daca114ea5956050e12dacdfcab34086",
+    "manual_hyperparams_sha256": "1a77ac90efe4bc0a9be8c57fdd1e148af3616f2ddcc5fada158148b929b1e8a7",
+    "model_configuration": {
+      "analyzer": "gpt-4.1-mini",
+      "checker": "gpt-5-mini",
+      "planner": "gpt-5-mini",
+      "interpretation": "gpt-5-mini"
+    },
+    "package_versions": {
+      "numpy": "2.4.0",
+      "pandas": "2.3.3",
+      "scipy": "1.16.3",
+      "sympy": "1.14.0",
+      "scikit-learn": "1.8.0",
+      "cma": "4.4.4",
+      "pydantic": "2.12.5",
+      "openai": "2.14.0",
+      "httpx": "0.28.1",
+      "langchain-core": "1.2.5",
+      "langchain-openai": "1.1.6",
+      "langgraph": "1.0.5"
+    },
+    "tracing_enabled": false,
+    "wall_seconds": 86.85820610000519,
+    "node_timings": [
+      {
+        "node": "Analyzer",
+        "visit": 1,
+        "duration_seconds": 0.02495019999332726,
+        "status": "returned",
+        "error_type": null
+      },
+      {
+        "node": "Hallu_Checker",
+        "visit": 1,
+        "duration_seconds": 86.7954171000165,
+        "status": "returned",
+        "error_type": null
+      },
+      {
+        "node": "Basis_Decider",
+        "visit": 1,
+        "duration_seconds": 0.009620599972549826,
+        "status": "returned",
+        "error_type": null
+      },
+      {
+        "node": "Basis_Executor",
+        "visit": 1,
+        "duration_seconds": 0.025067000009585172,
+        "status": "returned",
+        "error_type": null
+      }
+    ],
+    "http_attempts": [
+      {
+        "attempt_id": "7c1e55d7-1154-4e93-85b4-38177ae5fc04",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 2.336712100019213,
+        "started_utc": "2026-11-15T16:04:43Z",
+        "input_tokens": 165,
+        "output_tokens": 0,
+        "total_tokens": 165,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "edb7391ef043062bde252bace2687db6a20896f0462d369d6cb24343d9c516f4",
+        "response_id": null
+      },
+      {
+        "attempt_id": "deeaaad4-4f17-4abe-b357-46599b1cc6e1",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 1.1135656000114977,
+        "started_utc": "2026-11-15T16:04:46Z",
+        "input_tokens": 94,
+        "output_tokens": 0,
+        "total_tokens": 94,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "b3227c57f6cf2ba8554ae1b825725d77395e1f09a1228f08bd09bca42e444466",
+        "response_id": null
+      },
+      {
+        "attempt_id": "f527a3c2-ff1a-4206-89bf-06b285d40593",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 2.0748374000540935,
+        "started_utc": "2026-11-15T16:04:47Z",
+        "input_tokens": 166,
+        "output_tokens": 0,
+        "total_tokens": 166,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "d8f05a2a2d603d77f95adc0cc9c98dc9b4410313b58c397b328a58e8c976ff78",
+        "response_id": null
+      },
+      {
+        "attempt_id": "6468a667-cc47-4bea-9fc9-336e24a61298",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 18.25730499997735,
+        "started_utc": "2026-11-15T16:04:49Z",
+        "input_tokens": 170,
+        "output_tokens": 0,
+        "total_tokens": 170,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "9410dd124635f2a6aec2beaf4eb9c2db4ec2945ef876f1b35bf929a6ced49e86",
+        "response_id": null
+      },
+      {
+        "attempt_id": "96cdec12-53a2-4f16-9497-6443d77b25ec",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 6.184274299943354,
+        "started_utc": "2026-11-15T16:05:07Z",
+        "input_tokens": 169,
+        "output_tokens": 0,
+        "total_tokens": 169,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "8d66fdc2aa189c6490f7e86f4c456a2862e2a1910d50ef3b1375b1b9a220739c",
+        "response_id": null
+      },
+      {
+        "attempt_id": "57147b26-d122-4de1-8cd7-e6572e3239b3",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 1.273898100014776,
+        "started_utc": "2026-11-15T16:05:14Z",
+        "input_tokens": 169,
+        "output_tokens": 0,
+        "total_tokens": 169,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "88dc79cb411f82c768f22af4c775ae3e65748eb13cce22c20aa8194d9e4dc34c",
+        "response_id": null
+      },
+      {
+        "attempt_id": "549ba0a5-c2b0-4fc9-8583-43e559b2c102",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 2.524325600010343,
+        "started_utc": "2026-11-15T16:05:15Z",
+        "input_tokens": 168,
+        "output_tokens": 0,
+        "total_tokens": 168,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "ad18dab77ea602cc7aa5c57a63272557a76bd215887a85936d9b66b05942c60f",
+        "response_id": null
+      },
+      {
+        "attempt_id": "19e804e0-c683-43cf-9c38-8b5ef6743216",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "llm",
+        "requested_model": "gpt-5-mini",
+        "response_model": null,
+        "http_status": null,
+        "outcome": "transport_error",
+        "duration_seconds": 5.029088200011756,
+        "started_utc": "2026-11-15T16:05:17Z",
+        "input_tokens": null,
+        "output_tokens": null,
+        "total_tokens": null,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": false,
+        "sdk_retry_index": 0,
+        "error_type": "ConnectError",
+        "request_sha256": "e25d047ec7e93e1c523f662fa63b996295a4c23794bf82906864ec1287b62b15",
+        "response_id": null
+      },
+      {
+        "attempt_id": "eb1e054d-2879-4c42-808a-509b41efdcbf",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "llm",
+        "requested_model": "gpt-5-mini",
+        "response_model": null,
+        "http_status": null,
+        "outcome": "transport_error",
+        "duration_seconds": 5.010105299996212,
+        "started_utc": "2026-11-15T16:05:23Z",
+        "input_tokens": null,
+        "output_tokens": null,
+        "total_tokens": null,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": false,
+        "sdk_retry_index": 1,
+        "error_type": "ConnectError",
+        "request_sha256": "e25d047ec7e93e1c523f662fa63b996295a4c23794bf82906864ec1287b62b15",
+        "response_id": null
+      },
+      {
+        "attempt_id": "e84f69d1-f713-436d-8e5b-8feb1c5079c7",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "llm",
+        "requested_model": "gpt-5-mini",
+        "response_model": "gpt-5-mini",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 41.34367889998248,
+        "started_utc": "2026-11-15T16:05:29Z",
+        "input_tokens": 4801,
+        "output_tokens": 6265,
+        "total_tokens": 11066,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 0,
+        "usage_reported": true,
+        "sdk_retry_index": 2,
+        "error_type": null,
+        "request_sha256": "e25d047ec7e93e1c523f662fa63b996295a4c23794bf82906864ec1287b62b15",
+        "response_id": "chatcmpl-202611151605313955984148268d9d6Nftbwlvr"
+      }
+    ],
+    "observation_warnings": [],
+    "workflow_status": "basis_ready",
+    "scientific_status": null,
+    "totals": {
+      "http_attempt_count": 10,
+      "llm_http_attempt_count": 3,
+      "embedding_http_attempt_count": 7,
+      "usage_missing_attempt_count": 2,
+      "http_duration_seconds_sum": 85.14779050002107,
+      "node_duration_seconds_sum": 86.85505489999196,
+      "http_success_count": 8,
+      "http_error_count": 0,
+      "transport_error_count": 2,
+      "known_input_tokens": 5902,
+      "input_tokens_missing_count": 2,
+      "known_output_tokens": 6265,
+      "output_tokens_missing_count": 2,
+      "known_total_tokens": 12167,
+      "total_tokens_missing_count": 2,
+      "known_cached_input_tokens": 0,
+      "cached_input_tokens_missing_count": 9,
+      "known_reasoning_tokens": 0,
+      "reasoning_tokens_missing_count": 9
+    }
+  }
+}

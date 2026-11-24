@@ -1,0 +1,619 @@
+{
+  "schema_version": 1,
+  "case_id": "rough_pipe",
+  "title": "Viscous flow in a rough circular pipe",
+  "dataset": "data/datasets/rough_pipe.csv",
+  "prompt": "Perform dimensional analysis for viscous flow in a rough circular pipe to derive the dimensionless relationship governing the pipe friction factor (denoted as f_D).\nThis analysis uses ONLY the following 5 physical quantities as input parameters:\nthe fluid density (rho), the dynamic viscosity (mu), the pipe diameter (D), the mean flow velocity (U), and the absolute wall roughness height (epsilon).",
+  "manual_hyperparams": {
+    "workflow_template": "auto_mechanism_adaptive",
+    "similarity_type": "auto",
+    "gpr_random_state": 123,
+    "mi_method_used": "binning",
+    "mi_param_used": 20,
+    "gradient_regime_options": {
+      "surrogate": {
+        "mean_mode": "affine_sigmoid_transition",
+        "max_train_samples": 1100,
+        "regime_target_transform": "log",
+        "n_restarts_optimizer": 3,
+        "optimizer_maxiter": 2000,
+        "log_sigma0_sq_bounds": [
+          -40.0,
+          40.0
+        ],
+        "log_sigma1_sq_bounds": [
+          -30.0,
+          30.0
+        ],
+        "log_sigma_u_sq_bounds": [
+          -30.0,
+          5.0
+        ]
+      },
+      "clustering": {
+        "n_clusters": null,
+        "candidate_cluster_counts": [
+          2,
+          3,
+          4
+        ],
+        "min_cluster_fraction": 0.05,
+        "eigenvalue_ratio_threshold": 50.0,
+        "n_init": 30,
+        "max_iter": 200,
+        "require_convergence": true
+      }
+    },
+    "regime_plot_feature_mode": "screening_basis",
+    "regime_plot_feature_pi_indices": [
+      1,
+      2
+    ],
+    "regime_plot_feature_labels": [
+      "$\\log(\\Pi^{(S)}_1)$",
+      "$\\log(\\Pi^{(S)}_2)$"
+    ],
+    "regime_plot_physical_x": {
+      "source": "power_product",
+      "powers": {
+        "U": 1.0,
+        "rho": 1.0,
+        "D": 1.0,
+        "mu": -1.0
+      },
+      "label": "$Re=\\rho UD/\\mu$",
+      "scale": "log"
+    },
+    "regime_plot_physical_y": {
+      "source": "power_product",
+      "powers": {
+        "f_D": 1.0
+      },
+      "label": "$f_D$",
+      "scale": "log"
+    }
+  },
+  "input_columns": [
+    "rho",
+    "mu",
+    "D",
+    "U",
+    "epsilon"
+  ],
+  "output_column": "f_D",
+  "expected_dimensions": {
+    "dimension_order": [
+      "M",
+      "L",
+      "T",
+      "I",
+      "Theta",
+      "N",
+      "J"
+    ],
+    "inputs": {
+      "rho": {
+        "M": 1,
+        "L": -3,
+        "T": 0,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "mu": {
+        "M": 1,
+        "L": -1,
+        "T": -1,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "D": {
+        "M": 0,
+        "L": 1,
+        "T": 0,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "U": {
+        "M": 0,
+        "L": 1,
+        "T": -1,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "epsilon": {
+        "M": 0,
+        "L": 1,
+        "T": 0,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      }
+    },
+    "output": {
+      "M": 0,
+      "L": 0,
+      "T": 0,
+      "I": 0,
+      "Theta": 0,
+      "N": 0,
+      "J": 0
+    }
+  },
+  "data_metadata": {
+    "rows": 1200,
+    "columns": [
+      "rho",
+      "mu",
+      "D",
+      "U",
+      "epsilon",
+      "f_D"
+    ],
+    "auxiliary_columns": [],
+    "sha256": "b8c037a820e3532144f7626caa8eb9cd042c03ce558257e83e689edd16362178",
+    "original_filename": "dataset_pipe.csv",
+    "original_column_order_preserved": true,
+    "response_log_eligible_rows": 1200
+  },
+  "provenance": {
+    "prompt_source": "author-supplied current agent definitions",
+    "manual_hyperparams_source": "author-supplied current agent definitions",
+    "source_sha256": "55a4a6f2c9c0b3424a83d3576517539128d6dc86fb2d9479bf1c86ab5f4794db",
+    "original_prompt_symbol": "CMAME24_PIPE_PROMPT",
+    "original_hyperparams_symbol": "CMAME24_PIPE_hparams",
+    "reference_dimensions_source": "reproduction/rag_ablation/reference/expected_dimensions.json",
+    "reference_case_id": "CIRCLEPIPE",
+    "reference_dimensions_sha256": "72764f551ff87b286641978d8ed96addd0d80047028a351f06b0814329b04f98"
+  },
+  "numerical_threads": 20,
+  "resolved_hyperparameters": {
+    "output_variable": "f_D",
+    "output_resolution": {
+      "status": "success",
+      "output_var": "f_D",
+      "source": "structured_analyzer",
+      "requested": "f_D",
+      "candidates": [
+        "f_D"
+      ]
+    },
+    "manual_hyperparams": {
+      "workflow_template": "auto_mechanism_adaptive",
+      "similarity_type": "auto",
+      "gpr_random_state": 123,
+      "mi_method_used": "binning",
+      "mi_param_used": 20,
+      "gradient_regime_options": {
+        "surrogate": {
+          "mean_mode": "affine_sigmoid_transition",
+          "max_train_samples": 1100,
+          "regime_target_transform": "log",
+          "n_restarts_optimizer": 3,
+          "optimizer_maxiter": 2000,
+          "log_sigma0_sq_bounds": [
+            -40.0,
+            40.0
+          ],
+          "log_sigma1_sq_bounds": [
+            -30.0,
+            30.0
+          ],
+          "log_sigma_u_sq_bounds": [
+            -30.0,
+            5.0
+          ]
+        },
+        "clustering": {
+          "n_clusters": null,
+          "candidate_cluster_counts": [
+            2,
+            3,
+            4
+          ],
+          "min_cluster_fraction": 0.05,
+          "eigenvalue_ratio_threshold": 50.0,
+          "n_init": 30,
+          "max_iter": 200,
+          "require_convergence": true
+        }
+      },
+      "regime_plot_feature_mode": "screening_basis",
+      "regime_plot_feature_pi_indices": [
+        1,
+        2
+      ],
+      "regime_plot_feature_labels": [
+        "$\\log(\\Pi^{(S)}_1)$",
+        "$\\log(\\Pi^{(S)}_2)$"
+      ],
+      "regime_plot_physical_x": {
+        "source": "power_product",
+        "powers": {
+          "U": 1.0,
+          "rho": 1.0,
+          "D": 1.0,
+          "mu": -1.0
+        },
+        "label": "$Re=\\rho UD/\\mu$",
+        "scale": "log"
+      },
+      "regime_plot_physical_y": {
+        "source": "power_product",
+        "powers": {
+          "f_D": 1.0
+        },
+        "label": "$f_D$",
+        "scale": "log"
+      }
+    },
+    "effective_workflow": {
+      "status": "compiled",
+      "template": "auto_mechanism_adaptive",
+      "rationale": "Single-regime dimensional analysis using the five provided variables produces two independent dimensionless base-Pi groups (given): Pi_1 = (rho D U)/mu (the Reynolds number) and Pi_2 = epsilon/D (relative roughness). The dependent variable f_D is already dimensionless, so with first-kind (complete) similarity the sought relationship is f_D = F(Pi_1, Pi_2). With 1200 samples the mutual-information estimator will use binning (mi_param=16). No output scaling or automatic mechanism screening was requested, so we keep first-kind similarity and do not optimize the output scaling.",
+      "target_is_dimensionless": true,
+      "stages": [
+        "load_and_validate_data",
+        "gradient_regime_detection",
+        "validate_regime_partition",
+        "local_dominant_group_search",
+        "fan_out_local_workflows",
+        "aggregate_results",
+        "generate_report"
+      ],
+      "tool_ids": [
+        "calc_basis_tool",
+        "detect_gradient_regimes",
+        "run_local_dominant_group_workflow",
+        "rationalize_local_solution"
+      ],
+      "regime_detection": {
+        "n_clusters": null,
+        "candidate_cluster_counts": [
+          2,
+          3,
+          4
+        ],
+        "min_cluster_fraction": 0.05,
+        "min_cluster_samples": 60,
+        "max_intercluster_cosine": 0.9,
+        "eigenvalue_ratio_threshold": 50.0,
+        "require_convergence": true,
+        "exclude_low_confidence_points": false,
+        "assignment_confidence_threshold": 0.05
+      },
+      "resolved_gradient_regime_options": {
+        "surrogate": {
+          "mean_mode": "affine_sigmoid_transition",
+          "max_train_samples": 1100,
+          "n_restarts_optimizer": 3,
+          "optimizer_maxiter": 2000,
+          "optimizer_ftol": 1e-10,
+          "optimizer_gtol": 1e-06,
+          "jitter": 1e-10,
+          "random_state": 42,
+          "log_sigma0_sq_bounds": [
+            -40.0,
+            40.0
+          ],
+          "log_sigma1_sq_bounds": [
+            -30.0,
+            30.0
+          ],
+          "log_sigma_u_sq_bounds": [
+            -30.0,
+            5.0
+          ],
+          "mean_parameter_bounds": [
+            null,
+            null
+          ],
+          "initial_noise_fraction": 1e-06,
+          "require_optimizer_success": false,
+          "regime_target_transform": "log"
+        },
+        "clustering": {
+          "n_clusters": null,
+          "candidate_cluster_counts": [
+            2,
+            3,
+            4
+          ],
+          "min_cluster_fraction": 0.05,
+          "min_cluster_samples": 60,
+          "max_intercluster_cosine": 0.9,
+          "eigenvalue_ratio_threshold": 50.0,
+          "n_init": 30,
+          "max_iter": 200,
+          "random_state": 42,
+          "initialization": "random_eigenpairs",
+          "max_initialization_attempts": 100,
+          "require_convergence": true,
+          "gradient_norm_tolerance": 1e-12,
+          "exclude_low_confidence_points": false,
+          "assignment_confidence_threshold": 0.05
+        }
+      },
+      "regime_configuration_precedence": [
+        "library_defaults",
+        "workflow_plan",
+        "nested_manual",
+        "flat_manual"
+      ],
+      "resolved_manual_regime_overrides": {},
+      "local_workflow": {
+        "start_count": 1,
+        "max_count": 2,
+        "absolute_score_drop_threshold": 0.08,
+        "require_two_counts_when_possible": true,
+        "similarity_type": "auto",
+        "optimize_output": null,
+        "output_scaling_reason": "Authoritative manual similarity_type='auto'; runtime numerical screening required.",
+        "output_scaling_confidence": "medium",
+        "similarity_screening_max_relative_mi_change": 0.15,
+        "similarity_screening_max_cosine_similarity": 0.7,
+        "mi_method": "binning",
+        "mi_param": 20,
+        "cma_restarts": 3,
+        "minimum_samples": 20,
+        "minimum_samples_per_mi_dimension": 20,
+        "minimum_samples_for_second_count": 40,
+        "fixed_in_power": {},
+        "fixed_out_power": {},
+        "sparsification_enabled": true,
+        "sparsify_exponent_threshold": 0.05,
+        "sparsify_max_score_increase": 0.05,
+        "rationalization_enabled": true,
+        "max_rational_denominator": 5,
+        "validate_after_rationalization": true
+      },
+      "replanning_triggers": [
+        "insufficient_samples",
+        "poor_mi_convergence",
+        "high_similarity_between_pi_candidates"
+      ],
+      "max_replans": 2
+    },
+    "policy": "library defaults < LLM planner < manual_hyperparams"
+  },
+  "hyperparameter_provenance": {
+    "precedence": [
+      "library_defaults",
+      "llm_workflow_plan",
+      "manual_hyperparams"
+    ],
+    "manual_overrides": {
+      "template": "auto_mechanism_adaptive",
+      "local_analysis.mi_method": "binning",
+      "local_analysis.mi_param": 20,
+      "local_analysis.similarity_type": "auto",
+      "local_analysis.optimize_output": null
+    },
+    "passthrough_manual_hyperparameters": {
+      "gpr_random_state": 123,
+      "regime_plot_feature_mode": "screening_basis",
+      "regime_plot_feature_pi_indices": [
+        1,
+        2
+      ],
+      "regime_plot_feature_labels": [
+        "$\\log(\\Pi^{(S)}_1)$",
+        "$\\log(\\Pi^{(S)}_2)$"
+      ],
+      "regime_plot_physical_x": {
+        "source": "power_product",
+        "powers": {
+          "U": 1.0,
+          "rho": 1.0,
+          "D": 1.0,
+          "mu": -1.0
+        },
+        "label": "$Re=\\rho UD/\\mu$",
+        "scale": "log"
+      },
+      "regime_plot_physical_y": {
+        "source": "power_product",
+        "powers": {
+          "f_D": 1.0
+        },
+        "label": "$f_D$",
+        "scale": "log"
+      }
+    }
+  },
+  "workflow_plan": {
+    "template": "auto_mechanism_adaptive",
+    "rationale": "Single-regime dimensional analysis using the five provided variables produces two independent dimensionless base-Pi groups (given): Pi_1 = (rho D U)/mu (the Reynolds number) and Pi_2 = epsilon/D (relative roughness). The dependent variable f_D is already dimensionless, so with first-kind (complete) similarity the sought relationship is f_D = F(Pi_1, Pi_2). With 1200 samples the mutual-information estimator will use binning (mi_param=16). No output scaling or automatic mechanism screening was requested, so we keep first-kind similarity and do not optimize the output scaling.",
+    "target_is_dimensionless": true,
+    "stages": [
+      "load_and_validate_data",
+      "gradient_regime_detection",
+      "validate_regime_partition",
+      "local_dominant_group_search",
+      "fan_out_local_workflows",
+      "aggregate_results",
+      "generate_report"
+    ],
+    "regime_detection": {
+      "n_clusters": null,
+      "candidate_cluster_counts": [
+        2,
+        3,
+        4
+      ],
+      "min_cluster_fraction": 0.05,
+      "min_cluster_samples": 60,
+      "max_intercluster_cosine": 0.9,
+      "eigenvalue_ratio_threshold": 50.0,
+      "require_convergence": true,
+      "exclude_low_confidence_points": false,
+      "assignment_confidence_threshold": 0.05
+    },
+    "local_analysis": {
+      "start_count": 1,
+      "max_count": null,
+      "absolute_score_drop_threshold": 0.08,
+      "require_two_counts_when_possible": true,
+      "similarity_type": "auto",
+      "optimize_output": null,
+      "output_scaling_reason": "Authoritative manual similarity_type='auto'; runtime numerical screening required.",
+      "output_scaling_confidence": "medium",
+      "similarity_screening_max_relative_mi_change": 0.15,
+      "similarity_screening_max_cosine_similarity": 0.7,
+      "mi_method": "binning",
+      "mi_param": 20,
+      "cma_restarts": 3,
+      "minimum_samples": 20,
+      "minimum_samples_per_mi_dimension": 20,
+      "minimum_samples_for_second_count": 40,
+      "fixed_in_power": {},
+      "fixed_out_power": {},
+      "sparsification_enabled": true,
+      "sparsify_exponent_threshold": 0.05,
+      "sparsify_max_score_increase": 0.05,
+      "rationalization_enabled": true,
+      "max_rational_denominator": 5,
+      "validate_after_rationalization": true
+    },
+    "replanning_triggers": [
+      "insufficient_samples",
+      "poor_mi_convergence",
+      "high_similarity_between_pi_candidates"
+    ]
+  },
+  "compiled_workflow": {
+    "status": "compiled",
+    "template": "auto_mechanism_adaptive",
+    "rationale": "Single-regime dimensional analysis using the five provided variables produces two independent dimensionless base-Pi groups (given): Pi_1 = (rho D U)/mu (the Reynolds number) and Pi_2 = epsilon/D (relative roughness). The dependent variable f_D is already dimensionless, so with first-kind (complete) similarity the sought relationship is f_D = F(Pi_1, Pi_2). With 1200 samples the mutual-information estimator will use binning (mi_param=16). No output scaling or automatic mechanism screening was requested, so we keep first-kind similarity and do not optimize the output scaling.",
+    "target_is_dimensionless": true,
+    "stages": [
+      "load_and_validate_data",
+      "gradient_regime_detection",
+      "validate_regime_partition",
+      "local_dominant_group_search",
+      "fan_out_local_workflows",
+      "aggregate_results",
+      "generate_report"
+    ],
+    "tool_ids": [
+      "calc_basis_tool",
+      "detect_gradient_regimes",
+      "run_local_dominant_group_workflow",
+      "rationalize_local_solution"
+    ],
+    "regime_detection": {
+      "n_clusters": null,
+      "candidate_cluster_counts": [
+        2,
+        3,
+        4
+      ],
+      "min_cluster_fraction": 0.05,
+      "min_cluster_samples": 60,
+      "max_intercluster_cosine": 0.9,
+      "eigenvalue_ratio_threshold": 50.0,
+      "require_convergence": true,
+      "exclude_low_confidence_points": false,
+      "assignment_confidence_threshold": 0.05
+    },
+    "resolved_gradient_regime_options": {
+      "surrogate": {
+        "mean_mode": "affine_sigmoid_transition",
+        "max_train_samples": 1100,
+        "n_restarts_optimizer": 3,
+        "optimizer_maxiter": 2000,
+        "optimizer_ftol": 1e-10,
+        "optimizer_gtol": 1e-06,
+        "jitter": 1e-10,
+        "random_state": 42,
+        "log_sigma0_sq_bounds": [
+          -40.0,
+          40.0
+        ],
+        "log_sigma1_sq_bounds": [
+          -30.0,
+          30.0
+        ],
+        "log_sigma_u_sq_bounds": [
+          -30.0,
+          5.0
+        ],
+        "mean_parameter_bounds": [
+          null,
+          null
+        ],
+        "initial_noise_fraction": 1e-06,
+        "require_optimizer_success": false,
+        "regime_target_transform": "log"
+      },
+      "clustering": {
+        "n_clusters": null,
+        "candidate_cluster_counts": [
+          2,
+          3,
+          4
+        ],
+        "min_cluster_fraction": 0.05,
+        "min_cluster_samples": 60,
+        "max_intercluster_cosine": 0.9,
+        "eigenvalue_ratio_threshold": 50.0,
+        "n_init": 30,
+        "max_iter": 200,
+        "random_state": 42,
+        "initialization": "random_eigenpairs",
+        "max_initialization_attempts": 100,
+        "require_convergence": true,
+        "gradient_norm_tolerance": 1e-12,
+        "exclude_low_confidence_points": false,
+        "assignment_confidence_threshold": 0.05
+      }
+    },
+    "regime_configuration_precedence": [
+      "library_defaults",
+      "workflow_plan",
+      "nested_manual",
+      "flat_manual"
+    ],
+    "resolved_manual_regime_overrides": {},
+    "local_workflow": {
+      "start_count": 1,
+      "max_count": 2,
+      "absolute_score_drop_threshold": 0.08,
+      "require_two_counts_when_possible": true,
+      "similarity_type": "auto",
+      "optimize_output": null,
+      "output_scaling_reason": "Authoritative manual similarity_type='auto'; runtime numerical screening required.",
+      "output_scaling_confidence": "medium",
+      "similarity_screening_max_relative_mi_change": 0.15,
+      "similarity_screening_max_cosine_similarity": 0.7,
+      "mi_method": "binning",
+      "mi_param": 20,
+      "cma_restarts": 3,
+      "minimum_samples": 20,
+      "minimum_samples_per_mi_dimension": 20,
+      "minimum_samples_for_second_count": 40,
+      "fixed_in_power": {},
+      "fixed_out_power": {},
+      "sparsification_enabled": true,
+      "sparsify_exponent_threshold": 0.05,
+      "sparsify_max_score_increase": 0.05,
+      "rationalization_enabled": true,
+      "max_rational_denominator": 5,
+      "validate_after_rationalization": true
+    },
+    "replanning_triggers": [
+      "insufficient_samples",
+      "poor_mi_convergence",
+      "high_similarity_between_pi_candidates"
+    ],
+    "max_replans": 2
+  }
+}

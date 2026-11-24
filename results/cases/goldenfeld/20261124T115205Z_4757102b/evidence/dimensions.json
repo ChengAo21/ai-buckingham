@@ -1,0 +1,192 @@
+{
+  "dimension_ledger": {
+    "output_variable_name": "cf",
+    "output_variable_reasoning": "The friction factor cf is a well-known dimensionless quantity in pipe flow and can be expressed as a function of the provided dimensional inputs (rho, mu, D, U, r). Given standard dimensional definitions for these five quantities, the dimensional analysis leads deterministically to dimensionless groups (Reynolds number and relative roughness).",
+    "output_variable_confidence": "high",
+    "input_variable_names": [
+      "rho",
+      "mu",
+      "D",
+      "U",
+      "r"
+    ],
+    "variables": [
+      {
+        "csv_name": "rho",
+        "quantity_name": "fluid_density",
+        "physical_definition": "Mass per unit volume of the fluid (fluid density).",
+        "si_exponents": {
+          "M": "1",
+          "L": "-3",
+          "T": "0",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "mu",
+        "quantity_name": "dynamic_viscosity",
+        "physical_definition": "Dynamic viscosity of the fluid (shear stress per unit velocity gradient).",
+        "si_exponents": {
+          "M": "1",
+          "L": "-1",
+          "T": "-1",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "D",
+        "quantity_name": "pipe_diameter",
+        "physical_definition": "Internal diameter of the pipe (characteristic length).",
+        "si_exponents": {
+          "M": "0",
+          "L": "1",
+          "T": "0",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "U",
+        "quantity_name": "flow_velocity",
+        "physical_definition": "Average flow velocity in the pipe (characteristic speed).",
+        "si_exponents": {
+          "M": "0",
+          "L": "1",
+          "T": "-1",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "r",
+        "quantity_name": "roughness_height",
+        "physical_definition": "Height of surface roughness elements on the pipe wall (roughness length).",
+        "si_exponents": {
+          "M": "0",
+          "L": "1",
+          "T": "0",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      }
+    ]
+  },
+  "dimension_contract": {
+    "ledger_sha256": "837ed142f29c1ae71c545346ea00204eb638657d697123f93b43b28d9566171b",
+    "status": "complete",
+    "var_names": [
+      "rho",
+      "mu",
+      "D",
+      "U",
+      "r"
+    ],
+    "output_var": "cf",
+    "n": 5,
+    "r": 3,
+    "k": 2,
+    "row_order": [
+      "M",
+      "L",
+      "T"
+    ],
+    "D_exact": [
+      [
+        "1",
+        "1",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "-3",
+        "-1",
+        "1",
+        "1",
+        "1"
+      ],
+      [
+        "0",
+        "-1",
+        "0",
+        "-1",
+        "0"
+      ]
+    ],
+    "D_in": [
+      [
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        -3.0,
+        -1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      [
+        0.0,
+        -1.0,
+        0.0,
+        -1.0,
+        0.0
+      ]
+    ],
+    "unknown_coordinates": [],
+    "physical_correctness_scope": "Structure/rank only; physical assignments require audit and evidence."
+  },
+  "dimension_mat": "Rows = ['M', 'L', 'T']\nColumns = ['rho', 'mu', 'D', 'U', 'r']\nM: ['1', '1', '0', '0', '0']\nL: ['-3', '-1', '1', '1', '1']\nT: ['0', '-1', '0', '-1', '0']",
+  "basis_pi_formulas": {
+    "Pi_1": "(rho * D * U) / (mu)",
+    "Pi_2": "(r) / (D)"
+  },
+  "basis_pi_matrices": [
+    [
+      1.0,
+      -1.0,
+      1.0,
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      -1.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "input_vars": [
+    "rho",
+    "mu",
+    "D",
+    "U",
+    "r"
+  ],
+  "output_var": "cf",
+  "output_resolution": {
+    "status": "success",
+    "output_var": "cf",
+    "source": "structured_analyzer",
+    "requested": "cf",
+    "candidates": [
+      "cf"
+    ]
+  }
+}

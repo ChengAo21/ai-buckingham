@@ -1,0 +1,698 @@
+{
+  "workflow_plan": {
+    "template": "auto_mechanism_adaptive",
+    "rationale": "Use the single_regime_adaptive template because the problem specifies a single physical mechanism (classical Rayleigh-Bénard convection) and does not ask for multiple regimes or automatic mechanism screening. The dataset has 182 rows (<800), so the Kraskov estimator is preferred for mutual-information based checks (mi_param set to 5). First-kind similarity (complete similarity) is the default since the prompt did not request incomplete similarity or dependent-variable scaling; therefore optimize_output is set to false. Fixed-power dictionaries are included but left empty because the problem imposes no explicit exponent constraints on the Pi groups. Regime detection is left open (n_clusters=null) for a single-mechanism analysis; candidate cluster counts are provided for runtime checks. The analysis targets a dimensionless dependent variable (Nu).",
+    "target_is_dimensionless": true,
+    "stages": [
+      "load_and_validate_data",
+      "gradient_regime_detection",
+      "validate_regime_partition",
+      "local_dominant_group_search",
+      "fan_out_local_workflows",
+      "aggregate_results",
+      "generate_report"
+    ],
+    "regime_detection": {
+      "n_clusters": null,
+      "candidate_cluster_counts": [
+        2,
+        3,
+        4
+      ],
+      "min_cluster_fraction": 0.05,
+      "min_cluster_samples": 60,
+      "max_intercluster_cosine": 0.9,
+      "eigenvalue_ratio_threshold": 50.0,
+      "require_convergence": true,
+      "exclude_low_confidence_points": false,
+      "assignment_confidence_threshold": 0.05
+    },
+    "local_analysis": {
+      "start_count": 1,
+      "max_count": null,
+      "absolute_score_drop_threshold": 0.08,
+      "require_two_counts_when_possible": true,
+      "similarity_type": "auto",
+      "optimize_output": null,
+      "output_scaling_reason": "Authoritative manual similarity_type='auto'; runtime numerical screening required.",
+      "output_scaling_confidence": "medium",
+      "similarity_screening_max_relative_mi_change": 0.15,
+      "similarity_screening_max_cosine_similarity": 0.7,
+      "mi_method": "kraskov",
+      "mi_param": 6,
+      "cma_restarts": 3,
+      "minimum_samples": 20,
+      "minimum_samples_per_mi_dimension": 20,
+      "minimum_samples_for_second_count": 40,
+      "fixed_in_power": {},
+      "fixed_out_power": {},
+      "sparsification_enabled": true,
+      "sparsify_exponent_threshold": 0.05,
+      "sparsify_max_score_increase": 0.05,
+      "rationalization_enabled": true,
+      "max_rational_denominator": 4,
+      "validate_after_rationalization": true
+    },
+    "replanning_triggers": []
+  },
+  "compiled_workflow": {
+    "status": "compiled",
+    "template": "auto_mechanism_adaptive",
+    "rationale": "Use the single_regime_adaptive template because the problem specifies a single physical mechanism (classical Rayleigh-Bénard convection) and does not ask for multiple regimes or automatic mechanism screening. The dataset has 182 rows (<800), so the Kraskov estimator is preferred for mutual-information based checks (mi_param set to 5). First-kind similarity (complete similarity) is the default since the prompt did not request incomplete similarity or dependent-variable scaling; therefore optimize_output is set to false. Fixed-power dictionaries are included but left empty because the problem imposes no explicit exponent constraints on the Pi groups. Regime detection is left open (n_clusters=null) for a single-mechanism analysis; candidate cluster counts are provided for runtime checks. The analysis targets a dimensionless dependent variable (Nu).",
+    "target_is_dimensionless": true,
+    "stages": [
+      "load_and_validate_data",
+      "gradient_regime_detection",
+      "validate_regime_partition",
+      "local_dominant_group_search",
+      "fan_out_local_workflows",
+      "aggregate_results",
+      "generate_report"
+    ],
+    "tool_ids": [
+      "calc_basis_tool",
+      "detect_gradient_regimes",
+      "run_local_dominant_group_workflow",
+      "rationalize_local_solution"
+    ],
+    "regime_detection": {
+      "n_clusters": null,
+      "candidate_cluster_counts": [
+        2,
+        3,
+        4
+      ],
+      "min_cluster_fraction": 0.05,
+      "min_cluster_samples": 60,
+      "max_intercluster_cosine": 0.9,
+      "eigenvalue_ratio_threshold": 50.0,
+      "require_convergence": true,
+      "exclude_low_confidence_points": false,
+      "assignment_confidence_threshold": 0.05
+    },
+    "resolved_gradient_regime_options": {
+      "surrogate": {
+        "mean_mode": "constant",
+        "max_train_samples": null,
+        "n_restarts_optimizer": 3,
+        "optimizer_maxiter": 2000,
+        "optimizer_ftol": 1e-10,
+        "optimizer_gtol": 1e-06,
+        "jitter": 1e-10,
+        "random_state": 42,
+        "log_sigma0_sq_bounds": [
+          -30.0,
+          30.0
+        ],
+        "log_sigma1_sq_bounds": [
+          -30.0,
+          30.0
+        ],
+        "log_sigma_u_sq_bounds": [
+          -30.0,
+          30.0
+        ],
+        "mean_parameter_bounds": [
+          null,
+          null
+        ],
+        "initial_noise_fraction": 1e-06,
+        "require_optimizer_success": false,
+        "regime_target_transform": "log"
+      },
+      "clustering": {
+        "n_clusters": null,
+        "candidate_cluster_counts": [
+          2,
+          3,
+          4
+        ],
+        "min_cluster_fraction": 0.05,
+        "min_cluster_samples": 60,
+        "max_intercluster_cosine": 0.9,
+        "eigenvalue_ratio_threshold": 50.0,
+        "n_init": 30,
+        "max_iter": 200,
+        "random_state": 42,
+        "initialization": "random_eigenpairs",
+        "max_initialization_attempts": 100,
+        "require_convergence": true,
+        "gradient_norm_tolerance": 1e-12,
+        "exclude_low_confidence_points": false,
+        "assignment_confidence_threshold": 0.05
+      }
+    },
+    "regime_configuration_precedence": [
+      "library_defaults",
+      "workflow_plan",
+      "nested_manual",
+      "flat_manual"
+    ],
+    "resolved_manual_regime_overrides": {},
+    "local_workflow": {
+      "start_count": 1,
+      "max_count": 3,
+      "absolute_score_drop_threshold": 0.08,
+      "require_two_counts_when_possible": true,
+      "similarity_type": "auto",
+      "optimize_output": null,
+      "output_scaling_reason": "Authoritative manual similarity_type='auto'; runtime numerical screening required.",
+      "output_scaling_confidence": "medium",
+      "similarity_screening_max_relative_mi_change": 0.15,
+      "similarity_screening_max_cosine_similarity": 0.7,
+      "mi_method": "kraskov",
+      "mi_param": 6,
+      "cma_restarts": 3,
+      "minimum_samples": 20,
+      "minimum_samples_per_mi_dimension": 20,
+      "minimum_samples_for_second_count": 40,
+      "fixed_in_power": {},
+      "fixed_out_power": {},
+      "sparsification_enabled": true,
+      "sparsify_exponent_threshold": 0.05,
+      "sparsify_max_score_increase": 0.05,
+      "rationalization_enabled": true,
+      "max_rational_denominator": 4,
+      "validate_after_rationalization": true
+    },
+    "replanning_triggers": [],
+    "max_replans": 2
+  },
+  "resolved_hyperparameters": {
+    "output_variable": "Nu",
+    "output_resolution": {
+      "status": "success",
+      "output_var": "Nu",
+      "source": "structured_analyzer",
+      "requested": "Nu",
+      "candidates": [
+        "source",
+        "Ra",
+        "Nu"
+      ]
+    },
+    "manual_hyperparams": {
+      "workflow_template": "auto_mechanism_adaptive",
+      "similarity_type": "auto",
+      "max_rational_denominator": 4,
+      "cma_init_position": 0.3,
+      "cma_init_stepsize": 0.5,
+      "mi_param_used": 6
+    },
+    "effective_workflow": {
+      "status": "compiled",
+      "template": "auto_mechanism_adaptive",
+      "rationale": "Use the single_regime_adaptive template because the problem specifies a single physical mechanism (classical Rayleigh-Bénard convection) and does not ask for multiple regimes or automatic mechanism screening. The dataset has 182 rows (<800), so the Kraskov estimator is preferred for mutual-information based checks (mi_param set to 5). First-kind similarity (complete similarity) is the default since the prompt did not request incomplete similarity or dependent-variable scaling; therefore optimize_output is set to false. Fixed-power dictionaries are included but left empty because the problem imposes no explicit exponent constraints on the Pi groups. Regime detection is left open (n_clusters=null) for a single-mechanism analysis; candidate cluster counts are provided for runtime checks. The analysis targets a dimensionless dependent variable (Nu).",
+      "target_is_dimensionless": true,
+      "stages": [
+        "load_and_validate_data",
+        "gradient_regime_detection",
+        "validate_regime_partition",
+        "local_dominant_group_search",
+        "fan_out_local_workflows",
+        "aggregate_results",
+        "generate_report"
+      ],
+      "tool_ids": [
+        "calc_basis_tool",
+        "detect_gradient_regimes",
+        "run_local_dominant_group_workflow",
+        "rationalize_local_solution"
+      ],
+      "regime_detection": {
+        "n_clusters": null,
+        "candidate_cluster_counts": [
+          2,
+          3,
+          4
+        ],
+        "min_cluster_fraction": 0.05,
+        "min_cluster_samples": 60,
+        "max_intercluster_cosine": 0.9,
+        "eigenvalue_ratio_threshold": 50.0,
+        "require_convergence": true,
+        "exclude_low_confidence_points": false,
+        "assignment_confidence_threshold": 0.05
+      },
+      "resolved_gradient_regime_options": {
+        "surrogate": {
+          "mean_mode": "constant",
+          "max_train_samples": null,
+          "n_restarts_optimizer": 3,
+          "optimizer_maxiter": 2000,
+          "optimizer_ftol": 1e-10,
+          "optimizer_gtol": 1e-06,
+          "jitter": 1e-10,
+          "random_state": 42,
+          "log_sigma0_sq_bounds": [
+            -30.0,
+            30.0
+          ],
+          "log_sigma1_sq_bounds": [
+            -30.0,
+            30.0
+          ],
+          "log_sigma_u_sq_bounds": [
+            -30.0,
+            30.0
+          ],
+          "mean_parameter_bounds": [
+            null,
+            null
+          ],
+          "initial_noise_fraction": 1e-06,
+          "require_optimizer_success": false,
+          "regime_target_transform": "log"
+        },
+        "clustering": {
+          "n_clusters": null,
+          "candidate_cluster_counts": [
+            2,
+            3,
+            4
+          ],
+          "min_cluster_fraction": 0.05,
+          "min_cluster_samples": 60,
+          "max_intercluster_cosine": 0.9,
+          "eigenvalue_ratio_threshold": 50.0,
+          "n_init": 30,
+          "max_iter": 200,
+          "random_state": 42,
+          "initialization": "random_eigenpairs",
+          "max_initialization_attempts": 100,
+          "require_convergence": true,
+          "gradient_norm_tolerance": 1e-12,
+          "exclude_low_confidence_points": false,
+          "assignment_confidence_threshold": 0.05
+        }
+      },
+      "regime_configuration_precedence": [
+        "library_defaults",
+        "workflow_plan",
+        "nested_manual",
+        "flat_manual"
+      ],
+      "resolved_manual_regime_overrides": {},
+      "local_workflow": {
+        "start_count": 1,
+        "max_count": 3,
+        "absolute_score_drop_threshold": 0.08,
+        "require_two_counts_when_possible": true,
+        "similarity_type": "auto",
+        "optimize_output": null,
+        "output_scaling_reason": "Authoritative manual similarity_type='auto'; runtime numerical screening required.",
+        "output_scaling_confidence": "medium",
+        "similarity_screening_max_relative_mi_change": 0.15,
+        "similarity_screening_max_cosine_similarity": 0.7,
+        "mi_method": "kraskov",
+        "mi_param": 6,
+        "cma_restarts": 3,
+        "minimum_samples": 20,
+        "minimum_samples_per_mi_dimension": 20,
+        "minimum_samples_for_second_count": 40,
+        "fixed_in_power": {},
+        "fixed_out_power": {},
+        "sparsification_enabled": true,
+        "sparsify_exponent_threshold": 0.05,
+        "sparsify_max_score_increase": 0.05,
+        "rationalization_enabled": true,
+        "max_rational_denominator": 4,
+        "validate_after_rationalization": true
+      },
+      "replanning_triggers": [],
+      "max_replans": 2
+    },
+    "policy": "library defaults < LLM planner < manual_hyperparams"
+  },
+  "hyperparameter_provenance": {
+    "precedence": [
+      "library_defaults",
+      "llm_workflow_plan",
+      "manual_hyperparams"
+    ],
+    "manual_overrides": {
+      "template": "auto_mechanism_adaptive",
+      "local_analysis.mi_param": 6,
+      "local_analysis.max_rational_denominator": 4,
+      "local_analysis.similarity_type": "auto",
+      "local_analysis.optimize_output": null
+    },
+    "passthrough_manual_hyperparameters": {
+      "cma_init_position": 0.3,
+      "cma_init_stepsize": 0.5
+    }
+  },
+  "workflow_status": "workflow_compiled",
+  "run_provenance": {
+    "run_id": "ff593617-0b80-4cfa-bc9c-6461df636e61",
+    "release": "ai-buckingham",
+    "engine_sha256": "156ba98fdeb39cb115e61c78ab5aa78b50a2b4f23478a793f3ac56aa83e62406",
+    "started_utc": "2026-11-24T12:04:14Z",
+    "finished_utc": null,
+    "status": "running",
+    "dataset": {
+      "name": "rayleigh_benard.csv",
+      "sha256": "db5d6dfda46ee68cbdab8cbaba0d070093f2a63d52c0b3eab82e6c5cb9da4a8a"
+    },
+    "problem_sha256": "659a484bad793fb4a14fc8529f273aa5dafe2e71a7498669a70fc89271e99665",
+    "manual_hyperparams_sha256": "095fb082e0342c0a7d6b03e7fe88d0cb6840879e70466b56bd73d6d627a46b23",
+    "model_configuration": {
+      "analyzer": "gpt-5-mini",
+      "checker": "gpt-5-mini",
+      "planner": "gpt-5-mini",
+      "interpretation": "gpt-5-mini",
+      "output_binding_checker": "gpt-5-mini"
+    },
+    "package_versions": {
+      "numpy": "2.4.0",
+      "pandas": "2.3.3",
+      "scipy": "1.16.3",
+      "sympy": "1.14.0",
+      "scikit-learn": "1.8.0",
+      "cma": "4.4.4",
+      "pydantic": "2.12.5",
+      "openai": "2.14.0",
+      "httpx": "0.28.1",
+      "langchain-core": "1.2.5",
+      "langchain-openai": "1.1.6",
+      "langgraph": "1.0.5"
+    },
+    "tracing_enabled": false,
+    "wall_seconds": 78.74285220000002,
+    "node_timings": [
+      {
+        "node": "Analyzer",
+        "visit": 1,
+        "duration_seconds": 28.35695129999999,
+        "status": "returned",
+        "error_type": null
+      },
+      {
+        "node": "Hallu_Checker",
+        "visit": 1,
+        "duration_seconds": 27.681387200000017,
+        "status": "returned",
+        "error_type": null
+      },
+      {
+        "node": "Basis_Decider",
+        "visit": 1,
+        "duration_seconds": 0.009595500000159518,
+        "status": "returned",
+        "error_type": null
+      },
+      {
+        "node": "Basis_Executor",
+        "visit": 1,
+        "duration_seconds": 0.02526609999995344,
+        "status": "returned",
+        "error_type": null
+      },
+      {
+        "node": "Workflow_Planner",
+        "visit": 1,
+        "duration_seconds": 22.063598700000057,
+        "status": "returned",
+        "error_type": null
+      }
+    ],
+    "http_attempts": [
+      {
+        "attempt_id": "2d2d3b40-02d7-4a22-a177-564adfd25487",
+        "node": "Analyzer",
+        "node_visit": 1,
+        "kind": "llm",
+        "requested_model": "gpt-5-mini",
+        "response_model": "gpt-5-mini-2025-08-07",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 16.606547700000192,
+        "started_utc": "2026-11-24T12:04:14Z",
+        "input_tokens": 929,
+        "output_tokens": 1878,
+        "total_tokens": 2807,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 960,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "872d1e07a2e145767e6081a22eb3d3b74aaa21982288a73343d2cd10d5bae72d",
+        "response_id": "chatcmpl-EnjXqfOht9tfgzVJ6OESGEwhO3MYg"
+      },
+      {
+        "attempt_id": "06edf470-be74-479c-b803-01c3b99d320e",
+        "node": "Output_Binding_Checker",
+        "node_visit": 1,
+        "kind": "llm",
+        "requested_model": "gpt-5-mini",
+        "response_model": "gpt-5-mini-2025-08-07",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 11.680677399999922,
+        "started_utc": "2026-11-24T12:04:31Z",
+        "input_tokens": 368,
+        "output_tokens": 1497,
+        "total_tokens": 1865,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 1472,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "b2e0e825c844450dcb3e6abea031b154c95e8e815b6435d9e3d4d8ca5fdaffc0",
+        "response_id": "chatcmpl-EnjY7JB6MaWiTmudTrJfTqMvKjilG"
+      },
+      {
+        "attempt_id": "be8f0461-072f-42f9-a577-5b5ce09beab5",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 0.24279679999995096,
+        "started_utc": "2026-11-24T12:04:43Z",
+        "input_tokens": 159,
+        "output_tokens": 0,
+        "total_tokens": 159,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "f49a71eeeb9b9806b782405581ccc3b0faecb17de450924560aa154deaf8ffd2",
+        "response_id": null
+      },
+      {
+        "attempt_id": "a86ad9cc-6ac7-4106-aeb6-4dfb23de31ca",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 0.22769210000001294,
+        "started_utc": "2026-11-24T12:04:43Z",
+        "input_tokens": 162,
+        "output_tokens": 0,
+        "total_tokens": 162,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "4512a5ae99181f55bd3e6dec026f93e367171be755d8b80f2f4aa2fa401355c4",
+        "response_id": null
+      },
+      {
+        "attempt_id": "e19a4cb3-cf88-4131-a8cd-40161e7d0c8c",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 0.21520959999998013,
+        "started_utc": "2026-11-24T12:04:43Z",
+        "input_tokens": 172,
+        "output_tokens": 0,
+        "total_tokens": 172,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "c5f5e84d5fd5b4689c02d18af29955aa592fb9f8b9cf3d43f8be0c5ce0ea3977",
+        "response_id": null
+      },
+      {
+        "attempt_id": "29344c47-d3a1-4672-8125-3af1e5926bce",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 0.2432271000000128,
+        "started_utc": "2026-11-24T12:04:44Z",
+        "input_tokens": 151,
+        "output_tokens": 0,
+        "total_tokens": 151,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "d0666684f8c728e2c4caba1f0ee8c0465785caf50e2acc159d48064d1ea9460f",
+        "response_id": null
+      },
+      {
+        "attempt_id": "3c3a536b-b7c9-4865-b475-9c7037d7c819",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 0.22416720000001078,
+        "started_utc": "2026-11-24T12:04:44Z",
+        "input_tokens": 169,
+        "output_tokens": 0,
+        "total_tokens": 169,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "bcdb5204b2290c7c15483cbbd6c849d27df718d2c1e1b551be3dc5aa54732ebf",
+        "response_id": null
+      },
+      {
+        "attempt_id": "9e3a2000-2309-4b4b-b19a-67a1e5ed95a1",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 0.157454400000006,
+        "started_utc": "2026-11-24T12:04:44Z",
+        "input_tokens": 212,
+        "output_tokens": 0,
+        "total_tokens": 212,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "13c1b412929f49c93bf25ad8b3ea70c6fbb2d7f19dccc82ceb6da1e867231991",
+        "response_id": null
+      },
+      {
+        "attempt_id": "e2f96b95-13a8-4f9c-b16e-b0fc307db2f9",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 0.21061460000009902,
+        "started_utc": "2026-11-24T12:04:44Z",
+        "input_tokens": 173,
+        "output_tokens": 0,
+        "total_tokens": 173,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "0696a12d03be507e42e7318baa22c8920674aa63ed66df2909485b6d096656ca",
+        "response_id": null
+      },
+      {
+        "attempt_id": "c869bbe8-6a18-47f7-9e26-794c314da754",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "llm",
+        "requested_model": "gpt-5-mini",
+        "response_model": "gpt-5-mini-2025-08-07",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 25.864389099999926,
+        "started_utc": "2026-11-24T12:04:45Z",
+        "input_tokens": 5095,
+        "output_tokens": 3651,
+        "total_tokens": 8746,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 2304,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "8c225197c6cde5aaf66057bae7e943be463e6c5c7aba49cae75e37bf4f66d393",
+        "response_id": "chatcmpl-EnjYKbGGbF8ZUV97dKFRkA9ls7sb5"
+      },
+      {
+        "attempt_id": "5a5339f2-7a2b-4472-8afb-7fc6b72c8422",
+        "node": "Workflow_Planner",
+        "node_visit": 1,
+        "kind": "llm",
+        "requested_model": "gpt-5-mini",
+        "response_model": "gpt-5-mini-2025-08-07",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 22.055307800000037,
+        "started_utc": "2026-11-24T12:05:11Z",
+        "input_tokens": 1591,
+        "output_tokens": 2432,
+        "total_tokens": 4023,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 1920,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "d4064b5215a189f1519a277cafb32d6266b8d48a5e73febbe1ebb67790199f8e",
+        "response_id": "chatcmpl-EnjYnJR1WGpQfoe3fIlP6FDPrQeUZ"
+      }
+    ],
+    "observation_warnings": [],
+    "output_binding_events": [
+      {
+        "action": "verify",
+        "submitted": "Nu",
+        "selected": "Nu",
+        "status": "confirmed",
+        "duration_seconds": 11.682923899999878,
+        "analyzer_visit": 1
+      }
+    ],
+    "workflow_status": "workflow_compiled",
+    "scientific_status": null,
+    "totals": {
+      "http_attempt_count": 11,
+      "llm_http_attempt_count": 4,
+      "embedding_http_attempt_count": 7,
+      "usage_missing_attempt_count": 0,
+      "http_duration_seconds_sum": 77.72808380000015,
+      "node_duration_seconds_sum": 78.13679880000018,
+      "http_success_count": 11,
+      "http_error_count": 0,
+      "transport_error_count": 0,
+      "known_input_tokens": 9181,
+      "input_tokens_missing_count": 0,
+      "known_output_tokens": 9458,
+      "output_tokens_missing_count": 0,
+      "known_total_tokens": 18639,
+      "total_tokens_missing_count": 0,
+      "known_cached_input_tokens": 0,
+      "cached_input_tokens_missing_count": 7,
+      "known_reasoning_tokens": 6656,
+      "reasoning_tokens_missing_count": 7
+    }
+  }
+}

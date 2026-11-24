@@ -1,0 +1,192 @@
+{
+  "dimension_ledger": {
+    "output_variable_name": "f_D",
+    "output_variable_reasoning": "Dimensional analysis of incompressible pipe flow with these five inputs yields two independent dimensionless groups: Reynolds number Re = rho * U * D / mu and relative roughness epsilon/D. The friction factor f_D is thus a dimensionless function of Re and epsilon/D: f_D = F(Re, epsilon/D). This identification is standard and follows from Buckingham Pi with the chosen variables.",
+    "output_variable_confidence": "high",
+    "input_variable_names": [
+      "rho",
+      "mu",
+      "D",
+      "U",
+      "epsilon"
+    ],
+    "variables": [
+      {
+        "csv_name": "rho",
+        "quantity_name": "density",
+        "physical_definition": "fluid mass per unit volume (density)",
+        "si_exponents": {
+          "M": "1",
+          "L": "-3",
+          "T": "0",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "mu",
+        "quantity_name": "dynamic_viscosity",
+        "physical_definition": "dynamic viscosity (fluid resistance to shear)",
+        "si_exponents": {
+          "M": "1",
+          "L": "-1",
+          "T": "-1",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "D",
+        "quantity_name": "diameter",
+        "physical_definition": "pipe inner diameter (characteristic length)",
+        "si_exponents": {
+          "M": "0",
+          "L": "1",
+          "T": "0",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "U",
+        "quantity_name": "velocity",
+        "physical_definition": "mean flow velocity",
+        "si_exponents": {
+          "M": "0",
+          "L": "1",
+          "T": "-1",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "epsilon",
+        "quantity_name": "roughness_height",
+        "physical_definition": "absolute wall roughness height",
+        "si_exponents": {
+          "M": "0",
+          "L": "1",
+          "T": "0",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      }
+    ]
+  },
+  "dimension_contract": {
+    "ledger_sha256": "3fa960dfbe4ed40cf98fc7d0e7e8dda5c6b77654b09e4d6ec6434323d65d0d6c",
+    "status": "complete",
+    "var_names": [
+      "rho",
+      "mu",
+      "D",
+      "U",
+      "epsilon"
+    ],
+    "output_var": "f_D",
+    "n": 5,
+    "r": 3,
+    "k": 2,
+    "row_order": [
+      "M",
+      "L",
+      "T"
+    ],
+    "D_exact": [
+      [
+        "1",
+        "1",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "-3",
+        "-1",
+        "1",
+        "1",
+        "1"
+      ],
+      [
+        "0",
+        "-1",
+        "0",
+        "-1",
+        "0"
+      ]
+    ],
+    "D_in": [
+      [
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        -3.0,
+        -1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      [
+        0.0,
+        -1.0,
+        0.0,
+        -1.0,
+        0.0
+      ]
+    ],
+    "unknown_coordinates": [],
+    "physical_correctness_scope": "Structure/rank only; physical assignments require audit and evidence."
+  },
+  "dimension_mat": "Rows = ['M', 'L', 'T']\nColumns = ['rho', 'mu', 'D', 'U', 'epsilon']\nM: ['1', '1', '0', '0', '0']\nL: ['-3', '-1', '1', '1', '1']\nT: ['0', '-1', '0', '-1', '0']",
+  "basis_pi_formulas": {
+    "Pi_1": "(rho * D * U) / (mu)",
+    "Pi_2": "(epsilon) / (D)"
+  },
+  "basis_pi_matrices": [
+    [
+      1.0,
+      -1.0,
+      1.0,
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      -1.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "input_vars": [
+    "rho",
+    "mu",
+    "D",
+    "U",
+    "epsilon"
+  ],
+  "output_var": "f_D",
+  "output_resolution": {
+    "status": "success",
+    "output_var": "f_D",
+    "source": "structured_analyzer",
+    "requested": "f_D",
+    "candidates": [
+      "f_D"
+    ]
+  }
+}

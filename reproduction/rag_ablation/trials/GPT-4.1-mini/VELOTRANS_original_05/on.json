@@ -1,0 +1,1984 @@
+{
+  "pair_id": "VELOTRANS_original_05",
+  "arm": "on",
+  "initial_ledger_sha256": "c9c7a4497b56106b6e4cbdf0897fc81396b8d0b010b273e79683c2a13784778d",
+  "checker_rounds": [
+    {
+      "candidate_ledger": {
+        "output_variable_name": "u+",
+        "output_variable_reasoning": "The normalized mean velocity u+ is a dimensionless quantity derived from the mean velocity normalized by the friction velocity u_tau. The input variables include wall-normal distance y (length), wall density rho_w (mass per volume), wall dynamic viscosity mu_w (mass per length per time), fluid density rho (mass per volume), dynamic viscosity mu (mass per length per time), and friction velocity u_tau (length per time). The dimensionless form u+ is constructed by normalizing velocity with u_tau, ensuring the output is dimensionless (all exponents zero). The input variables have their standard SI dimensions, and the output u+ is dimensionless, consistent with the normalized velocity definition.",
+        "output_variable_confidence": "high",
+        "input_variable_names": [
+          "y",
+          "rho_w",
+          "mu_w",
+          "rho",
+          "mu",
+          "u_tau"
+        ],
+        "variables": [
+          {
+            "csv_name": "y",
+            "quantity_name": "length",
+            "physical_definition": "wall-normal distance from the wall",
+            "si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "rho_w",
+            "quantity_name": "density",
+            "physical_definition": "density of the fluid at the wall",
+            "si_exponents": {
+              "M": "1",
+              "L": "-3",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "mu_w",
+            "quantity_name": "dynamic_viscosity",
+            "physical_definition": "dynamic viscosity of the fluid at the wall",
+            "si_exponents": {
+              "M": "1",
+              "L": "-1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "rho",
+            "quantity_name": "density",
+            "physical_definition": "density of the fluid",
+            "si_exponents": {
+              "M": "1",
+              "L": "-3",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "mu",
+            "quantity_name": "dynamic_viscosity",
+            "physical_definition": "dynamic viscosity of the fluid",
+            "si_exponents": {
+              "M": "1",
+              "L": "-1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "u_tau",
+            "quantity_name": "velocity",
+            "physical_definition": "friction velocity characterizing shear at the wall",
+            "si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          }
+        ]
+      },
+      "ledger_sha256": "c9c7a4497b56106b6e4cbdf0897fc81396b8d0b010b273e79683c2a13784778d",
+      "gate": {
+        "gate_status": "PASSED",
+        "ledger_sha256": "c9c7a4497b56106b6e4cbdf0897fc81396b8d0b010b273e79683c2a13784778d",
+        "checker_audit": {
+          "ledger_sha256": "c9c7a4497b56106b6e4cbdf0897fc81396b8d0b010b273e79683c2a13784778d",
+          "variables": [
+            {
+              "csv_name": "y",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "0",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_wall_normal_distance"
+              ],
+              "reason": "The record pq_wall_normal_distance is the canonical entry for the wall-normal distance (symbol y) in wall-bounded flows; its definition explicitly reads \"Distance measured normal to a wall\" and its si_dimension is L with dimension_vector [0,1,0,0,0,0,0]. This record therefore directly applies to the variable y in the original problem (wall-normal distance) and supports the full proposed SI vector (L^1 and zeros for M,T,I,Theta,N,J)."
+            },
+            {
+              "csv_name": "rho_w",
+              "before_si_exponents": {
+                "M": "1",
+                "L": "-3",
+                "T": "0",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_wall_density"
+              ],
+              "reason": "The record pq_wall_density defines \"wall density; mass density evaluated at the wall thermodynamic conditions\" and has si_dimension M L^-3 with dimension_vector [1,-3,0,0,0,0,0]. Because the original problem specifically lists rho_w as the wall-evaluated fluid density, this canonical density record directly applies and confirms all coordinates (M=1, L=-3, zeros for T,I,Theta,N,J)."
+            },
+            {
+              "csv_name": "mu_w",
+              "before_si_exponents": {
+                "M": "1",
+                "L": "-1",
+                "T": "-1",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_wall_dynamic_viscosity"
+              ],
+              "reason": "The record pq_wall_dynamic_viscosity is the canonical definition for dynamic viscosity evaluated at the wall (mu_w) with si_dimension M L^-1 T^-1 and dimension_vector [1,-1,-1,0,0,0,0]. The entry explicitly states subscript w denotes evaluation at the wall; it therefore applies to the original variable mu_w and supports every coordinate of the proposed SI vector (nonzero M,L,T exponents and zeros elsewhere)."
+            },
+            {
+              "csv_name": "rho",
+              "before_si_exponents": {
+                "M": "1",
+                "L": "-3",
+                "T": "0",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_mass_density"
+              ],
+              "reason": "The record pq_mass_density gives the canonical mass density (rho) with si_dimension M L^-3 and dimension_vector [1,-3,0,0,0,0,0]; its definition is mass per unit volume and its domain includes fluid mechanics, which matches the original problem's use of rho as fluid density. The entry therefore confirms all coordinates of the proposed vector (M=1,L=-3, all other bases zero)."
+            },
+            {
+              "csv_name": "mu",
+              "before_si_exponents": {
+                "M": "1",
+                "L": "-1",
+                "T": "-1",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_dynamic_viscosity"
+              ],
+              "reason": "The record pq_dynamic_viscosity is the canonical dynamic viscosity (mu) entry with si_dimension M L^-1 T^-1 and dimension_vector [1,-1,-1,0,0,0,0]; its definition (coefficient relating viscous shear stress to velocity gradient) and domain (fluid mechanics) match the original variable mu. The record thus supports every coordinate in the proposed SI vector (M=1,L=-1,T=-1, zeros for I,Theta,N,J)."
+            },
+            {
+              "csv_name": "u_tau",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "-1",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_friction_velocity"
+              ],
+              "reason": "The record pq_friction_velocity defines the friction (shear) velocity u_tau used in wall-bounded turbulence with si_dimension L T^-1 and dimension_vector [0,1,-1,0,0,0,0]; its definition u_tau = sqrt(tau_w/rho) explicitly states it is a velocity scale (not a stress), matching the original problem's friction velocity. This record therefore confirms the proposed SI vector (L^1 T^-1 and zeros for M,I,Theta,N,J)."
+            }
+          ]
+        },
+        "variable_results": [
+          {
+            "csv_name": "y",
+            "decision": "PASSED",
+            "before": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "suggested": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "coordinate_diff": {},
+            "issues": [],
+            "referenced_entry_ids": [
+              "pq_wall_normal_distance"
+            ],
+            "selected_entities": [
+              {
+                "entry_id": "pq_wall_normal_distance",
+                "canonical_quantity": "wall-normal distance",
+                "source_identifier": "https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html"
+              }
+            ],
+            "cited_reference_si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "known_coordinate_conflicts_with_reference": {}
+          },
+          {
+            "csv_name": "rho_w",
+            "decision": "PASSED",
+            "before": {
+              "M": "1",
+              "L": "-3",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "suggested": {
+              "M": "1",
+              "L": "-3",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "coordinate_diff": {},
+            "issues": [],
+            "referenced_entry_ids": [
+              "pq_wall_density"
+            ],
+            "selected_entities": [
+              {
+                "entry_id": "pq_wall_density",
+                "canonical_quantity": "wall density",
+                "source_identifier": "doi:10.59161/AUEZ1291"
+              }
+            ],
+            "cited_reference_si_exponents": {
+              "M": "1",
+              "L": "-3",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "known_coordinate_conflicts_with_reference": {}
+          },
+          {
+            "csv_name": "mu_w",
+            "decision": "PASSED",
+            "before": {
+              "M": "1",
+              "L": "-1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "suggested": {
+              "M": "1",
+              "L": "-1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "coordinate_diff": {},
+            "issues": [],
+            "referenced_entry_ids": [
+              "pq_wall_dynamic_viscosity"
+            ],
+            "selected_entities": [
+              {
+                "entry_id": "pq_wall_dynamic_viscosity",
+                "canonical_quantity": "wall dynamic viscosity",
+                "source_identifier": "doi:10.6028/NIST.SP.811e2008"
+              }
+            ],
+            "cited_reference_si_exponents": {
+              "M": "1",
+              "L": "-1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "known_coordinate_conflicts_with_reference": {}
+          },
+          {
+            "csv_name": "rho",
+            "decision": "PASSED",
+            "before": {
+              "M": "1",
+              "L": "-3",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "suggested": {
+              "M": "1",
+              "L": "-3",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "coordinate_diff": {},
+            "issues": [],
+            "referenced_entry_ids": [
+              "pq_mass_density"
+            ],
+            "selected_entities": [
+              {
+                "entry_id": "pq_mass_density",
+                "canonical_quantity": "mass density",
+                "source_identifier": "doi:10.59161/AUEZ1291"
+              }
+            ],
+            "cited_reference_si_exponents": {
+              "M": "1",
+              "L": "-3",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "known_coordinate_conflicts_with_reference": {}
+          },
+          {
+            "csv_name": "mu",
+            "decision": "PASSED",
+            "before": {
+              "M": "1",
+              "L": "-1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "suggested": {
+              "M": "1",
+              "L": "-1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "coordinate_diff": {},
+            "issues": [],
+            "referenced_entry_ids": [
+              "pq_dynamic_viscosity"
+            ],
+            "selected_entities": [
+              {
+                "entry_id": "pq_dynamic_viscosity",
+                "canonical_quantity": "dynamic viscosity",
+                "source_identifier": "doi:10.6028/NIST.SP.811e2008"
+              }
+            ],
+            "cited_reference_si_exponents": {
+              "M": "1",
+              "L": "-1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "known_coordinate_conflicts_with_reference": {}
+          },
+          {
+            "csv_name": "u_tau",
+            "decision": "PASSED",
+            "before": {
+              "M": "0",
+              "L": "1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "suggested": {
+              "M": "0",
+              "L": "1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "coordinate_diff": {},
+            "issues": [],
+            "referenced_entry_ids": [
+              "pq_friction_velocity"
+            ],
+            "selected_entities": [
+              {
+                "entry_id": "pq_friction_velocity",
+                "canonical_quantity": "friction velocity",
+                "source_identifier": "https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8"
+              }
+            ],
+            "cited_reference_si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "known_coordinate_conflicts_with_reference": {}
+          }
+        ],
+        "issues": [],
+        "referenced_records": [
+          {
+            "csv_name": "y",
+            "record": {
+              "variable_name": "y",
+              "entry_id": "pq_wall_normal_distance",
+              "canonical_quantity": "wall-normal distance",
+              "symbols": "y",
+              "aliases": "distance from wall; wall-normal coordinate",
+              "definition": "Distance measured normal to a wall.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "wall-bounded flows",
+              "ambiguity_notes": "",
+              "source": "NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions",
+              "source_identifier": "https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.6003453083071233,
+              "hybrid_score": 0.8601208579074932,
+              "retrieval_mode": "hybrid"
+            }
+          },
+          {
+            "csv_name": "rho_w",
+            "record": {
+              "variable_name": "rho_w",
+              "entry_id": "pq_wall_density",
+              "canonical_quantity": "wall density",
+              "symbols": "rho_w; ρ_w",
+              "aliases": "fluid density evaluated at the wall; wall mass density",
+              "definition": "Mass density evaluated at wall thermodynamic conditions.",
+              "si_dimension": "M L^-3",
+              "dimension_vector": "[1, -3, 0, 0, 0, 0, 0]",
+              "si_unit": "kg m^-3",
+              "domain": "compressible wall-bounded flows",
+              "ambiguity_notes": "Same physical dimension as mass density; subscript w denotes evaluation at the wall.",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.6280189820094547,
+              "hybrid_score": 0.8698066437033092,
+              "retrieval_mode": "hybrid"
+            }
+          },
+          {
+            "csv_name": "mu_w",
+            "record": {
+              "variable_name": "mu_w",
+              "entry_id": "pq_wall_dynamic_viscosity",
+              "canonical_quantity": "wall dynamic viscosity",
+              "symbols": "mu_w; μ_w",
+              "aliases": "dynamic viscosity evaluated at the wall",
+              "definition": "Dynamic viscosity evaluated at wall thermodynamic conditions.",
+              "si_dimension": "M L^-1 T^-1",
+              "dimension_vector": "[1, -1, -1, 0, 0, 0, 0]",
+              "si_unit": "Pa s",
+              "domain": "compressible wall-bounded flows",
+              "ambiguity_notes": "Same physical dimension as dynamic viscosity; subscript w denotes evaluation at the wall.",
+              "source": "NIST SP 811, Guide for the Use of the International System of Units (SI)",
+              "source_identifier": "doi:10.6028/NIST.SP.811e2008",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.6033511691652631,
+              "hybrid_score": 0.8611729092078421,
+              "retrieval_mode": "hybrid"
+            }
+          },
+          {
+            "csv_name": "rho",
+            "record": {
+              "variable_name": "rho",
+              "entry_id": "pq_mass_density",
+              "canonical_quantity": "mass density",
+              "symbols": "rho; ρ",
+              "aliases": "density; fluid density; material density; wall density",
+              "definition": "Mass per unit volume.",
+              "si_dimension": "M L^-3",
+              "dimension_vector": "[1, -3, 0, 0, 0, 0, 0]",
+              "si_unit": "kg m^-3",
+              "domain": "continuum mechanics; fluid mechanics; materials",
+              "ambiguity_notes": "The symbol rho/ρ may also denote electrical resistivity in electromagnetism; resolve by physical context.",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5639585640386262,
+              "hybrid_score": 0.8473854974135192,
+              "retrieval_mode": "hybrid"
+            }
+          },
+          {
+            "csv_name": "mu",
+            "record": {
+              "variable_name": "mu",
+              "entry_id": "pq_dynamic_viscosity",
+              "canonical_quantity": "dynamic viscosity",
+              "symbols": "mu; μ; eta; η",
+              "aliases": "absolute viscosity; viscosity coefficient; dynamic viscosity coefficient",
+              "definition": "Coefficient relating Newtonian viscous shear stress to velocity gradient.",
+              "si_dimension": "M L^-1 T^-1",
+              "dimension_vector": "[1, -1, -1, 0, 0, 0, 0]",
+              "si_unit": "Pa s",
+              "domain": "fluid mechanics; rheology",
+              "ambiguity_notes": "Symbols eta/η can instead denote electrical resistivity, magnetic diffusivity, or other quantities; symbols mu/μ are also used for magnetic permeability in some contexts.",
+              "source": "NIST SP 811, Guide for the Use of the International System of Units (SI)",
+              "source_identifier": "doi:10.6028/NIST.SP.811e2008",
+              "confidence": "curated",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5662427988131822,
+              "hybrid_score": 0.8481849795846138,
+              "retrieval_mode": "hybrid"
+            }
+          },
+          {
+            "csv_name": "u_tau",
+            "record": {
+              "variable_name": "u_tau",
+              "entry_id": "pq_friction_velocity",
+              "canonical_quantity": "friction velocity",
+              "symbols": "u_tau; uτ; U_tau; Uτ",
+              "aliases": "shear velocity; wall friction velocity",
+              "definition": "Velocity scale defined from wall shear stress and density, conventionally u_tau = sqrt(tau_w/rho).",
+              "si_dimension": "L T^-1",
+              "dimension_vector": "[0, 1, -1, 0, 0, 0, 0]",
+              "si_unit": "m s^-1",
+              "domain": "wall-bounded fluid mechanics",
+              "ambiguity_notes": "It is a velocity scale, not a stress; do not assign pressure dimensions.",
+              "source": "Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling",
+              "source_identifier": "https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.6412345552272241,
+              "hybrid_score": 0.8744320943295284,
+              "retrieval_mode": "hybrid"
+            }
+          }
+        ],
+        "feedback": "Typed ledger c9c7a4497b56106b6e4cbdf0897fc81396b8d0b010b273e79683c2a13784778d; program gate=PASSED\nVariable y: decision=PASSED; reason=The record pq_wall_normal_distance is the canonical entry for the wall-normal distance (symbol y) in wall-bounded flows; its definition explicitly reads \"Distance measured normal to a wall\" and its si_dimension is L with dimension_vector [0,1,0,0,0,0,0]. This record therefore directly applies to the variable y in the original problem (wall-normal distance) and supports the full proposed SI vector (L^1 and zeros for M,T,I,Theta,N,J).\nActual named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_wall_normal_distance\", \"canonical_quantity\": \"wall-normal distance\", \"source_identifier\": \"https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for y:\n{\"aliases\": \"distance from wall; wall-normal coordinate\", \"ambiguity_notes\": \"\", \"canonical_quantity\": \"wall-normal distance\", \"confidence\": \"high\", \"definition\": \"Distance measured normal to a wall.\", \"dimension_vector\": \"[0, 1, 0, 0, 0, 0, 0]\", \"domain\": \"wall-bounded flows\", \"entry_id\": \"pq_wall_normal_distance\", \"hybrid_score\": 0.8601208579074932, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.6003453083071233, \"si_dimension\": \"L\", \"si_unit\": \"m\", \"source\": \"NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions\", \"source_identifier\": \"https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html\", \"symbols\": \"y\", \"variable_name\": \"y\"}\n\nVariable rho_w: decision=PASSED; reason=The record pq_wall_density defines \"wall density; mass density evaluated at the wall thermodynamic conditions\" and has si_dimension M L^-3 with dimension_vector [1,-3,0,0,0,0,0]. Because the original problem specifically lists rho_w as the wall-evaluated fluid density, this canonical density record directly applies and confirms all coordinates (M=1, L=-3, zeros for T,I,Theta,N,J).\nActual named SI={\"M\": \"1\", \"L\": \"-3\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"1\", \"L\": \"-3\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_wall_density\", \"canonical_quantity\": \"wall density\", \"source_identifier\": \"doi:10.59161/AUEZ1291\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for rho_w:\n{\"aliases\": \"fluid density evaluated at the wall; wall mass density\", \"ambiguity_notes\": \"Same physical dimension as mass density; subscript w denotes evaluation at the wall.\", \"canonical_quantity\": \"wall density\", \"confidence\": \"high\", \"definition\": \"Mass density evaluated at wall thermodynamic conditions.\", \"dimension_vector\": \"[1, -3, 0, 0, 0, 0, 0]\", \"domain\": \"compressible wall-bounded flows\", \"entry_id\": \"pq_wall_density\", \"hybrid_score\": 0.8698066437033092, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.6280189820094547, \"si_dimension\": \"M L^-3\", \"si_unit\": \"kg m^-3\", \"source\": \"BIPM SI Brochure, 9th ed. (updated 2026)\", \"source_identifier\": \"doi:10.59161/AUEZ1291\", \"symbols\": \"rho_w; ρ_w\", \"variable_name\": \"rho_w\"}\n\nVariable mu_w: decision=PASSED; reason=The record pq_wall_dynamic_viscosity is the canonical definition for dynamic viscosity evaluated at the wall (mu_w) with si_dimension M L^-1 T^-1 and dimension_vector [1,-1,-1,0,0,0,0]. The entry explicitly states subscript w denotes evaluation at the wall; it therefore applies to the original variable mu_w and supports every coordinate of the proposed SI vector (nonzero M,L,T exponents and zeros elsewhere).\nActual named SI={\"M\": \"1\", \"L\": \"-1\", \"T\": \"-1\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"1\", \"L\": \"-1\", \"T\": \"-1\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_wall_dynamic_viscosity\", \"canonical_quantity\": \"wall dynamic viscosity\", \"source_identifier\": \"doi:10.6028/NIST.SP.811e2008\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for mu_w:\n{\"aliases\": \"dynamic viscosity evaluated at the wall\", \"ambiguity_notes\": \"Same physical dimension as dynamic viscosity; subscript w denotes evaluation at the wall.\", \"canonical_quantity\": \"wall dynamic viscosity\", \"confidence\": \"high\", \"definition\": \"Dynamic viscosity evaluated at wall thermodynamic conditions.\", \"dimension_vector\": \"[1, -1, -1, 0, 0, 0, 0]\", \"domain\": \"compressible wall-bounded flows\", \"entry_id\": \"pq_wall_dynamic_viscosity\", \"hybrid_score\": 0.8611729092078421, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.6033511691652631, \"si_dimension\": \"M L^-1 T^-1\", \"si_unit\": \"Pa s\", \"source\": \"NIST SP 811, Guide for the Use of the International System of Units (SI)\", \"source_identifier\": \"doi:10.6028/NIST.SP.811e2008\", \"symbols\": \"mu_w; μ_w\", \"variable_name\": \"mu_w\"}\n\nVariable rho: decision=PASSED; reason=The record pq_mass_density gives the canonical mass density (rho) with si_dimension M L^-3 and dimension_vector [1,-3,0,0,0,0,0]; its definition is mass per unit volume and its domain includes fluid mechanics, which matches the original problem's use of rho as fluid density. The entry therefore confirms all coordinates of the proposed vector (M=1,L=-3, all other bases zero).\nActual named SI={\"M\": \"1\", \"L\": \"-3\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"1\", \"L\": \"-3\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_mass_density\", \"canonical_quantity\": \"mass density\", \"source_identifier\": \"doi:10.59161/AUEZ1291\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for rho:\n{\"aliases\": \"density; fluid density; material density; wall density\", \"ambiguity_notes\": \"The symbol rho/ρ may also denote electrical resistivity in electromagnetism; resolve by physical context.\", \"canonical_quantity\": \"mass density\", \"confidence\": \"high\", \"definition\": \"Mass per unit volume.\", \"dimension_vector\": \"[1, -3, 0, 0, 0, 0, 0]\", \"domain\": \"continuum mechanics; fluid mechanics; materials\", \"entry_id\": \"pq_mass_density\", \"hybrid_score\": 0.8473854974135192, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.5639585640386262, \"si_dimension\": \"M L^-3\", \"si_unit\": \"kg m^-3\", \"source\": \"BIPM SI Brochure, 9th ed. (updated 2026)\", \"source_identifier\": \"doi:10.59161/AUEZ1291\", \"symbols\": \"rho; ρ\", \"variable_name\": \"rho\"}\n\nVariable mu: decision=PASSED; reason=The record pq_dynamic_viscosity is the canonical dynamic viscosity (mu) entry with si_dimension M L^-1 T^-1 and dimension_vector [1,-1,-1,0,0,0,0]; its definition (coefficient relating viscous shear stress to velocity gradient) and domain (fluid mechanics) match the original variable mu. The record thus supports every coordinate in the proposed SI vector (M=1,L=-1,T=-1, zeros for I,Theta,N,J).\nActual named SI={\"M\": \"1\", \"L\": \"-1\", \"T\": \"-1\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"1\", \"L\": \"-1\", \"T\": \"-1\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_dynamic_viscosity\", \"canonical_quantity\": \"dynamic viscosity\", \"source_identifier\": \"doi:10.6028/NIST.SP.811e2008\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for mu:\n{\"aliases\": \"absolute viscosity; viscosity coefficient; dynamic viscosity coefficient\", \"ambiguity_notes\": \"Symbols eta/η can instead denote electrical resistivity, magnetic diffusivity, or other quantities; symbols mu/μ are also used for magnetic permeability in some contexts.\", \"canonical_quantity\": \"dynamic viscosity\", \"confidence\": \"curated\", \"definition\": \"Coefficient relating Newtonian viscous shear stress to velocity gradient.\", \"dimension_vector\": \"[1, -1, -1, 0, 0, 0, 0]\", \"domain\": \"fluid mechanics; rheology\", \"entry_id\": \"pq_dynamic_viscosity\", \"hybrid_score\": 0.8481849795846138, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.5662427988131822, \"si_dimension\": \"M L^-1 T^-1\", \"si_unit\": \"Pa s\", \"source\": \"NIST SP 811, Guide for the Use of the International System of Units (SI)\", \"source_identifier\": \"doi:10.6028/NIST.SP.811e2008\", \"symbols\": \"mu; μ; eta; η\", \"variable_name\": \"mu\"}\n\nVariable u_tau: decision=PASSED; reason=The record pq_friction_velocity defines the friction (shear) velocity u_tau used in wall-bounded turbulence with si_dimension L T^-1 and dimension_vector [0,1,-1,0,0,0,0]; its definition u_tau = sqrt(tau_w/rho) explicitly states it is a velocity scale (not a stress), matching the original problem's friction velocity. This record therefore confirms the proposed SI vector (L^1 T^-1 and zeros for M,I,Theta,N,J).\nActual named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"-1\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"-1\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_friction_velocity\", \"canonical_quantity\": \"friction velocity\", \"source_identifier\": \"https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for u_tau:\n{\"aliases\": \"shear velocity; wall friction velocity\", \"ambiguity_notes\": \"It is a velocity scale, not a stress; do not assign pressure dimensions.\", \"canonical_quantity\": \"friction velocity\", \"confidence\": \"high\", \"definition\": \"Velocity scale defined from wall shear stress and density, conventionally u_tau = sqrt(tau_w/rho).\", \"dimension_vector\": \"[0, 1, -1, 0, 0, 0, 0]\", \"domain\": \"wall-bounded fluid mechanics\", \"entry_id\": \"pq_friction_velocity\", \"hybrid_score\": 0.8744320943295284, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.6412345552272241, \"si_dimension\": \"L T^-1\", \"si_unit\": \"m s^-1\", \"source\": \"Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling\", \"source_identifier\": \"https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8\", \"symbols\": \"u_tau; uτ; U_tau; Uτ\", \"variable_name\": \"u_tau\"}",
+        "entity_policy": "Only Checker-selected visible record IDs identify cited canonical entities; no unselected-record or Analyzer-name anchor. Equal vectors do not establish equal physical entities.",
+        "physical_correctness_scope": "A passed contract is not a theorem of physical correctness. Record ID and coordinate checks establish citation consistency; semantic relevance/applicability in the reason and internal-reasoning physics remain model judgements."
+      },
+      "gate_status": "PASSED",
+      "retrieval": {
+        "status": "success",
+        "kb_path": "Q:\\Chengao_File\\CodeX_\\Dimsionless_learn\\1114_final\\Data_csv\\dimensional_physical_quantities.md",
+        "kb_sha256": "64d8ebb7988c9157401c6b023add3ed8681651bc6d4d1d1bbb7a7aa452fc9f60",
+        "embedding_cache_path": "Q:\\Chengao_File\\CodeX_\\Dimsionless_learn\\1114_final\\Codes_src\\RAG_ablation\\followup_live\\runs\\20261115_v2_paired_rag_rounds\\cache\\dimensional_physical_quantities-d1e3d1e7178395497e4f.npz",
+        "embedding_cache_source": null,
+        "embedding_model": "GLM-Embedding-3",
+        "embedding_provider": "Paratera",
+        "embedding_base_url": "https://llmapi.paratera.com/v1",
+        "embedding_status": "query_embedding_unavailable: APIConnectionError",
+        "retrieval_modes": [
+          "hybrid"
+        ],
+        "retrieved_variables": [
+          "y",
+          "rho_w",
+          "mu_w",
+          "rho",
+          "mu",
+          "u_tau"
+        ],
+        "n_retrieved_records": 18,
+        "top_k_per_variable": 3,
+        "max_evidence_rows": 30,
+        "lexical_weight": 0.65,
+        "semantic_weight": 0.35,
+        "min_hybrid_score": 0.22,
+        "allow_lexical_fallback": false,
+        "matches_by_variable": {
+          "y": [
+            {
+              "variable_name": "y",
+              "entry_id": "pq_wall_normal_distance",
+              "canonical_quantity": "wall-normal distance",
+              "symbols": "y",
+              "aliases": "distance from wall; wall-normal coordinate",
+              "definition": "Distance measured normal to a wall.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "wall-bounded flows",
+              "ambiguity_notes": "",
+              "source": "NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions",
+              "source_identifier": "https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.6003453083071233,
+              "hybrid_score": 0.8601208579074932,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "y",
+              "entry_id": "pq_mass_fraction",
+              "canonical_quantity": "mass fraction",
+              "symbols": "Y; w",
+              "aliases": "mass fraction",
+              "definition": "Ratio of constituent mass to total mass.",
+              "si_dimension": "1",
+              "dimension_vector": "[0, 0, 0, 0, 0, 0, 0]",
+              "si_unit": "1",
+              "domain": "mixtures; chemistry",
+              "ambiguity_notes": "Dimensionless ratio.",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "high",
+              "lexical_score": 0.9,
+              "semantic_score": 0.43369535824334293,
+              "hybrid_score": 0.7367933753851701,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "y",
+              "entry_id": "pq_friction_velocity",
+              "canonical_quantity": "friction velocity",
+              "symbols": "u_tau; uτ; U_tau; Uτ",
+              "aliases": "shear velocity; wall friction velocity",
+              "definition": "Velocity scale defined from wall shear stress and density, conventionally u_tau = sqrt(tau_w/rho).",
+              "si_dimension": "L T^-1",
+              "dimension_vector": "[0, 1, -1, 0, 0, 0, 0]",
+              "si_unit": "m s^-1",
+              "domain": "wall-bounded fluid mechanics",
+              "ambiguity_notes": "It is a velocity scale, not a stress; do not assign pressure dimensions.",
+              "source": "Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling",
+              "source_identifier": "https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8",
+              "confidence": "high",
+              "lexical_score": 0.4513888888888889,
+              "semantic_score": 0.5334344250820433,
+              "hybrid_score": 0.48010482655649295,
+              "retrieval_mode": "hybrid"
+            }
+          ],
+          "rho_w": [
+            {
+              "variable_name": "rho_w",
+              "entry_id": "pq_wall_density",
+              "canonical_quantity": "wall density",
+              "symbols": "rho_w; ρ_w",
+              "aliases": "fluid density evaluated at the wall; wall mass density",
+              "definition": "Mass density evaluated at wall thermodynamic conditions.",
+              "si_dimension": "M L^-3",
+              "dimension_vector": "[1, -3, 0, 0, 0, 0, 0]",
+              "si_unit": "kg m^-3",
+              "domain": "compressible wall-bounded flows",
+              "ambiguity_notes": "Same physical dimension as mass density; subscript w denotes evaluation at the wall.",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.6280189820094547,
+              "hybrid_score": 0.8698066437033092,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "rho_w",
+              "entry_id": "pq_friction_velocity",
+              "canonical_quantity": "friction velocity",
+              "symbols": "u_tau; uτ; U_tau; Uτ",
+              "aliases": "shear velocity; wall friction velocity",
+              "definition": "Velocity scale defined from wall shear stress and density, conventionally u_tau = sqrt(tau_w/rho).",
+              "si_dimension": "L T^-1",
+              "dimension_vector": "[0, 1, -1, 0, 0, 0, 0]",
+              "si_unit": "m s^-1",
+              "domain": "wall-bounded fluid mechanics",
+              "ambiguity_notes": "It is a velocity scale, not a stress; do not assign pressure dimensions.",
+              "source": "Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling",
+              "source_identifier": "https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8",
+              "confidence": "high",
+              "lexical_score": 0.38461538461538464,
+              "semantic_score": 0.508351433917601,
+              "hybrid_score": 0.42792300187116034,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "rho_w",
+              "entry_id": "pq_wall_shear_stress",
+              "canonical_quantity": "wall shear stress",
+              "symbols": "tau_w; τ_w; τw",
+              "aliases": "skin friction stress; wall stress",
+              "definition": "Tangential shear stress exerted at a wall.",
+              "si_dimension": "M L^-1 T^-2",
+              "dimension_vector": "[1, -1, -2, 0, 0, 0, 0]",
+              "si_unit": "Pa",
+              "domain": "wall-bounded fluid mechanics",
+              "ambiguity_notes": "",
+              "source": "NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions",
+              "source_identifier": "https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html",
+              "confidence": "curated",
+              "lexical_score": 0.2966101694915254,
+              "semantic_score": 0.4887449382237618,
+              "hybrid_score": 0.3638573385478081,
+              "retrieval_mode": "hybrid"
+            }
+          ],
+          "mu_w": [
+            {
+              "variable_name": "mu_w",
+              "entry_id": "pq_wall_dynamic_viscosity",
+              "canonical_quantity": "wall dynamic viscosity",
+              "symbols": "mu_w; μ_w",
+              "aliases": "dynamic viscosity evaluated at the wall",
+              "definition": "Dynamic viscosity evaluated at wall thermodynamic conditions.",
+              "si_dimension": "M L^-1 T^-1",
+              "dimension_vector": "[1, -1, -1, 0, 0, 0, 0]",
+              "si_unit": "Pa s",
+              "domain": "compressible wall-bounded flows",
+              "ambiguity_notes": "Same physical dimension as dynamic viscosity; subscript w denotes evaluation at the wall.",
+              "source": "NIST SP 811, Guide for the Use of the International System of Units (SI)",
+              "source_identifier": "doi:10.6028/NIST.SP.811e2008",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.6033511691652631,
+              "hybrid_score": 0.8611729092078421,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "mu_w",
+              "entry_id": "pq_turbulent_dynamic_viscosity",
+              "canonical_quantity": "turbulent dynamic viscosity",
+              "symbols": "mu_t",
+              "aliases": "eddy dynamic viscosity",
+              "definition": "Dynamic-viscosity form of an eddy-viscosity closure coefficient.",
+              "si_dimension": "M L^-1 T^-1",
+              "dimension_vector": "[1, -1, -1, 0, 0, 0, 0]",
+              "si_unit": "Pa s",
+              "domain": "turbulence",
+              "ambiguity_notes": "",
+              "source": "Hauke, An Introduction to Fluid Mechanics and Transport Phenomena",
+              "source_identifier": "doi:10.1007/978-1-4020-8537-6",
+              "confidence": "high",
+              "lexical_score": 0.3070175438596491,
+              "semantic_score": 0.5452525503815544,
+              "hybrid_score": 0.3903997961423159,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "mu_w",
+              "entry_id": "pq_wall_density",
+              "canonical_quantity": "wall density",
+              "symbols": "rho_w; ρ_w",
+              "aliases": "fluid density evaluated at the wall; wall mass density",
+              "definition": "Mass density evaluated at wall thermodynamic conditions.",
+              "si_dimension": "M L^-3",
+              "dimension_vector": "[1, -3, 0, 0, 0, 0, 0]",
+              "si_unit": "kg m^-3",
+              "domain": "compressible wall-bounded flows",
+              "ambiguity_notes": "Same physical dimension as mass density; subscript w denotes evaluation at the wall.",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "high",
+              "lexical_score": 0.282258064516129,
+              "semantic_score": 0.541752466003447,
+              "hybrid_score": 0.37308110503669023,
+              "retrieval_mode": "hybrid"
+            }
+          ],
+          "rho": [
+            {
+              "variable_name": "rho",
+              "entry_id": "pq_mass_density",
+              "canonical_quantity": "mass density",
+              "symbols": "rho; ρ",
+              "aliases": "density; fluid density; material density; wall density",
+              "definition": "Mass per unit volume.",
+              "si_dimension": "M L^-3",
+              "dimension_vector": "[1, -3, 0, 0, 0, 0, 0]",
+              "si_unit": "kg m^-3",
+              "domain": "continuum mechanics; fluid mechanics; materials",
+              "ambiguity_notes": "The symbol rho/ρ may also denote electrical resistivity in electromagnetism; resolve by physical context.",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5639585640386262,
+              "hybrid_score": 0.8473854974135192,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "rho",
+              "entry_id": "pq_electrical_resistivity",
+              "canonical_quantity": "electrical resistivity",
+              "symbols": "eta; η; rho_e; ρ_e",
+              "aliases": "resistivity; specific electrical resistance; rho notation for electrical resistivity; ρ notation for electrical resistivity",
+              "definition": "Material property relating electric field to current density; equivalently electrical resistance times a length scale divided by area.",
+              "si_dimension": "M L^3 T^-3 I^-2",
+              "dimension_vector": "[1, 3, -3, -2, 0, 0, 0]",
+              "si_unit": "ohm m",
+              "domain": "electromagnetism; magnetohydrodynamics",
+              "ambiguity_notes": "Eta/η may denote dynamic viscosity or magnetic diffusivity; rho/ρ may denote mass density. In an MHD prompt explicitly saying electrical resistivity, use this record.",
+              "source": "MHD Flow in Simple Cubic Periodic Array Geometry, Journal of Fusion Energy (2023)",
+              "source_identifier": "doi:10.1007/s10894-023-00390-8",
+              "confidence": "curated",
+              "lexical_score": 0.74,
+              "semantic_score": 0.48776936040412067,
+              "hybrid_score": 0.6517192761414422,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "rho",
+              "entry_id": "pq_friction_velocity",
+              "canonical_quantity": "friction velocity",
+              "symbols": "u_tau; uτ; U_tau; Uτ",
+              "aliases": "shear velocity; wall friction velocity",
+              "definition": "Velocity scale defined from wall shear stress and density, conventionally u_tau = sqrt(tau_w/rho).",
+              "si_dimension": "L T^-1",
+              "dimension_vector": "[0, 1, -1, 0, 0, 0, 0]",
+              "si_unit": "m s^-1",
+              "domain": "wall-bounded fluid mechanics",
+              "ambiguity_notes": "It is a velocity scale, not a stress; do not assign pressure dimensions.",
+              "source": "Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling",
+              "source_identifier": "https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8",
+              "confidence": "high",
+              "lexical_score": 0.45774647887323944,
+              "semantic_score": 0.545221908704794,
+              "hybrid_score": 0.4883628793142835,
+              "retrieval_mode": "hybrid"
+            }
+          ],
+          "mu": [
+            {
+              "variable_name": "mu",
+              "entry_id": "pq_dynamic_viscosity",
+              "canonical_quantity": "dynamic viscosity",
+              "symbols": "mu; μ; eta; η",
+              "aliases": "absolute viscosity; viscosity coefficient; dynamic viscosity coefficient",
+              "definition": "Coefficient relating Newtonian viscous shear stress to velocity gradient.",
+              "si_dimension": "M L^-1 T^-1",
+              "dimension_vector": "[1, -1, -1, 0, 0, 0, 0]",
+              "si_unit": "Pa s",
+              "domain": "fluid mechanics; rheology",
+              "ambiguity_notes": "Symbols eta/η can instead denote electrical resistivity, magnetic diffusivity, or other quantities; symbols mu/μ are also used for magnetic permeability in some contexts.",
+              "source": "NIST SP 811, Guide for the Use of the International System of Units (SI)",
+              "source_identifier": "doi:10.6028/NIST.SP.811e2008",
+              "confidence": "curated",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5662427988131822,
+              "hybrid_score": 0.8481849795846138,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "mu",
+              "entry_id": "pq_friction_velocity",
+              "canonical_quantity": "friction velocity",
+              "symbols": "u_tau; uτ; U_tau; Uτ",
+              "aliases": "shear velocity; wall friction velocity",
+              "definition": "Velocity scale defined from wall shear stress and density, conventionally u_tau = sqrt(tau_w/rho).",
+              "si_dimension": "L T^-1",
+              "dimension_vector": "[0, 1, -1, 0, 0, 0, 0]",
+              "si_unit": "m s^-1",
+              "domain": "wall-bounded fluid mechanics",
+              "ambiguity_notes": "It is a velocity scale, not a stress; do not assign pressure dimensions.",
+              "source": "Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling",
+              "source_identifier": "https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8",
+              "confidence": "high",
+              "lexical_score": 0.45774647887323944,
+              "semantic_score": 0.571161125816203,
+              "hybrid_score": 0.4974416053032767,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "mu",
+              "entry_id": "pq_wall_dynamic_viscosity",
+              "canonical_quantity": "wall dynamic viscosity",
+              "symbols": "mu_w; μ_w",
+              "aliases": "dynamic viscosity evaluated at the wall",
+              "definition": "Dynamic viscosity evaluated at wall thermodynamic conditions.",
+              "si_dimension": "M L^-1 T^-1",
+              "dimension_vector": "[1, -1, -1, 0, 0, 0, 0]",
+              "si_unit": "Pa s",
+              "domain": "compressible wall-bounded flows",
+              "ambiguity_notes": "Same physical dimension as dynamic viscosity; subscript w denotes evaluation at the wall.",
+              "source": "NIST SP 811, Guide for the Use of the International System of Units (SI)",
+              "source_identifier": "doi:10.6028/NIST.SP.811e2008",
+              "confidence": "high",
+              "lexical_score": 0.31690140845070425,
+              "semantic_score": 0.6235148684043339,
+              "hybrid_score": 0.4242161194344746,
+              "retrieval_mode": "hybrid"
+            }
+          ],
+          "u_tau": [
+            {
+              "variable_name": "u_tau",
+              "entry_id": "pq_friction_velocity",
+              "canonical_quantity": "friction velocity",
+              "symbols": "u_tau; uτ; U_tau; Uτ",
+              "aliases": "shear velocity; wall friction velocity",
+              "definition": "Velocity scale defined from wall shear stress and density, conventionally u_tau = sqrt(tau_w/rho).",
+              "si_dimension": "L T^-1",
+              "dimension_vector": "[0, 1, -1, 0, 0, 0, 0]",
+              "si_unit": "m s^-1",
+              "domain": "wall-bounded fluid mechanics",
+              "ambiguity_notes": "It is a velocity scale, not a stress; do not assign pressure dimensions.",
+              "source": "Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling",
+              "source_identifier": "https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.6412345552272241,
+              "hybrid_score": 0.8744320943295284,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "u_tau",
+              "entry_id": "pq_wall_shear_stress",
+              "canonical_quantity": "wall shear stress",
+              "symbols": "tau_w; τ_w; τw",
+              "aliases": "skin friction stress; wall stress",
+              "definition": "Tangential shear stress exerted at a wall.",
+              "si_dimension": "M L^-1 T^-2",
+              "dimension_vector": "[1, -1, -2, 0, 0, 0, 0]",
+              "si_unit": "Pa",
+              "domain": "wall-bounded fluid mechanics",
+              "ambiguity_notes": "",
+              "source": "NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions",
+              "source_identifier": "https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html",
+              "confidence": "curated",
+              "lexical_score": 0.3731343283582089,
+              "semantic_score": 0.570575097399511,
+              "hybrid_score": 0.4422385975226646,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "u_tau",
+              "entry_id": "pq_wall_density",
+              "canonical_quantity": "wall density",
+              "symbols": "rho_w; ρ_w",
+              "aliases": "fluid density evaluated at the wall; wall mass density",
+              "definition": "Mass density evaluated at wall thermodynamic conditions.",
+              "si_dimension": "M L^-3",
+              "dimension_vector": "[1, -3, 0, 0, 0, 0, 0]",
+              "si_unit": "kg m^-3",
+              "domain": "compressible wall-bounded flows",
+              "ambiguity_notes": "Same physical dimension as mass density; subscript w denotes evaluation at the wall.",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "high",
+              "lexical_score": 0.3214285714285714,
+              "semantic_score": 0.536806689819183,
+              "hybrid_score": 0.39681091286528547,
+              "retrieval_mode": "hybrid"
+            }
+          ]
+        },
+        "evidence_markdown": "### Input variable `y`\n- entry_id: pq_wall_normal_distance; canonical_quantity: wall-normal distance; symbols: y; aliases: distance from wall; wall-normal coordinate; definition: Distance measured normal to a wall.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: wall-bounded flows; ambiguity_notes: ; source: NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions; source_identifier: https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html; confidence: high\n- entry_id: pq_mass_fraction; canonical_quantity: mass fraction; symbols: Y; w; aliases: mass fraction; definition: Ratio of constituent mass to total mass.; si_dimension: 1; dimension_vector: [0, 0, 0, 0, 0, 0, 0]; si_unit: 1; domain: mixtures; chemistry; ambiguity_notes: Dimensionless ratio.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_friction_velocity; canonical_quantity: friction velocity; symbols: u_tau; uτ; U_tau; Uτ; aliases: shear velocity; wall friction velocity; definition: Velocity scale defined from wall shear stress and density, conventionally u_tau = sqrt(tau_w/rho).; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: wall-bounded fluid mechanics; ambiguity_notes: It is a velocity scale, not a stress; do not assign pressure dimensions.; source: Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling; source_identifier: https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8; confidence: high\n### Input variable `rho_w`\n- entry_id: pq_wall_density; canonical_quantity: wall density; symbols: rho_w; ρ_w; aliases: fluid density evaluated at the wall; wall mass density; definition: Mass density evaluated at wall thermodynamic conditions.; si_dimension: M L^-3; dimension_vector: [1, -3, 0, 0, 0, 0, 0]; si_unit: kg m^-3; domain: compressible wall-bounded flows; ambiguity_notes: Same physical dimension as mass density; subscript w denotes evaluation at the wall.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_friction_velocity; canonical_quantity: friction velocity; symbols: u_tau; uτ; U_tau; Uτ; aliases: shear velocity; wall friction velocity; definition: Velocity scale defined from wall shear stress and density, conventionally u_tau = sqrt(tau_w/rho).; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: wall-bounded fluid mechanics; ambiguity_notes: It is a velocity scale, not a stress; do not assign pressure dimensions.; source: Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling; source_identifier: https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8; confidence: high\n- entry_id: pq_wall_shear_stress; canonical_quantity: wall shear stress; symbols: tau_w; τ_w; τw; aliases: skin friction stress; wall stress; definition: Tangential shear stress exerted at a wall.; si_dimension: M L^-1 T^-2; dimension_vector: [1, -1, -2, 0, 0, 0, 0]; si_unit: Pa; domain: wall-bounded fluid mechanics; ambiguity_notes: ; source: NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions; source_identifier: https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html; confidence: curated\n### Input variable `mu_w`\n- entry_id: pq_wall_dynamic_viscosity; canonical_quantity: wall dynamic viscosity; symbols: mu_w; μ_w; aliases: dynamic viscosity evaluated at the wall; definition: Dynamic viscosity evaluated at wall thermodynamic conditions.; si_dimension: M L^-1 T^-1; dimension_vector: [1, -1, -1, 0, 0, 0, 0]; si_unit: Pa s; domain: compressible wall-bounded flows; ambiguity_notes: Same physical dimension as dynamic viscosity; subscript w denotes evaluation at the wall.; source: NIST SP 811, Guide for the Use of the International System of Units (SI); source_identifier: doi:10.6028/NIST.SP.811e2008; confidence: high\n- entry_id: pq_turbulent_dynamic_viscosity; canonical_quantity: turbulent dynamic viscosity; symbols: mu_t; aliases: eddy dynamic viscosity; definition: Dynamic-viscosity form of an eddy-viscosity closure coefficient.; si_dimension: M L^-1 T^-1; dimension_vector: [1, -1, -1, 0, 0, 0, 0]; si_unit: Pa s; domain: turbulence; ambiguity_notes: ; source: Hauke, An Introduction to Fluid Mechanics and Transport Phenomena; source_identifier: doi:10.1007/978-1-4020-8537-6; confidence: high\n- entry_id: pq_wall_density; canonical_quantity: wall density; symbols: rho_w; ρ_w; aliases: fluid density evaluated at the wall; wall mass density; definition: Mass density evaluated at wall thermodynamic conditions.; si_dimension: M L^-3; dimension_vector: [1, -3, 0, 0, 0, 0, 0]; si_unit: kg m^-3; domain: compressible wall-bounded flows; ambiguity_notes: Same physical dimension as mass density; subscript w denotes evaluation at the wall.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n### Input variable `rho`\n- entry_id: pq_mass_density; canonical_quantity: mass density; symbols: rho; ρ; aliases: density; fluid density; material density; wall density; definition: Mass per unit volume.; si_dimension: M L^-3; dimension_vector: [1, -3, 0, 0, 0, 0, 0]; si_unit: kg m^-3; domain: continuum mechanics; fluid mechanics; materials; ambiguity_notes: The symbol rho/ρ may also denote electrical resistivity in electromagnetism; resolve by physical context.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_electrical_resistivity; canonical_quantity: electrical resistivity; symbols: eta; η; rho_e; ρ_e; aliases: resistivity; specific electrical resistance; rho notation for electrical resistivity; ρ notation for electrical resistivity; definition: Material property relating electric field to current density; equivalently electrical resistance times a length scale divided by area.; si_dimension: M L^3 T^-3 I^-2; dimension_vector: [1, 3, -3, -2, 0, 0, 0]; si_unit: ohm m; domain: electromagnetism; magnetohydrodynamics; ambiguity_notes: Eta/η may denote dynamic viscosity or magnetic diffusivity; rho/ρ may denote mass density. In an MHD prompt explicitly saying electrical resistivity, use this record.; source: MHD Flow in Simple Cubic Periodic Array Geometry, Journal of Fusion Energy (2023); source_identifier: doi:10.1007/s10894-023-00390-8; confidence: curated\n- entry_id: pq_friction_velocity; canonical_quantity: friction velocity; symbols: u_tau; uτ; U_tau; Uτ; aliases: shear velocity; wall friction velocity; definition: Velocity scale defined from wall shear stress and density, conventionally u_tau = sqrt(tau_w/rho).; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: wall-bounded fluid mechanics; ambiguity_notes: It is a velocity scale, not a stress; do not assign pressure dimensions.; source: Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling; source_identifier: https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8; confidence: high\n### Input variable `mu`\n- entry_id: pq_dynamic_viscosity; canonical_quantity: dynamic viscosity; symbols: mu; μ; eta; η; aliases: absolute viscosity; viscosity coefficient; dynamic viscosity coefficient; definition: Coefficient relating Newtonian viscous shear stress to velocity gradient.; si_dimension: M L^-1 T^-1; dimension_vector: [1, -1, -1, 0, 0, 0, 0]; si_unit: Pa s; domain: fluid mechanics; rheology; ambiguity_notes: Symbols eta/η can instead denote electrical resistivity, magnetic diffusivity, or other quantities; symbols mu/μ are also used for magnetic permeability in some contexts.; source: NIST SP 811, Guide for the Use of the International System of Units (SI); source_identifier: doi:10.6028/NIST.SP.811e2008; confidence: curated\n- entry_id: pq_friction_velocity; canonical_quantity: friction velocity; symbols: u_tau; uτ; U_tau; Uτ; aliases: shear velocity; wall friction velocity; definition: Velocity scale defined from wall shear stress and density, conventionally u_tau = sqrt(tau_w/rho).; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: wall-bounded fluid mechanics; ambiguity_notes: It is a velocity scale, not a stress; do not assign pressure dimensions.; source: Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling; source_identifier: https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8; confidence: high\n- entry_id: pq_wall_dynamic_viscosity; canonical_quantity: wall dynamic viscosity; symbols: mu_w; μ_w; aliases: dynamic viscosity evaluated at the wall; definition: Dynamic viscosity evaluated at wall thermodynamic conditions.; si_dimension: M L^-1 T^-1; dimension_vector: [1, -1, -1, 0, 0, 0, 0]; si_unit: Pa s; domain: compressible wall-bounded flows; ambiguity_notes: Same physical dimension as dynamic viscosity; subscript w denotes evaluation at the wall.; source: NIST SP 811, Guide for the Use of the International System of Units (SI); source_identifier: doi:10.6028/NIST.SP.811e2008; confidence: high\n### Input variable `u_tau`\n- entry_id: pq_friction_velocity; canonical_quantity: friction velocity; symbols: u_tau; uτ; U_tau; Uτ; aliases: shear velocity; wall friction velocity; definition: Velocity scale defined from wall shear stress and density, conventionally u_tau = sqrt(tau_w/rho).; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: wall-bounded fluid mechanics; ambiguity_notes: It is a velocity scale, not a stress; do not assign pressure dimensions.; source: Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling; source_identifier: https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8; confidence: high\n- entry_id: pq_wall_shear_stress; canonical_quantity: wall shear stress; symbols: tau_w; τ_w; τw; aliases: skin friction stress; wall stress; definition: Tangential shear stress exerted at a wall.; si_dimension: M L^-1 T^-2; dimension_vector: [1, -1, -2, 0, 0, 0, 0]; si_unit: Pa; domain: wall-bounded fluid mechanics; ambiguity_notes: ; source: NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions; source_identifier: https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html; confidence: curated\n- entry_id: pq_wall_density; canonical_quantity: wall density; symbols: rho_w; ρ_w; aliases: fluid density evaluated at the wall; wall mass density; definition: Mass density evaluated at wall thermodynamic conditions.; si_dimension: M L^-3; dimension_vector: [1, -3, 0, 0, 0, 0, 0]; si_unit: kg m^-3; domain: compressible wall-bounded flows; ambiguity_notes: Same physical dimension as mass density; subscript w denotes evaluation at the wall.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high",
+        "evidence_records_visible_by_variable": {
+          "y": [
+            "pq_wall_normal_distance",
+            "pq_mass_fraction",
+            "pq_friction_velocity"
+          ],
+          "rho_w": [
+            "pq_wall_density",
+            "pq_friction_velocity",
+            "pq_wall_shear_stress"
+          ],
+          "mu_w": [
+            "pq_wall_dynamic_viscosity",
+            "pq_turbulent_dynamic_viscosity",
+            "pq_wall_density"
+          ],
+          "rho": [
+            "pq_mass_density",
+            "pq_electrical_resistivity",
+            "pq_friction_velocity"
+          ],
+          "mu": [
+            "pq_dynamic_viscosity",
+            "pq_friction_velocity",
+            "pq_wall_dynamic_viscosity"
+          ],
+          "u_tau": [
+            "pq_friction_velocity",
+            "pq_wall_shear_stress",
+            "pq_wall_density"
+          ]
+        },
+        "queries_by_variable": {
+          "y": "Target CSV variable: y\nLocal problem description: the wall-normal distance (y), the wall density (ρ_w), the wall dynamic viscosity (μ_w), the fluid density (ρ), the dynamic viscosity (μ), and the friction velocity (u_tau).\nProblem domain/context: Perform dimensional analysis for compressible wall-bounded channel turbulence to derive the dimensionless form of the normalized mean velocity (denoted as u+).\nAnalyzer interpretation: exact_column: y; quantity_name: length; physical_definition: wall-normal distance from the wall",
+          "rho_w": "Target CSV variable: rho_w\nLocal problem description: \nProblem domain/context: Perform dimensional analysis for compressible wall-bounded channel turbulence to derive the dimensionless form of the normalized mean velocity (denoted as u+).\nAnalyzer interpretation: exact_column: rho_w; quantity_name: density; physical_definition: density of the fluid at the wall",
+          "mu_w": "Target CSV variable: mu_w\nLocal problem description: \nProblem domain/context: Perform dimensional analysis for compressible wall-bounded channel turbulence to derive the dimensionless form of the normalized mean velocity (denoted as u+).\nAnalyzer interpretation: exact_column: mu_w; quantity_name: dynamic_viscosity; physical_definition: dynamic viscosity of the fluid at the wall",
+          "rho": "Target CSV variable: rho\nLocal problem description: the wall-normal distance (y), the wall density (ρ_w), the wall dynamic viscosity (μ_w), the fluid density (ρ), the dynamic viscosity (μ), and the friction velocity (u_tau).\nProblem domain/context: Perform dimensional analysis for compressible wall-bounded channel turbulence to derive the dimensionless form of the normalized mean velocity (denoted as u+).\nAnalyzer interpretation: exact_column: rho; quantity_name: density; physical_definition: density of the fluid",
+          "mu": "Target CSV variable: mu\nLocal problem description: the wall-normal distance (y), the wall density (ρ_w), the wall dynamic viscosity (μ_w), the fluid density (ρ), the dynamic viscosity (μ), and the friction velocity (u_tau).\nProblem domain/context: Perform dimensional analysis for compressible wall-bounded channel turbulence to derive the dimensionless form of the normalized mean velocity (denoted as u+).\nAnalyzer interpretation: exact_column: mu; quantity_name: dynamic_viscosity; physical_definition: dynamic viscosity of the fluid",
+          "u_tau": "Target CSV variable: u_tau\nLocal problem description: the wall-normal distance (y), the wall density (ρ_w), the wall dynamic viscosity (μ_w), the fluid density (ρ), the dynamic viscosity (μ), and the friction velocity (u_tau).\nProblem domain/context: Perform dimensional analysis for compressible wall-bounded channel turbulence to derive the dimensionless form of the normalized mean velocity (denoted as u+).\nAnalyzer interpretation: exact_column: u_tau; quantity_name: velocity; physical_definition: friction velocity characterizing shear at the wall"
+        },
+        "query_sha256_by_variable": {
+          "y": "05e44b86f76bdac9a81d6006311afc812e6b2c0f4ac715af1f30a1f0899210dd",
+          "rho_w": "15d0e465d28ae5b8d48b03a1dc88e58ea85b349ffc84d087fdaefea1bd211fa9",
+          "mu_w": "3218778edc2cae8d9af6b8210ac6961714730861e0c35764117eb493a3ff5643",
+          "rho": "f00d4e30f982473c1d7309cff80bab8cf7083d2796838fdb608aa130c0ca2bd5",
+          "mu": "70f4be62a84761fa25254b37cd36b1d289aed6e0df98b1dc681cd37cec49cab7",
+          "u_tau": "1b26f07608615a1e7f772cbf481daad93a9e841864efeb71089ba22eab7ef667"
+        },
+        "query_observed_in_retriever_by_variable": {
+          "y": true,
+          "rho_w": true,
+          "mu_w": true,
+          "rho": true,
+          "mu": true,
+          "u_tau": true
+        },
+        "query_scope": "Candidate SI powers excluded. Original problem and typed quantity/definition provide semantic context; they still require physical interpretation."
+      },
+      "provisional_zero_coordinates": [
+        {
+          "csv_name": "y",
+          "base": "I"
+        },
+        {
+          "csv_name": "y",
+          "base": "Theta"
+        },
+        {
+          "csv_name": "y",
+          "base": "N"
+        },
+        {
+          "csv_name": "y",
+          "base": "J"
+        },
+        {
+          "csv_name": "rho_w",
+          "base": "I"
+        },
+        {
+          "csv_name": "rho_w",
+          "base": "Theta"
+        },
+        {
+          "csv_name": "rho_w",
+          "base": "N"
+        },
+        {
+          "csv_name": "rho_w",
+          "base": "J"
+        },
+        {
+          "csv_name": "mu_w",
+          "base": "I"
+        },
+        {
+          "csv_name": "mu_w",
+          "base": "Theta"
+        },
+        {
+          "csv_name": "mu_w",
+          "base": "N"
+        },
+        {
+          "csv_name": "mu_w",
+          "base": "J"
+        },
+        {
+          "csv_name": "rho",
+          "base": "I"
+        },
+        {
+          "csv_name": "rho",
+          "base": "Theta"
+        },
+        {
+          "csv_name": "rho",
+          "base": "N"
+        },
+        {
+          "csv_name": "rho",
+          "base": "J"
+        },
+        {
+          "csv_name": "mu",
+          "base": "I"
+        },
+        {
+          "csv_name": "mu",
+          "base": "Theta"
+        },
+        {
+          "csv_name": "mu",
+          "base": "N"
+        },
+        {
+          "csv_name": "mu",
+          "base": "J"
+        },
+        {
+          "csv_name": "u_tau",
+          "base": "I"
+        },
+        {
+          "csv_name": "u_tau",
+          "base": "Theta"
+        },
+        {
+          "csv_name": "u_tau",
+          "base": "N"
+        },
+        {
+          "csv_name": "u_tau",
+          "base": "J"
+        }
+      ],
+      "checker_response": {
+        "ledger_sha256": "c9c7a4497b56106b6e4cbdf0897fc81396b8d0b010b273e79683c2a13784778d",
+        "variables": [
+          {
+            "csv_name": "y",
+            "before_si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "decision": "PASSED",
+            "suggested_si_exponents": null,
+            "support_mode": "KB_RECORD",
+            "evidence_entry_ids": [
+              "pq_wall_normal_distance"
+            ],
+            "reason": "The record pq_wall_normal_distance is the canonical entry for the wall-normal distance (symbol y) in wall-bounded flows; its definition explicitly reads \"Distance measured normal to a wall\" and its si_dimension is L with dimension_vector [0,1,0,0,0,0,0]. This record therefore directly applies to the variable y in the original problem (wall-normal distance) and supports the full proposed SI vector (L^1 and zeros for M,T,I,Theta,N,J)."
+          },
+          {
+            "csv_name": "rho_w",
+            "before_si_exponents": {
+              "M": "1",
+              "L": "-3",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "decision": "PASSED",
+            "suggested_si_exponents": null,
+            "support_mode": "KB_RECORD",
+            "evidence_entry_ids": [
+              "pq_wall_density"
+            ],
+            "reason": "The record pq_wall_density defines \"wall density; mass density evaluated at the wall thermodynamic conditions\" and has si_dimension M L^-3 with dimension_vector [1,-3,0,0,0,0,0]. Because the original problem specifically lists rho_w as the wall-evaluated fluid density, this canonical density record directly applies and confirms all coordinates (M=1, L=-3, zeros for T,I,Theta,N,J)."
+          },
+          {
+            "csv_name": "mu_w",
+            "before_si_exponents": {
+              "M": "1",
+              "L": "-1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "decision": "PASSED",
+            "suggested_si_exponents": null,
+            "support_mode": "KB_RECORD",
+            "evidence_entry_ids": [
+              "pq_wall_dynamic_viscosity"
+            ],
+            "reason": "The record pq_wall_dynamic_viscosity is the canonical definition for dynamic viscosity evaluated at the wall (mu_w) with si_dimension M L^-1 T^-1 and dimension_vector [1,-1,-1,0,0,0,0]. The entry explicitly states subscript w denotes evaluation at the wall; it therefore applies to the original variable mu_w and supports every coordinate of the proposed SI vector (nonzero M,L,T exponents and zeros elsewhere)."
+          },
+          {
+            "csv_name": "rho",
+            "before_si_exponents": {
+              "M": "1",
+              "L": "-3",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "decision": "PASSED",
+            "suggested_si_exponents": null,
+            "support_mode": "KB_RECORD",
+            "evidence_entry_ids": [
+              "pq_mass_density"
+            ],
+            "reason": "The record pq_mass_density gives the canonical mass density (rho) with si_dimension M L^-3 and dimension_vector [1,-3,0,0,0,0,0]; its definition is mass per unit volume and its domain includes fluid mechanics, which matches the original problem's use of rho as fluid density. The entry therefore confirms all coordinates of the proposed vector (M=1,L=-3, all other bases zero)."
+          },
+          {
+            "csv_name": "mu",
+            "before_si_exponents": {
+              "M": "1",
+              "L": "-1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "decision": "PASSED",
+            "suggested_si_exponents": null,
+            "support_mode": "KB_RECORD",
+            "evidence_entry_ids": [
+              "pq_dynamic_viscosity"
+            ],
+            "reason": "The record pq_dynamic_viscosity is the canonical dynamic viscosity (mu) entry with si_dimension M L^-1 T^-1 and dimension_vector [1,-1,-1,0,0,0,0]; its definition (coefficient relating viscous shear stress to velocity gradient) and domain (fluid mechanics) match the original variable mu. The record thus supports every coordinate in the proposed SI vector (M=1,L=-1,T=-1, zeros for I,Theta,N,J)."
+          },
+          {
+            "csv_name": "u_tau",
+            "before_si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "decision": "PASSED",
+            "suggested_si_exponents": null,
+            "support_mode": "KB_RECORD",
+            "evidence_entry_ids": [
+              "pq_friction_velocity"
+            ],
+            "reason": "The record pq_friction_velocity defines the friction (shear) velocity u_tau used in wall-bounded turbulence with si_dimension L T^-1 and dimension_vector [0,1,-1,0,0,0,0]; its definition u_tau = sqrt(tau_w/rho) explicitly states it is a velocity scale (not a stress), matching the original problem's friction velocity. This record therefore confirms the proposed SI vector (L^1 T^-1 and zeros for M,I,Theta,N,J)."
+          }
+        ]
+      },
+      "checker_elapsed_s": 21.66207379999105,
+      "checker_tokens": {
+        "input": 4958,
+        "output": 2601
+      },
+      "embedding_tokens": {
+        "input": 726,
+        "output": 0
+      },
+      "checker_call": {
+        "parsed_response": {
+          "ledger_sha256": "c9c7a4497b56106b6e4cbdf0897fc81396b8d0b010b273e79683c2a13784778d",
+          "variables": [
+            {
+              "csv_name": "y",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "0",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_wall_normal_distance"
+              ],
+              "reason": "The record pq_wall_normal_distance is the canonical entry for the wall-normal distance (symbol y) in wall-bounded flows; its definition explicitly reads \"Distance measured normal to a wall\" and its si_dimension is L with dimension_vector [0,1,0,0,0,0,0]. This record therefore directly applies to the variable y in the original problem (wall-normal distance) and supports the full proposed SI vector (L^1 and zeros for M,T,I,Theta,N,J)."
+            },
+            {
+              "csv_name": "rho_w",
+              "before_si_exponents": {
+                "M": "1",
+                "L": "-3",
+                "T": "0",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_wall_density"
+              ],
+              "reason": "The record pq_wall_density defines \"wall density; mass density evaluated at the wall thermodynamic conditions\" and has si_dimension M L^-3 with dimension_vector [1,-3,0,0,0,0,0]. Because the original problem specifically lists rho_w as the wall-evaluated fluid density, this canonical density record directly applies and confirms all coordinates (M=1, L=-3, zeros for T,I,Theta,N,J)."
+            },
+            {
+              "csv_name": "mu_w",
+              "before_si_exponents": {
+                "M": "1",
+                "L": "-1",
+                "T": "-1",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_wall_dynamic_viscosity"
+              ],
+              "reason": "The record pq_wall_dynamic_viscosity is the canonical definition for dynamic viscosity evaluated at the wall (mu_w) with si_dimension M L^-1 T^-1 and dimension_vector [1,-1,-1,0,0,0,0]. The entry explicitly states subscript w denotes evaluation at the wall; it therefore applies to the original variable mu_w and supports every coordinate of the proposed SI vector (nonzero M,L,T exponents and zeros elsewhere)."
+            },
+            {
+              "csv_name": "rho",
+              "before_si_exponents": {
+                "M": "1",
+                "L": "-3",
+                "T": "0",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_mass_density"
+              ],
+              "reason": "The record pq_mass_density gives the canonical mass density (rho) with si_dimension M L^-3 and dimension_vector [1,-3,0,0,0,0,0]; its definition is mass per unit volume and its domain includes fluid mechanics, which matches the original problem's use of rho as fluid density. The entry therefore confirms all coordinates of the proposed vector (M=1,L=-3, all other bases zero)."
+            },
+            {
+              "csv_name": "mu",
+              "before_si_exponents": {
+                "M": "1",
+                "L": "-1",
+                "T": "-1",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_dynamic_viscosity"
+              ],
+              "reason": "The record pq_dynamic_viscosity is the canonical dynamic viscosity (mu) entry with si_dimension M L^-1 T^-1 and dimension_vector [1,-1,-1,0,0,0,0]; its definition (coefficient relating viscous shear stress to velocity gradient) and domain (fluid mechanics) match the original variable mu. The record thus supports every coordinate in the proposed SI vector (M=1,L=-1,T=-1, zeros for I,Theta,N,J)."
+            },
+            {
+              "csv_name": "u_tau",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "-1",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_friction_velocity"
+              ],
+              "reason": "The record pq_friction_velocity defines the friction (shear) velocity u_tau used in wall-bounded turbulence with si_dimension L T^-1 and dimension_vector [0,1,-1,0,0,0,0]; its definition u_tau = sqrt(tau_w/rho) explicitly states it is a velocity scale (not a stress), matching the original problem's friction velocity. This record therefore confirms the proposed SI vector (L^1 T^-1 and zeros for M,I,Theta,N,J)."
+            }
+          ]
+        },
+        "raw_tool_calls": [
+          {
+            "id": "call_rcMOGw53rlWqPPgEeYi9BAvC",
+            "type": "function",
+            "function": {
+              "name": "CheckerDimensionAudit",
+              "arguments": "{\"ledger_sha256\":\"c9c7a4497b56106b6e4cbdf0897fc81396b8d0b010b273e79683c2a13784778d\",\"variables\":[{\"csv_name\":\"y\",\"before_si_exponents\":{\"M\":\"0\",\"L\":\"1\",\"T\":\"0\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"},\"decision\":\"PASSED\",\"suggested_si_exponents\":null,\"support_mode\":\"KB_RECORD\",\"evidence_entry_ids\":[\"pq_wall_normal_distance\"],\"reason\":\"The record pq_wall_normal_distance is the canonical entry for the wall-normal distance (symbol y) in wall-bounded flows; its definition explicitly reads \\\"Distance measured normal to a wall\\\" and its si_dimension is L with dimension_vector [0,1,0,0,0,0,0]. This record therefore directly applies to the variable y in the original problem (wall-normal distance) and supports the full proposed SI vector (L^1 and zeros for M,T,I,Theta,N,J).\"},{\"csv_name\":\"rho_w\",\"before_si_exponents\":{\"M\":\"1\",\"L\":\"-3\",\"T\":\"0\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"},\"decision\":\"PASSED\",\"suggested_si_exponents\":null,\"support_mode\":\"KB_RECORD\",\"evidence_entry_ids\":[\"pq_wall_density\"],\"reason\":\"The record pq_wall_density defines \\\"wall density; mass density evaluated at the wall thermodynamic conditions\\\" and has si_dimension M L^-3 with dimension_vector [1,-3,0,0,0,0,0]. Because the original problem specifically lists rho_w as the wall-evaluated fluid density, this canonical density record directly applies and confirms all coordinates (M=1, L=-3, zeros for T,I,Theta,N,J).\"},{\"csv_name\":\"mu_w\",\"before_si_exponents\":{\"M\":\"1\",\"L\":\"-1\",\"T\":\"-1\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"},\"decision\":\"PASSED\",\"suggested_si_exponents\":null,\"support_mode\":\"KB_RECORD\",\"evidence_entry_ids\":[\"pq_wall_dynamic_viscosity\"],\"reason\":\"The record pq_wall_dynamic_viscosity is the canonical definition for dynamic viscosity evaluated at the wall (mu_w) with si_dimension M L^-1 T^-1 and dimension_vector [1,-1,-1,0,0,0,0]. The entry explicitly states subscript w denotes evaluation at the wall; it therefore applies to the original variable mu_w and supports every coordinate of the proposed SI vector (nonzero M,L,T exponents and zeros elsewhere).\"},{\"csv_name\":\"rho\",\"before_si_exponents\":{\"M\":\"1\",\"L\":\"-3\",\"T\":\"0\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"},\"decision\":\"PASSED\",\"suggested_si_exponents\":null,\"support_mode\":\"KB_RECORD\",\"evidence_entry_ids\":[\"pq_mass_density\"],\"reason\":\"The record pq_mass_density gives the canonical mass density (rho) with si_dimension M L^-3 and dimension_vector [1,-3,0,0,0,0,0]; its definition is mass per unit volume and its domain includes fluid mechanics, which matches the original problem's use of rho as fluid density. The entry therefore confirms all coordinates of the proposed vector (M=1,L=-3, all other bases zero).\"},{\"csv_name\":\"mu\",\"before_si_exponents\":{\"M\":\"1\",\"L\":\"-1\",\"T\":\"-1\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"},\"decision\":\"PASSED\",\"suggested_si_exponents\":null,\"support_mode\":\"KB_RECORD\",\"evidence_entry_ids\":[\"pq_dynamic_viscosity\"],\"reason\":\"The record pq_dynamic_viscosity is the canonical dynamic viscosity (mu) entry with si_dimension M L^-1 T^-1 and dimension_vector [1,-1,-1,0,0,0,0]; its definition (coefficient relating viscous shear stress to velocity gradient) and domain (fluid mechanics) match the original variable mu. The record thus supports every coordinate in the proposed SI vector (M=1,L=-1,T=-1, zeros for I,Theta,N,J).\"},{\"csv_name\":\"u_tau\",\"before_si_exponents\":{\"M\":\"0\",\"L\":\"1\",\"T\":\"-1\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"},\"decision\":\"PASSED\",\"suggested_si_exponents\":null,\"support_mode\":\"KB_RECORD\",\"evidence_entry_ids\":[\"pq_friction_velocity\"],\"reason\":\"The record pq_friction_velocity defines the friction (shear) velocity u_tau used in wall-bounded turbulence with si_dimension L T^-1 and dimension_vector [0,1,-1,0,0,0,0]; its definition u_tau = sqrt(tau_w/rho) explicitly states it is a velocity scale (not a stress), matching the original problem's friction velocity. This record therefore confirms the proposed SI vector (L^1 T^-1 and zeros for M,I,Theta,N,J).\"}]}"
+            }
+          }
+        ],
+        "model_messages": [
+          {
+            "type": "system",
+            "content": "Audit every named physical input in this exact typed ledger, including literal SI coordinate values. Do not substitute the correct definition or a KB vector for a wrong candidate and then claim PASSED. Return ledger_sha256 and each csv_name exactly once; before_si_exponents must copy the actual candidate. PASSED confirms the actual vector, CONFLICT requires a complete corrected suggested vector, and UNCERTAIN does not permit numerical execution. KB_RECORD requires actual entry_id citations from that variable's retrieved records. Canonical entity names are read by the program from the selected IDs; do not echo another quantity-name field. Your reason must explain why each cited record applies to this variable in the original problem, not merely why its vector matches. Cited vectors must support all known coordinates of the proposed/confirmed SI vector. INTERNAL_REASONING uses no IDs and must explain the physical meaning. Retrieval rank is relevance, not truth. Resolve symbol ambiguity from the original problem; do not choose an unrelated matching symbol. Known absent base dimensions must be explicit '0'; null means genuinely unknown, not unused. If any current coordinate is unknown, request revision or report UNCERTAIN; never call a partly known vector PASSED. Give a complete correction when physically justified. If a correction remains partly unknown, preserve null and explain what remains unresolved; the program will request revision rather than invent zeros. Lack of KB alone is not a physical contradiction. Matrix compilation and n/r/k are program tasks, not audit tasks. The listed provisional zero coordinates were null in the Analyzer response. Copy their current zero values in before_si_exponents and verify each from the physical definition or applicable retrieved evidence. Use PASSED only if you can affirm those zeros. If an exponent is nonzero, report CONFLICT with the complete corrected vector. If any provisional coordinate cannot be verified, report UNCERTAIN."
+          },
+          {
+            "type": "human",
+            "content": "Problem:\nPerform dimensional analysis for compressible wall-bounded channel turbulence to derive the dimensionless form of the normalized mean velocity (denoted as u+). \nThis analysis uses ONLY the following 6 physical quantities as input parameters: \nthe wall-normal distance (y), the wall density (ρ_w), the wall dynamic viscosity (μ_w), the fluid density (ρ), the dynamic viscosity (μ), and the friction velocity (u_tau). \nTo ensure comparability with the log-law and uniqueness of results, the power of wall units must be constrained to 1 for the INPUT and 0 for the OUTPUT formula.\n\nTyped ledger SHA256: c9c7a4497b56106b6e4cbdf0897fc81396b8d0b010b273e79683c2a13784778d\nTyped candidate ledger:\n{\"input_variable_names\": [\"y\", \"rho_w\", \"mu_w\", \"rho\", \"mu\", \"u_tau\"], \"output_variable_confidence\": \"high\", \"output_variable_name\": \"u+\", \"output_variable_reasoning\": \"The normalized mean velocity u+ is a dimensionless quantity derived from the mean velocity normalized by the friction velocity u_tau. The input variables include wall-normal distance y (length), wall density rho_w (mass per volume), wall dynamic viscosity mu_w (mass per length per time), fluid density rho (mass per volume), dynamic viscosity mu (mass per length per time), and friction velocity u_tau (length per time). The dimensionless form u+ is constructed by normalizing velocity with u_tau, ensuring the output is dimensionless (all exponents zero). The input variables have their standard SI dimensions, and the output u+ is dimensionless, consistent with the normalized velocity definition.\", \"variables\": [{\"csv_name\": \"y\", \"physical_definition\": \"wall-normal distance from the wall\", \"quantity_name\": \"length\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"1\", \"M\": \"0\", \"N\": \"0\", \"T\": \"0\", \"Theta\": \"0\"}}, {\"csv_name\": \"rho_w\", \"physical_definition\": \"density of the fluid at the wall\", \"quantity_name\": \"density\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"-3\", \"M\": \"1\", \"N\": \"0\", \"T\": \"0\", \"Theta\": \"0\"}}, {\"csv_name\": \"mu_w\", \"physical_definition\": \"dynamic viscosity of the fluid at the wall\", \"quantity_name\": \"dynamic_viscosity\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"-1\", \"M\": \"1\", \"N\": \"0\", \"T\": \"-1\", \"Theta\": \"0\"}}, {\"csv_name\": \"rho\", \"physical_definition\": \"density of the fluid\", \"quantity_name\": \"density\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"-3\", \"M\": \"1\", \"N\": \"0\", \"T\": \"0\", \"Theta\": \"0\"}}, {\"csv_name\": \"mu\", \"physical_definition\": \"dynamic viscosity of the fluid\", \"quantity_name\": \"dynamic_viscosity\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"-1\", \"M\": \"1\", \"N\": \"0\", \"T\": \"-1\", \"Theta\": \"0\"}}, {\"csv_name\": \"u_tau\", \"physical_definition\": \"friction velocity characterizing shear at the wall\", \"quantity_name\": \"velocity\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"1\", \"M\": \"0\", \"N\": \"0\", \"T\": \"-1\", \"Theta\": \"0\"}}]}\n\nProvisional zero coordinates:\n[{\"csv_name\": \"y\", \"base\": \"I\"}, {\"csv_name\": \"y\", \"base\": \"Theta\"}, {\"csv_name\": \"y\", \"base\": \"N\"}, {\"csv_name\": \"y\", \"base\": \"J\"}, {\"csv_name\": \"rho_w\", \"base\": \"I\"}, {\"csv_name\": \"rho_w\", \"base\": \"Theta\"}, {\"csv_name\": \"rho_w\", \"base\": \"N\"}, {\"csv_name\": \"rho_w\", \"base\": \"J\"}, {\"csv_name\": \"mu_w\", \"base\": \"I\"}, {\"csv_name\": \"mu_w\", \"base\": \"Theta\"}, {\"csv_name\": \"mu_w\", \"base\": \"N\"}, {\"csv_name\": \"mu_w\", \"base\": \"J\"}, {\"csv_name\": \"rho\", \"base\": \"I\"}, {\"csv_name\": \"rho\", \"base\": \"Theta\"}, {\"csv_name\": \"rho\", \"base\": \"N\"}, {\"csv_name\": \"rho\", \"base\": \"J\"}, {\"csv_name\": \"mu\", \"base\": \"I\"}, {\"csv_name\": \"mu\", \"base\": \"Theta\"}, {\"csv_name\": \"mu\", \"base\": \"N\"}, {\"csv_name\": \"mu\", \"base\": \"J\"}, {\"csv_name\": \"u_tau\", \"base\": \"I\"}, {\"csv_name\": \"u_tau\", \"base\": \"Theta\"}, {\"csv_name\": \"u_tau\", \"base\": \"N\"}, {\"csv_name\": \"u_tau\", \"base\": \"J\"}]\n\nRetrieved dimensional evidence:\n### Input variable `y`\n- entry_id: pq_wall_normal_distance; canonical_quantity: wall-normal distance; symbols: y; aliases: distance from wall; wall-normal coordinate; definition: Distance measured normal to a wall.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: wall-bounded flows; ambiguity_notes: ; source: NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions; source_identifier: https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html; confidence: high\n- entry_id: pq_mass_fraction; canonical_quantity: mass fraction; symbols: Y; w; aliases: mass fraction; definition: Ratio of constituent mass to total mass.; si_dimension: 1; dimension_vector: [0, 0, 0, 0, 0, 0, 0]; si_unit: 1; domain: mixtures; chemistry; ambiguity_notes: Dimensionless ratio.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_friction_velocity; canonical_quantity: friction velocity; symbols: u_tau; uτ; U_tau; Uτ; aliases: shear velocity; wall friction velocity; definition: Velocity scale defined from wall shear stress and density, conventionally u_tau = sqrt(tau_w/rho).; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: wall-bounded fluid mechanics; ambiguity_notes: It is a velocity scale, not a stress; do not assign pressure dimensions.; source: Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling; source_identifier: https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8; confidence: high\n### Input variable `rho_w`\n- entry_id: pq_wall_density; canonical_quantity: wall density; symbols: rho_w; ρ_w; aliases: fluid density evaluated at the wall; wall mass density; definition: Mass density evaluated at wall thermodynamic conditions.; si_dimension: M L^-3; dimension_vector: [1, -3, 0, 0, 0, 0, 0]; si_unit: kg m^-3; domain: compressible wall-bounded flows; ambiguity_notes: Same physical dimension as mass density; subscript w denotes evaluation at the wall.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_friction_velocity; canonical_quantity: friction velocity; symbols: u_tau; uτ; U_tau; Uτ; aliases: shear velocity; wall friction velocity; definition: Velocity scale defined from wall shear stress and density, conventionally u_tau = sqrt(tau_w/rho).; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: wall-bounded fluid mechanics; ambiguity_notes: It is a velocity scale, not a stress; do not assign pressure dimensions.; source: Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling; source_identifier: https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8; confidence: high\n- entry_id: pq_wall_shear_stress; canonical_quantity: wall shear stress; symbols: tau_w; τ_w; τw; aliases: skin friction stress; wall stress; definition: Tangential shear stress exerted at a wall.; si_dimension: M L^-1 T^-2; dimension_vector: [1, -1, -2, 0, 0, 0, 0]; si_unit: Pa; domain: wall-bounded fluid mechanics; ambiguity_notes: ; source: NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions; source_identifier: https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html; confidence: curated\n### Input variable `mu_w`\n- entry_id: pq_wall_dynamic_viscosity; canonical_quantity: wall dynamic viscosity; symbols: mu_w; μ_w; aliases: dynamic viscosity evaluated at the wall; definition: Dynamic viscosity evaluated at wall thermodynamic conditions.; si_dimension: M L^-1 T^-1; dimension_vector: [1, -1, -1, 0, 0, 0, 0]; si_unit: Pa s; domain: compressible wall-bounded flows; ambiguity_notes: Same physical dimension as dynamic viscosity; subscript w denotes evaluation at the wall.; source: NIST SP 811, Guide for the Use of the International System of Units (SI); source_identifier: doi:10.6028/NIST.SP.811e2008; confidence: high\n- entry_id: pq_turbulent_dynamic_viscosity; canonical_quantity: turbulent dynamic viscosity; symbols: mu_t; aliases: eddy dynamic viscosity; definition: Dynamic-viscosity form of an eddy-viscosity closure coefficient.; si_dimension: M L^-1 T^-1; dimension_vector: [1, -1, -1, 0, 0, 0, 0]; si_unit: Pa s; domain: turbulence; ambiguity_notes: ; source: Hauke, An Introduction to Fluid Mechanics and Transport Phenomena; source_identifier: doi:10.1007/978-1-4020-8537-6; confidence: high\n- entry_id: pq_wall_density; canonical_quantity: wall density; symbols: rho_w; ρ_w; aliases: fluid density evaluated at the wall; wall mass density; definition: Mass density evaluated at wall thermodynamic conditions.; si_dimension: M L^-3; dimension_vector: [1, -3, 0, 0, 0, 0, 0]; si_unit: kg m^-3; domain: compressible wall-bounded flows; ambiguity_notes: Same physical dimension as mass density; subscript w denotes evaluation at the wall.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n### Input variable `rho`\n- entry_id: pq_mass_density; canonical_quantity: mass density; symbols: rho; ρ; aliases: density; fluid density; material density; wall density; definition: Mass per unit volume.; si_dimension: M L^-3; dimension_vector: [1, -3, 0, 0, 0, 0, 0]; si_unit: kg m^-3; domain: continuum mechanics; fluid mechanics; materials; ambiguity_notes: The symbol rho/ρ may also denote electrical resistivity in electromagnetism; resolve by physical context.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_electrical_resistivity; canonical_quantity: electrical resistivity; symbols: eta; η; rho_e; ρ_e; aliases: resistivity; specific electrical resistance; rho notation for electrical resistivity; ρ notation for electrical resistivity; definition: Material property relating electric field to current density; equivalently electrical resistance times a length scale divided by area.; si_dimension: M L^3 T^-3 I^-2; dimension_vector: [1, 3, -3, -2, 0, 0, 0]; si_unit: ohm m; domain: electromagnetism; magnetohydrodynamics; ambiguity_notes: Eta/η may denote dynamic viscosity or magnetic diffusivity; rho/ρ may denote mass density. In an MHD prompt explicitly saying electrical resistivity, use this record.; source: MHD Flow in Simple Cubic Periodic Array Geometry, Journal of Fusion Energy (2023); source_identifier: doi:10.1007/s10894-023-00390-8; confidence: curated\n- entry_id: pq_friction_velocity; canonical_quantity: friction velocity; symbols: u_tau; uτ; U_tau; Uτ; aliases: shear velocity; wall friction velocity; definition: Velocity scale defined from wall shear stress and density, conventionally u_tau = sqrt(tau_w/rho).; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: wall-bounded fluid mechanics; ambiguity_notes: It is a velocity scale, not a stress; do not assign pressure dimensions.; source: Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling; source_identifier: https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8; confidence: high\n### Input variable `mu`\n- entry_id: pq_dynamic_viscosity; canonical_quantity: dynamic viscosity; symbols: mu; μ; eta; η; aliases: absolute viscosity; viscosity coefficient; dynamic viscosity coefficient; definition: Coefficient relating Newtonian viscous shear stress to velocity gradient.; si_dimension: M L^-1 T^-1; dimension_vector: [1, -1, -1, 0, 0, 0, 0]; si_unit: Pa s; domain: fluid mechanics; rheology; ambiguity_notes: Symbols eta/η can instead denote electrical resistivity, magnetic diffusivity, or other quantities; symbols mu/μ are also used for magnetic permeability in some contexts.; source: NIST SP 811, Guide for the Use of the International System of Units (SI); source_identifier: doi:10.6028/NIST.SP.811e2008; confidence: curated\n- entry_id: pq_friction_velocity; canonical_quantity: friction velocity; symbols: u_tau; uτ; U_tau; Uτ; aliases: shear velocity; wall friction velocity; definition: Velocity scale defined from wall shear stress and density, conventionally u_tau = sqrt(tau_w/rho).; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: wall-bounded fluid mechanics; ambiguity_notes: It is a velocity scale, not a stress; do not assign pressure dimensions.; source: Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling; source_identifier: https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8; confidence: high\n- entry_id: pq_wall_dynamic_viscosity; canonical_quantity: wall dynamic viscosity; symbols: mu_w; μ_w; aliases: dynamic viscosity evaluated at the wall; definition: Dynamic viscosity evaluated at wall thermodynamic conditions.; si_dimension: M L^-1 T^-1; dimension_vector: [1, -1, -1, 0, 0, 0, 0]; si_unit: Pa s; domain: compressible wall-bounded flows; ambiguity_notes: Same physical dimension as dynamic viscosity; subscript w denotes evaluation at the wall.; source: NIST SP 811, Guide for the Use of the International System of Units (SI); source_identifier: doi:10.6028/NIST.SP.811e2008; confidence: high\n### Input variable `u_tau`\n- entry_id: pq_friction_velocity; canonical_quantity: friction velocity; symbols: u_tau; uτ; U_tau; Uτ; aliases: shear velocity; wall friction velocity; definition: Velocity scale defined from wall shear stress and density, conventionally u_tau = sqrt(tau_w/rho).; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: wall-bounded fluid mechanics; ambiguity_notes: It is a velocity scale, not a stress; do not assign pressure dimensions.; source: Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling; source_identifier: https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8; confidence: high\n- entry_id: pq_wall_shear_stress; canonical_quantity: wall shear stress; symbols: tau_w; τ_w; τw; aliases: skin friction stress; wall stress; definition: Tangential shear stress exerted at a wall.; si_dimension: M L^-1 T^-2; dimension_vector: [1, -1, -2, 0, 0, 0, 0]; si_unit: Pa; domain: wall-bounded fluid mechanics; ambiguity_notes: ; source: NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions; source_identifier: https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html; confidence: curated\n- entry_id: pq_wall_density; canonical_quantity: wall density; symbols: rho_w; ρ_w; aliases: fluid density evaluated at the wall; wall mass density; definition: Mass density evaluated at wall thermodynamic conditions.; si_dimension: M L^-3; dimension_vector: [1, -3, 0, 0, 0, 0, 0]; si_unit: kg m^-3; domain: compressible wall-bounded flows; ambiguity_notes: Same physical dimension as mass density; subscript w denotes evaluation at the wall.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high"
+          }
+        ],
+        "elapsed_s": 21.66207379999105
+      },
+      "retrieval_elapsed_s": 17.913551300007384
+    }
+  ],
+  "final_ledger": {
+    "output_variable_name": "u+",
+    "output_variable_reasoning": "The normalized mean velocity u+ is a dimensionless quantity derived from the mean velocity normalized by the friction velocity u_tau. The input variables include wall-normal distance y (length), wall density rho_w (mass per volume), wall dynamic viscosity mu_w (mass per length per time), fluid density rho (mass per volume), dynamic viscosity mu (mass per length per time), and friction velocity u_tau (length per time). The dimensionless form u+ is constructed by normalizing velocity with u_tau, ensuring the output is dimensionless (all exponents zero). The input variables have their standard SI dimensions, and the output u+ is dimensionless, consistent with the normalized velocity definition.",
+    "output_variable_confidence": "high",
+    "input_variable_names": [
+      "y",
+      "rho_w",
+      "mu_w",
+      "rho",
+      "mu",
+      "u_tau"
+    ],
+    "variables": [
+      {
+        "csv_name": "y",
+        "quantity_name": "length",
+        "physical_definition": "wall-normal distance from the wall",
+        "si_exponents": {
+          "M": "0",
+          "L": "1",
+          "T": "0",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "rho_w",
+        "quantity_name": "density",
+        "physical_definition": "density of the fluid at the wall",
+        "si_exponents": {
+          "M": "1",
+          "L": "-3",
+          "T": "0",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "mu_w",
+        "quantity_name": "dynamic_viscosity",
+        "physical_definition": "dynamic viscosity of the fluid at the wall",
+        "si_exponents": {
+          "M": "1",
+          "L": "-1",
+          "T": "-1",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "rho",
+        "quantity_name": "density",
+        "physical_definition": "density of the fluid",
+        "si_exponents": {
+          "M": "1",
+          "L": "-3",
+          "T": "0",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "mu",
+        "quantity_name": "dynamic_viscosity",
+        "physical_definition": "dynamic viscosity of the fluid",
+        "si_exponents": {
+          "M": "1",
+          "L": "-1",
+          "T": "-1",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "u_tau",
+        "quantity_name": "velocity",
+        "physical_definition": "friction velocity characterizing shear at the wall",
+        "si_exponents": {
+          "M": "0",
+          "L": "1",
+          "T": "-1",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      }
+    ]
+  },
+  "workflow_status": "basis_ready",
+  "basis_built": true,
+  "basis": {
+    "workflow_status": "basis_ready",
+    "input_vars": [
+      "y",
+      "rho_w",
+      "mu_w",
+      "rho",
+      "mu",
+      "u_tau"
+    ],
+    "output_var": "u+",
+    "basis_pi_formulas": {
+      "Pi_1": "(rho) / (rho_w)",
+      "Pi_2": "(mu) / (mu_w)",
+      "Pi_3": "(y * rho_w * u_tau) / (mu_w)"
+    },
+    "basis_pi_matrices": [
+      [
+        0.0,
+        -1.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        -1.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        1.0,
+        1.0,
+        -1.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "basis_tool_history": [
+      {
+        "args": {
+          "D_in": [
+            [
+              0.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              -3.0,
+              -1.0,
+              -3.0,
+              -1.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              -1.0,
+              0.0,
+              -1.0,
+              -1.0
+            ]
+          ],
+          "var_names": [
+            "y",
+            "rho_w",
+            "mu_w",
+            "rho",
+            "mu",
+            "u_tau"
+          ]
+        },
+        "result": {
+          "status": "success",
+          "pi_formulas": {
+            "Pi_1": "(rho) / (rho_w)",
+            "Pi_2": "(mu) / (mu_w)",
+            "Pi_3": "(y * rho_w * u_tau) / (mu_w)"
+          },
+          "basis_matrices": [
+            [
+              0.0,
+              -1.0,
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              -1.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              1.0,
+              -1.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "basis_matrices_display": [
+            [
+              0.0,
+              -1.0,
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              -1.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              1.0,
+              -1.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "null_space_residual_inf": 0.0,
+          "basis_precision_note": "basis_matrices stores full floating-point precision; basis_matrices_display is rounded for display only."
+        }
+      }
+    ],
+    "output_resolution": {
+      "status": "success",
+      "output_var": "u+",
+      "source": "structured_analyzer",
+      "requested": "u+",
+      "candidates": [
+        "u+"
+      ]
+    }
+  },
+  "revision_calls": [],
+  "elapsed_s": 39.645314200024586,
+  "error": null,
+  "infrastructure_error": [],
+  "node_sequence": [
+    "Analyzer",
+    "Hallu_Checker",
+    "Basis_Decider",
+    "Basis_Executor"
+  ],
+  "provenance": {
+    "run_id": "60355d05-521d-42b9-b627-9d3badecd1a7",
+    "release": "run-provenance-2026-11-09",
+    "engine_sha256": "ae9a03710f9685d3be863b98acc1880d72c9ea3f04450af039b92f5459ee1ea9",
+    "started_utc": "2026-11-15T15:45:59Z",
+    "finished_utc": null,
+    "status": "running",
+    "dataset": {
+      "name": "dataset_veloTrans.csv",
+      "sha256": "3eafad604ec0f661b3a74b1ecbad6f6d206a4f6dd826bdb9e47d3fadc0f33149"
+    },
+    "problem_sha256": "d4cb32bef3c52317ef4da6ef090ee3ceeba838b5da8bcf56397a7f3f127ead52",
+    "manual_hyperparams_sha256": "1a77ac90efe4bc0a9be8c57fdd1e148af3616f2ddcc5fada158148b929b1e8a7",
+    "model_configuration": {
+      "analyzer": "gpt-4.1-mini",
+      "checker": "gpt-5-mini",
+      "planner": "gpt-5-mini",
+      "interpretation": "gpt-5-mini"
+    },
+    "package_versions": {
+      "numpy": "2.4.0",
+      "pandas": "2.3.3",
+      "scipy": "1.16.3",
+      "sympy": "1.14.0",
+      "scikit-learn": "1.8.0",
+      "cma": "4.4.4",
+      "pydantic": "2.12.5",
+      "openai": "2.14.0",
+      "httpx": "0.28.1",
+      "langchain-core": "1.2.5",
+      "langchain-openai": "1.1.6",
+      "langgraph": "1.0.5"
+    },
+    "tracing_enabled": false,
+    "wall_seconds": 39.644785000011325,
+    "node_timings": [
+      {
+        "node": "Analyzer",
+        "visit": 1,
+        "duration_seconds": 0.023803999996744096,
+        "status": "returned",
+        "error_type": null
+      },
+      {
+        "node": "Hallu_Checker",
+        "visit": 1,
+        "duration_seconds": 39.58562389999861,
+        "status": "returned",
+        "error_type": null
+      },
+      {
+        "node": "Basis_Decider",
+        "visit": 1,
+        "duration_seconds": 0.00863190001109615,
+        "status": "returned",
+        "error_type": null
+      },
+      {
+        "node": "Basis_Executor",
+        "visit": 1,
+        "duration_seconds": 0.023592000012286007,
+        "status": "returned",
+        "error_type": null
+      }
+    ],
+    "http_attempts": [
+      {
+        "attempt_id": "39be4cc9-40b0-43ba-a8be-e714eb78602a",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 5.681560199998785,
+        "started_utc": "2026-11-15T15:45:59Z",
+        "input_tokens": 133,
+        "output_tokens": 0,
+        "total_tokens": 133,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "43fd4e118807e52cad4e88dde5510a6c29582a16c90ee0d6a8dd6cc1dbd6aa39",
+        "response_id": null
+      },
+      {
+        "attempt_id": "95646bb0-466d-40cf-909d-fe7799c53515",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 1.566503099980764,
+        "started_utc": "2026-11-15T15:46:05Z",
+        "input_tokens": 90,
+        "output_tokens": 0,
+        "total_tokens": 90,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "34a4fa6fa745a6d5d7843e31dd230194a6ca822275c141bfc0538125c018c4ef",
+        "response_id": null
+      },
+      {
+        "attempt_id": "55095fd5-f0df-442d-838b-f6b7bc4a0b6a",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 3.703772500040941,
+        "started_utc": "2026-11-15T15:46:07Z",
+        "input_tokens": 95,
+        "output_tokens": 0,
+        "total_tokens": 95,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "0783d36ed3aeabe5fa417c6cb111462d8c92d4ff5dc796edba5883792b7502ad",
+        "response_id": null
+      },
+      {
+        "attempt_id": "50a7c529-de91-4f7f-8d8c-72950142d7c6",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 1.248556800012011,
+        "started_utc": "2026-11-15T15:46:10Z",
+        "input_tokens": 132,
+        "output_tokens": 0,
+        "total_tokens": 132,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "b071b61df1ca227d7f6360963b0cddd77a6d77a3fe7738eecfd9af20f58594f5",
+        "response_id": null
+      },
+      {
+        "attempt_id": "74fb35c3-ecc9-4799-96c3-3097e2120bef",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 0.7917918000021018,
+        "started_utc": "2026-11-15T15:46:12Z",
+        "input_tokens": 137,
+        "output_tokens": 0,
+        "total_tokens": 137,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "0230795f3b3ff3273c4faacc52a1add4884fe852b39de0f32f01de1eaca1c309",
+        "response_id": null
+      },
+      {
+        "attempt_id": "baf9b4f2-d3d8-40e4-b38b-65c737d3d6b4",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 4.762714600015897,
+        "started_utc": "2026-11-15T15:46:13Z",
+        "input_tokens": 139,
+        "output_tokens": 0,
+        "total_tokens": 139,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "addf63e696b537bc26b4d6fb11963de95afebc333676374477479f1ac3f6adb8",
+        "response_id": null
+      },
+      {
+        "attempt_id": "5e68778a-4ec7-407d-90c9-57cfd7cc0f24",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "llm",
+        "requested_model": "gpt-5-mini",
+        "response_model": "gpt-5-mini",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 21.658446900022682,
+        "started_utc": "2026-11-15T15:46:17Z",
+        "input_tokens": 4958,
+        "output_tokens": 2601,
+        "total_tokens": 7559,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 0,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "65bfedb7fde9070b4c2308d926327c96a5c41e86022d7f8fe9e5303f1cd6d958",
+        "response_id": "chatcmpl-202611151546189977863558268d9d6GXJpMH1z"
+      }
+    ],
+    "observation_warnings": [],
+    "workflow_status": "basis_ready",
+    "scientific_status": null,
+    "totals": {
+      "http_attempt_count": 7,
+      "llm_http_attempt_count": 1,
+      "embedding_http_attempt_count": 6,
+      "usage_missing_attempt_count": 0,
+      "http_duration_seconds_sum": 39.41334590007318,
+      "node_duration_seconds_sum": 39.641651800018735,
+      "http_success_count": 7,
+      "http_error_count": 0,
+      "transport_error_count": 0,
+      "known_input_tokens": 5684,
+      "input_tokens_missing_count": 0,
+      "known_output_tokens": 2601,
+      "output_tokens_missing_count": 0,
+      "known_total_tokens": 8285,
+      "total_tokens_missing_count": 0,
+      "known_cached_input_tokens": 0,
+      "cached_input_tokens_missing_count": 6,
+      "known_reasoning_tokens": 0,
+      "reasoning_tokens_missing_count": 6
+    }
+  }
+}

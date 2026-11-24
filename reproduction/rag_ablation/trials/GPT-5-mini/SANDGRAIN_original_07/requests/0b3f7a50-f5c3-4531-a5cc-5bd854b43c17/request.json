@@ -1,0 +1,55 @@
+{
+  "method": "POST",
+  "url": "https://api.chatanywhere.tech/v1/chat/completions",
+  "body": {
+    "messages": [
+      {
+        "content": "Independently identify the dependent response requested in the full problem. Distinguish the requested response from inputs, metadata, and other derived columns. Return its zero-based index from the CSV columns, or null if ambiguous. Check column binding only.",
+        "role": "system"
+      },
+      {
+        "content": "{\"problem\": \"Perform dimensional analysis for sand-grain roughness parameterization to derive the dimensionless relationship governing the normalized equivalent sand-grain roughness (denoted as ks/Ra).\\nThis analysis uses ONLY the following 7 physical quantities as input parameters:\\nthe first-order absolute moment of height fluctuations, Ra;\\nthe peak-to-valley height, kt;\\nthe root-mean-square height, k_rms;\\nthe skewness of roughness height fluctuations, Sk;\\nthe kurtosis of roughness height fluctuations, Ku;\\nthe effective streamwise slope of the roughness, ES;\\nthe surface porosity, Po.\", \"csv_columns_by_index\": {\"0\": \"Ra\", \"1\": \"kt\", \"2\": \"k_rms\", \"3\": \"Sk\", \"4\": \"Ku\", \"5\": \"ES\", \"6\": \"Po\", \"7\": \"ks\", \"8\": \"ks/Ra\", \"9\": \"case\", \"10\": \"case_id\"}}",
+        "role": "user"
+      }
+    ],
+    "model": "gpt-5-mini",
+    "parallel_tool_calls": false,
+    "stream": false,
+    "tool_choice": {
+      "type": "function",
+      "function": {
+        "name": "OutputColumnSelection"
+      }
+    },
+    "tools": [
+      {
+        "type": "function",
+        "function": {
+          "name": "OutputColumnSelection",
+          "description": "",
+          "parameters": {
+            "additionalProperties": false,
+            "properties": {
+              "column_index": {
+                "anyOf": [
+                  {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "column_index"
+            ],
+            "type": "object"
+          }
+        }
+      }
+    ]
+  },
+  "body_text": "{\"messages\":[{\"content\":\"Independently identify the dependent response requested in the full problem. Distinguish the requested response from inputs, metadata, and other derived columns. Return its zero-based index from the CSV columns, or null if ambiguous. Check column binding only.\",\"role\":\"system\"},{\"content\":\"{\\\"problem\\\": \\\"Perform dimensional analysis for sand-grain roughness parameterization to derive the dimensionless relationship governing the normalized equivalent sand-grain roughness (denoted as ks/Ra).\\\\nThis analysis uses ONLY the following 7 physical quantities as input parameters:\\\\nthe first-order absolute moment of height fluctuations, Ra;\\\\nthe peak-to-valley height, kt;\\\\nthe root-mean-square height, k_rms;\\\\nthe skewness of roughness height fluctuations, Sk;\\\\nthe kurtosis of roughness height fluctuations, Ku;\\\\nthe effective streamwise slope of the roughness, ES;\\\\nthe surface porosity, Po.\\\", \\\"csv_columns_by_index\\\": {\\\"0\\\": \\\"Ra\\\", \\\"1\\\": \\\"kt\\\", \\\"2\\\": \\\"k_rms\\\", \\\"3\\\": \\\"Sk\\\", \\\"4\\\": \\\"Ku\\\", \\\"5\\\": \\\"ES\\\", \\\"6\\\": \\\"Po\\\", \\\"7\\\": \\\"ks\\\", \\\"8\\\": \\\"ks/Ra\\\", \\\"9\\\": \\\"case\\\", \\\"10\\\": \\\"case_id\\\"}}\",\"role\":\"user\"}],\"model\":\"gpt-5-mini\",\"parallel_tool_calls\":false,\"stream\":false,\"tool_choice\":{\"type\":\"function\",\"function\":{\"name\":\"OutputColumnSelection\"}},\"tools\":[{\"type\":\"function\",\"function\":{\"name\":\"OutputColumnSelection\",\"description\":\"\",\"parameters\":{\"additionalProperties\":false,\"properties\":{\"column_index\":{\"anyOf\":[{\"minimum\":0,\"type\":\"integer\"},{\"type\":\"null\"}]}},\"required\":[\"column_index\"],\"type\":\"object\"}}}]}"
+}

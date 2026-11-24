@@ -1,0 +1,2738 @@
+{
+  "pair_id": "CESS_original_09",
+  "arm": "on",
+  "initial_ledger_sha256": "3cd082bce050a7b2af5f4b8dd50a385c0698af2d2e8b6a04404482c48d4c1ea4",
+  "checker_rounds": [
+    {
+      "candidate_ledger": {
+        "output_variable_name": "nu_t/nu",
+        "output_variable_reasoning": "The output variable is a dimensionless ratio of eddy viscosity to kinematic viscosity, which is derived from the input parameters that have defined physical dimensions.",
+        "output_variable_confidence": "high",
+        "input_variable_names": [
+          "u_tau",
+          "h",
+          "y",
+          "nu"
+        ],
+        "variables": [
+          {
+            "csv_name": "u_tau",
+            "quantity_name": "friction velocity",
+            "physical_definition": "The friction velocity, a measure of the velocity scale in turbulent flow.",
+            "si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "h",
+            "quantity_name": "channel half-height",
+            "physical_definition": "The channel half-height, a characteristic length scale of the flow.",
+            "si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "y",
+            "quantity_name": "distance from the wall",
+            "physical_definition": "The distance from the wall, a measure of vertical position in the flow.",
+            "si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "nu",
+            "quantity_name": "kinematic viscosity",
+            "physical_definition": "The fluid kinematic viscosity, a measure of the fluid's resistance to flow.",
+            "si_exponents": {
+              "M": "2",
+              "L": "-1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          }
+        ]
+      },
+      "ledger_sha256": "3cd082bce050a7b2af5f4b8dd50a385c0698af2d2e8b6a04404482c48d4c1ea4",
+      "gate": {
+        "gate_status": "RETRY",
+        "ledger_sha256": "3cd082bce050a7b2af5f4b8dd50a385c0698af2d2e8b6a04404482c48d4c1ea4",
+        "checker_audit": {
+          "ledger_sha256": "3cd082bce050a7b2af5f4b8dd50a385c0698af2d2e8b6a04404482c48d4c1ea4",
+          "variables": [
+            {
+              "csv_name": "u_tau",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "-1",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_friction_velocity"
+              ],
+              "reason": "The ledger symbol u_tau is the friction (shear) velocity used in wall-bounded turbulence; the retrieved record pq_friction_velocity defines u_tau = sqrt(tau_w/ rho) and gives the SI dimension L T^-1 (dimension_vector [0,1,-1,0,0,0,0]). That record therefore establishes the nonzero exponents L=1 and T=-1 and the zeros for M,I,Theta,N,J in the ledger entry for u_tau. The record is directly about the same canonical quantity and symbol used in the problem (friction velocity), so it applies to the variable as stated in the original problem."
+            },
+            {
+              "csv_name": "h",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "0",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_channel_half_height"
+              ],
+              "reason": "The ledger variable h is named and defined as the channel half-height. The retrieved record pq_channel_half_height is the canonical entry for channel half-height (distance from wall to centerline) with SI dimension L (dimension_vector [0,1,0,0,0,0,0]). This record therefore verifies L=1 and zeros for M,T,I,Theta,N,J in the ledger entry; it is the canonical quantity intended by the problem statement and so directly supports the ledger values."
+            },
+            {
+              "csv_name": "y",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "0",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_wall_normal_distance"
+              ],
+              "reason": "The ledger variable y is the wall-normal distance. The retrieved record pq_wall_normal_distance is the canonical entry for distance-from-wall with SI dimension L (dimension_vector [0,1,0,0,0,0,0]). That record confirms L=1 and zeros for the other base exponents in the ledger entry. The record matches the physical meaning and symbol used in the original problem (wall-normal coordinate y)."
+            },
+            {
+              "csv_name": "nu",
+              "before_si_exponents": {
+                "M": "2",
+                "L": "-1",
+                "T": "-1",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "CONFLICT",
+              "suggested_si_exponents": {
+                "M": "0",
+                "L": "2",
+                "T": "-1",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_kinematic_viscosity"
+              ],
+              "reason": "The ledger entry labelled nu claims kinematic viscosity but lists exponents M=2, L=-1, T=-1 which do not match the standard physical definition. The retrieved record pq_kinematic_viscosity defines kinematic viscosity (momentum diffusivity) as dynamic viscosity divided by density, with SI dimension L^2 T^-1 (dimension_vector [0,2,-1,0,0,0,0]). This canonical record applies to the ledger variable 'nu' because the problem explicitly names it as the fluid kinematic viscosity and uses the conventional symbol ν. The record therefore supports the corrected exponents M=0, L=2, T=-1 (with zeros for I,Theta,N,J). The ledger's preexisting nonzero M and negative L are inconsistent with that canonical definition, so I report CONFLICT and supply the complete corrected SI exponent vector above."
+            }
+          ]
+        },
+        "variable_results": [
+          {
+            "csv_name": "u_tau",
+            "decision": "PASSED",
+            "before": {
+              "M": "0",
+              "L": "1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "suggested": {
+              "M": "0",
+              "L": "1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "coordinate_diff": {},
+            "issues": [],
+            "referenced_entry_ids": [
+              "pq_friction_velocity"
+            ],
+            "selected_entities": [
+              {
+                "entry_id": "pq_friction_velocity",
+                "canonical_quantity": "friction velocity",
+                "source_identifier": "https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8"
+              }
+            ],
+            "cited_reference_si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "known_coordinate_conflicts_with_reference": {}
+          },
+          {
+            "csv_name": "h",
+            "decision": "PASSED",
+            "before": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "suggested": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "coordinate_diff": {},
+            "issues": [],
+            "referenced_entry_ids": [
+              "pq_channel_half_height"
+            ],
+            "selected_entities": [
+              {
+                "entry_id": "pq_channel_half_height",
+                "canonical_quantity": "channel half-height",
+                "source_identifier": "https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8"
+              }
+            ],
+            "cited_reference_si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "known_coordinate_conflicts_with_reference": {}
+          },
+          {
+            "csv_name": "y",
+            "decision": "PASSED",
+            "before": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "suggested": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "coordinate_diff": {},
+            "issues": [],
+            "referenced_entry_ids": [
+              "pq_wall_normal_distance"
+            ],
+            "selected_entities": [
+              {
+                "entry_id": "pq_wall_normal_distance",
+                "canonical_quantity": "wall-normal distance",
+                "source_identifier": "https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html"
+              }
+            ],
+            "cited_reference_si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "known_coordinate_conflicts_with_reference": {}
+          },
+          {
+            "csv_name": "nu",
+            "decision": "CONFLICT",
+            "before": {
+              "M": "2",
+              "L": "-1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "suggested": {
+              "M": "0",
+              "L": "2",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "coordinate_diff": {
+              "M": {
+                "before": "2",
+                "suggested": "0"
+              },
+              "L": {
+                "before": "-1",
+                "suggested": "2"
+              }
+            },
+            "issues": [
+              "Checker decision CONFLICT"
+            ],
+            "referenced_entry_ids": [
+              "pq_kinematic_viscosity"
+            ],
+            "selected_entities": [
+              {
+                "entry_id": "pq_kinematic_viscosity",
+                "canonical_quantity": "kinematic viscosity",
+                "source_identifier": "doi:10.6028/NIST.SP.811e2008"
+              }
+            ],
+            "cited_reference_si_exponents": {
+              "M": "0",
+              "L": "2",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "known_coordinate_conflicts_with_reference": {}
+          }
+        ],
+        "issues": [
+          "nu: Checker decision CONFLICT"
+        ],
+        "referenced_records": [
+          {
+            "csv_name": "u_tau",
+            "record": {
+              "variable_name": "u_tau",
+              "entry_id": "pq_friction_velocity",
+              "canonical_quantity": "friction velocity",
+              "symbols": "u_tau; uτ; U_tau; Uτ",
+              "aliases": "shear velocity; wall friction velocity",
+              "definition": "Velocity scale defined from wall shear stress and density, conventionally u_tau = sqrt(tau_w/rho).",
+              "si_dimension": "L T^-1",
+              "dimension_vector": "[0, 1, -1, 0, 0, 0, 0]",
+              "si_unit": "m s^-1",
+              "domain": "wall-bounded fluid mechanics",
+              "ambiguity_notes": "It is a velocity scale, not a stress; do not assign pressure dimensions.",
+              "source": "Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling",
+              "source_identifier": "https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.6480470685576922,
+              "hybrid_score": 0.8768164739951922,
+              "retrieval_mode": "hybrid"
+            }
+          },
+          {
+            "csv_name": "h",
+            "record": {
+              "variable_name": "h",
+              "entry_id": "pq_channel_half_height",
+              "canonical_quantity": "channel half-height",
+              "symbols": "h; delta; δ",
+              "aliases": "channel half-height; half-gap",
+              "definition": "Distance from a channel wall to its centerline for a symmetric plane channel.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "channel flow",
+              "ambiguity_notes": "The symbol h is also used for full height, enthalpy, or heat-transfer coefficient in other contexts.",
+              "source": "Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling",
+              "source_identifier": "https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.6215079916397804,
+              "hybrid_score": 0.8675277970739231,
+              "retrieval_mode": "hybrid"
+            }
+          },
+          {
+            "csv_name": "y",
+            "record": {
+              "variable_name": "y",
+              "entry_id": "pq_wall_normal_distance",
+              "canonical_quantity": "wall-normal distance",
+              "symbols": "y",
+              "aliases": "distance from wall; wall-normal coordinate",
+              "definition": "Distance measured normal to a wall.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "wall-bounded flows",
+              "ambiguity_notes": "",
+              "source": "NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions",
+              "source_identifier": "https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5869941585443874,
+              "hybrid_score": 0.8554479554905356,
+              "retrieval_mode": "hybrid"
+            }
+          },
+          {
+            "csv_name": "nu",
+            "record": {
+              "variable_name": "nu",
+              "entry_id": "pq_kinematic_viscosity",
+              "canonical_quantity": "kinematic viscosity",
+              "symbols": "nu; ν",
+              "aliases": "momentum diffusivity",
+              "definition": "Dynamic viscosity divided by mass density.",
+              "si_dimension": "L^2 T^-1",
+              "dimension_vector": "[0, 2, -1, 0, 0, 0, 0]",
+              "si_unit": "m^2 s^-1",
+              "domain": "fluid mechanics",
+              "ambiguity_notes": "Do not confuse lowercase nu/ν with the Nusselt number Nu or a generic frequency symbol.",
+              "source": "NIST SP 811, Guide for the Use of the International System of Units (SI)",
+              "source_identifier": "doi:10.6028/NIST.SP.811e2008",
+              "confidence": "curated",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5801440574938123,
+              "hybrid_score": 0.8530504201228343,
+              "retrieval_mode": "hybrid"
+            }
+          }
+        ],
+        "feedback": "Typed ledger 3cd082bce050a7b2af5f4b8dd50a385c0698af2d2e8b6a04404482c48d4c1ea4; program gate=RETRY\nVariable u_tau: decision=PASSED; reason=The ledger symbol u_tau is the friction (shear) velocity used in wall-bounded turbulence; the retrieved record pq_friction_velocity defines u_tau = sqrt(tau_w/ rho) and gives the SI dimension L T^-1 (dimension_vector [0,1,-1,0,0,0,0]). That record therefore establishes the nonzero exponents L=1 and T=-1 and the zeros for M,I,Theta,N,J in the ledger entry for u_tau. The record is directly about the same canonical quantity and symbol used in the problem (friction velocity), so it applies to the variable as stated in the original problem.\nActual named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"-1\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"-1\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_friction_velocity\", \"canonical_quantity\": \"friction velocity\", \"source_identifier\": \"https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for u_tau:\n{\"aliases\": \"shear velocity; wall friction velocity\", \"ambiguity_notes\": \"It is a velocity scale, not a stress; do not assign pressure dimensions.\", \"canonical_quantity\": \"friction velocity\", \"confidence\": \"high\", \"definition\": \"Velocity scale defined from wall shear stress and density, conventionally u_tau = sqrt(tau_w/rho).\", \"dimension_vector\": \"[0, 1, -1, 0, 0, 0, 0]\", \"domain\": \"wall-bounded fluid mechanics\", \"entry_id\": \"pq_friction_velocity\", \"hybrid_score\": 0.8768164739951922, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.6480470685576922, \"si_dimension\": \"L T^-1\", \"si_unit\": \"m s^-1\", \"source\": \"Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling\", \"source_identifier\": \"https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8\", \"symbols\": \"u_tau; uτ; U_tau; Uτ\", \"variable_name\": \"u_tau\"}\n\nVariable h: decision=PASSED; reason=The ledger variable h is named and defined as the channel half-height. The retrieved record pq_channel_half_height is the canonical entry for channel half-height (distance from wall to centerline) with SI dimension L (dimension_vector [0,1,0,0,0,0,0]). This record therefore verifies L=1 and zeros for M,T,I,Theta,N,J in the ledger entry; it is the canonical quantity intended by the problem statement and so directly supports the ledger values.\nActual named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_channel_half_height\", \"canonical_quantity\": \"channel half-height\", \"source_identifier\": \"https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for h:\n{\"aliases\": \"channel half-height; half-gap\", \"ambiguity_notes\": \"The symbol h is also used for full height, enthalpy, or heat-transfer coefficient in other contexts.\", \"canonical_quantity\": \"channel half-height\", \"confidence\": \"high\", \"definition\": \"Distance from a channel wall to its centerline for a symmetric plane channel.\", \"dimension_vector\": \"[0, 1, 0, 0, 0, 0, 0]\", \"domain\": \"channel flow\", \"entry_id\": \"pq_channel_half_height\", \"hybrid_score\": 0.8675277970739231, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.6215079916397804, \"si_dimension\": \"L\", \"si_unit\": \"m\", \"source\": \"Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling\", \"source_identifier\": \"https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8\", \"symbols\": \"h; delta; δ\", \"variable_name\": \"h\"}\n\nVariable y: decision=PASSED; reason=The ledger variable y is the wall-normal distance. The retrieved record pq_wall_normal_distance is the canonical entry for distance-from-wall with SI dimension L (dimension_vector [0,1,0,0,0,0,0]). That record confirms L=1 and zeros for the other base exponents in the ledger entry. The record matches the physical meaning and symbol used in the original problem (wall-normal coordinate y).\nActual named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_wall_normal_distance\", \"canonical_quantity\": \"wall-normal distance\", \"source_identifier\": \"https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for y:\n{\"aliases\": \"distance from wall; wall-normal coordinate\", \"ambiguity_notes\": \"\", \"canonical_quantity\": \"wall-normal distance\", \"confidence\": \"high\", \"definition\": \"Distance measured normal to a wall.\", \"dimension_vector\": \"[0, 1, 0, 0, 0, 0, 0]\", \"domain\": \"wall-bounded flows\", \"entry_id\": \"pq_wall_normal_distance\", \"hybrid_score\": 0.8554479554905356, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.5869941585443874, \"si_dimension\": \"L\", \"si_unit\": \"m\", \"source\": \"NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions\", \"source_identifier\": \"https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html\", \"symbols\": \"y\", \"variable_name\": \"y\"}\n\nVariable nu: decision=CONFLICT; reason=The ledger entry labelled nu claims kinematic viscosity but lists exponents M=2, L=-1, T=-1 which do not match the standard physical definition. The retrieved record pq_kinematic_viscosity defines kinematic viscosity (momentum diffusivity) as dynamic viscosity divided by density, with SI dimension L^2 T^-1 (dimension_vector [0,2,-1,0,0,0,0]). This canonical record applies to the ledger variable 'nu' because the problem explicitly names it as the fluid kinematic viscosity and uses the conventional symbol ν. The record therefore supports the corrected exponents M=0, L=2, T=-1 (with zeros for I,Theta,N,J). The ledger's preexisting nonzero M and negative L are inconsistent with that canonical definition, so I report CONFLICT and supply the complete corrected SI exponent vector above.\nActual named SI={\"M\": \"2\", \"L\": \"-1\", \"T\": \"-1\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"0\", \"L\": \"2\", \"T\": \"-1\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={\"M\": {\"before\": \"2\", \"suggested\": \"0\"}, \"L\": {\"before\": \"-1\", \"suggested\": \"2\"}}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_kinematic_viscosity\", \"canonical_quantity\": \"kinematic viscosity\", \"source_identifier\": \"doi:10.6028/NIST.SP.811e2008\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[\"Checker decision CONFLICT\"]\n\nReferenced KB original record for nu:\n{\"aliases\": \"momentum diffusivity\", \"ambiguity_notes\": \"Do not confuse lowercase nu/ν with the Nusselt number Nu or a generic frequency symbol.\", \"canonical_quantity\": \"kinematic viscosity\", \"confidence\": \"curated\", \"definition\": \"Dynamic viscosity divided by mass density.\", \"dimension_vector\": \"[0, 2, -1, 0, 0, 0, 0]\", \"domain\": \"fluid mechanics\", \"entry_id\": \"pq_kinematic_viscosity\", \"hybrid_score\": 0.8530504201228343, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.5801440574938123, \"si_dimension\": \"L^2 T^-1\", \"si_unit\": \"m^2 s^-1\", \"source\": \"NIST SP 811, Guide for the Use of the International System of Units (SI)\", \"source_identifier\": \"doi:10.6028/NIST.SP.811e2008\", \"symbols\": \"nu; ν\", \"variable_name\": \"nu\"}",
+        "entity_policy": "Only Checker-selected visible record IDs identify cited canonical entities; no unselected-record or Analyzer-name anchor. Equal vectors do not establish equal physical entities.",
+        "physical_correctness_scope": "A passed contract is not a theorem of physical correctness. Record ID and coordinate checks establish citation consistency; semantic relevance/applicability in the reason and internal-reasoning physics remain model judgements."
+      },
+      "gate_status": "RETRY",
+      "retrieval": {
+        "status": "success",
+        "kb_path": "Q:\\Chengao_File\\CodeX_\\Dimsionless_learn\\1114_final\\Codes_src\\RAG_on_model_evaluation\\reference\\Data_csv\\dimensional_physical_quantities.md",
+        "kb_sha256": "64d8ebb7988c9157401c6b023add3ed8681651bc6d4d1d1bbb7a7aa452fc9f60",
+        "embedding_cache_path": "Q:\\Chengao_File\\CodeX_\\Dimsionless_learn\\1114_final\\Codes_src\\RAG_on_model_evaluation\\followup_repairs\\GPT-4o-mini-quoted-null\\.work\\physical_quantity_index.npz",
+        "embedding_cache_source": null,
+        "embedding_model": "GLM-Embedding-3",
+        "embedding_provider": "Paratera",
+        "embedding_base_url": "https://llmapi.paratera.com/v1",
+        "embedding_status": "cache",
+        "retrieval_modes": [
+          "hybrid"
+        ],
+        "retrieved_variables": [
+          "u_tau",
+          "h",
+          "y",
+          "nu"
+        ],
+        "n_retrieved_records": 12,
+        "top_k_per_variable": 3,
+        "max_evidence_rows": 30,
+        "lexical_weight": 0.65,
+        "semantic_weight": 0.35,
+        "min_hybrid_score": 0.22,
+        "allow_lexical_fallback": false,
+        "matches_by_variable": {
+          "u_tau": [
+            {
+              "variable_name": "u_tau",
+              "entry_id": "pq_friction_velocity",
+              "canonical_quantity": "friction velocity",
+              "symbols": "u_tau; uτ; U_tau; Uτ",
+              "aliases": "shear velocity; wall friction velocity",
+              "definition": "Velocity scale defined from wall shear stress and density, conventionally u_tau = sqrt(tau_w/rho).",
+              "si_dimension": "L T^-1",
+              "dimension_vector": "[0, 1, -1, 0, 0, 0, 0]",
+              "si_unit": "m s^-1",
+              "domain": "wall-bounded fluid mechanics",
+              "ambiguity_notes": "It is a velocity scale, not a stress; do not assign pressure dimensions.",
+              "source": "Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling",
+              "source_identifier": "https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.6480470685576922,
+              "hybrid_score": 0.8768164739951922,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "u_tau",
+              "entry_id": "pq_channel_half_height",
+              "canonical_quantity": "channel half-height",
+              "symbols": "h; delta; δ",
+              "aliases": "channel half-height; half-gap",
+              "definition": "Distance from a channel wall to its centerline for a symmetric plane channel.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "channel flow",
+              "ambiguity_notes": "The symbol h is also used for full height, enthalpy, or heat-transfer coefficient in other contexts.",
+              "source": "Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling",
+              "source_identifier": "https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8",
+              "confidence": "high",
+              "lexical_score": 0.3333333333333333,
+              "semantic_score": 0.5068119898064017,
+              "hybrid_score": 0.39405086309890724,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "u_tau",
+              "entry_id": "pq_eddy_viscosity",
+              "canonical_quantity": "eddy viscosity",
+              "symbols": "nu_t; ν_t; mu_t/rho",
+              "aliases": "turbulent kinematic viscosity; turbulent eddy diffusivity for momentum",
+              "definition": "Turbulent transport coefficient with the dimensions of kinematic viscosity when written as nu_t.",
+              "si_dimension": "L^2 T^-1",
+              "dimension_vector": "[0, 2, -1, 0, 0, 0, 0]",
+              "si_unit": "m^2 s^-1",
+              "domain": "turbulence modeling",
+              "ambiguity_notes": "If a code uses dynamic eddy viscosity mu_t instead, its dimension is M L^-1 T^-1.",
+              "source": "NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions",
+              "source_identifier": "https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html",
+              "confidence": "high",
+              "lexical_score": 0.24691358024691357,
+              "semantic_score": 0.6249052418326402,
+              "hybrid_score": 0.37921066180191787,
+              "retrieval_mode": "hybrid"
+            }
+          ],
+          "h": [
+            {
+              "variable_name": "h",
+              "entry_id": "pq_channel_half_height",
+              "canonical_quantity": "channel half-height",
+              "symbols": "h; delta; δ",
+              "aliases": "channel half-height; half-gap",
+              "definition": "Distance from a channel wall to its centerline for a symmetric plane channel.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "channel flow",
+              "ambiguity_notes": "The symbol h is also used for full height, enthalpy, or heat-transfer coefficient in other contexts.",
+              "source": "Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling",
+              "source_identifier": "https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.6215079916397804,
+              "hybrid_score": 0.8675277970739231,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "h",
+              "entry_id": "pq_container_height",
+              "canonical_quantity": "container height",
+              "symbols": "h; H",
+              "aliases": "cell height; layer height; plate separation",
+              "definition": "Vertical separation between confining plates in the Rayleigh-Benard configuration.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "Rayleigh-Benard convection",
+              "ambiguity_notes": "The symbol h may denote a half-height in channel flow; use the problem geometry.",
+              "source": "Rayleigh-Benard convection reference defining Ra and Pr",
+              "source_identifier": "https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/scaling-laws-for-rayleighbenard-convection-between-navierslip-boundaries/F474DBFC0CC0A874A0B14A383195D714",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5405918158018895,
+              "hybrid_score": 0.8392071355306614,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "h",
+              "entry_id": "pq_heat_transfer_coefficient",
+              "canonical_quantity": "convective heat-transfer coefficient",
+              "symbols": "h_c; h",
+              "aliases": "film coefficient; convection coefficient",
+              "definition": "Heat flux divided by a driving temperature difference.",
+              "si_dimension": "M T^-3 Theta^-1",
+              "dimension_vector": "[1, 0, -3, 0, -1, 0, 0]",
+              "si_unit": "W m^-2 K^-1",
+              "domain": "heat transfer",
+              "ambiguity_notes": "h is also used for length or enthalpy in some contexts.",
+              "source": "Lupi, Heat Transfer, in Fundamentals of Electroheat",
+              "source_identifier": "doi:10.1007/978-3-319-46015-4_1",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5306599829352318,
+              "hybrid_score": 0.8357309940273311,
+              "retrieval_mode": "hybrid"
+            }
+          ],
+          "y": [
+            {
+              "variable_name": "y",
+              "entry_id": "pq_wall_normal_distance",
+              "canonical_quantity": "wall-normal distance",
+              "symbols": "y",
+              "aliases": "distance from wall; wall-normal coordinate",
+              "definition": "Distance measured normal to a wall.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "wall-bounded flows",
+              "ambiguity_notes": "",
+              "source": "NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions",
+              "source_identifier": "https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5869941585443874,
+              "hybrid_score": 0.8554479554905356,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "y",
+              "entry_id": "pq_mass_fraction",
+              "canonical_quantity": "mass fraction",
+              "symbols": "Y; w",
+              "aliases": "mass fraction",
+              "definition": "Ratio of constituent mass to total mass.",
+              "si_dimension": "1",
+              "dimension_vector": "[0, 0, 0, 0, 0, 0, 0]",
+              "si_unit": "1",
+              "domain": "mixtures; chemistry",
+              "ambiguity_notes": "Dimensionless ratio.",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "high",
+              "lexical_score": 0.9,
+              "semantic_score": 0.4538563820598327,
+              "hybrid_score": 0.7438497337209415,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "y",
+              "entry_id": "pq_channel_half_height",
+              "canonical_quantity": "channel half-height",
+              "symbols": "h; delta; δ",
+              "aliases": "channel half-height; half-gap",
+              "definition": "Distance from a channel wall to its centerline for a symmetric plane channel.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "channel flow",
+              "ambiguity_notes": "The symbol h is also used for full height, enthalpy, or heat-transfer coefficient in other contexts.",
+              "source": "Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling",
+              "source_identifier": "https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8",
+              "confidence": "high",
+              "lexical_score": 0.3289473684210526,
+              "semantic_score": 0.5612953932290414,
+              "hybrid_score": 0.4102691771038487,
+              "retrieval_mode": "hybrid"
+            }
+          ],
+          "nu": [
+            {
+              "variable_name": "nu",
+              "entry_id": "pq_kinematic_viscosity",
+              "canonical_quantity": "kinematic viscosity",
+              "symbols": "nu; ν",
+              "aliases": "momentum diffusivity",
+              "definition": "Dynamic viscosity divided by mass density.",
+              "si_dimension": "L^2 T^-1",
+              "dimension_vector": "[0, 2, -1, 0, 0, 0, 0]",
+              "si_unit": "m^2 s^-1",
+              "domain": "fluid mechanics",
+              "ambiguity_notes": "Do not confuse lowercase nu/ν with the Nusselt number Nu or a generic frequency symbol.",
+              "source": "NIST SP 811, Guide for the Use of the International System of Units (SI)",
+              "source_identifier": "doi:10.6028/NIST.SP.811e2008",
+              "confidence": "curated",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5801440574938123,
+              "hybrid_score": 0.8530504201228343,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "nu",
+              "entry_id": "pq_friction_velocity",
+              "canonical_quantity": "friction velocity",
+              "symbols": "u_tau; uτ; U_tau; Uτ",
+              "aliases": "shear velocity; wall friction velocity",
+              "definition": "Velocity scale defined from wall shear stress and density, conventionally u_tau = sqrt(tau_w/rho).",
+              "si_dimension": "L T^-1",
+              "dimension_vector": "[0, 1, -1, 0, 0, 0, 0]",
+              "si_unit": "m s^-1",
+              "domain": "wall-bounded fluid mechanics",
+              "ambiguity_notes": "It is a velocity scale, not a stress; do not assign pressure dimensions.",
+              "source": "Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling",
+              "source_identifier": "https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8",
+              "confidence": "high",
+              "lexical_score": 0.35256410256410253,
+              "semantic_score": 0.5045183598401604,
+              "hybrid_score": 0.40574809261072275,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "nu",
+              "entry_id": "pq_eddy_viscosity",
+              "canonical_quantity": "eddy viscosity",
+              "symbols": "nu_t; ν_t; mu_t/rho",
+              "aliases": "turbulent kinematic viscosity; turbulent eddy diffusivity for momentum",
+              "definition": "Turbulent transport coefficient with the dimensions of kinematic viscosity when written as nu_t.",
+              "si_dimension": "L^2 T^-1",
+              "dimension_vector": "[0, 2, -1, 0, 0, 0, 0]",
+              "si_unit": "m^2 s^-1",
+              "domain": "turbulence modeling",
+              "ambiguity_notes": "If a code uses dynamic eddy viscosity mu_t instead, its dimension is M L^-1 T^-1.",
+              "source": "NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions",
+              "source_identifier": "https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html",
+              "confidence": "high",
+              "lexical_score": 0.2777777777777778,
+              "semantic_score": 0.604655500121756,
+              "hybrid_score": 0.39218498059817014,
+              "retrieval_mode": "hybrid"
+            }
+          ]
+        },
+        "evidence_markdown": "### Input variable `u_tau`\n- entry_id: pq_friction_velocity; canonical_quantity: friction velocity; symbols: u_tau; uτ; U_tau; Uτ; aliases: shear velocity; wall friction velocity; definition: Velocity scale defined from wall shear stress and density, conventionally u_tau = sqrt(tau_w/rho).; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: wall-bounded fluid mechanics; ambiguity_notes: It is a velocity scale, not a stress; do not assign pressure dimensions.; source: Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling; source_identifier: https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8; confidence: high\n- entry_id: pq_channel_half_height; canonical_quantity: channel half-height; symbols: h; delta; δ; aliases: channel half-height; half-gap; definition: Distance from a channel wall to its centerline for a symmetric plane channel.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: channel flow; ambiguity_notes: The symbol h is also used for full height, enthalpy, or heat-transfer coefficient in other contexts.; source: Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling; source_identifier: https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8; confidence: high\n- entry_id: pq_eddy_viscosity; canonical_quantity: eddy viscosity; symbols: nu_t; ν_t; mu_t/rho; aliases: turbulent kinematic viscosity; turbulent eddy diffusivity for momentum; definition: Turbulent transport coefficient with the dimensions of kinematic viscosity when written as nu_t.; si_dimension: L^2 T^-1; dimension_vector: [0, 2, -1, 0, 0, 0, 0]; si_unit: m^2 s^-1; domain: turbulence modeling; ambiguity_notes: If a code uses dynamic eddy viscosity mu_t instead, its dimension is M L^-1 T^-1.; source: NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions; source_identifier: https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html; confidence: high\n### Input variable `h`\n- entry_id: pq_channel_half_height; canonical_quantity: channel half-height; symbols: h; delta; δ; aliases: channel half-height; half-gap; definition: Distance from a channel wall to its centerline for a symmetric plane channel.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: channel flow; ambiguity_notes: The symbol h is also used for full height, enthalpy, or heat-transfer coefficient in other contexts.; source: Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling; source_identifier: https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8; confidence: high\n- entry_id: pq_container_height; canonical_quantity: container height; symbols: h; H; aliases: cell height; layer height; plate separation; definition: Vertical separation between confining plates in the Rayleigh-Benard configuration.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: Rayleigh-Benard convection; ambiguity_notes: The symbol h may denote a half-height in channel flow; use the problem geometry.; source: Rayleigh-Benard convection reference defining Ra and Pr; source_identifier: https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/scaling-laws-for-rayleighbenard-convection-between-navierslip-boundaries/F474DBFC0CC0A874A0B14A383195D714; confidence: high\n- entry_id: pq_heat_transfer_coefficient; canonical_quantity: convective heat-transfer coefficient; symbols: h_c; h; aliases: film coefficient; convection coefficient; definition: Heat flux divided by a driving temperature difference.; si_dimension: M T^-3 Theta^-1; dimension_vector: [1, 0, -3, 0, -1, 0, 0]; si_unit: W m^-2 K^-1; domain: heat transfer; ambiguity_notes: h is also used for length or enthalpy in some contexts.; source: Lupi, Heat Transfer, in Fundamentals of Electroheat; source_identifier: doi:10.1007/978-3-319-46015-4_1; confidence: high\n### Input variable `y`\n- entry_id: pq_wall_normal_distance; canonical_quantity: wall-normal distance; symbols: y; aliases: distance from wall; wall-normal coordinate; definition: Distance measured normal to a wall.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: wall-bounded flows; ambiguity_notes: ; source: NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions; source_identifier: https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html; confidence: high\n- entry_id: pq_mass_fraction; canonical_quantity: mass fraction; symbols: Y; w; aliases: mass fraction; definition: Ratio of constituent mass to total mass.; si_dimension: 1; dimension_vector: [0, 0, 0, 0, 0, 0, 0]; si_unit: 1; domain: mixtures; chemistry; ambiguity_notes: Dimensionless ratio.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_channel_half_height; canonical_quantity: channel half-height; symbols: h; delta; δ; aliases: channel half-height; half-gap; definition: Distance from a channel wall to its centerline for a symmetric plane channel.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: channel flow; ambiguity_notes: The symbol h is also used for full height, enthalpy, or heat-transfer coefficient in other contexts.; source: Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling; source_identifier: https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8; confidence: high\n### Input variable `nu`\n- entry_id: pq_kinematic_viscosity; canonical_quantity: kinematic viscosity; symbols: nu; ν; aliases: momentum diffusivity; definition: Dynamic viscosity divided by mass density.; si_dimension: L^2 T^-1; dimension_vector: [0, 2, -1, 0, 0, 0, 0]; si_unit: m^2 s^-1; domain: fluid mechanics; ambiguity_notes: Do not confuse lowercase nu/ν with the Nusselt number Nu or a generic frequency symbol.; source: NIST SP 811, Guide for the Use of the International System of Units (SI); source_identifier: doi:10.6028/NIST.SP.811e2008; confidence: curated\n- entry_id: pq_friction_velocity; canonical_quantity: friction velocity; symbols: u_tau; uτ; U_tau; Uτ; aliases: shear velocity; wall friction velocity; definition: Velocity scale defined from wall shear stress and density, conventionally u_tau = sqrt(tau_w/rho).; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: wall-bounded fluid mechanics; ambiguity_notes: It is a velocity scale, not a stress; do not assign pressure dimensions.; source: Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling; source_identifier: https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8; confidence: high\n- entry_id: pq_eddy_viscosity; canonical_quantity: eddy viscosity; symbols: nu_t; ν_t; mu_t/rho; aliases: turbulent kinematic viscosity; turbulent eddy diffusivity for momentum; definition: Turbulent transport coefficient with the dimensions of kinematic viscosity when written as nu_t.; si_dimension: L^2 T^-1; dimension_vector: [0, 2, -1, 0, 0, 0, 0]; si_unit: m^2 s^-1; domain: turbulence modeling; ambiguity_notes: If a code uses dynamic eddy viscosity mu_t instead, its dimension is M L^-1 T^-1.; source: NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions; source_identifier: https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html; confidence: high",
+        "evidence_records_visible_by_variable": {
+          "u_tau": [
+            "pq_friction_velocity",
+            "pq_channel_half_height",
+            "pq_eddy_viscosity"
+          ],
+          "h": [
+            "pq_channel_half_height",
+            "pq_container_height",
+            "pq_heat_transfer_coefficient"
+          ],
+          "y": [
+            "pq_wall_normal_distance",
+            "pq_mass_fraction",
+            "pq_channel_half_height"
+          ],
+          "nu": [
+            "pq_kinematic_viscosity",
+            "pq_friction_velocity",
+            "pq_eddy_viscosity"
+          ]
+        },
+        "queries_by_variable": {
+          "u_tau": "Target CSV variable: u_tau\nLocal problem description: the channel half-height (h), the distance from the wall (y), the friction velocity (u_tau), and the fluid kinematic viscosity (nu).\nProblem domain/context: Perform dimensional analysis for the Cess eddy-viscosity model in turbulent channel flow to derive the dimensionless relationship governing the normalized eddy viscosity (denoted as nu_t/nu).\nAnalyzer interpretation: exact_column: u_tau; quantity_name: friction velocity; physical_definition: The friction velocity, a measure of the velocity scale in turbulent flow.",
+          "h": "Target CSV variable: h\nLocal problem description: the channel half-height (h), the distance from the wall (y), the friction velocity (u_tau), and the fluid kinematic viscosity (nu).\nProblem domain/context: Perform dimensional analysis for the Cess eddy-viscosity model in turbulent channel flow to derive the dimensionless relationship governing the normalized eddy viscosity (denoted as nu_t/nu).\nAnalyzer interpretation: exact_column: h; quantity_name: channel half-height; physical_definition: The channel half-height, a characteristic length scale of the flow.",
+          "y": "Target CSV variable: y\nLocal problem description: the channel half-height (h), the distance from the wall (y), the friction velocity (u_tau), and the fluid kinematic viscosity (nu).\nProblem domain/context: Perform dimensional analysis for the Cess eddy-viscosity model in turbulent channel flow to derive the dimensionless relationship governing the normalized eddy viscosity (denoted as nu_t/nu).\nAnalyzer interpretation: exact_column: y; quantity_name: distance from the wall; physical_definition: The distance from the wall, a measure of vertical position in the flow.",
+          "nu": "Target CSV variable: nu\nLocal problem description: Perform dimensional analysis for the Cess eddy-viscosity model in turbulent channel flow to derive the dimensionless relationship governing the normalized eddy viscosity (denoted as nu_t/nu). the channel half-height (h), the distance from the wall (y), the friction velocity (u_tau), and the fluid kinematic viscosity (nu).\nProblem domain/context: Perform dimensional analysis for the Cess eddy-viscosity model in turbulent channel flow to derive the dimensionless relationship governing the normalized eddy viscosity (denoted as nu_t/nu).\nAnalyzer interpretation: exact_column: nu; quantity_name: kinematic viscosity; physical_definition: The fluid kinematic viscosity, a measure of the fluid's resistance to flow."
+        },
+        "query_sha256_by_variable": {
+          "u_tau": "978da50cb41fff6d26587dd5382128aeb8b351c0920a9fca60845a61a19fb40f",
+          "h": "54eb044960c811914fcabfc12269f8bf96c3b97eaf9e12b9500f1e880d573023",
+          "y": "e1acaead384b68e213a36033380fade51b63f3e2e07c9fe1c6d7304cc939ff6c",
+          "nu": "7c45e5a94a7f2a2d952c49e9e172ef794b60b6e37952c052f4410fc65ed0b167"
+        },
+        "query_observed_in_retriever_by_variable": {
+          "u_tau": true,
+          "h": true,
+          "y": true,
+          "nu": true
+        },
+        "query_scope": "Candidate SI powers excluded. Original problem and typed quantity/definition provide semantic context; they still require physical interpretation."
+      },
+      "provisional_zero_coordinates": [
+        {
+          "csv_name": "u_tau",
+          "base": "Theta"
+        },
+        {
+          "csv_name": "u_tau",
+          "base": "N"
+        },
+        {
+          "csv_name": "u_tau",
+          "base": "J"
+        },
+        {
+          "csv_name": "h",
+          "base": "Theta"
+        },
+        {
+          "csv_name": "h",
+          "base": "N"
+        },
+        {
+          "csv_name": "h",
+          "base": "J"
+        },
+        {
+          "csv_name": "y",
+          "base": "Theta"
+        },
+        {
+          "csv_name": "y",
+          "base": "N"
+        },
+        {
+          "csv_name": "y",
+          "base": "J"
+        },
+        {
+          "csv_name": "nu",
+          "base": "Theta"
+        },
+        {
+          "csv_name": "nu",
+          "base": "N"
+        },
+        {
+          "csv_name": "nu",
+          "base": "J"
+        }
+      ],
+      "checker_response": {
+        "ledger_sha256": "3cd082bce050a7b2af5f4b8dd50a385c0698af2d2e8b6a04404482c48d4c1ea4",
+        "variables": [
+          {
+            "csv_name": "u_tau",
+            "before_si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "decision": "PASSED",
+            "suggested_si_exponents": null,
+            "support_mode": "KB_RECORD",
+            "evidence_entry_ids": [
+              "pq_friction_velocity"
+            ],
+            "reason": "The ledger symbol u_tau is the friction (shear) velocity used in wall-bounded turbulence; the retrieved record pq_friction_velocity defines u_tau = sqrt(tau_w/ rho) and gives the SI dimension L T^-1 (dimension_vector [0,1,-1,0,0,0,0]). That record therefore establishes the nonzero exponents L=1 and T=-1 and the zeros for M,I,Theta,N,J in the ledger entry for u_tau. The record is directly about the same canonical quantity and symbol used in the problem (friction velocity), so it applies to the variable as stated in the original problem."
+          },
+          {
+            "csv_name": "h",
+            "before_si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "decision": "PASSED",
+            "suggested_si_exponents": null,
+            "support_mode": "KB_RECORD",
+            "evidence_entry_ids": [
+              "pq_channel_half_height"
+            ],
+            "reason": "The ledger variable h is named and defined as the channel half-height. The retrieved record pq_channel_half_height is the canonical entry for channel half-height (distance from wall to centerline) with SI dimension L (dimension_vector [0,1,0,0,0,0,0]). This record therefore verifies L=1 and zeros for M,T,I,Theta,N,J in the ledger entry; it is the canonical quantity intended by the problem statement and so directly supports the ledger values."
+          },
+          {
+            "csv_name": "y",
+            "before_si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "decision": "PASSED",
+            "suggested_si_exponents": null,
+            "support_mode": "KB_RECORD",
+            "evidence_entry_ids": [
+              "pq_wall_normal_distance"
+            ],
+            "reason": "The ledger variable y is the wall-normal distance. The retrieved record pq_wall_normal_distance is the canonical entry for distance-from-wall with SI dimension L (dimension_vector [0,1,0,0,0,0,0]). That record confirms L=1 and zeros for the other base exponents in the ledger entry. The record matches the physical meaning and symbol used in the original problem (wall-normal coordinate y)."
+          },
+          {
+            "csv_name": "nu",
+            "before_si_exponents": {
+              "M": "2",
+              "L": "-1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "decision": "CONFLICT",
+            "suggested_si_exponents": {
+              "M": "0",
+              "L": "2",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "support_mode": "KB_RECORD",
+            "evidence_entry_ids": [
+              "pq_kinematic_viscosity"
+            ],
+            "reason": "The ledger entry labelled nu claims kinematic viscosity but lists exponents M=2, L=-1, T=-1 which do not match the standard physical definition. The retrieved record pq_kinematic_viscosity defines kinematic viscosity (momentum diffusivity) as dynamic viscosity divided by density, with SI dimension L^2 T^-1 (dimension_vector [0,2,-1,0,0,0,0]). This canonical record applies to the ledger variable 'nu' because the problem explicitly names it as the fluid kinematic viscosity and uses the conventional symbol ν. The record therefore supports the corrected exponents M=0, L=2, T=-1 (with zeros for I,Theta,N,J). The ledger's preexisting nonzero M and negative L are inconsistent with that canonical definition, so I report CONFLICT and supply the complete corrected SI exponent vector above."
+          }
+        ]
+      },
+      "checker_elapsed_s": 36.960474899969995,
+      "checker_tokens": {
+        "input": 3565,
+        "output": 3583
+      },
+      "embedding_tokens": {
+        "input": 620,
+        "output": 0
+      },
+      "checker_call": {
+        "parsed_response": {
+          "ledger_sha256": "3cd082bce050a7b2af5f4b8dd50a385c0698af2d2e8b6a04404482c48d4c1ea4",
+          "variables": [
+            {
+              "csv_name": "u_tau",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "-1",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_friction_velocity"
+              ],
+              "reason": "The ledger symbol u_tau is the friction (shear) velocity used in wall-bounded turbulence; the retrieved record pq_friction_velocity defines u_tau = sqrt(tau_w/ rho) and gives the SI dimension L T^-1 (dimension_vector [0,1,-1,0,0,0,0]). That record therefore establishes the nonzero exponents L=1 and T=-1 and the zeros for M,I,Theta,N,J in the ledger entry for u_tau. The record is directly about the same canonical quantity and symbol used in the problem (friction velocity), so it applies to the variable as stated in the original problem."
+            },
+            {
+              "csv_name": "h",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "0",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_channel_half_height"
+              ],
+              "reason": "The ledger variable h is named and defined as the channel half-height. The retrieved record pq_channel_half_height is the canonical entry for channel half-height (distance from wall to centerline) with SI dimension L (dimension_vector [0,1,0,0,0,0,0]). This record therefore verifies L=1 and zeros for M,T,I,Theta,N,J in the ledger entry; it is the canonical quantity intended by the problem statement and so directly supports the ledger values."
+            },
+            {
+              "csv_name": "y",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "0",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_wall_normal_distance"
+              ],
+              "reason": "The ledger variable y is the wall-normal distance. The retrieved record pq_wall_normal_distance is the canonical entry for distance-from-wall with SI dimension L (dimension_vector [0,1,0,0,0,0,0]). That record confirms L=1 and zeros for the other base exponents in the ledger entry. The record matches the physical meaning and symbol used in the original problem (wall-normal coordinate y)."
+            },
+            {
+              "csv_name": "nu",
+              "before_si_exponents": {
+                "M": "2",
+                "L": "-1",
+                "T": "-1",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "CONFLICT",
+              "suggested_si_exponents": {
+                "M": "0",
+                "L": "2",
+                "T": "-1",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_kinematic_viscosity"
+              ],
+              "reason": "The ledger entry labelled nu claims kinematic viscosity but lists exponents M=2, L=-1, T=-1 which do not match the standard physical definition. The retrieved record pq_kinematic_viscosity defines kinematic viscosity (momentum diffusivity) as dynamic viscosity divided by density, with SI dimension L^2 T^-1 (dimension_vector [0,2,-1,0,0,0,0]). This canonical record applies to the ledger variable 'nu' because the problem explicitly names it as the fluid kinematic viscosity and uses the conventional symbol ν. The record therefore supports the corrected exponents M=0, L=2, T=-1 (with zeros for I,Theta,N,J). The ledger's preexisting nonzero M and negative L are inconsistent with that canonical definition, so I report CONFLICT and supply the complete corrected SI exponent vector above."
+            }
+          ]
+        },
+        "raw_tool_calls": [
+          {
+            "id": "call_NMBKuaFbqjag1rGo2WHNAt0r",
+            "type": "function",
+            "function": {
+              "name": "CheckerDimensionAudit",
+              "arguments": "{\"ledger_sha256\":\"3cd082bce050a7b2af5f4b8dd50a385c0698af2d2e8b6a04404482c48d4c1ea4\",\"variables\":[{\"csv_name\":\"u_tau\",\"before_si_exponents\":{\"M\":\"0\",\"L\":\"1\",\"T\":\"-1\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"},\"decision\":\"PASSED\",\"suggested_si_exponents\":null,\"support_mode\":\"KB_RECORD\",\"evidence_entry_ids\":[\"pq_friction_velocity\"],\"reason\":\"The ledger symbol u_tau is the friction (shear) velocity used in wall-bounded turbulence; the retrieved record pq_friction_velocity defines u_tau = sqrt(tau_w/ rho) and gives the SI dimension L T^-1 (dimension_vector [0,1,-1,0,0,0,0]). That record therefore establishes the nonzero exponents L=1 and T=-1 and the zeros for M,I,Theta,N,J in the ledger entry for u_tau. The record is directly about the same canonical quantity and symbol used in the problem (friction velocity), so it applies to the variable as stated in the original problem.\"},{\"csv_name\":\"h\",\"before_si_exponents\":{\"M\":\"0\",\"L\":\"1\",\"T\":\"0\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"},\"decision\":\"PASSED\",\"suggested_si_exponents\":null,\"support_mode\":\"KB_RECORD\",\"evidence_entry_ids\":[\"pq_channel_half_height\"],\"reason\":\"The ledger variable h is named and defined as the channel half-height. The retrieved record pq_channel_half_height is the canonical entry for channel half-height (distance from wall to centerline) with SI dimension L (dimension_vector [0,1,0,0,0,0,0]). This record therefore verifies L=1 and zeros for M,T,I,Theta,N,J in the ledger entry; it is the canonical quantity intended by the problem statement and so directly supports the ledger values.\"},{\"csv_name\":\"y\",\"before_si_exponents\":{\"M\":\"0\",\"L\":\"1\",\"T\":\"0\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"},\"decision\":\"PASSED\",\"suggested_si_exponents\":null,\"support_mode\":\"KB_RECORD\",\"evidence_entry_ids\":[\"pq_wall_normal_distance\"],\"reason\":\"The ledger variable y is the wall-normal distance. The retrieved record pq_wall_normal_distance is the canonical entry for distance-from-wall with SI dimension L (dimension_vector [0,1,0,0,0,0,0]). That record confirms L=1 and zeros for the other base exponents in the ledger entry. The record matches the physical meaning and symbol used in the original problem (wall-normal coordinate y).\"},{\"csv_name\":\"nu\",\"before_si_exponents\":{\"M\":\"2\",\"L\":\"-1\",\"T\":\"-1\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"},\"decision\":\"CONFLICT\",\"suggested_si_exponents\":{\"M\":\"0\",\"L\":\"2\",\"T\":\"-1\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"},\"support_mode\":\"KB_RECORD\",\"evidence_entry_ids\":[\"pq_kinematic_viscosity\"],\"reason\":\"The ledger entry labelled nu claims kinematic viscosity but lists exponents M=2, L=-1, T=-1 which do not match the standard physical definition. The retrieved record pq_kinematic_viscosity defines kinematic viscosity (momentum diffusivity) as dynamic viscosity divided by density, with SI dimension L^2 T^-1 (dimension_vector [0,2,-1,0,0,0,0]). This canonical record applies to the ledger variable 'nu' because the problem explicitly names it as the fluid kinematic viscosity and uses the conventional symbol ν. The record therefore supports the corrected exponents M=0, L=2, T=-1 (with zeros for I,Theta,N,J). The ledger's preexisting nonzero M and negative L are inconsistent with that canonical definition, so I report CONFLICT and supply the complete corrected SI exponent vector above.\"}]}"
+            }
+          }
+        ],
+        "model_messages": [
+          {
+            "type": "system",
+            "content": "Audit every named physical input in this exact typed ledger, including literal SI coordinate values. Do not substitute the correct definition or a KB vector for a wrong candidate and then claim PASSED. Return ledger_sha256 and each csv_name exactly once; before_si_exponents must copy the actual candidate. PASSED confirms the actual vector, CONFLICT requires a complete corrected suggested vector, and UNCERTAIN does not permit numerical execution. KB_RECORD requires actual entry_id citations from that variable's retrieved records. Canonical entity names are read by the program from the selected IDs; do not echo another quantity-name field. Your reason must explain why each cited record applies to this variable in the original problem, not merely why its vector matches. Cited vectors must support all known coordinates of the proposed/confirmed SI vector. INTERNAL_REASONING uses no IDs and must explain the physical meaning. Retrieval rank is relevance, not truth. Resolve symbol ambiguity from the original problem; do not choose an unrelated matching symbol. Known absent base dimensions must be explicit '0'; null means genuinely unknown, not unused. If any current coordinate is unknown, request revision or report UNCERTAIN; never call a partly known vector PASSED. Give a complete correction when physically justified. If a correction remains partly unknown, preserve null and explain what remains unresolved; the program will request revision rather than invent zeros. Lack of KB alone is not a physical contradiction. Matrix compilation and n/r/k are program tasks, not audit tasks. The listed provisional zero coordinates were null in the Analyzer response. Copy their current zero values in before_si_exponents and verify each from the physical definition or applicable retrieved evidence. Use PASSED only if you can affirm those zeros. If an exponent is nonzero, report CONFLICT with the complete corrected vector. If any provisional coordinate cannot be verified, report UNCERTAIN."
+          },
+          {
+            "type": "human",
+            "content": "Problem:\nPerform dimensional analysis for the Cess eddy-viscosity model in turbulent channel flow to derive the dimensionless relationship governing the normalized eddy viscosity (denoted as nu_t/nu).\nThis analysis uses ONLY the following 4 dimensional physical quantities as input parameters:\nthe channel half-height (h), the distance from the wall (y), the friction velocity (u_tau), and the fluid kinematic viscosity (nu).\n\nTyped ledger SHA256: 3cd082bce050a7b2af5f4b8dd50a385c0698af2d2e8b6a04404482c48d4c1ea4\nTyped candidate ledger:\n{\"input_variable_names\": [\"u_tau\", \"h\", \"y\", \"nu\"], \"output_variable_confidence\": \"high\", \"output_variable_name\": \"nu_t/nu\", \"output_variable_reasoning\": \"The output variable is a dimensionless ratio of eddy viscosity to kinematic viscosity, which is derived from the input parameters that have defined physical dimensions.\", \"variables\": [{\"csv_name\": \"u_tau\", \"physical_definition\": \"The friction velocity, a measure of the velocity scale in turbulent flow.\", \"quantity_name\": \"friction velocity\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"1\", \"M\": \"0\", \"N\": \"0\", \"T\": \"-1\", \"Theta\": \"0\"}}, {\"csv_name\": \"h\", \"physical_definition\": \"The channel half-height, a characteristic length scale of the flow.\", \"quantity_name\": \"channel half-height\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"1\", \"M\": \"0\", \"N\": \"0\", \"T\": \"0\", \"Theta\": \"0\"}}, {\"csv_name\": \"y\", \"physical_definition\": \"The distance from the wall, a measure of vertical position in the flow.\", \"quantity_name\": \"distance from the wall\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"1\", \"M\": \"0\", \"N\": \"0\", \"T\": \"0\", \"Theta\": \"0\"}}, {\"csv_name\": \"nu\", \"physical_definition\": \"The fluid kinematic viscosity, a measure of the fluid's resistance to flow.\", \"quantity_name\": \"kinematic viscosity\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"-1\", \"M\": \"2\", \"N\": \"0\", \"T\": \"-1\", \"Theta\": \"0\"}}]}\n\nProvisional zero coordinates:\n[{\"csv_name\": \"u_tau\", \"base\": \"Theta\"}, {\"csv_name\": \"u_tau\", \"base\": \"N\"}, {\"csv_name\": \"u_tau\", \"base\": \"J\"}, {\"csv_name\": \"h\", \"base\": \"Theta\"}, {\"csv_name\": \"h\", \"base\": \"N\"}, {\"csv_name\": \"h\", \"base\": \"J\"}, {\"csv_name\": \"y\", \"base\": \"Theta\"}, {\"csv_name\": \"y\", \"base\": \"N\"}, {\"csv_name\": \"y\", \"base\": \"J\"}, {\"csv_name\": \"nu\", \"base\": \"Theta\"}, {\"csv_name\": \"nu\", \"base\": \"N\"}, {\"csv_name\": \"nu\", \"base\": \"J\"}]\n\nRetrieved dimensional evidence:\n### Input variable `u_tau`\n- entry_id: pq_friction_velocity; canonical_quantity: friction velocity; symbols: u_tau; uτ; U_tau; Uτ; aliases: shear velocity; wall friction velocity; definition: Velocity scale defined from wall shear stress and density, conventionally u_tau = sqrt(tau_w/rho).; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: wall-bounded fluid mechanics; ambiguity_notes: It is a velocity scale, not a stress; do not assign pressure dimensions.; source: Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling; source_identifier: https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8; confidence: high\n- entry_id: pq_channel_half_height; canonical_quantity: channel half-height; symbols: h; delta; δ; aliases: channel half-height; half-gap; definition: Distance from a channel wall to its centerline for a symmetric plane channel.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: channel flow; ambiguity_notes: The symbol h is also used for full height, enthalpy, or heat-transfer coefficient in other contexts.; source: Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling; source_identifier: https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8; confidence: high\n- entry_id: pq_eddy_viscosity; canonical_quantity: eddy viscosity; symbols: nu_t; ν_t; mu_t/rho; aliases: turbulent kinematic viscosity; turbulent eddy diffusivity for momentum; definition: Turbulent transport coefficient with the dimensions of kinematic viscosity when written as nu_t.; si_dimension: L^2 T^-1; dimension_vector: [0, 2, -1, 0, 0, 0, 0]; si_unit: m^2 s^-1; domain: turbulence modeling; ambiguity_notes: If a code uses dynamic eddy viscosity mu_t instead, its dimension is M L^-1 T^-1.; source: NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions; source_identifier: https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html; confidence: high\n### Input variable `h`\n- entry_id: pq_channel_half_height; canonical_quantity: channel half-height; symbols: h; delta; δ; aliases: channel half-height; half-gap; definition: Distance from a channel wall to its centerline for a symmetric plane channel.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: channel flow; ambiguity_notes: The symbol h is also used for full height, enthalpy, or heat-transfer coefficient in other contexts.; source: Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling; source_identifier: https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8; confidence: high\n- entry_id: pq_container_height; canonical_quantity: container height; symbols: h; H; aliases: cell height; layer height; plate separation; definition: Vertical separation between confining plates in the Rayleigh-Benard configuration.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: Rayleigh-Benard convection; ambiguity_notes: The symbol h may denote a half-height in channel flow; use the problem geometry.; source: Rayleigh-Benard convection reference defining Ra and Pr; source_identifier: https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/scaling-laws-for-rayleighbenard-convection-between-navierslip-boundaries/F474DBFC0CC0A874A0B14A383195D714; confidence: high\n- entry_id: pq_heat_transfer_coefficient; canonical_quantity: convective heat-transfer coefficient; symbols: h_c; h; aliases: film coefficient; convection coefficient; definition: Heat flux divided by a driving temperature difference.; si_dimension: M T^-3 Theta^-1; dimension_vector: [1, 0, -3, 0, -1, 0, 0]; si_unit: W m^-2 K^-1; domain: heat transfer; ambiguity_notes: h is also used for length or enthalpy in some contexts.; source: Lupi, Heat Transfer, in Fundamentals of Electroheat; source_identifier: doi:10.1007/978-3-319-46015-4_1; confidence: high\n### Input variable `y`\n- entry_id: pq_wall_normal_distance; canonical_quantity: wall-normal distance; symbols: y; aliases: distance from wall; wall-normal coordinate; definition: Distance measured normal to a wall.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: wall-bounded flows; ambiguity_notes: ; source: NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions; source_identifier: https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html; confidence: high\n- entry_id: pq_mass_fraction; canonical_quantity: mass fraction; symbols: Y; w; aliases: mass fraction; definition: Ratio of constituent mass to total mass.; si_dimension: 1; dimension_vector: [0, 0, 0, 0, 0, 0, 0]; si_unit: 1; domain: mixtures; chemistry; ambiguity_notes: Dimensionless ratio.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_channel_half_height; canonical_quantity: channel half-height; symbols: h; delta; δ; aliases: channel half-height; half-gap; definition: Distance from a channel wall to its centerline for a symmetric plane channel.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: channel flow; ambiguity_notes: The symbol h is also used for full height, enthalpy, or heat-transfer coefficient in other contexts.; source: Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling; source_identifier: https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8; confidence: high\n### Input variable `nu`\n- entry_id: pq_kinematic_viscosity; canonical_quantity: kinematic viscosity; symbols: nu; ν; aliases: momentum diffusivity; definition: Dynamic viscosity divided by mass density.; si_dimension: L^2 T^-1; dimension_vector: [0, 2, -1, 0, 0, 0, 0]; si_unit: m^2 s^-1; domain: fluid mechanics; ambiguity_notes: Do not confuse lowercase nu/ν with the Nusselt number Nu or a generic frequency symbol.; source: NIST SP 811, Guide for the Use of the International System of Units (SI); source_identifier: doi:10.6028/NIST.SP.811e2008; confidence: curated\n- entry_id: pq_friction_velocity; canonical_quantity: friction velocity; symbols: u_tau; uτ; U_tau; Uτ; aliases: shear velocity; wall friction velocity; definition: Velocity scale defined from wall shear stress and density, conventionally u_tau = sqrt(tau_w/rho).; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: wall-bounded fluid mechanics; ambiguity_notes: It is a velocity scale, not a stress; do not assign pressure dimensions.; source: Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling; source_identifier: https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8; confidence: high\n- entry_id: pq_eddy_viscosity; canonical_quantity: eddy viscosity; symbols: nu_t; ν_t; mu_t/rho; aliases: turbulent kinematic viscosity; turbulent eddy diffusivity for momentum; definition: Turbulent transport coefficient with the dimensions of kinematic viscosity when written as nu_t.; si_dimension: L^2 T^-1; dimension_vector: [0, 2, -1, 0, 0, 0, 0]; si_unit: m^2 s^-1; domain: turbulence modeling; ambiguity_notes: If a code uses dynamic eddy viscosity mu_t instead, its dimension is M L^-1 T^-1.; source: NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions; source_identifier: https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html; confidence: high"
+          }
+        ],
+        "elapsed_s": 36.960474899969995
+      },
+      "retrieval_elapsed_s": 24.002738799958024
+    },
+    {
+      "candidate_ledger": {
+        "output_variable_name": "nu_t/nu",
+        "output_variable_reasoning": "The normalized eddy viscosity is a dimensionless quantity derived from the ratio of turbulent eddy viscosity to kinematic viscosity, which is a common practice in fluid dynamics to analyze turbulent flows.",
+        "output_variable_confidence": "high",
+        "input_variable_names": [
+          "u_tau",
+          "h",
+          "y",
+          "nu"
+        ],
+        "variables": [
+          {
+            "csv_name": "u_tau",
+            "quantity_name": "friction velocity",
+            "physical_definition": "Friction velocity used in wall-bounded turbulence.",
+            "si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "h",
+            "quantity_name": "channel half-height",
+            "physical_definition": "Channel half-height, the distance from a channel wall to its centerline.",
+            "si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "y",
+            "quantity_name": "wall-normal distance",
+            "physical_definition": "Wall-normal distance from the wall.",
+            "si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "nu",
+            "quantity_name": "kinematic viscosity",
+            "physical_definition": "Fluid kinematic viscosity, a measure of the fluid's resistance to flow.",
+            "si_exponents": {
+              "M": "0",
+              "L": "2",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          }
+        ]
+      },
+      "ledger_sha256": "badebdecf5b09b12001992fe061c22c2e77381a589d66d18adfbac98affa1774",
+      "gate": {
+        "gate_status": "PASSED",
+        "ledger_sha256": "badebdecf5b09b12001992fe061c22c2e77381a589d66d18adfbac98affa1774",
+        "checker_audit": {
+          "ledger_sha256": "badebdecf5b09b12001992fe061c22c2e77381a589d66d18adfbac98affa1774",
+          "variables": [
+            {
+              "csv_name": "u_tau",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "-1",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "-1",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_friction_velocity"
+              ],
+              "reason": "The problem defines u_tau as the friction velocity (wall-bounded turbulence). The retrieved record pq_friction_velocity explicitly defines friction velocity u_tau = sqrt(tau_w/rho) and gives SI dimension L T^-1 (vector [0,1,-1,0,0,0,0]). This canonical record applies directly to the variable as named in the original problem (same symbol and physical role), and its dimension vector supplies all coordinates (M=0, L=1, T=-1, I=0, Theta=0, N=0, J=0) that match the candidate."
+            },
+            {
+              "csv_name": "h",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "0",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "0",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_channel_half_height"
+              ],
+              "reason": "The candidate names h as the channel half-height. The retrieved record pq_channel_half_height defines channel half-height (distance from wall to centerline) with SI dimension L (vector [0,1,0,0,0,0,0]). This canonical quantity matches the problem geometry and provides the complete set of SI exponents for h."
+            },
+            {
+              "csv_name": "y",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "0",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "0",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_wall_normal_distance"
+              ],
+              "reason": "The ledger defines y as the wall-normal distance. The retrieved record pq_wall_normal_distance explicitly gives y as the distance normal to a wall with SI dimension L (vector [0,1,0,0,0,0,0]). This record corresponds directly to the named variable in the original problem, and its vector supplies all coordinates used in the candidate."
+            },
+            {
+              "csv_name": "nu",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "2",
+                "T": "-1",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": {
+                "M": "0",
+                "L": "2",
+                "T": "-1",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_kinematic_viscosity"
+              ],
+              "reason": "The candidate lists nu as kinematic viscosity. The retrieved record pq_kinematic_viscosity defines kinematic viscosity (dynamic viscosity divided by density) with SI dimension L^2 T^-1 (vector [0,2,-1,0,0,0,0]). This canonical record directly applies to the variable named nu in the problem and provides the full SI exponent vector that matches the candidate."
+            }
+          ]
+        },
+        "variable_results": [
+          {
+            "csv_name": "u_tau",
+            "decision": "PASSED",
+            "before": {
+              "M": "0",
+              "L": "1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "suggested": {
+              "M": "0",
+              "L": "1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "coordinate_diff": {},
+            "issues": [],
+            "referenced_entry_ids": [
+              "pq_friction_velocity"
+            ],
+            "selected_entities": [
+              {
+                "entry_id": "pq_friction_velocity",
+                "canonical_quantity": "friction velocity",
+                "source_identifier": "https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8"
+              }
+            ],
+            "cited_reference_si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "known_coordinate_conflicts_with_reference": {}
+          },
+          {
+            "csv_name": "h",
+            "decision": "PASSED",
+            "before": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "suggested": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "coordinate_diff": {},
+            "issues": [],
+            "referenced_entry_ids": [
+              "pq_channel_half_height"
+            ],
+            "selected_entities": [
+              {
+                "entry_id": "pq_channel_half_height",
+                "canonical_quantity": "channel half-height",
+                "source_identifier": "https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8"
+              }
+            ],
+            "cited_reference_si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "known_coordinate_conflicts_with_reference": {}
+          },
+          {
+            "csv_name": "y",
+            "decision": "PASSED",
+            "before": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "suggested": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "coordinate_diff": {},
+            "issues": [],
+            "referenced_entry_ids": [
+              "pq_wall_normal_distance"
+            ],
+            "selected_entities": [
+              {
+                "entry_id": "pq_wall_normal_distance",
+                "canonical_quantity": "wall-normal distance",
+                "source_identifier": "https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html"
+              }
+            ],
+            "cited_reference_si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "known_coordinate_conflicts_with_reference": {}
+          },
+          {
+            "csv_name": "nu",
+            "decision": "PASSED",
+            "before": {
+              "M": "0",
+              "L": "2",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "suggested": {
+              "M": "0",
+              "L": "2",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "coordinate_diff": {},
+            "issues": [],
+            "referenced_entry_ids": [
+              "pq_kinematic_viscosity"
+            ],
+            "selected_entities": [
+              {
+                "entry_id": "pq_kinematic_viscosity",
+                "canonical_quantity": "kinematic viscosity",
+                "source_identifier": "doi:10.6028/NIST.SP.811e2008"
+              }
+            ],
+            "cited_reference_si_exponents": {
+              "M": "0",
+              "L": "2",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "known_coordinate_conflicts_with_reference": {}
+          }
+        ],
+        "issues": [],
+        "referenced_records": [
+          {
+            "csv_name": "u_tau",
+            "record": {
+              "variable_name": "u_tau",
+              "entry_id": "pq_friction_velocity",
+              "canonical_quantity": "friction velocity",
+              "symbols": "u_tau; uτ; U_tau; Uτ",
+              "aliases": "shear velocity; wall friction velocity",
+              "definition": "Velocity scale defined from wall shear stress and density, conventionally u_tau = sqrt(tau_w/rho).",
+              "si_dimension": "L T^-1",
+              "dimension_vector": "[0, 1, -1, 0, 0, 0, 0]",
+              "si_unit": "m s^-1",
+              "domain": "wall-bounded fluid mechanics",
+              "ambiguity_notes": "It is a velocity scale, not a stress; do not assign pressure dimensions.",
+              "source": "Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling",
+              "source_identifier": "https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.6387330051913871,
+              "hybrid_score": 0.8735565518169854,
+              "retrieval_mode": "hybrid"
+            }
+          },
+          {
+            "csv_name": "h",
+            "record": {
+              "variable_name": "h",
+              "entry_id": "pq_channel_half_height",
+              "canonical_quantity": "channel half-height",
+              "symbols": "h; delta; δ",
+              "aliases": "channel half-height; half-gap",
+              "definition": "Distance from a channel wall to its centerline for a symmetric plane channel.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "channel flow",
+              "ambiguity_notes": "The symbol h is also used for full height, enthalpy, or heat-transfer coefficient in other contexts.",
+              "source": "Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling",
+              "source_identifier": "https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.6277028458490992,
+              "hybrid_score": 0.8696959960471847,
+              "retrieval_mode": "hybrid"
+            }
+          },
+          {
+            "csv_name": "y",
+            "record": {
+              "variable_name": "y",
+              "entry_id": "pq_wall_normal_distance",
+              "canonical_quantity": "wall-normal distance",
+              "symbols": "y",
+              "aliases": "distance from wall; wall-normal coordinate",
+              "definition": "Distance measured normal to a wall.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "wall-bounded flows",
+              "ambiguity_notes": "",
+              "source": "NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions",
+              "source_identifier": "https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5818461999258995,
+              "hybrid_score": 0.8536461699740648,
+              "retrieval_mode": "hybrid"
+            }
+          },
+          {
+            "csv_name": "nu",
+            "record": {
+              "variable_name": "nu",
+              "entry_id": "pq_kinematic_viscosity",
+              "canonical_quantity": "kinematic viscosity",
+              "symbols": "nu; ν",
+              "aliases": "momentum diffusivity",
+              "definition": "Dynamic viscosity divided by mass density.",
+              "si_dimension": "L^2 T^-1",
+              "dimension_vector": "[0, 2, -1, 0, 0, 0, 0]",
+              "si_unit": "m^2 s^-1",
+              "domain": "fluid mechanics",
+              "ambiguity_notes": "Do not confuse lowercase nu/ν with the Nusselt number Nu or a generic frequency symbol.",
+              "source": "NIST SP 811, Guide for the Use of the International System of Units (SI)",
+              "source_identifier": "doi:10.6028/NIST.SP.811e2008",
+              "confidence": "curated",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5746708966940056,
+              "hybrid_score": 0.851134813842902,
+              "retrieval_mode": "hybrid"
+            }
+          }
+        ],
+        "feedback": "Typed ledger badebdecf5b09b12001992fe061c22c2e77381a589d66d18adfbac98affa1774; program gate=PASSED\nVariable u_tau: decision=PASSED; reason=The problem defines u_tau as the friction velocity (wall-bounded turbulence). The retrieved record pq_friction_velocity explicitly defines friction velocity u_tau = sqrt(tau_w/rho) and gives SI dimension L T^-1 (vector [0,1,-1,0,0,0,0]). This canonical record applies directly to the variable as named in the original problem (same symbol and physical role), and its dimension vector supplies all coordinates (M=0, L=1, T=-1, I=0, Theta=0, N=0, J=0) that match the candidate.\nActual named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"-1\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"-1\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_friction_velocity\", \"canonical_quantity\": \"friction velocity\", \"source_identifier\": \"https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for u_tau:\n{\"aliases\": \"shear velocity; wall friction velocity\", \"ambiguity_notes\": \"It is a velocity scale, not a stress; do not assign pressure dimensions.\", \"canonical_quantity\": \"friction velocity\", \"confidence\": \"high\", \"definition\": \"Velocity scale defined from wall shear stress and density, conventionally u_tau = sqrt(tau_w/rho).\", \"dimension_vector\": \"[0, 1, -1, 0, 0, 0, 0]\", \"domain\": \"wall-bounded fluid mechanics\", \"entry_id\": \"pq_friction_velocity\", \"hybrid_score\": 0.8735565518169854, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.6387330051913871, \"si_dimension\": \"L T^-1\", \"si_unit\": \"m s^-1\", \"source\": \"Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling\", \"source_identifier\": \"https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8\", \"symbols\": \"u_tau; uτ; U_tau; Uτ\", \"variable_name\": \"u_tau\"}\n\nVariable h: decision=PASSED; reason=The candidate names h as the channel half-height. The retrieved record pq_channel_half_height defines channel half-height (distance from wall to centerline) with SI dimension L (vector [0,1,0,0,0,0,0]). This canonical quantity matches the problem geometry and provides the complete set of SI exponents for h.\nActual named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_channel_half_height\", \"canonical_quantity\": \"channel half-height\", \"source_identifier\": \"https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for h:\n{\"aliases\": \"channel half-height; half-gap\", \"ambiguity_notes\": \"The symbol h is also used for full height, enthalpy, or heat-transfer coefficient in other contexts.\", \"canonical_quantity\": \"channel half-height\", \"confidence\": \"high\", \"definition\": \"Distance from a channel wall to its centerline for a symmetric plane channel.\", \"dimension_vector\": \"[0, 1, 0, 0, 0, 0, 0]\", \"domain\": \"channel flow\", \"entry_id\": \"pq_channel_half_height\", \"hybrid_score\": 0.8696959960471847, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.6277028458490992, \"si_dimension\": \"L\", \"si_unit\": \"m\", \"source\": \"Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling\", \"source_identifier\": \"https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8\", \"symbols\": \"h; delta; δ\", \"variable_name\": \"h\"}\n\nVariable y: decision=PASSED; reason=The ledger defines y as the wall-normal distance. The retrieved record pq_wall_normal_distance explicitly gives y as the distance normal to a wall with SI dimension L (vector [0,1,0,0,0,0,0]). This record corresponds directly to the named variable in the original problem, and its vector supplies all coordinates used in the candidate.\nActual named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_wall_normal_distance\", \"canonical_quantity\": \"wall-normal distance\", \"source_identifier\": \"https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for y:\n{\"aliases\": \"distance from wall; wall-normal coordinate\", \"ambiguity_notes\": \"\", \"canonical_quantity\": \"wall-normal distance\", \"confidence\": \"high\", \"definition\": \"Distance measured normal to a wall.\", \"dimension_vector\": \"[0, 1, 0, 0, 0, 0, 0]\", \"domain\": \"wall-bounded flows\", \"entry_id\": \"pq_wall_normal_distance\", \"hybrid_score\": 0.8536461699740648, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.5818461999258995, \"si_dimension\": \"L\", \"si_unit\": \"m\", \"source\": \"NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions\", \"source_identifier\": \"https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html\", \"symbols\": \"y\", \"variable_name\": \"y\"}\n\nVariable nu: decision=PASSED; reason=The candidate lists nu as kinematic viscosity. The retrieved record pq_kinematic_viscosity defines kinematic viscosity (dynamic viscosity divided by density) with SI dimension L^2 T^-1 (vector [0,2,-1,0,0,0,0]). This canonical record directly applies to the variable named nu in the problem and provides the full SI exponent vector that matches the candidate.\nActual named SI={\"M\": \"0\", \"L\": \"2\", \"T\": \"-1\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"0\", \"L\": \"2\", \"T\": \"-1\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_kinematic_viscosity\", \"canonical_quantity\": \"kinematic viscosity\", \"source_identifier\": \"doi:10.6028/NIST.SP.811e2008\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for nu:\n{\"aliases\": \"momentum diffusivity\", \"ambiguity_notes\": \"Do not confuse lowercase nu/ν with the Nusselt number Nu or a generic frequency symbol.\", \"canonical_quantity\": \"kinematic viscosity\", \"confidence\": \"curated\", \"definition\": \"Dynamic viscosity divided by mass density.\", \"dimension_vector\": \"[0, 2, -1, 0, 0, 0, 0]\", \"domain\": \"fluid mechanics\", \"entry_id\": \"pq_kinematic_viscosity\", \"hybrid_score\": 0.851134813842902, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.5746708966940056, \"si_dimension\": \"L^2 T^-1\", \"si_unit\": \"m^2 s^-1\", \"source\": \"NIST SP 811, Guide for the Use of the International System of Units (SI)\", \"source_identifier\": \"doi:10.6028/NIST.SP.811e2008\", \"symbols\": \"nu; ν\", \"variable_name\": \"nu\"}",
+        "entity_policy": "Only Checker-selected visible record IDs identify cited canonical entities; no unselected-record or Analyzer-name anchor. Equal vectors do not establish equal physical entities.",
+        "physical_correctness_scope": "A passed contract is not a theorem of physical correctness. Record ID and coordinate checks establish citation consistency; semantic relevance/applicability in the reason and internal-reasoning physics remain model judgements."
+      },
+      "gate_status": "PASSED",
+      "retrieval": {
+        "status": "success",
+        "kb_path": "Q:\\Chengao_File\\CodeX_\\Dimsionless_learn\\1114_final\\Codes_src\\RAG_on_model_evaluation\\reference\\Data_csv\\dimensional_physical_quantities.md",
+        "kb_sha256": "64d8ebb7988c9157401c6b023add3ed8681651bc6d4d1d1bbb7a7aa452fc9f60",
+        "embedding_cache_path": "Q:\\Chengao_File\\CodeX_\\Dimsionless_learn\\1114_final\\Codes_src\\RAG_on_model_evaluation\\followup_repairs\\GPT-4o-mini-quoted-null\\.work\\physical_quantity_index.npz",
+        "embedding_cache_source": null,
+        "embedding_model": "GLM-Embedding-3",
+        "embedding_provider": "Paratera",
+        "embedding_base_url": "https://llmapi.paratera.com/v1",
+        "embedding_status": "cache",
+        "retrieval_modes": [
+          "hybrid"
+        ],
+        "retrieved_variables": [
+          "u_tau",
+          "h",
+          "y",
+          "nu"
+        ],
+        "n_retrieved_records": 12,
+        "top_k_per_variable": 3,
+        "max_evidence_rows": 30,
+        "lexical_weight": 0.65,
+        "semantic_weight": 0.35,
+        "min_hybrid_score": 0.22,
+        "allow_lexical_fallback": false,
+        "matches_by_variable": {
+          "u_tau": [
+            {
+              "variable_name": "u_tau",
+              "entry_id": "pq_friction_velocity",
+              "canonical_quantity": "friction velocity",
+              "symbols": "u_tau; uτ; U_tau; Uτ",
+              "aliases": "shear velocity; wall friction velocity",
+              "definition": "Velocity scale defined from wall shear stress and density, conventionally u_tau = sqrt(tau_w/rho).",
+              "si_dimension": "L T^-1",
+              "dimension_vector": "[0, 1, -1, 0, 0, 0, 0]",
+              "si_unit": "m s^-1",
+              "domain": "wall-bounded fluid mechanics",
+              "ambiguity_notes": "It is a velocity scale, not a stress; do not assign pressure dimensions.",
+              "source": "Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling",
+              "source_identifier": "https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.6387330051913871,
+              "hybrid_score": 0.8735565518169854,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "u_tau",
+              "entry_id": "pq_wall_shear_stress",
+              "canonical_quantity": "wall shear stress",
+              "symbols": "tau_w; τ_w; τw",
+              "aliases": "skin friction stress; wall stress",
+              "definition": "Tangential shear stress exerted at a wall.",
+              "si_dimension": "M L^-1 T^-2",
+              "dimension_vector": "[1, -1, -2, 0, 0, 0, 0]",
+              "si_unit": "Pa",
+              "domain": "wall-bounded fluid mechanics",
+              "ambiguity_notes": "",
+              "source": "NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions",
+              "source_identifier": "https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html",
+              "confidence": "curated",
+              "lexical_score": 0.3214285714285714,
+              "semantic_score": 0.5565678287337485,
+              "hybrid_score": 0.4037273114853834,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "u_tau",
+              "entry_id": "pq_mean_flow_velocity",
+              "canonical_quantity": "mean flow velocity",
+              "symbols": "U; U_m; Umean; V",
+              "aliases": "bulk velocity; mean velocity; average flow velocity",
+              "definition": "Mean or bulk velocity used to characterize a flow.",
+              "si_dimension": "L T^-1",
+              "dimension_vector": "[0, 1, -1, 0, 0, 0, 0]",
+              "si_unit": "m s^-1",
+              "domain": "fluid mechanics",
+              "ambiguity_notes": "",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "high",
+              "lexical_score": 0.33088235294117646,
+              "semantic_score": 0.5340782573727617,
+              "hybrid_score": 0.40200091949223127,
+              "retrieval_mode": "hybrid"
+            }
+          ],
+          "h": [
+            {
+              "variable_name": "h",
+              "entry_id": "pq_channel_half_height",
+              "canonical_quantity": "channel half-height",
+              "symbols": "h; delta; δ",
+              "aliases": "channel half-height; half-gap",
+              "definition": "Distance from a channel wall to its centerline for a symmetric plane channel.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "channel flow",
+              "ambiguity_notes": "The symbol h is also used for full height, enthalpy, or heat-transfer coefficient in other contexts.",
+              "source": "Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling",
+              "source_identifier": "https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.6277028458490992,
+              "hybrid_score": 0.8696959960471847,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "h",
+              "entry_id": "pq_container_height",
+              "canonical_quantity": "container height",
+              "symbols": "h; H",
+              "aliases": "cell height; layer height; plate separation",
+              "definition": "Vertical separation between confining plates in the Rayleigh-Benard configuration.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "Rayleigh-Benard convection",
+              "ambiguity_notes": "The symbol h may denote a half-height in channel flow; use the problem geometry.",
+              "source": "Rayleigh-Benard convection reference defining Ra and Pr",
+              "source_identifier": "https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/scaling-laws-for-rayleighbenard-convection-between-navierslip-boundaries/F474DBFC0CC0A874A0B14A383195D714",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5420201586924545,
+              "hybrid_score": 0.8397070555423591,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "h",
+              "entry_id": "pq_duct_side_length",
+              "canonical_quantity": "square-duct side length",
+              "symbols": "h",
+              "aliases": "duct side length; side length of square duct",
+              "definition": "Side length of a square duct cross-section.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "duct flow; magnetohydrodynamics",
+              "ambiguity_notes": "The symbol h is also used for channel half-height or full container height; all are length quantities.",
+              "source": "MHD Flow in Simple Cubic Periodic Array Geometry, Journal of Fusion Energy (2023)",
+              "source_identifier": "doi:10.1007/s10894-023-00390-8",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5286419239057754,
+              "hybrid_score": 0.8350246733670214,
+              "retrieval_mode": "hybrid"
+            }
+          ],
+          "y": [
+            {
+              "variable_name": "y",
+              "entry_id": "pq_wall_normal_distance",
+              "canonical_quantity": "wall-normal distance",
+              "symbols": "y",
+              "aliases": "distance from wall; wall-normal coordinate",
+              "definition": "Distance measured normal to a wall.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "wall-bounded flows",
+              "ambiguity_notes": "",
+              "source": "NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions",
+              "source_identifier": "https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5818461999258995,
+              "hybrid_score": 0.8536461699740648,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "y",
+              "entry_id": "pq_mass_fraction",
+              "canonical_quantity": "mass fraction",
+              "symbols": "Y; w",
+              "aliases": "mass fraction",
+              "definition": "Ratio of constituent mass to total mass.",
+              "si_dimension": "1",
+              "dimension_vector": "[0, 0, 0, 0, 0, 0, 0]",
+              "si_unit": "1",
+              "domain": "mixtures; chemistry",
+              "ambiguity_notes": "Dimensionless ratio.",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "high",
+              "lexical_score": 0.9,
+              "semantic_score": 0.4439407942977853,
+              "hybrid_score": 0.7403792780042249,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "y",
+              "entry_id": "pq_friction_velocity",
+              "canonical_quantity": "friction velocity",
+              "symbols": "u_tau; uτ; U_tau; Uτ",
+              "aliases": "shear velocity; wall friction velocity",
+              "definition": "Velocity scale defined from wall shear stress and density, conventionally u_tau = sqrt(tau_w/rho).",
+              "si_dimension": "L T^-1",
+              "dimension_vector": "[0, 1, -1, 0, 0, 0, 0]",
+              "si_unit": "m s^-1",
+              "domain": "wall-bounded fluid mechanics",
+              "ambiguity_notes": "It is a velocity scale, not a stress; do not assign pressure dimensions.",
+              "source": "Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling",
+              "source_identifier": "https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8",
+              "confidence": "high",
+              "lexical_score": 0.3246753246753247,
+              "semantic_score": 0.5361638134581115,
+              "hybrid_score": 0.3986962957493001,
+              "retrieval_mode": "hybrid"
+            }
+          ],
+          "nu": [
+            {
+              "variable_name": "nu",
+              "entry_id": "pq_kinematic_viscosity",
+              "canonical_quantity": "kinematic viscosity",
+              "symbols": "nu; ν",
+              "aliases": "momentum diffusivity",
+              "definition": "Dynamic viscosity divided by mass density.",
+              "si_dimension": "L^2 T^-1",
+              "dimension_vector": "[0, 2, -1, 0, 0, 0, 0]",
+              "si_unit": "m^2 s^-1",
+              "domain": "fluid mechanics",
+              "ambiguity_notes": "Do not confuse lowercase nu/ν with the Nusselt number Nu or a generic frequency symbol.",
+              "source": "NIST SP 811, Guide for the Use of the International System of Units (SI)",
+              "source_identifier": "doi:10.6028/NIST.SP.811e2008",
+              "confidence": "curated",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5746708966940056,
+              "hybrid_score": 0.851134813842902,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "nu",
+              "entry_id": "pq_friction_velocity",
+              "canonical_quantity": "friction velocity",
+              "symbols": "u_tau; uτ; U_tau; Uτ",
+              "aliases": "shear velocity; wall friction velocity",
+              "definition": "Velocity scale defined from wall shear stress and density, conventionally u_tau = sqrt(tau_w/rho).",
+              "si_dimension": "L T^-1",
+              "dimension_vector": "[0, 1, -1, 0, 0, 0, 0]",
+              "si_unit": "m s^-1",
+              "domain": "wall-bounded fluid mechanics",
+              "ambiguity_notes": "It is a velocity scale, not a stress; do not assign pressure dimensions.",
+              "source": "Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling",
+              "source_identifier": "https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8",
+              "confidence": "high",
+              "lexical_score": 0.35256410256410253,
+              "semantic_score": 0.5009966545293953,
+              "hybrid_score": 0.404515495751955,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "nu",
+              "entry_id": "pq_eddy_viscosity",
+              "canonical_quantity": "eddy viscosity",
+              "symbols": "nu_t; ν_t; mu_t/rho",
+              "aliases": "turbulent kinematic viscosity; turbulent eddy diffusivity for momentum",
+              "definition": "Turbulent transport coefficient with the dimensions of kinematic viscosity when written as nu_t.",
+              "si_dimension": "L^2 T^-1",
+              "dimension_vector": "[0, 2, -1, 0, 0, 0, 0]",
+              "si_unit": "m^2 s^-1",
+              "domain": "turbulence modeling",
+              "ambiguity_notes": "If a code uses dynamic eddy viscosity mu_t instead, its dimension is M L^-1 T^-1.",
+              "source": "NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions",
+              "source_identifier": "https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html",
+              "confidence": "high",
+              "lexical_score": 0.2777777777777778,
+              "semantic_score": 0.6008003094748713,
+              "hybrid_score": 0.3908356638717605,
+              "retrieval_mode": "hybrid"
+            }
+          ]
+        },
+        "evidence_markdown": "### Input variable `u_tau`\n- entry_id: pq_friction_velocity; canonical_quantity: friction velocity; symbols: u_tau; uτ; U_tau; Uτ; aliases: shear velocity; wall friction velocity; definition: Velocity scale defined from wall shear stress and density, conventionally u_tau = sqrt(tau_w/rho).; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: wall-bounded fluid mechanics; ambiguity_notes: It is a velocity scale, not a stress; do not assign pressure dimensions.; source: Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling; source_identifier: https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8; confidence: high\n- entry_id: pq_wall_shear_stress; canonical_quantity: wall shear stress; symbols: tau_w; τ_w; τw; aliases: skin friction stress; wall stress; definition: Tangential shear stress exerted at a wall.; si_dimension: M L^-1 T^-2; dimension_vector: [1, -1, -2, 0, 0, 0, 0]; si_unit: Pa; domain: wall-bounded fluid mechanics; ambiguity_notes: ; source: NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions; source_identifier: https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html; confidence: curated\n- entry_id: pq_mean_flow_velocity; canonical_quantity: mean flow velocity; symbols: U; U_m; Umean; V; aliases: bulk velocity; mean velocity; average flow velocity; definition: Mean or bulk velocity used to characterize a flow.; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: fluid mechanics; ambiguity_notes: ; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n### Input variable `h`\n- entry_id: pq_channel_half_height; canonical_quantity: channel half-height; symbols: h; delta; δ; aliases: channel half-height; half-gap; definition: Distance from a channel wall to its centerline for a symmetric plane channel.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: channel flow; ambiguity_notes: The symbol h is also used for full height, enthalpy, or heat-transfer coefficient in other contexts.; source: Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling; source_identifier: https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8; confidence: high\n- entry_id: pq_container_height; canonical_quantity: container height; symbols: h; H; aliases: cell height; layer height; plate separation; definition: Vertical separation between confining plates in the Rayleigh-Benard configuration.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: Rayleigh-Benard convection; ambiguity_notes: The symbol h may denote a half-height in channel flow; use the problem geometry.; source: Rayleigh-Benard convection reference defining Ra and Pr; source_identifier: https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/scaling-laws-for-rayleighbenard-convection-between-navierslip-boundaries/F474DBFC0CC0A874A0B14A383195D714; confidence: high\n- entry_id: pq_duct_side_length; canonical_quantity: square-duct side length; symbols: h; aliases: duct side length; side length of square duct; definition: Side length of a square duct cross-section.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: duct flow; magnetohydrodynamics; ambiguity_notes: The symbol h is also used for channel half-height or full container height; all are length quantities.; source: MHD Flow in Simple Cubic Periodic Array Geometry, Journal of Fusion Energy (2023); source_identifier: doi:10.1007/s10894-023-00390-8; confidence: high\n### Input variable `y`\n- entry_id: pq_wall_normal_distance; canonical_quantity: wall-normal distance; symbols: y; aliases: distance from wall; wall-normal coordinate; definition: Distance measured normal to a wall.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: wall-bounded flows; ambiguity_notes: ; source: NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions; source_identifier: https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html; confidence: high\n- entry_id: pq_mass_fraction; canonical_quantity: mass fraction; symbols: Y; w; aliases: mass fraction; definition: Ratio of constituent mass to total mass.; si_dimension: 1; dimension_vector: [0, 0, 0, 0, 0, 0, 0]; si_unit: 1; domain: mixtures; chemistry; ambiguity_notes: Dimensionless ratio.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_friction_velocity; canonical_quantity: friction velocity; symbols: u_tau; uτ; U_tau; Uτ; aliases: shear velocity; wall friction velocity; definition: Velocity scale defined from wall shear stress and density, conventionally u_tau = sqrt(tau_w/rho).; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: wall-bounded fluid mechanics; ambiguity_notes: It is a velocity scale, not a stress; do not assign pressure dimensions.; source: Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling; source_identifier: https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8; confidence: high\n### Input variable `nu`\n- entry_id: pq_kinematic_viscosity; canonical_quantity: kinematic viscosity; symbols: nu; ν; aliases: momentum diffusivity; definition: Dynamic viscosity divided by mass density.; si_dimension: L^2 T^-1; dimension_vector: [0, 2, -1, 0, 0, 0, 0]; si_unit: m^2 s^-1; domain: fluid mechanics; ambiguity_notes: Do not confuse lowercase nu/ν with the Nusselt number Nu or a generic frequency symbol.; source: NIST SP 811, Guide for the Use of the International System of Units (SI); source_identifier: doi:10.6028/NIST.SP.811e2008; confidence: curated\n- entry_id: pq_friction_velocity; canonical_quantity: friction velocity; symbols: u_tau; uτ; U_tau; Uτ; aliases: shear velocity; wall friction velocity; definition: Velocity scale defined from wall shear stress and density, conventionally u_tau = sqrt(tau_w/rho).; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: wall-bounded fluid mechanics; ambiguity_notes: It is a velocity scale, not a stress; do not assign pressure dimensions.; source: Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling; source_identifier: https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8; confidence: high\n- entry_id: pq_eddy_viscosity; canonical_quantity: eddy viscosity; symbols: nu_t; ν_t; mu_t/rho; aliases: turbulent kinematic viscosity; turbulent eddy diffusivity for momentum; definition: Turbulent transport coefficient with the dimensions of kinematic viscosity when written as nu_t.; si_dimension: L^2 T^-1; dimension_vector: [0, 2, -1, 0, 0, 0, 0]; si_unit: m^2 s^-1; domain: turbulence modeling; ambiguity_notes: If a code uses dynamic eddy viscosity mu_t instead, its dimension is M L^-1 T^-1.; source: NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions; source_identifier: https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html; confidence: high",
+        "evidence_records_visible_by_variable": {
+          "u_tau": [
+            "pq_friction_velocity",
+            "pq_wall_shear_stress",
+            "pq_mean_flow_velocity"
+          ],
+          "h": [
+            "pq_channel_half_height",
+            "pq_container_height",
+            "pq_duct_side_length"
+          ],
+          "y": [
+            "pq_wall_normal_distance",
+            "pq_mass_fraction",
+            "pq_friction_velocity"
+          ],
+          "nu": [
+            "pq_kinematic_viscosity",
+            "pq_friction_velocity",
+            "pq_eddy_viscosity"
+          ]
+        },
+        "queries_by_variable": {
+          "u_tau": "Target CSV variable: u_tau\nLocal problem description: the channel half-height (h), the distance from the wall (y), the friction velocity (u_tau), and the fluid kinematic viscosity (nu).\nProblem domain/context: Perform dimensional analysis for the Cess eddy-viscosity model in turbulent channel flow to derive the dimensionless relationship governing the normalized eddy viscosity (denoted as nu_t/nu).\nAnalyzer interpretation: exact_column: u_tau; quantity_name: friction velocity; physical_definition: Friction velocity used in wall-bounded turbulence.",
+          "h": "Target CSV variable: h\nLocal problem description: the channel half-height (h), the distance from the wall (y), the friction velocity (u_tau), and the fluid kinematic viscosity (nu).\nProblem domain/context: Perform dimensional analysis for the Cess eddy-viscosity model in turbulent channel flow to derive the dimensionless relationship governing the normalized eddy viscosity (denoted as nu_t/nu).\nAnalyzer interpretation: exact_column: h; quantity_name: channel half-height; physical_definition: Channel half-height, the distance from a channel wall to its centerline.",
+          "y": "Target CSV variable: y\nLocal problem description: the channel half-height (h), the distance from the wall (y), the friction velocity (u_tau), and the fluid kinematic viscosity (nu).\nProblem domain/context: Perform dimensional analysis for the Cess eddy-viscosity model in turbulent channel flow to derive the dimensionless relationship governing the normalized eddy viscosity (denoted as nu_t/nu).\nAnalyzer interpretation: exact_column: y; quantity_name: wall-normal distance; physical_definition: Wall-normal distance from the wall.",
+          "nu": "Target CSV variable: nu\nLocal problem description: Perform dimensional analysis for the Cess eddy-viscosity model in turbulent channel flow to derive the dimensionless relationship governing the normalized eddy viscosity (denoted as nu_t/nu). the channel half-height (h), the distance from the wall (y), the friction velocity (u_tau), and the fluid kinematic viscosity (nu).\nProblem domain/context: Perform dimensional analysis for the Cess eddy-viscosity model in turbulent channel flow to derive the dimensionless relationship governing the normalized eddy viscosity (denoted as nu_t/nu).\nAnalyzer interpretation: exact_column: nu; quantity_name: kinematic viscosity; physical_definition: Fluid kinematic viscosity, a measure of the fluid's resistance to flow."
+        },
+        "query_sha256_by_variable": {
+          "u_tau": "8d06ca15f8a0f6cd47a91b0321ba09ea1cf6d566da3805ece3488967934d3592",
+          "h": "0242f7ff2c7d4994bd3fa19df593827c4909c19fd76920c4d280fb7ea2740fb8",
+          "y": "4f2fbcee7327a1cf36c99ff8e160d8bf761b3aca4555556e998356100777b5c8",
+          "nu": "6c109d41d2a505e158a4e305ec7bb5a71d20d0dfdf835f71a7f6dc30e4f7f933"
+        },
+        "query_observed_in_retriever_by_variable": {
+          "u_tau": true,
+          "h": true,
+          "y": true,
+          "nu": true
+        },
+        "query_scope": "Candidate SI powers excluded. Original problem and typed quantity/definition provide semantic context; they still require physical interpretation."
+      },
+      "provisional_zero_coordinates": [],
+      "checker_response": {
+        "ledger_sha256": "badebdecf5b09b12001992fe061c22c2e77381a589d66d18adfbac98affa1774",
+        "variables": [
+          {
+            "csv_name": "u_tau",
+            "before_si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "decision": "PASSED",
+            "suggested_si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "support_mode": "KB_RECORD",
+            "evidence_entry_ids": [
+              "pq_friction_velocity"
+            ],
+            "reason": "The problem defines u_tau as the friction velocity (wall-bounded turbulence). The retrieved record pq_friction_velocity explicitly defines friction velocity u_tau = sqrt(tau_w/rho) and gives SI dimension L T^-1 (vector [0,1,-1,0,0,0,0]). This canonical record applies directly to the variable as named in the original problem (same symbol and physical role), and its dimension vector supplies all coordinates (M=0, L=1, T=-1, I=0, Theta=0, N=0, J=0) that match the candidate."
+          },
+          {
+            "csv_name": "h",
+            "before_si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "decision": "PASSED",
+            "suggested_si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "support_mode": "KB_RECORD",
+            "evidence_entry_ids": [
+              "pq_channel_half_height"
+            ],
+            "reason": "The candidate names h as the channel half-height. The retrieved record pq_channel_half_height defines channel half-height (distance from wall to centerline) with SI dimension L (vector [0,1,0,0,0,0,0]). This canonical quantity matches the problem geometry and provides the complete set of SI exponents for h."
+          },
+          {
+            "csv_name": "y",
+            "before_si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "decision": "PASSED",
+            "suggested_si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "support_mode": "KB_RECORD",
+            "evidence_entry_ids": [
+              "pq_wall_normal_distance"
+            ],
+            "reason": "The ledger defines y as the wall-normal distance. The retrieved record pq_wall_normal_distance explicitly gives y as the distance normal to a wall with SI dimension L (vector [0,1,0,0,0,0,0]). This record corresponds directly to the named variable in the original problem, and its vector supplies all coordinates used in the candidate."
+          },
+          {
+            "csv_name": "nu",
+            "before_si_exponents": {
+              "M": "0",
+              "L": "2",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "decision": "PASSED",
+            "suggested_si_exponents": {
+              "M": "0",
+              "L": "2",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "support_mode": "KB_RECORD",
+            "evidence_entry_ids": [
+              "pq_kinematic_viscosity"
+            ],
+            "reason": "The candidate lists nu as kinematic viscosity. The retrieved record pq_kinematic_viscosity defines kinematic viscosity (dynamic viscosity divided by density) with SI dimension L^2 T^-1 (vector [0,2,-1,0,0,0,0]). This canonical record directly applies to the variable named nu in the problem and provides the full SI exponent vector that matches the candidate."
+          }
+        ]
+      },
+      "checker_elapsed_s": 19.508673699980136,
+      "checker_tokens": {
+        "input": 3237,
+        "output": 2792
+      },
+      "embedding_tokens": {
+        "input": 612,
+        "output": 0
+      },
+      "checker_call": {
+        "parsed_response": {
+          "ledger_sha256": "badebdecf5b09b12001992fe061c22c2e77381a589d66d18adfbac98affa1774",
+          "variables": [
+            {
+              "csv_name": "u_tau",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "-1",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "-1",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_friction_velocity"
+              ],
+              "reason": "The problem defines u_tau as the friction velocity (wall-bounded turbulence). The retrieved record pq_friction_velocity explicitly defines friction velocity u_tau = sqrt(tau_w/rho) and gives SI dimension L T^-1 (vector [0,1,-1,0,0,0,0]). This canonical record applies directly to the variable as named in the original problem (same symbol and physical role), and its dimension vector supplies all coordinates (M=0, L=1, T=-1, I=0, Theta=0, N=0, J=0) that match the candidate."
+            },
+            {
+              "csv_name": "h",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "0",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "0",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_channel_half_height"
+              ],
+              "reason": "The candidate names h as the channel half-height. The retrieved record pq_channel_half_height defines channel half-height (distance from wall to centerline) with SI dimension L (vector [0,1,0,0,0,0,0]). This canonical quantity matches the problem geometry and provides the complete set of SI exponents for h."
+            },
+            {
+              "csv_name": "y",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "0",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "0",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_wall_normal_distance"
+              ],
+              "reason": "The ledger defines y as the wall-normal distance. The retrieved record pq_wall_normal_distance explicitly gives y as the distance normal to a wall with SI dimension L (vector [0,1,0,0,0,0,0]). This record corresponds directly to the named variable in the original problem, and its vector supplies all coordinates used in the candidate."
+            },
+            {
+              "csv_name": "nu",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "2",
+                "T": "-1",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": {
+                "M": "0",
+                "L": "2",
+                "T": "-1",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_kinematic_viscosity"
+              ],
+              "reason": "The candidate lists nu as kinematic viscosity. The retrieved record pq_kinematic_viscosity defines kinematic viscosity (dynamic viscosity divided by density) with SI dimension L^2 T^-1 (vector [0,2,-1,0,0,0,0]). This canonical record directly applies to the variable named nu in the problem and provides the full SI exponent vector that matches the candidate."
+            }
+          ]
+        },
+        "raw_tool_calls": [
+          {
+            "id": "call_NPWoyY3IyfLq2FwMETMAhnNa",
+            "type": "function",
+            "function": {
+              "name": "CheckerDimensionAudit",
+              "arguments": "{\"ledger_sha256\":\"badebdecf5b09b12001992fe061c22c2e77381a589d66d18adfbac98affa1774\",\"variables\":[{\"csv_name\":\"u_tau\",\"before_si_exponents\":{\"M\":\"0\",\"L\":\"1\",\"T\":\"-1\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"},\"decision\":\"PASSED\",\"suggested_si_exponents\":{\"M\":\"0\",\"L\":\"1\",\"T\":\"-1\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"},\"support_mode\":\"KB_RECORD\",\"evidence_entry_ids\":[\"pq_friction_velocity\"],\"reason\":\"The problem defines u_tau as the friction velocity (wall-bounded turbulence). The retrieved record pq_friction_velocity explicitly defines friction velocity u_tau = sqrt(tau_w/rho) and gives SI dimension L T^-1 (vector [0,1,-1,0,0,0,0]). This canonical record applies directly to the variable as named in the original problem (same symbol and physical role), and its dimension vector supplies all coordinates (M=0, L=1, T=-1, I=0, Theta=0, N=0, J=0) that match the candidate.\"},{\"csv_name\":\"h\",\"before_si_exponents\":{\"M\":\"0\",\"L\":\"1\",\"T\":\"0\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"},\"decision\":\"PASSED\",\"suggested_si_exponents\":{\"M\":\"0\",\"L\":\"1\",\"T\":\"0\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"},\"support_mode\":\"KB_RECORD\",\"evidence_entry_ids\":[\"pq_channel_half_height\"],\"reason\":\"The candidate names h as the channel half-height. The retrieved record pq_channel_half_height defines channel half-height (distance from wall to centerline) with SI dimension L (vector [0,1,0,0,0,0,0]). This canonical quantity matches the problem geometry and provides the complete set of SI exponents for h.\"},{\"csv_name\":\"y\",\"before_si_exponents\":{\"M\":\"0\",\"L\":\"1\",\"T\":\"0\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"},\"decision\":\"PASSED\",\"suggested_si_exponents\":{\"M\":\"0\",\"L\":\"1\",\"T\":\"0\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"},\"support_mode\":\"KB_RECORD\",\"evidence_entry_ids\":[\"pq_wall_normal_distance\"],\"reason\":\"The ledger defines y as the wall-normal distance. The retrieved record pq_wall_normal_distance explicitly gives y as the distance normal to a wall with SI dimension L (vector [0,1,0,0,0,0,0]). This record corresponds directly to the named variable in the original problem, and its vector supplies all coordinates used in the candidate.\"},{\"csv_name\":\"nu\",\"before_si_exponents\":{\"M\":\"0\",\"L\":\"2\",\"T\":\"-1\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"},\"decision\":\"PASSED\",\"suggested_si_exponents\":{\"M\":\"0\",\"L\":\"2\",\"T\":\"-1\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"},\"support_mode\":\"KB_RECORD\",\"evidence_entry_ids\":[\"pq_kinematic_viscosity\"],\"reason\":\"The candidate lists nu as kinematic viscosity. The retrieved record pq_kinematic_viscosity defines kinematic viscosity (dynamic viscosity divided by density) with SI dimension L^2 T^-1 (vector [0,2,-1,0,0,0,0]). This canonical record directly applies to the variable named nu in the problem and provides the full SI exponent vector that matches the candidate.\"}]}"
+            }
+          }
+        ],
+        "model_messages": [
+          {
+            "type": "system",
+            "content": "Audit every named physical input in this exact typed ledger, including literal SI coordinate values. Do not substitute the correct definition or a KB vector for a wrong candidate and then claim PASSED. Return ledger_sha256 and each csv_name exactly once; before_si_exponents must copy the actual candidate. PASSED confirms the actual vector, CONFLICT requires a complete corrected suggested vector, and UNCERTAIN does not permit numerical execution. KB_RECORD requires actual entry_id citations from that variable's retrieved records. Canonical entity names are read by the program from the selected IDs; do not echo another quantity-name field. Your reason must explain why each cited record applies to this variable in the original problem, not merely why its vector matches. Cited vectors must support all known coordinates of the proposed/confirmed SI vector. INTERNAL_REASONING uses no IDs and must explain the physical meaning. Retrieval rank is relevance, not truth. Resolve symbol ambiguity from the original problem; do not choose an unrelated matching symbol. Known absent base dimensions must be explicit '0'; null means genuinely unknown, not unused. If any current coordinate is unknown, request revision or report UNCERTAIN; never call a partly known vector PASSED. Give a complete correction when physically justified. If a correction remains partly unknown, preserve null and explain what remains unresolved; the program will request revision rather than invent zeros. Lack of KB alone is not a physical contradiction. Matrix compilation and n/r/k are program tasks, not audit tasks."
+          },
+          {
+            "type": "human",
+            "content": "Problem:\nPerform dimensional analysis for the Cess eddy-viscosity model in turbulent channel flow to derive the dimensionless relationship governing the normalized eddy viscosity (denoted as nu_t/nu).\nThis analysis uses ONLY the following 4 dimensional physical quantities as input parameters:\nthe channel half-height (h), the distance from the wall (y), the friction velocity (u_tau), and the fluid kinematic viscosity (nu).\n\nTyped ledger SHA256: badebdecf5b09b12001992fe061c22c2e77381a589d66d18adfbac98affa1774\nTyped candidate ledger:\n{\"input_variable_names\": [\"u_tau\", \"h\", \"y\", \"nu\"], \"output_variable_confidence\": \"high\", \"output_variable_name\": \"nu_t/nu\", \"output_variable_reasoning\": \"The normalized eddy viscosity is a dimensionless quantity derived from the ratio of turbulent eddy viscosity to kinematic viscosity, which is a common practice in fluid dynamics to analyze turbulent flows.\", \"variables\": [{\"csv_name\": \"u_tau\", \"physical_definition\": \"Friction velocity used in wall-bounded turbulence.\", \"quantity_name\": \"friction velocity\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"1\", \"M\": \"0\", \"N\": \"0\", \"T\": \"-1\", \"Theta\": \"0\"}}, {\"csv_name\": \"h\", \"physical_definition\": \"Channel half-height, the distance from a channel wall to its centerline.\", \"quantity_name\": \"channel half-height\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"1\", \"M\": \"0\", \"N\": \"0\", \"T\": \"0\", \"Theta\": \"0\"}}, {\"csv_name\": \"y\", \"physical_definition\": \"Wall-normal distance from the wall.\", \"quantity_name\": \"wall-normal distance\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"1\", \"M\": \"0\", \"N\": \"0\", \"T\": \"0\", \"Theta\": \"0\"}}, {\"csv_name\": \"nu\", \"physical_definition\": \"Fluid kinematic viscosity, a measure of the fluid's resistance to flow.\", \"quantity_name\": \"kinematic viscosity\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"2\", \"M\": \"0\", \"N\": \"0\", \"T\": \"-1\", \"Theta\": \"0\"}}]}\n\nRetrieved dimensional evidence:\n### Input variable `u_tau`\n- entry_id: pq_friction_velocity; canonical_quantity: friction velocity; symbols: u_tau; uτ; U_tau; Uτ; aliases: shear velocity; wall friction velocity; definition: Velocity scale defined from wall shear stress and density, conventionally u_tau = sqrt(tau_w/rho).; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: wall-bounded fluid mechanics; ambiguity_notes: It is a velocity scale, not a stress; do not assign pressure dimensions.; source: Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling; source_identifier: https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8; confidence: high\n- entry_id: pq_wall_shear_stress; canonical_quantity: wall shear stress; symbols: tau_w; τ_w; τw; aliases: skin friction stress; wall stress; definition: Tangential shear stress exerted at a wall.; si_dimension: M L^-1 T^-2; dimension_vector: [1, -1, -2, 0, 0, 0, 0]; si_unit: Pa; domain: wall-bounded fluid mechanics; ambiguity_notes: ; source: NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions; source_identifier: https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html; confidence: curated\n- entry_id: pq_mean_flow_velocity; canonical_quantity: mean flow velocity; symbols: U; U_m; Umean; V; aliases: bulk velocity; mean velocity; average flow velocity; definition: Mean or bulk velocity used to characterize a flow.; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: fluid mechanics; ambiguity_notes: ; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n### Input variable `h`\n- entry_id: pq_channel_half_height; canonical_quantity: channel half-height; symbols: h; delta; δ; aliases: channel half-height; half-gap; definition: Distance from a channel wall to its centerline for a symmetric plane channel.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: channel flow; ambiguity_notes: The symbol h is also used for full height, enthalpy, or heat-transfer coefficient in other contexts.; source: Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling; source_identifier: https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8; confidence: high\n- entry_id: pq_container_height; canonical_quantity: container height; symbols: h; H; aliases: cell height; layer height; plate separation; definition: Vertical separation between confining plates in the Rayleigh-Benard configuration.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: Rayleigh-Benard convection; ambiguity_notes: The symbol h may denote a half-height in channel flow; use the problem geometry.; source: Rayleigh-Benard convection reference defining Ra and Pr; source_identifier: https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/scaling-laws-for-rayleighbenard-convection-between-navierslip-boundaries/F474DBFC0CC0A874A0B14A383195D714; confidence: high\n- entry_id: pq_duct_side_length; canonical_quantity: square-duct side length; symbols: h; aliases: duct side length; side length of square duct; definition: Side length of a square duct cross-section.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: duct flow; magnetohydrodynamics; ambiguity_notes: The symbol h is also used for channel half-height or full container height; all are length quantities.; source: MHD Flow in Simple Cubic Periodic Array Geometry, Journal of Fusion Energy (2023); source_identifier: doi:10.1007/s10894-023-00390-8; confidence: high\n### Input variable `y`\n- entry_id: pq_wall_normal_distance; canonical_quantity: wall-normal distance; symbols: y; aliases: distance from wall; wall-normal coordinate; definition: Distance measured normal to a wall.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: wall-bounded flows; ambiguity_notes: ; source: NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions; source_identifier: https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html; confidence: high\n- entry_id: pq_mass_fraction; canonical_quantity: mass fraction; symbols: Y; w; aliases: mass fraction; definition: Ratio of constituent mass to total mass.; si_dimension: 1; dimension_vector: [0, 0, 0, 0, 0, 0, 0]; si_unit: 1; domain: mixtures; chemistry; ambiguity_notes: Dimensionless ratio.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_friction_velocity; canonical_quantity: friction velocity; symbols: u_tau; uτ; U_tau; Uτ; aliases: shear velocity; wall friction velocity; definition: Velocity scale defined from wall shear stress and density, conventionally u_tau = sqrt(tau_w/rho).; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: wall-bounded fluid mechanics; ambiguity_notes: It is a velocity scale, not a stress; do not assign pressure dimensions.; source: Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling; source_identifier: https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8; confidence: high\n### Input variable `nu`\n- entry_id: pq_kinematic_viscosity; canonical_quantity: kinematic viscosity; symbols: nu; ν; aliases: momentum diffusivity; definition: Dynamic viscosity divided by mass density.; si_dimension: L^2 T^-1; dimension_vector: [0, 2, -1, 0, 0, 0, 0]; si_unit: m^2 s^-1; domain: fluid mechanics; ambiguity_notes: Do not confuse lowercase nu/ν with the Nusselt number Nu or a generic frequency symbol.; source: NIST SP 811, Guide for the Use of the International System of Units (SI); source_identifier: doi:10.6028/NIST.SP.811e2008; confidence: curated\n- entry_id: pq_friction_velocity; canonical_quantity: friction velocity; symbols: u_tau; uτ; U_tau; Uτ; aliases: shear velocity; wall friction velocity; definition: Velocity scale defined from wall shear stress and density, conventionally u_tau = sqrt(tau_w/rho).; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: wall-bounded fluid mechanics; ambiguity_notes: It is a velocity scale, not a stress; do not assign pressure dimensions.; source: Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling; source_identifier: https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8; confidence: high\n- entry_id: pq_eddy_viscosity; canonical_quantity: eddy viscosity; symbols: nu_t; ν_t; mu_t/rho; aliases: turbulent kinematic viscosity; turbulent eddy diffusivity for momentum; definition: Turbulent transport coefficient with the dimensions of kinematic viscosity when written as nu_t.; si_dimension: L^2 T^-1; dimension_vector: [0, 2, -1, 0, 0, 0, 0]; si_unit: m^2 s^-1; domain: turbulence modeling; ambiguity_notes: If a code uses dynamic eddy viscosity mu_t instead, its dimension is M L^-1 T^-1.; source: NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions; source_identifier: https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html; confidence: high"
+          }
+        ],
+        "elapsed_s": 19.508673699980136
+      },
+      "retrieval_elapsed_s": 18.660656000021845
+    }
+  ],
+  "final_ledger": {
+    "output_variable_name": "nu_t/nu",
+    "output_variable_reasoning": "The normalized eddy viscosity is a dimensionless quantity derived from the ratio of turbulent eddy viscosity to kinematic viscosity, which is a common practice in fluid dynamics to analyze turbulent flows.",
+    "output_variable_confidence": "high",
+    "input_variable_names": [
+      "u_tau",
+      "h",
+      "y",
+      "nu"
+    ],
+    "variables": [
+      {
+        "csv_name": "u_tau",
+        "quantity_name": "friction velocity",
+        "physical_definition": "Friction velocity used in wall-bounded turbulence.",
+        "si_exponents": {
+          "M": "0",
+          "L": "1",
+          "T": "-1",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "h",
+        "quantity_name": "channel half-height",
+        "physical_definition": "Channel half-height, the distance from a channel wall to its centerline.",
+        "si_exponents": {
+          "M": "0",
+          "L": "1",
+          "T": "0",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "y",
+        "quantity_name": "wall-normal distance",
+        "physical_definition": "Wall-normal distance from the wall.",
+        "si_exponents": {
+          "M": "0",
+          "L": "1",
+          "T": "0",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "nu",
+        "quantity_name": "kinematic viscosity",
+        "physical_definition": "Fluid kinematic viscosity, a measure of the fluid's resistance to flow.",
+        "si_exponents": {
+          "M": "0",
+          "L": "2",
+          "T": "-1",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      }
+    ]
+  },
+  "workflow_status": "basis_ready",
+  "basis_built": true,
+  "basis": {
+    "workflow_status": "basis_ready",
+    "input_vars": [
+      "u_tau",
+      "h",
+      "y",
+      "nu"
+    ],
+    "output_var": "nu_t/nu",
+    "basis_pi_formulas": {
+      "Pi_1": "(y) / (h)",
+      "Pi_2": "(nu) / (u_tau * h)"
+    },
+    "basis_pi_matrices": [
+      [
+        0.0,
+        -1.0,
+        1.0,
+        0.0
+      ],
+      [
+        -1.0,
+        -1.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "basis_tool_history": [
+      {
+        "args": {
+          "D_in": [
+            [
+              1.0,
+              1.0,
+              1.0,
+              2.0
+            ],
+            [
+              -1.0,
+              0.0,
+              0.0,
+              -1.0
+            ]
+          ],
+          "var_names": [
+            "u_tau",
+            "h",
+            "y",
+            "nu"
+          ]
+        },
+        "result": {
+          "status": "success",
+          "pi_formulas": {
+            "Pi_1": "(y) / (h)",
+            "Pi_2": "(nu) / (u_tau * h)"
+          },
+          "basis_matrices": [
+            [
+              0.0,
+              -1.0,
+              1.0,
+              0.0
+            ],
+            [
+              -1.0,
+              -1.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "basis_matrices_display": [
+            [
+              0.0,
+              -1.0,
+              1.0,
+              0.0
+            ],
+            [
+              -1.0,
+              -1.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "null_space_residual_inf": 0.0,
+          "basis_precision_note": "basis_matrices stores full floating-point precision; basis_matrices_display is rounded for display only."
+        }
+      }
+    ],
+    "output_resolution": {
+      "status": "success",
+      "output_var": "nu_t/nu",
+      "source": "structured_analyzer",
+      "requested": "nu_t/nu",
+      "candidates": [
+        "nu_t/nu"
+      ]
+    }
+  },
+  "revision_calls": [
+    {
+      "parsed_response": {
+        "input_variable_names": [
+          "u_tau",
+          "h",
+          "y",
+          "nu"
+        ],
+        "output_variable_confidence": "high",
+        "output_variable_name": "nu_t/nu",
+        "output_variable_reasoning": "The normalized eddy viscosity is a dimensionless quantity derived from the ratio of turbulent eddy viscosity to kinematic viscosity, which is a common practice in fluid dynamics to analyze turbulent flows.",
+        "variables": [
+          {
+            "csv_name": "u_tau",
+            "physical_definition": "Friction velocity used in wall-bounded turbulence.",
+            "quantity_name": "friction velocity",
+            "si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "h",
+            "physical_definition": "Channel half-height, the distance from a channel wall to its centerline.",
+            "quantity_name": "channel half-height",
+            "si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "y",
+            "physical_definition": "Wall-normal distance from the wall.",
+            "quantity_name": "wall-normal distance",
+            "si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "nu",
+            "physical_definition": "Fluid kinematic viscosity, a measure of the fluid's resistance to flow.",
+            "quantity_name": "kinematic viscosity",
+            "si_exponents": {
+              "M": "0",
+              "L": "2",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          }
+        ]
+      },
+      "raw_tool_calls": [
+        {
+          "id": "call_MaxozCScqGNLxxwjhuqRZBjo",
+          "type": "function",
+          "function": {
+            "name": "AnalyzerDimensionLedger",
+            "arguments": "{\"input_variable_names\":[\"u_tau\",\"h\",\"y\",\"nu\"],\"output_variable_confidence\":\"high\",\"output_variable_name\":\"nu_t/nu\",\"output_variable_reasoning\":\"The normalized eddy viscosity is a dimensionless quantity derived from the ratio of turbulent eddy viscosity to kinematic viscosity, which is a common practice in fluid dynamics to analyze turbulent flows.\",\"variables\":[{\"csv_name\":\"u_tau\",\"physical_definition\":\"Friction velocity used in wall-bounded turbulence.\",\"quantity_name\":\"friction velocity\",\"si_exponents\":{\"M\":\"0\",\"L\":\"1\",\"T\":\"-1\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"}},{\"csv_name\":\"h\",\"physical_definition\":\"Channel half-height, the distance from a channel wall to its centerline.\",\"quantity_name\":\"channel half-height\",\"si_exponents\":{\"M\":\"0\",\"L\":\"1\",\"T\":\"0\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"}},{\"csv_name\":\"y\",\"physical_definition\":\"Wall-normal distance from the wall.\",\"quantity_name\":\"wall-normal distance\",\"si_exponents\":{\"M\":\"0\",\"L\":\"1\",\"T\":\"0\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"}},{\"csv_name\":\"nu\",\"physical_definition\":\"Fluid kinematic viscosity, a measure of the fluid's resistance to flow.\",\"quantity_name\":\"kinematic viscosity\",\"si_exponents\":{\"M\":\"0\",\"L\":\"2\",\"T\":\"-1\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"}}]}"
+          }
+        }
+      ],
+      "model_messages": [
+        {
+          "type": "system",
+          "content": "Infer one typed physical-input ledger. Exact CSV names and explicit input order are binding. Return each input exactly once with its physical quantity name, a plain-language physical_definition, and all seven named SI exponents M,L,T,I,Theta,N,J as rational strings. Use null for unknown coordinates. For a base quantity known not to participate, explicitly return '0'; this is known absence, not uncertainty. Use null only when the exponent is genuinely unknown. Never infer unknown as0. Exclude the output and metadata/unused/derived columns. quantity_name and physical_definition are retrieval meaning fields: do not put assigned SI units, dimension vectors or exponent formulas there. Do not output a separate dimensional matrix or n/r/k. They are generated deterministically from this ledger. A confident name is not proof of its SI vector."
+        },
+        {
+          "type": "human",
+          "content": "Problem statement:\nPerform dimensional analysis for the Cess eddy-viscosity model in turbulent channel flow to derive the dimensionless relationship governing the normalized eddy viscosity (denoted as nu_t/nu).\nThis analysis uses ONLY the following 4 dimensional physical quantities as input parameters:\nthe channel half-height (h), the distance from the wall (y), the friction velocity (u_tau), and the fluid kinematic viscosity (nu).\n\nCSV columns: ['u_tau', 'h', 'y', 'nu', 'nu_t/nu']\nCSV preview:\n       u_tau         h         y        nu        nu_t/nu\n0   0.151006  0.972606  0.211789  0.000008    1159.125740\n1   1.398090  0.859692  0.001290  0.000006     130.279295\n2   0.028931  0.581437  0.000755  0.000002       1.080343\n3   9.183617  0.911929  0.031137  0.000002   48623.066250\n4  81.939517  0.932334  0.024524  0.000005  153148.903582\n\nExplicit manual input-role/order override: None\nExplicit manual output override: None\n\nPrevious physics-audit feedback (exact coordinate differences and cited original KB records):\nAudit round 1:\nTyped ledger 3cd082bce050a7b2af5f4b8dd50a385c0698af2d2e8b6a04404482c48d4c1ea4; program gate=RETRY\nVariable u_tau: decision=PASSED; reason=The ledger symbol u_tau is the friction (shear) velocity used in wall-bounded turbulence; the retrieved record pq_friction_velocity defines u_tau = sqrt(tau_w/ rho) and gives the SI dimension L T^-1 (dimension_vector [0,1,-1,0,0,0,0]). That record therefore establishes the nonzero exponents L=1 and T=-1 and the zeros for M,I,Theta,N,J in the ledger entry for u_tau. The record is directly about the same canonical quantity and symbol used in the problem (friction velocity), so it applies to the variable as stated in the original problem.\nActual named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"-1\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"-1\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_friction_velocity\", \"canonical_quantity\": \"friction velocity\", \"source_identifier\": \"https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for u_tau:\n{\"aliases\": \"shear velocity; wall friction velocity\", \"ambiguity_notes\": \"It is a velocity scale, not a stress; do not assign pressure dimensions.\", \"canonical_quantity\": \"friction velocity\", \"confidence\": \"high\", \"definition\": \"Velocity scale defined from wall shear stress and density, conventionally u_tau = sqrt(tau_w/rho).\", \"dimension_vector\": \"[0, 1, -1, 0, 0, 0, 0]\", \"domain\": \"wall-bounded fluid mechanics\", \"entry_id\": \"pq_friction_velocity\", \"hybrid_score\": 0.8768164739951922, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.6480470685576922, \"si_dimension\": \"L T^-1\", \"si_unit\": \"m s^-1\", \"source\": \"Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling\", \"source_identifier\": \"https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8\", \"symbols\": \"u_tau; uτ; U_tau; Uτ\", \"variable_name\": \"u_tau\"}\n\nVariable h: decision=PASSED; reason=The ledger variable h is named and defined as the channel half-height. The retrieved record pq_channel_half_height is the canonical entry for channel half-height (distance from wall to centerline) with SI dimension L (dimension_vector [0,1,0,0,0,0,0]). This record therefore verifies L=1 and zeros for M,T,I,Theta,N,J in the ledger entry; it is the canonical quantity intended by the problem statement and so directly supports the ledger values.\nActual named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_channel_half_height\", \"canonical_quantity\": \"channel half-height\", \"source_identifier\": \"https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for h:\n{\"aliases\": \"channel half-height; half-gap\", \"ambiguity_notes\": \"The symbol h is also used for full height, enthalpy, or heat-transfer coefficient in other contexts.\", \"canonical_quantity\": \"channel half-height\", \"confidence\": \"high\", \"definition\": \"Distance from a channel wall to its centerline for a symmetric plane channel.\", \"dimension_vector\": \"[0, 1, 0, 0, 0, 0, 0]\", \"domain\": \"channel flow\", \"entry_id\": \"pq_channel_half_height\", \"hybrid_score\": 0.8675277970739231, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.6215079916397804, \"si_dimension\": \"L\", \"si_unit\": \"m\", \"source\": \"Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling\", \"source_identifier\": \"https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8\", \"symbols\": \"h; delta; δ\", \"variable_name\": \"h\"}\n\nVariable y: decision=PASSED; reason=The ledger variable y is the wall-normal distance. The retrieved record pq_wall_normal_distance is the canonical entry for distance-from-wall with SI dimension L (dimension_vector [0,1,0,0,0,0,0]). That record confirms L=1 and zeros for the other base exponents in the ledger entry. The record matches the physical meaning and symbol used in the original problem (wall-normal coordinate y).\nActual named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_wall_normal_distance\", \"canonical_quantity\": \"wall-normal distance\", \"source_identifier\": \"https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for y:\n{\"aliases\": \"distance from wall; wall-normal coordinate\", \"ambiguity_notes\": \"\", \"canonical_quantity\": \"wall-normal distance\", \"confidence\": \"high\", \"definition\": \"Distance measured normal to a wall.\", \"dimension_vector\": \"[0, 1, 0, 0, 0, 0, 0]\", \"domain\": \"wall-bounded flows\", \"entry_id\": \"pq_wall_normal_distance\", \"hybrid_score\": 0.8554479554905356, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.5869941585443874, \"si_dimension\": \"L\", \"si_unit\": \"m\", \"source\": \"NASA Glenn CFPOST User's Guide, equations and boundary-layer definitions\", \"source_identifier\": \"https://www.grc.nasa.gov/www/winddocs/cfpost/appc.html\", \"symbols\": \"y\", \"variable_name\": \"y\"}\n\nVariable nu: decision=CONFLICT; reason=The ledger entry labelled nu claims kinematic viscosity but lists exponents M=2, L=-1, T=-1 which do not match the standard physical definition. The retrieved record pq_kinematic_viscosity defines kinematic viscosity (momentum diffusivity) as dynamic viscosity divided by density, with SI dimension L^2 T^-1 (dimension_vector [0,2,-1,0,0,0,0]). This canonical record applies to the ledger variable 'nu' because the problem explicitly names it as the fluid kinematic viscosity and uses the conventional symbol ν. The record therefore supports the corrected exponents M=0, L=2, T=-1 (with zeros for I,Theta,N,J). The ledger's preexisting nonzero M and negative L are inconsistent with that canonical definition, so I report CONFLICT and supply the complete corrected SI exponent vector above.\nActual named SI={\"M\": \"2\", \"L\": \"-1\", \"T\": \"-1\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"0\", \"L\": \"2\", \"T\": \"-1\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={\"M\": {\"before\": \"2\", \"suggested\": \"0\"}, \"L\": {\"before\": \"-1\", \"suggested\": \"2\"}}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_kinematic_viscosity\", \"canonical_quantity\": \"kinematic viscosity\", \"source_identifier\": \"doi:10.6028/NIST.SP.811e2008\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[\"Checker decision CONFLICT\"]\n\nReferenced KB original record for nu:\n{\"aliases\": \"momentum diffusivity\", \"ambiguity_notes\": \"Do not confuse lowercase nu/ν with the Nusselt number Nu or a generic frequency symbol.\", \"canonical_quantity\": \"kinematic viscosity\", \"confidence\": \"curated\", \"definition\": \"Dynamic viscosity divided by mass density.\", \"dimension_vector\": \"[0, 2, -1, 0, 0, 0, 0]\", \"domain\": \"fluid mechanics\", \"entry_id\": \"pq_kinematic_viscosity\", \"hybrid_score\": 0.8530504201228343, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.5801440574938123, \"si_dimension\": \"L^2 T^-1\", \"si_unit\": \"m^2 s^-1\", \"source\": \"NIST SP 811, Guide for the Use of the International System of Units (SI)\", \"source_identifier\": \"doi:10.6028/NIST.SP.811e2008\", \"symbols\": \"nu; ν\", \"variable_name\": \"nu\"}"
+        }
+      ],
+      "elapsed_s": 4.60162799997488,
+      "tokens": {
+        "input": 3100,
+        "output": 318
+      },
+      "original_schema_error": null
+    }
+  ],
+  "elapsed_s": 103.80467829998815,
+  "error": null,
+  "infrastructure_error": [],
+  "node_sequence": [
+    "Analyzer",
+    "Hallu_Checker",
+    "Analyzer",
+    "Hallu_Checker",
+    "Basis_Decider",
+    "Basis_Executor"
+  ],
+  "provenance": {
+    "run_id": "15a35245-1dcd-4e2a-8396-3efa592ebec5",
+    "release": "run-provenance-2026-11-09",
+    "engine_sha256": "ae9a03710f9685d3be863b98acc1880d72c9ea3f04450af039b92f5459ee1ea9",
+    "started_utc": "2026-11-16T03:02:43Z",
+    "finished_utc": null,
+    "status": "running",
+    "dataset": {
+      "name": "dataset_cess_channel.csv",
+      "sha256": "5f33633175902520ef6de3478e60aea9fc5fa9bcf830178d0be5ff928d308cb4"
+    },
+    "problem_sha256": "b8b50058ce65424bedd197c85ea5ccf875455e5d6e1b39c55e100ae4a9997e66",
+    "manual_hyperparams_sha256": "b8623ef26ba2bbb23332ef233ecaf3b116e5a51a2d2a491e03fb16018e0803fe",
+    "model_configuration": {
+      "analyzer": "gpt-4o-mini",
+      "checker": "gpt-5-mini",
+      "planner": "gpt-5-mini",
+      "interpretation": "gpt-5-mini"
+    },
+    "package_versions": {
+      "numpy": "2.4.0",
+      "pandas": "2.3.3",
+      "scipy": "1.16.3",
+      "sympy": "1.14.0",
+      "scikit-learn": "1.8.0",
+      "cma": "4.4.4",
+      "pydantic": "2.12.5",
+      "openai": "2.14.0",
+      "httpx": "0.28.1",
+      "langchain-core": "1.2.5",
+      "langchain-openai": "1.1.6",
+      "langgraph": "1.0.5"
+    },
+    "tracing_enabled": false,
+    "wall_seconds": 103.80414059996838,
+    "node_timings": [
+      {
+        "node": "Analyzer",
+        "visit": 1,
+        "duration_seconds": 0.021239200024865568,
+        "status": "returned",
+        "error_type": null
+      },
+      {
+        "node": "Hallu_Checker",
+        "visit": 1,
+        "duration_seconds": 60.97023300000001,
+        "status": "returned",
+        "error_type": null
+      },
+      {
+        "node": "Analyzer",
+        "visit": 2,
+        "duration_seconds": 4.6119846000219695,
+        "status": "returned",
+        "error_type": null
+      },
+      {
+        "node": "Hallu_Checker",
+        "visit": 2,
+        "duration_seconds": 38.176244600035716,
+        "status": "returned",
+        "error_type": null
+      },
+      {
+        "node": "Basis_Decider",
+        "visit": 1,
+        "duration_seconds": 0.006100800004787743,
+        "status": "returned",
+        "error_type": null
+      },
+      {
+        "node": "Basis_Executor",
+        "visit": 1,
+        "duration_seconds": 0.013749200035817921,
+        "status": "returned",
+        "error_type": null
+      }
+    ],
+    "http_attempts": [
+      {
+        "attempt_id": "62145bde-92b1-42e9-9916-6555206c84ab",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 4.952790500014089,
+        "started_utc": "2026-11-16T03:02:43Z",
+        "input_tokens": 144,
+        "output_tokens": 0,
+        "total_tokens": 144,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "1af609ee5af30a4cb815112de6fb967363e97fca79a227b66ee61dab7d3ed583",
+        "response_id": null
+      },
+      {
+        "attempt_id": "465e2b7b-bdda-4efe-905f-c755770766b5",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 0.7675963999936357,
+        "started_utc": "2026-11-16T03:02:48Z",
+        "input_tokens": 141,
+        "output_tokens": 0,
+        "total_tokens": 141,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "9c0176619d55fb901d2b1502586b3df972a9127fac29aff98efe810877c61f28",
+        "response_id": null
+      },
+      {
+        "attempt_id": "7e1cafb1-d188-464b-8a9c-3b47895bf228",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 0.7479340999852866,
+        "started_utc": "2026-11-16T03:02:49Z",
+        "input_tokens": 142,
+        "output_tokens": 0,
+        "total_tokens": 142,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "aa4ddb26e5b5679edc506cd42733f8334983563abac27dc5a0e9f38422c6dd66",
+        "response_id": null
+      },
+      {
+        "attempt_id": "96a5d1f3-674c-49ca-a3f7-558b1f73db57",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 17.416873300040606,
+        "started_utc": "2026-11-16T03:02:50Z",
+        "input_tokens": 193,
+        "output_tokens": 0,
+        "total_tokens": 193,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "fb8e3c8a02396dc20630262101ecb09db295dfb2d6d1a4155bc309387cfb947e",
+        "response_id": null
+      },
+      {
+        "attempt_id": "4c5b0312-caff-4a8f-8342-82e283755c8f",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "llm",
+        "requested_model": "gpt-5-mini",
+        "response_model": null,
+        "http_status": null,
+        "outcome": "transport_error",
+        "duration_seconds": 5.036619000020437,
+        "started_utc": "2026-11-16T03:03:07Z",
+        "input_tokens": null,
+        "output_tokens": null,
+        "total_tokens": null,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": false,
+        "sdk_retry_index": 0,
+        "error_type": "ConnectError",
+        "request_sha256": "8eec23723ee6bf8148663ad239294657acff2f05a90c486ef200093dbbe31509",
+        "response_id": null
+      },
+      {
+        "attempt_id": "0806d203-f20c-4413-955e-cf3e7dafaa0c",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "llm",
+        "requested_model": "gpt-5-mini",
+        "response_model": "gpt-5-mini",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 31.483909600006882,
+        "started_utc": "2026-11-16T03:03:13Z",
+        "input_tokens": 3565,
+        "output_tokens": 3583,
+        "total_tokens": 7148,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 0,
+        "usage_reported": true,
+        "sdk_retry_index": 1,
+        "error_type": null,
+        "request_sha256": "8eec23723ee6bf8148663ad239294657acff2f05a90c486ef200093dbbe31509",
+        "response_id": "chatcmpl-202611160303143401392328268d9d6mBdBF2Gm"
+      },
+      {
+        "attempt_id": "b9179ef1-bad6-457c-aee5-f7a76852dbae",
+        "node": "Analyzer",
+        "node_visit": 2,
+        "kind": "llm",
+        "requested_model": "gpt-4o-mini",
+        "response_model": "gpt-4o-mini-2024-07-18",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 4.59431279997807,
+        "started_utc": "2026-11-16T03:03:44Z",
+        "input_tokens": 3100,
+        "output_tokens": 318,
+        "total_tokens": 3418,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 0,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "458cf72489f1c4047271f31975d7b5caa1acfbdac252bd15bac49bf8911ae9c0",
+        "response_id": "chatcmpl-EkhIQVMcbmRghpHnP1giSFV5LnaXh"
+      },
+      {
+        "attempt_id": "46c6e7de-e360-4ee8-9671-8b7170a6d971",
+        "node": "Hallu_Checker",
+        "node_visit": 2,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 5.853443600004539,
+        "started_utc": "2026-11-16T03:03:49Z",
+        "input_tokens": 141,
+        "output_tokens": 0,
+        "total_tokens": 141,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "7252ca10d073b22660cf8a27062aa6f32cc96734239defcbc7fa8c08117436c0",
+        "response_id": null
+      },
+      {
+        "attempt_id": "169f302e-8e73-4769-a278-4c50c5750119",
+        "node": "Hallu_Checker",
+        "node_visit": 2,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 1.467335199995432,
+        "started_utc": "2026-11-16T03:03:55Z",
+        "input_tokens": 143,
+        "output_tokens": 0,
+        "total_tokens": 143,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "b572a634ed15daabd9b3f33831c81c66506d8370018261eb508c4de84f436417",
+        "response_id": null
+      },
+      {
+        "attempt_id": "387eeb68-da2f-4724-9ed9-e431cd65dc19",
+        "node": "Hallu_Checker",
+        "node_visit": 2,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 9.86662589997286,
+        "started_utc": "2026-11-16T03:03:56Z",
+        "input_tokens": 135,
+        "output_tokens": 0,
+        "total_tokens": 135,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "70626cbf2e8ab953781ac9de281c79bdd9f94f3d3da6f316d120926f33be0968",
+        "response_id": null
+      },
+      {
+        "attempt_id": "a76eb647-35f6-4fef-b63e-88f623e112f2",
+        "node": "Hallu_Checker",
+        "node_visit": 2,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 1.3588951000128873,
+        "started_utc": "2026-11-16T03:04:06Z",
+        "input_tokens": 193,
+        "output_tokens": 0,
+        "total_tokens": 193,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "8b7b05df347eb90c07710f2b3f2baa45cc208580304e005745b40c814e628d60",
+        "response_id": null
+      },
+      {
+        "attempt_id": "0f1f4e43-599d-4ca9-9ca4-4450c567fdb5",
+        "node": "Hallu_Checker",
+        "node_visit": 2,
+        "kind": "llm",
+        "requested_model": "gpt-5-mini",
+        "response_model": "gpt-5-mini",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 19.505170400021598,
+        "started_utc": "2026-11-16T03:04:07Z",
+        "input_tokens": 3237,
+        "output_tokens": 2792,
+        "total_tokens": 6029,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 0,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "e4aca6f198aa5136d6f02afbb752f9c358e6a1fa8facce34ecfe702c3057b944",
+        "response_id": "chatcmpl-202611160304087809281178268d9d6VANzdXLr"
+      }
+    ],
+    "observation_warnings": [],
+    "workflow_status": "basis_ready",
+    "scientific_status": null,
+    "totals": {
+      "http_attempt_count": 12,
+      "llm_http_attempt_count": 4,
+      "embedding_http_attempt_count": 8,
+      "usage_missing_attempt_count": 1,
+      "http_duration_seconds_sum": 103.05150590004632,
+      "node_duration_seconds_sum": 103.79955140012316,
+      "http_success_count": 11,
+      "http_error_count": 0,
+      "transport_error_count": 1,
+      "known_input_tokens": 11134,
+      "input_tokens_missing_count": 1,
+      "known_output_tokens": 6693,
+      "output_tokens_missing_count": 1,
+      "known_total_tokens": 17827,
+      "total_tokens_missing_count": 1,
+      "known_cached_input_tokens": 0,
+      "cached_input_tokens_missing_count": 9,
+      "known_reasoning_tokens": 0,
+      "reasoning_tokens_missing_count": 9
+    }
+  }
+}

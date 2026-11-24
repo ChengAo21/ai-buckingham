@@ -1,0 +1,542 @@
+{
+  "schema_version": 1,
+  "case_id": "sandgrain",
+  "title": "Equivalent sand-grain roughness",
+  "dataset": "data/datasets/sandgrain.csv",
+  "prompt": "Perform dimensional analysis for sand-grain roughness parameterization to derive the dimensionless relationship governing the normalized equivalent sand-grain roughness (denoted as ks/Ra).\nThis analysis uses ONLY the following 7 physical quantities as input parameters:\nthe first-order absolute moment of height fluctuations, Ra;\nthe peak-to-valley height, kt;\nthe root-mean-square height, k_rms;\nthe skewness of roughness height fluctuations, Sk;\nthe kurtosis of roughness height fluctuations, Ku;\nthe effective streamwise slope of the roughness, ES;\nthe surface porosity, Po.",
+  "manual_hyperparams": {
+    "workflow_template": "auto_mechanism_adaptive",
+    "cma_maxiter": 240,
+    "cma_popsize": 60,
+    "max_rational_denominator": 5,
+    "mi_param_used": 5,
+    "mi_method_used": "kraskov",
+    "dimensionless_input_preprocessing": {
+      "Sk": {
+        "transform": "shift",
+        "offset": 2.0
+      }
+    },
+    "display_ipt_Pi": "none",
+    "enable_score_uq": true,
+    "gpr_log_features": false,
+    "gpr_log_target": false,
+    "gpr_n_splits": 1,
+    "gpr_n_restarts_optimizer": 1,
+    "gpr_stratify_column": "case",
+    "similarity_type": "first_kind"
+  },
+  "input_columns": [
+    "Ra",
+    "kt",
+    "k_rms",
+    "Sk",
+    "Ku",
+    "ES",
+    "Po"
+  ],
+  "output_column": "ks/Ra",
+  "expected_dimensions": {
+    "dimension_order": [
+      "M",
+      "L",
+      "T",
+      "I",
+      "Theta",
+      "N",
+      "J"
+    ],
+    "inputs": {
+      "Ra": {
+        "M": 0,
+        "L": 1,
+        "T": 0,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "kt": {
+        "M": 0,
+        "L": 1,
+        "T": 0,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "k_rms": {
+        "M": 0,
+        "L": 1,
+        "T": 0,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "Sk": {
+        "M": 0,
+        "L": 0,
+        "T": 0,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "Ku": {
+        "M": 0,
+        "L": 0,
+        "T": 0,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "ES": {
+        "M": 0,
+        "L": 0,
+        "T": 0,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "Po": {
+        "M": 0,
+        "L": 0,
+        "T": 0,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      }
+    },
+    "output": {
+      "M": 0,
+      "L": 0,
+      "T": 0,
+      "I": 0,
+      "Theta": 0,
+      "N": 0,
+      "J": 0
+    }
+  },
+  "data_metadata": {
+    "rows": 104,
+    "columns": [
+      "Ra",
+      "kt",
+      "k_rms",
+      "Sk",
+      "Ku",
+      "ES",
+      "Po",
+      "ks",
+      "ks/Ra",
+      "case",
+      "case_id"
+    ],
+    "auxiliary_columns": [
+      "ks",
+      "case",
+      "case_id"
+    ],
+    "sha256": "0bd235aa92db381dacdc6c176396efe5fbf2f0a9c84ccf1d468410321203a175",
+    "original_filename": "dataset_sandgrain.csv",
+    "original_column_order_preserved": true,
+    "response_log_eligible_rows": 104
+  },
+  "provenance": {
+    "prompt_source": "author-supplied current agent definitions",
+    "manual_hyperparams_source": "author-supplied current agent definitions",
+    "source_sha256": "55a4a6f2c9c0b3424a83d3576517539128d6dc86fb2d9479bf1c86ab5f4794db",
+    "original_prompt_symbol": "sand_grain_roughness",
+    "original_hyperparams_symbol": "sand_grain_hparams",
+    "reference_dimensions_source": "reproduction/rag_ablation/reference/expected_dimensions.json",
+    "reference_case_id": "SANDGRAIN",
+    "reference_dimensions_sha256": "72764f551ff87b286641978d8ed96addd0d80047028a351f06b0814329b04f98"
+  },
+  "preprocessing_note": "Sk is shifted by +2 by the declared dimensionless_input_preprocessing; archived CSV values are unchanged.",
+  "resolved_hyperparameters": {
+    "output_variable": "ks/Ra",
+    "output_resolution": {
+      "status": "success",
+      "output_var": "ks/Ra",
+      "source": "structured_analyzer",
+      "requested": "ks/Ra",
+      "candidates": [
+        "ks",
+        "ks/Ra"
+      ]
+    },
+    "manual_hyperparams": {
+      "workflow_template": "auto_mechanism_adaptive",
+      "cma_maxiter": 240,
+      "cma_popsize": 60,
+      "max_rational_denominator": 5,
+      "mi_param_used": 5,
+      "mi_method_used": "kraskov",
+      "dimensionless_input_preprocessing": {
+        "Sk": {
+          "transform": "shift",
+          "offset": 2.0
+        }
+      },
+      "display_ipt_Pi": "none",
+      "enable_score_uq": true,
+      "gpr_log_features": false,
+      "gpr_log_target": false,
+      "gpr_n_splits": 1,
+      "gpr_n_restarts_optimizer": 1,
+      "gpr_stratify_column": "case",
+      "similarity_type": "first_kind"
+    },
+    "effective_workflow": {
+      "status": "compiled",
+      "template": "auto_mechanism_adaptive",
+      "rationale": "Use single_regime_adaptive because the problem statement gives a single physical scenario (no explicit multiple mechanisms requested). Use first-kind similarity (default) because the prompt did not request incomplete similarity, dependent-variable scaling, or automatic similarity screening. Kraskov mutual-information estimator is chosen because the sample size (104) is <= 800; k=3 is a conservative nearest-neighbor choice for MI estimation at this sample size. Both fixed_in_power and fixed_out_power are included (empty) to preserve any explicit exponent constraints from the problem (none were given). The analysis will search for dominant Pi groups built from the provided base-Pi generators Pi_1..Pi_6 and will rationalize exponents where appropriate, validating results after rationalization.",
+      "target_is_dimensionless": true,
+      "stages": [
+        "load_and_validate_data",
+        "gradient_regime_detection",
+        "validate_regime_partition",
+        "local_dominant_group_search",
+        "fan_out_local_workflows",
+        "aggregate_results",
+        "generate_report"
+      ],
+      "tool_ids": [
+        "calc_basis_tool",
+        "detect_gradient_regimes",
+        "run_local_dominant_group_workflow",
+        "rationalize_local_solution"
+      ],
+      "regime_detection": {
+        "n_clusters": null,
+        "candidate_cluster_counts": [
+          2,
+          3,
+          4
+        ],
+        "min_cluster_fraction": 0.05,
+        "min_cluster_samples": 60,
+        "max_intercluster_cosine": 0.9,
+        "eigenvalue_ratio_threshold": 50.0,
+        "require_convergence": true,
+        "exclude_low_confidence_points": false,
+        "assignment_confidence_threshold": 0.05
+      },
+      "resolved_gradient_regime_options": {
+        "surrogate": {
+          "mean_mode": "constant",
+          "max_train_samples": null,
+          "n_restarts_optimizer": 3,
+          "optimizer_maxiter": 2000,
+          "optimizer_ftol": 1e-10,
+          "optimizer_gtol": 1e-06,
+          "jitter": 1e-10,
+          "random_state": 42,
+          "log_sigma0_sq_bounds": [
+            -30.0,
+            30.0
+          ],
+          "log_sigma1_sq_bounds": [
+            -30.0,
+            30.0
+          ],
+          "log_sigma_u_sq_bounds": [
+            -30.0,
+            30.0
+          ],
+          "mean_parameter_bounds": [
+            null,
+            null
+          ],
+          "initial_noise_fraction": 1e-06,
+          "require_optimizer_success": false,
+          "regime_target_transform": "log"
+        },
+        "clustering": {
+          "n_clusters": null,
+          "candidate_cluster_counts": [
+            2,
+            3,
+            4
+          ],
+          "min_cluster_fraction": 0.05,
+          "min_cluster_samples": 60,
+          "max_intercluster_cosine": 0.9,
+          "eigenvalue_ratio_threshold": 50.0,
+          "n_init": 30,
+          "max_iter": 200,
+          "random_state": 42,
+          "initialization": "random_eigenpairs",
+          "max_initialization_attempts": 100,
+          "require_convergence": true,
+          "gradient_norm_tolerance": 1e-12,
+          "exclude_low_confidence_points": false,
+          "assignment_confidence_threshold": 0.05
+        }
+      },
+      "regime_configuration_precedence": [
+        "library_defaults",
+        "workflow_plan",
+        "nested_manual",
+        "flat_manual"
+      ],
+      "resolved_manual_regime_overrides": {},
+      "local_workflow": {
+        "start_count": 1,
+        "max_count": 6,
+        "absolute_score_drop_threshold": 0.08,
+        "require_two_counts_when_possible": true,
+        "similarity_type": "first_kind",
+        "optimize_output": false,
+        "output_scaling_reason": "Authoritative manual similarity_type override.",
+        "output_scaling_confidence": "high",
+        "similarity_screening_max_relative_mi_change": 0.15,
+        "similarity_screening_max_cosine_similarity": 0.7,
+        "mi_method": "kraskov",
+        "mi_param": 5,
+        "cma_restarts": 3,
+        "minimum_samples": 20,
+        "minimum_samples_per_mi_dimension": 20,
+        "minimum_samples_for_second_count": 40,
+        "fixed_in_power": {},
+        "fixed_out_power": {},
+        "sparsification_enabled": true,
+        "sparsify_exponent_threshold": 0.05,
+        "sparsify_max_score_increase": 0.05,
+        "rationalization_enabled": true,
+        "max_rational_denominator": 5,
+        "validate_after_rationalization": true
+      },
+      "replanning_triggers": [
+        "insufficient_effective_samples",
+        "nonconvergent_rationalization",
+        "flat_mutual_information_trend"
+      ],
+      "max_replans": 2
+    },
+    "policy": "library defaults < LLM planner < manual_hyperparams"
+  },
+  "hyperparameter_provenance": {
+    "precedence": [
+      "library_defaults",
+      "llm_workflow_plan",
+      "manual_hyperparams"
+    ],
+    "manual_overrides": {
+      "template": "auto_mechanism_adaptive",
+      "local_analysis.mi_method": "kraskov",
+      "local_analysis.mi_param": 5,
+      "local_analysis.max_rational_denominator": 5,
+      "local_analysis.similarity_type": "first_kind",
+      "local_analysis.optimize_output": false
+    },
+    "passthrough_manual_hyperparameters": {
+      "cma_maxiter": 240,
+      "cma_popsize": 60,
+      "dimensionless_input_preprocessing": {
+        "Sk": {
+          "transform": "shift",
+          "offset": 2.0
+        }
+      },
+      "display_ipt_Pi": "none",
+      "enable_score_uq": true,
+      "gpr_log_features": false,
+      "gpr_log_target": false,
+      "gpr_n_splits": 1,
+      "gpr_n_restarts_optimizer": 1,
+      "gpr_stratify_column": "case"
+    }
+  },
+  "workflow_plan": {
+    "template": "auto_mechanism_adaptive",
+    "rationale": "Use single_regime_adaptive because the problem statement gives a single physical scenario (no explicit multiple mechanisms requested). Use first-kind similarity (default) because the prompt did not request incomplete similarity, dependent-variable scaling, or automatic similarity screening. Kraskov mutual-information estimator is chosen because the sample size (104) is <= 800; k=3 is a conservative nearest-neighbor choice for MI estimation at this sample size. Both fixed_in_power and fixed_out_power are included (empty) to preserve any explicit exponent constraints from the problem (none were given). The analysis will search for dominant Pi groups built from the provided base-Pi generators Pi_1..Pi_6 and will rationalize exponents where appropriate, validating results after rationalization.",
+    "target_is_dimensionless": true,
+    "stages": [
+      "load_and_validate_data",
+      "gradient_regime_detection",
+      "validate_regime_partition",
+      "local_dominant_group_search",
+      "fan_out_local_workflows",
+      "aggregate_results",
+      "generate_report"
+    ],
+    "regime_detection": {
+      "n_clusters": null,
+      "candidate_cluster_counts": [
+        2,
+        3,
+        4
+      ],
+      "min_cluster_fraction": 0.05,
+      "min_cluster_samples": 60,
+      "max_intercluster_cosine": 0.9,
+      "eigenvalue_ratio_threshold": 50.0,
+      "require_convergence": true,
+      "exclude_low_confidence_points": false,
+      "assignment_confidence_threshold": 0.05
+    },
+    "local_analysis": {
+      "start_count": 1,
+      "max_count": null,
+      "absolute_score_drop_threshold": 0.08,
+      "require_two_counts_when_possible": true,
+      "similarity_type": "first_kind",
+      "optimize_output": false,
+      "output_scaling_reason": "Authoritative manual similarity_type override.",
+      "output_scaling_confidence": "high",
+      "similarity_screening_max_relative_mi_change": 0.15,
+      "similarity_screening_max_cosine_similarity": 0.7,
+      "mi_method": "kraskov",
+      "mi_param": 5,
+      "cma_restarts": 3,
+      "minimum_samples": 20,
+      "minimum_samples_per_mi_dimension": 20,
+      "minimum_samples_for_second_count": 40,
+      "fixed_in_power": {},
+      "fixed_out_power": {},
+      "sparsification_enabled": true,
+      "sparsify_exponent_threshold": 0.05,
+      "sparsify_max_score_increase": 0.05,
+      "rationalization_enabled": true,
+      "max_rational_denominator": 5,
+      "validate_after_rationalization": true
+    },
+    "replanning_triggers": [
+      "insufficient_effective_samples",
+      "nonconvergent_rationalization",
+      "flat_mutual_information_trend"
+    ]
+  },
+  "compiled_workflow": {
+    "status": "compiled",
+    "template": "auto_mechanism_adaptive",
+    "rationale": "Use single_regime_adaptive because the problem statement gives a single physical scenario (no explicit multiple mechanisms requested). Use first-kind similarity (default) because the prompt did not request incomplete similarity, dependent-variable scaling, or automatic similarity screening. Kraskov mutual-information estimator is chosen because the sample size (104) is <= 800; k=3 is a conservative nearest-neighbor choice for MI estimation at this sample size. Both fixed_in_power and fixed_out_power are included (empty) to preserve any explicit exponent constraints from the problem (none were given). The analysis will search for dominant Pi groups built from the provided base-Pi generators Pi_1..Pi_6 and will rationalize exponents where appropriate, validating results after rationalization.",
+    "target_is_dimensionless": true,
+    "stages": [
+      "load_and_validate_data",
+      "gradient_regime_detection",
+      "validate_regime_partition",
+      "local_dominant_group_search",
+      "fan_out_local_workflows",
+      "aggregate_results",
+      "generate_report"
+    ],
+    "tool_ids": [
+      "calc_basis_tool",
+      "detect_gradient_regimes",
+      "run_local_dominant_group_workflow",
+      "rationalize_local_solution"
+    ],
+    "regime_detection": {
+      "n_clusters": null,
+      "candidate_cluster_counts": [
+        2,
+        3,
+        4
+      ],
+      "min_cluster_fraction": 0.05,
+      "min_cluster_samples": 60,
+      "max_intercluster_cosine": 0.9,
+      "eigenvalue_ratio_threshold": 50.0,
+      "require_convergence": true,
+      "exclude_low_confidence_points": false,
+      "assignment_confidence_threshold": 0.05
+    },
+    "resolved_gradient_regime_options": {
+      "surrogate": {
+        "mean_mode": "constant",
+        "max_train_samples": null,
+        "n_restarts_optimizer": 3,
+        "optimizer_maxiter": 2000,
+        "optimizer_ftol": 1e-10,
+        "optimizer_gtol": 1e-06,
+        "jitter": 1e-10,
+        "random_state": 42,
+        "log_sigma0_sq_bounds": [
+          -30.0,
+          30.0
+        ],
+        "log_sigma1_sq_bounds": [
+          -30.0,
+          30.0
+        ],
+        "log_sigma_u_sq_bounds": [
+          -30.0,
+          30.0
+        ],
+        "mean_parameter_bounds": [
+          null,
+          null
+        ],
+        "initial_noise_fraction": 1e-06,
+        "require_optimizer_success": false,
+        "regime_target_transform": "log"
+      },
+      "clustering": {
+        "n_clusters": null,
+        "candidate_cluster_counts": [
+          2,
+          3,
+          4
+        ],
+        "min_cluster_fraction": 0.05,
+        "min_cluster_samples": 60,
+        "max_intercluster_cosine": 0.9,
+        "eigenvalue_ratio_threshold": 50.0,
+        "n_init": 30,
+        "max_iter": 200,
+        "random_state": 42,
+        "initialization": "random_eigenpairs",
+        "max_initialization_attempts": 100,
+        "require_convergence": true,
+        "gradient_norm_tolerance": 1e-12,
+        "exclude_low_confidence_points": false,
+        "assignment_confidence_threshold": 0.05
+      }
+    },
+    "regime_configuration_precedence": [
+      "library_defaults",
+      "workflow_plan",
+      "nested_manual",
+      "flat_manual"
+    ],
+    "resolved_manual_regime_overrides": {},
+    "local_workflow": {
+      "start_count": 1,
+      "max_count": 6,
+      "absolute_score_drop_threshold": 0.08,
+      "require_two_counts_when_possible": true,
+      "similarity_type": "first_kind",
+      "optimize_output": false,
+      "output_scaling_reason": "Authoritative manual similarity_type override.",
+      "output_scaling_confidence": "high",
+      "similarity_screening_max_relative_mi_change": 0.15,
+      "similarity_screening_max_cosine_similarity": 0.7,
+      "mi_method": "kraskov",
+      "mi_param": 5,
+      "cma_restarts": 3,
+      "minimum_samples": 20,
+      "minimum_samples_per_mi_dimension": 20,
+      "minimum_samples_for_second_count": 40,
+      "fixed_in_power": {},
+      "fixed_out_power": {},
+      "sparsification_enabled": true,
+      "sparsify_exponent_threshold": 0.05,
+      "sparsify_max_score_increase": 0.05,
+      "rationalization_enabled": true,
+      "max_rational_denominator": 5,
+      "validate_after_rationalization": true
+    },
+    "replanning_triggers": [
+      "insufficient_effective_samples",
+      "nonconvergent_rationalization",
+      "flat_mutual_information_trend"
+    ],
+    "max_replans": 2
+  }
+}

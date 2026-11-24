@@ -1,0 +1,154 @@
+{
+  "dimension_ledger": {
+    "output_variable_name": "u/U",
+    "output_variable_reasoning": "The dependent quantity u/U is dimensionless so it is not included as an input variable. The four provided inputs are standard: U is a velocity with dimensions L T^-1; nu is kinematic viscosity with dimensions L^2 T^-1; x and y are distances with dimensions L. All electromagnetic, temperature, amount, and luminous intensity bases do not participate (I, Theta, N, J) and are therefore returned as '0'. Mass M does not appear in kinematic viscosity or in these quantities and is therefore '0'. Exponents are given as rational integer strings: M, L, T, I, Theta, N, J.",
+    "output_variable_confidence": "high",
+    "input_variable_names": [
+      "U",
+      "nu",
+      "x",
+      "y"
+    ],
+    "variables": [
+      {
+        "csv_name": "U",
+        "quantity_name": "free_stream_velocity",
+        "physical_definition": "Free-stream velocity of the fluid far from the plate (streamwise velocity scale).",
+        "si_exponents": {
+          "M": "0",
+          "L": "1",
+          "T": "-1",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "nu",
+        "quantity_name": "kinematic_viscosity",
+        "physical_definition": "Kinematic viscosity of the fluid (momentum diffusivity).",
+        "si_exponents": {
+          "M": "0",
+          "L": "2",
+          "T": "-1",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "x",
+        "quantity_name": "streamwise_distance",
+        "physical_definition": "Streamwise distance from the leading edge of the plate (coordinate along the plate).",
+        "si_exponents": {
+          "M": "0",
+          "L": "1",
+          "T": "0",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "y",
+        "quantity_name": "wall_normal_distance",
+        "physical_definition": "Wall-normal distance from the plate surface (coordinate normal to the plate).",
+        "si_exponents": {
+          "M": "0",
+          "L": "1",
+          "T": "0",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      }
+    ]
+  },
+  "dimension_contract": {
+    "ledger_sha256": "7b5fcd564fd1a290859adddfecd760cc29f90ffbff3b2de31775c7139738946a",
+    "status": "complete",
+    "var_names": [
+      "U",
+      "nu",
+      "x",
+      "y"
+    ],
+    "output_var": "u/U",
+    "n": 4,
+    "r": 2,
+    "k": 2,
+    "row_order": [
+      "L",
+      "T"
+    ],
+    "D_exact": [
+      [
+        "1",
+        "2",
+        "1",
+        "1"
+      ],
+      [
+        "-1",
+        "-1",
+        "0",
+        "0"
+      ]
+    ],
+    "D_in": [
+      [
+        1.0,
+        2.0,
+        1.0,
+        1.0
+      ],
+      [
+        -1.0,
+        -1.0,
+        0.0,
+        0.0
+      ]
+    ],
+    "unknown_coordinates": [],
+    "physical_correctness_scope": "Structure/rank only; physical assignments require audit and evidence."
+  },
+  "dimension_mat": "Rows = ['L', 'T']\nColumns = ['U', 'nu', 'x', 'y']\nL: ['1', '2', '1', '1']\nT: ['-1', '-1', '0', '0']",
+  "basis_pi_formulas": {
+    "Pi_1": "(U * x) / (nu)",
+    "Pi_2": "(U * y) / (nu)"
+  },
+  "basis_pi_matrices": [
+    [
+      1.0,
+      -1.0,
+      1.0,
+      0.0
+    ],
+    [
+      1.0,
+      -1.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "input_vars": [
+    "U",
+    "nu",
+    "x",
+    "y"
+  ],
+  "output_var": "u/U",
+  "output_resolution": {
+    "status": "success",
+    "output_var": "u/U",
+    "source": "structured_analyzer",
+    "requested": "u/U",
+    "candidates": [
+      "u/U"
+    ]
+  }
+}

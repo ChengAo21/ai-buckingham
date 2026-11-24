@@ -1,0 +1,586 @@
+{
+  "schema_version": 1,
+  "case_id": "cess_channel",
+  "title": "Cess eddy-viscosity model in turbulent channel flow",
+  "dataset": "data/datasets/cess_channel.csv",
+  "prompt": "Perform dimensional analysis for the Cess eddy-viscosity model in turbulent channel flow to derive the dimensionless relationship governing the normalized eddy viscosity (denoted as nu_t/nu).\nThis analysis uses ONLY the following 4 physical quantities as input parameters:\nthe channel half-height (h), the distance from the wall (y), the friction velocity (u_tau), and the fluid kinematic viscosity (nu).",
+  "manual_hyperparams": {
+    "workflow_template": "auto_mechanism_adaptive",
+    "similarity_type": "auto",
+    "gradient_regime_options": {
+      "surrogate": {
+        "mean_mode": "constant",
+        "max_train_samples": 800,
+        "regime_target_transform": "log",
+        "n_restarts_optimizer": 3,
+        "optimizer_maxiter": 2000,
+        "log_sigma0_sq_bounds": [
+          -30.0,
+          30.0
+        ],
+        "log_sigma1_sq_bounds": [
+          -30.0,
+          30.0
+        ],
+        "log_sigma_u_sq_bounds": [
+          -30.0,
+          30.0
+        ]
+      },
+      "clustering": {
+        "n_clusters": null,
+        "candidate_cluster_counts": [
+          2,
+          3,
+          4
+        ],
+        "min_cluster_fraction": 0.05,
+        "eigenvalue_ratio_threshold": 50.0,
+        "n_init": 30,
+        "max_iter": 200,
+        "require_convergence": true
+      }
+    },
+    "regime_plot_feature_mode": "screening_basis",
+    "regime_plot_feature_pi_indices": [
+      1,
+      2
+    ],
+    "regime_plot_feature_labels": [
+      "$\\log(\\Pi^{(S)}_1)$",
+      "$\\log(\\Pi^{(S)}_2)$"
+    ],
+    "regime_plot_physical_x": {
+      "source": "power_product",
+      "powers": {
+        "u_tau": 1.0,
+        "h": 1.0,
+        "nu": -1.0
+      },
+      "label": "$Re_\\tau=u_\\tau h/\\nu$",
+      "scale": "log"
+    },
+    "regime_plot_physical_y": {
+      "source": "power_product",
+      "powers": {
+        "y": 1.0,
+        "h": -1.0
+      },
+      "label": "$\\eta=y/h$",
+      "scale": "log"
+    }
+  },
+  "input_columns": [
+    "u_tau",
+    "h",
+    "y",
+    "nu"
+  ],
+  "output_column": "nu_t/nu",
+  "expected_dimensions": {
+    "dimension_order": [
+      "M",
+      "L",
+      "T",
+      "I",
+      "Theta",
+      "N",
+      "J"
+    ],
+    "inputs": {
+      "h": {
+        "M": 0,
+        "L": 1,
+        "T": 0,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "y": {
+        "M": 0,
+        "L": 1,
+        "T": 0,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "u_tau": {
+        "M": 0,
+        "L": 1,
+        "T": -1,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "nu": {
+        "M": 0,
+        "L": 2,
+        "T": -1,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      }
+    },
+    "output": {
+      "M": 0,
+      "L": 0,
+      "T": 0,
+      "I": 0,
+      "Theta": 0,
+      "N": 0,
+      "J": 0
+    }
+  },
+  "data_metadata": {
+    "rows": 1000,
+    "columns": [
+      "u_tau",
+      "h",
+      "y",
+      "nu",
+      "nu_t/nu"
+    ],
+    "auxiliary_columns": [],
+    "sha256": "5f33633175902520ef6de3478e60aea9fc5fa9bcf830178d0be5ff928d308cb4",
+    "original_filename": "dataset_cess_channel.csv",
+    "original_column_order_preserved": true,
+    "response_log_eligible_rows": 1000
+  },
+  "provenance": {
+    "prompt_source": "author-supplied current agent definitions",
+    "manual_hyperparams_source": "author-supplied current agent definitions",
+    "source_sha256": "55a4a6f2c9c0b3424a83d3576517539128d6dc86fb2d9479bf1c86ab5f4794db",
+    "original_prompt_symbol": "CMAME24_CESS_PROMPT",
+    "original_hyperparams_symbol": "CMAME24_CESS_hparams",
+    "reference_dimensions_source": "reproduction/rag_ablation/reference/expected_dimensions.json",
+    "reference_case_id": "CESS",
+    "reference_dimensions_sha256": "72764f551ff87b286641978d8ed96addd0d80047028a351f06b0814329b04f98"
+  },
+  "resolved_hyperparameters": {
+    "output_variable": "nu_t/nu",
+    "output_resolution": {
+      "status": "success",
+      "output_var": "nu_t/nu",
+      "source": "structured_analyzer",
+      "requested": "nu_t/nu",
+      "candidates": [
+        "nu_t/nu"
+      ]
+    },
+    "manual_hyperparams": {
+      "workflow_template": "auto_mechanism_adaptive",
+      "similarity_type": "auto",
+      "gradient_regime_options": {
+        "surrogate": {
+          "mean_mode": "constant",
+          "max_train_samples": 800,
+          "regime_target_transform": "log",
+          "n_restarts_optimizer": 3,
+          "optimizer_maxiter": 2000,
+          "log_sigma0_sq_bounds": [
+            -30.0,
+            30.0
+          ],
+          "log_sigma1_sq_bounds": [
+            -30.0,
+            30.0
+          ],
+          "log_sigma_u_sq_bounds": [
+            -30.0,
+            30.0
+          ]
+        },
+        "clustering": {
+          "n_clusters": null,
+          "candidate_cluster_counts": [
+            2,
+            3,
+            4
+          ],
+          "min_cluster_fraction": 0.05,
+          "eigenvalue_ratio_threshold": 50.0,
+          "n_init": 30,
+          "max_iter": 200,
+          "require_convergence": true
+        }
+      },
+      "regime_plot_feature_mode": "screening_basis",
+      "regime_plot_feature_pi_indices": [
+        1,
+        2
+      ],
+      "regime_plot_feature_labels": [
+        "$\\log(\\Pi^{(S)}_1)$",
+        "$\\log(\\Pi^{(S)}_2)$"
+      ],
+      "regime_plot_physical_x": {
+        "source": "power_product",
+        "powers": {
+          "u_tau": 1.0,
+          "h": 1.0,
+          "nu": -1.0
+        },
+        "label": "$Re_\\tau=u_\\tau h/\\nu$",
+        "scale": "log"
+      },
+      "regime_plot_physical_y": {
+        "source": "power_product",
+        "powers": {
+          "y": 1.0,
+          "h": -1.0
+        },
+        "label": "$\\eta=y/h$",
+        "scale": "log"
+      }
+    },
+    "effective_workflow": {
+      "status": "compiled",
+      "template": "auto_mechanism_adaptive",
+      "rationale": "The problem specifies a single mechanism (Cess eddy-viscosity model) and does not request incomplete similarity or automatic mechanism screening, so the single_regime_adaptive template with first-kind similarity is appropriate. The dataset has 1000 rows (>800) so the MI estimator is set to binning with mi_param=20. No explicit exponent constraints were given, so fixed_in_power and fixed_out_power are left empty. The target is a dimensionless quantity (nu_t/nu) so target_is_dimensionless is true and output optimization is disabled under first-kind similarity.",
+      "target_is_dimensionless": true,
+      "stages": [
+        "load_and_validate_data",
+        "gradient_regime_detection",
+        "validate_regime_partition",
+        "local_dominant_group_search",
+        "fan_out_local_workflows",
+        "aggregate_results",
+        "generate_report"
+      ],
+      "tool_ids": [
+        "calc_basis_tool",
+        "detect_gradient_regimes",
+        "run_local_dominant_group_workflow",
+        "rationalize_local_solution"
+      ],
+      "regime_detection": {
+        "n_clusters": null,
+        "candidate_cluster_counts": [
+          2,
+          3,
+          4
+        ],
+        "min_cluster_fraction": 0.05,
+        "min_cluster_samples": 60,
+        "max_intercluster_cosine": 0.9,
+        "eigenvalue_ratio_threshold": 50.0,
+        "require_convergence": true,
+        "exclude_low_confidence_points": false,
+        "assignment_confidence_threshold": 0.05
+      },
+      "resolved_gradient_regime_options": {
+        "surrogate": {
+          "mean_mode": "constant",
+          "max_train_samples": 800,
+          "n_restarts_optimizer": 3,
+          "optimizer_maxiter": 2000,
+          "optimizer_ftol": 1e-10,
+          "optimizer_gtol": 1e-06,
+          "jitter": 1e-10,
+          "random_state": 42,
+          "log_sigma0_sq_bounds": [
+            -30.0,
+            30.0
+          ],
+          "log_sigma1_sq_bounds": [
+            -30.0,
+            30.0
+          ],
+          "log_sigma_u_sq_bounds": [
+            -30.0,
+            30.0
+          ],
+          "mean_parameter_bounds": [
+            null,
+            null
+          ],
+          "initial_noise_fraction": 1e-06,
+          "require_optimizer_success": false,
+          "regime_target_transform": "log"
+        },
+        "clustering": {
+          "n_clusters": null,
+          "candidate_cluster_counts": [
+            2,
+            3,
+            4
+          ],
+          "min_cluster_fraction": 0.05,
+          "min_cluster_samples": 60,
+          "max_intercluster_cosine": 0.9,
+          "eigenvalue_ratio_threshold": 50.0,
+          "n_init": 30,
+          "max_iter": 200,
+          "random_state": 42,
+          "initialization": "random_eigenpairs",
+          "max_initialization_attempts": 100,
+          "require_convergence": true,
+          "gradient_norm_tolerance": 1e-12,
+          "exclude_low_confidence_points": false,
+          "assignment_confidence_threshold": 0.05
+        }
+      },
+      "regime_configuration_precedence": [
+        "library_defaults",
+        "workflow_plan",
+        "nested_manual",
+        "flat_manual"
+      ],
+      "resolved_manual_regime_overrides": {},
+      "local_workflow": {
+        "start_count": 1,
+        "max_count": 2,
+        "absolute_score_drop_threshold": 0.08,
+        "require_two_counts_when_possible": true,
+        "similarity_type": "auto",
+        "optimize_output": null,
+        "output_scaling_reason": "Authoritative manual similarity_type='auto'; runtime numerical screening required.",
+        "output_scaling_confidence": "medium",
+        "similarity_screening_max_relative_mi_change": 0.15,
+        "similarity_screening_max_cosine_similarity": 0.7,
+        "mi_method": "binning",
+        "mi_param": 20,
+        "cma_restarts": 3,
+        "minimum_samples": 20,
+        "minimum_samples_per_mi_dimension": 20,
+        "minimum_samples_for_second_count": 40,
+        "fixed_in_power": {},
+        "fixed_out_power": {},
+        "sparsification_enabled": true,
+        "sparsify_exponent_threshold": 0.05,
+        "sparsify_max_score_increase": 0.05,
+        "rationalization_enabled": true,
+        "max_rational_denominator": 5,
+        "validate_after_rationalization": true
+      },
+      "replanning_triggers": [],
+      "max_replans": 2
+    },
+    "policy": "library defaults < LLM planner < manual_hyperparams"
+  },
+  "hyperparameter_provenance": {
+    "precedence": [
+      "library_defaults",
+      "llm_workflow_plan",
+      "manual_hyperparams"
+    ],
+    "manual_overrides": {
+      "template": "auto_mechanism_adaptive",
+      "local_analysis.similarity_type": "auto",
+      "local_analysis.optimize_output": null
+    },
+    "passthrough_manual_hyperparameters": {
+      "regime_plot_feature_mode": "screening_basis",
+      "regime_plot_feature_pi_indices": [
+        1,
+        2
+      ],
+      "regime_plot_feature_labels": [
+        "$\\log(\\Pi^{(S)}_1)$",
+        "$\\log(\\Pi^{(S)}_2)$"
+      ],
+      "regime_plot_physical_x": {
+        "source": "power_product",
+        "powers": {
+          "u_tau": 1.0,
+          "h": 1.0,
+          "nu": -1.0
+        },
+        "label": "$Re_\\tau=u_\\tau h/\\nu$",
+        "scale": "log"
+      },
+      "regime_plot_physical_y": {
+        "source": "power_product",
+        "powers": {
+          "y": 1.0,
+          "h": -1.0
+        },
+        "label": "$\\eta=y/h$",
+        "scale": "log"
+      }
+    }
+  },
+  "workflow_plan": {
+    "template": "auto_mechanism_adaptive",
+    "rationale": "The problem specifies a single mechanism (Cess eddy-viscosity model) and does not request incomplete similarity or automatic mechanism screening, so the single_regime_adaptive template with first-kind similarity is appropriate. The dataset has 1000 rows (>800) so the MI estimator is set to binning with mi_param=20. No explicit exponent constraints were given, so fixed_in_power and fixed_out_power are left empty. The target is a dimensionless quantity (nu_t/nu) so target_is_dimensionless is true and output optimization is disabled under first-kind similarity.",
+    "target_is_dimensionless": true,
+    "stages": [
+      "load_and_validate_data",
+      "gradient_regime_detection",
+      "validate_regime_partition",
+      "local_dominant_group_search",
+      "fan_out_local_workflows",
+      "aggregate_results",
+      "generate_report"
+    ],
+    "regime_detection": {
+      "n_clusters": null,
+      "candidate_cluster_counts": [
+        2,
+        3,
+        4
+      ],
+      "min_cluster_fraction": 0.05,
+      "min_cluster_samples": 60,
+      "max_intercluster_cosine": 0.9,
+      "eigenvalue_ratio_threshold": 50.0,
+      "require_convergence": true,
+      "exclude_low_confidence_points": false,
+      "assignment_confidence_threshold": 0.05
+    },
+    "local_analysis": {
+      "start_count": 1,
+      "max_count": null,
+      "absolute_score_drop_threshold": 0.08,
+      "require_two_counts_when_possible": true,
+      "similarity_type": "auto",
+      "optimize_output": null,
+      "output_scaling_reason": "Authoritative manual similarity_type='auto'; runtime numerical screening required.",
+      "output_scaling_confidence": "medium",
+      "similarity_screening_max_relative_mi_change": 0.15,
+      "similarity_screening_max_cosine_similarity": 0.7,
+      "mi_method": "binning",
+      "mi_param": 20,
+      "cma_restarts": 3,
+      "minimum_samples": 20,
+      "minimum_samples_per_mi_dimension": 20,
+      "minimum_samples_for_second_count": 40,
+      "fixed_in_power": {},
+      "fixed_out_power": {},
+      "sparsification_enabled": true,
+      "sparsify_exponent_threshold": 0.05,
+      "sparsify_max_score_increase": 0.05,
+      "rationalization_enabled": true,
+      "max_rational_denominator": 5,
+      "validate_after_rationalization": true
+    },
+    "replanning_triggers": []
+  },
+  "compiled_workflow": {
+    "status": "compiled",
+    "template": "auto_mechanism_adaptive",
+    "rationale": "The problem specifies a single mechanism (Cess eddy-viscosity model) and does not request incomplete similarity or automatic mechanism screening, so the single_regime_adaptive template with first-kind similarity is appropriate. The dataset has 1000 rows (>800) so the MI estimator is set to binning with mi_param=20. No explicit exponent constraints were given, so fixed_in_power and fixed_out_power are left empty. The target is a dimensionless quantity (nu_t/nu) so target_is_dimensionless is true and output optimization is disabled under first-kind similarity.",
+    "target_is_dimensionless": true,
+    "stages": [
+      "load_and_validate_data",
+      "gradient_regime_detection",
+      "validate_regime_partition",
+      "local_dominant_group_search",
+      "fan_out_local_workflows",
+      "aggregate_results",
+      "generate_report"
+    ],
+    "tool_ids": [
+      "calc_basis_tool",
+      "detect_gradient_regimes",
+      "run_local_dominant_group_workflow",
+      "rationalize_local_solution"
+    ],
+    "regime_detection": {
+      "n_clusters": null,
+      "candidate_cluster_counts": [
+        2,
+        3,
+        4
+      ],
+      "min_cluster_fraction": 0.05,
+      "min_cluster_samples": 60,
+      "max_intercluster_cosine": 0.9,
+      "eigenvalue_ratio_threshold": 50.0,
+      "require_convergence": true,
+      "exclude_low_confidence_points": false,
+      "assignment_confidence_threshold": 0.05
+    },
+    "resolved_gradient_regime_options": {
+      "surrogate": {
+        "mean_mode": "constant",
+        "max_train_samples": 800,
+        "n_restarts_optimizer": 3,
+        "optimizer_maxiter": 2000,
+        "optimizer_ftol": 1e-10,
+        "optimizer_gtol": 1e-06,
+        "jitter": 1e-10,
+        "random_state": 42,
+        "log_sigma0_sq_bounds": [
+          -30.0,
+          30.0
+        ],
+        "log_sigma1_sq_bounds": [
+          -30.0,
+          30.0
+        ],
+        "log_sigma_u_sq_bounds": [
+          -30.0,
+          30.0
+        ],
+        "mean_parameter_bounds": [
+          null,
+          null
+        ],
+        "initial_noise_fraction": 1e-06,
+        "require_optimizer_success": false,
+        "regime_target_transform": "log"
+      },
+      "clustering": {
+        "n_clusters": null,
+        "candidate_cluster_counts": [
+          2,
+          3,
+          4
+        ],
+        "min_cluster_fraction": 0.05,
+        "min_cluster_samples": 60,
+        "max_intercluster_cosine": 0.9,
+        "eigenvalue_ratio_threshold": 50.0,
+        "n_init": 30,
+        "max_iter": 200,
+        "random_state": 42,
+        "initialization": "random_eigenpairs",
+        "max_initialization_attempts": 100,
+        "require_convergence": true,
+        "gradient_norm_tolerance": 1e-12,
+        "exclude_low_confidence_points": false,
+        "assignment_confidence_threshold": 0.05
+      }
+    },
+    "regime_configuration_precedence": [
+      "library_defaults",
+      "workflow_plan",
+      "nested_manual",
+      "flat_manual"
+    ],
+    "resolved_manual_regime_overrides": {},
+    "local_workflow": {
+      "start_count": 1,
+      "max_count": 2,
+      "absolute_score_drop_threshold": 0.08,
+      "require_two_counts_when_possible": true,
+      "similarity_type": "auto",
+      "optimize_output": null,
+      "output_scaling_reason": "Authoritative manual similarity_type='auto'; runtime numerical screening required.",
+      "output_scaling_confidence": "medium",
+      "similarity_screening_max_relative_mi_change": 0.15,
+      "similarity_screening_max_cosine_similarity": 0.7,
+      "mi_method": "binning",
+      "mi_param": 20,
+      "cma_restarts": 3,
+      "minimum_samples": 20,
+      "minimum_samples_per_mi_dimension": 20,
+      "minimum_samples_for_second_count": 40,
+      "fixed_in_power": {},
+      "fixed_out_power": {},
+      "sparsification_enabled": true,
+      "sparsify_exponent_threshold": 0.05,
+      "sparsify_max_score_increase": 0.05,
+      "rationalization_enabled": true,
+      "max_rational_denominator": 5,
+      "validate_after_rationalization": true
+    },
+    "replanning_triggers": [],
+    "max_replans": 2
+  }
+}

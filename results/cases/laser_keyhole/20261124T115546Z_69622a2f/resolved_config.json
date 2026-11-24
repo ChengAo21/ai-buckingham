@@ -1,0 +1,533 @@
+{
+  "schema_version": 1,
+  "case_id": "laser_keyhole",
+  "title": "Laser keyhole depth in additive manufacturing",
+  "dataset": "data/datasets/laser_keyhole.csv",
+  "prompt": "Perform dimensional analysis for laser-melted liquid metal to derive the dimensionless form of the keyhole depth (denoted as e*). \nThis analysis uses ONLY the following 7 physical quantities as input parameters: \nthe material density (ρ), the temperature difference between melting temperature and ambient temperature (Tl − T0), the laser beam radius (r0), and the thermal diffusivity (α), the effective laser power (ηP), the heat capacity (cp), the laser scan speed (Vs).",
+  "manual_hyperparams": {
+    "workflow_template": "auto_mechanism_adaptive",
+    "similarity_type": "auto",
+    "max_rational_denominator": 5,
+    "mi_param_used": 4,
+    "mi_method_used": "kraskov",
+    "cma_init_position": 0.1,
+    "cma_init_stepsize": 0.5
+  },
+  "input_columns": [
+    "rho",
+    "Tl-T0",
+    "r0",
+    "alpha",
+    "etaP",
+    "cp",
+    "Vs"
+  ],
+  "output_column": "e*",
+  "expected_dimensions": {
+    "dimension_order": [
+      "M",
+      "L",
+      "T",
+      "I",
+      "Theta",
+      "N",
+      "J"
+    ],
+    "inputs": {
+      "rho": {
+        "M": 1,
+        "L": -3,
+        "T": 0,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "Tl-T0": {
+        "M": 0,
+        "L": 0,
+        "T": 0,
+        "I": 0,
+        "Theta": 1,
+        "N": 0,
+        "J": 0
+      },
+      "r0": {
+        "M": 0,
+        "L": 1,
+        "T": 0,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "alpha": {
+        "M": 0,
+        "L": 2,
+        "T": -1,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "etaP": {
+        "M": 1,
+        "L": 2,
+        "T": -3,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "cp": {
+        "M": 0,
+        "L": 2,
+        "T": -2,
+        "I": 0,
+        "Theta": -1,
+        "N": 0,
+        "J": 0
+      },
+      "Vs": {
+        "M": 0,
+        "L": 1,
+        "T": -1,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      }
+    },
+    "output": {
+      "M": 0,
+      "L": 0,
+      "T": 0,
+      "I": 0,
+      "Theta": 0,
+      "N": 0,
+      "J": 0
+    }
+  },
+  "data_metadata": {
+    "rows": 90,
+    "columns": [
+      "rho",
+      "Tl-T0",
+      "r0",
+      "alpha",
+      "etaP",
+      "cp",
+      "Vs",
+      "case",
+      "source",
+      "Tv-T0",
+      "Lv",
+      "Lm",
+      "e",
+      "Ke",
+      "e*"
+    ],
+    "auxiliary_columns": [
+      "case",
+      "source",
+      "Tv-T0",
+      "Lv",
+      "Lm",
+      "e",
+      "Ke"
+    ],
+    "sha256": "138426b025a59a183f464fe88be7699839edd79f01a859f00df00137997476f5",
+    "original_filename": "dataset_keyhole.csv",
+    "original_column_order_preserved": true,
+    "response_log_eligible_rows": 90
+  },
+  "provenance": {
+    "prompt_source": "author-supplied current agent definitions",
+    "manual_hyperparams_source": "author-supplied current agent definitions",
+    "source_sha256": "55a4a6f2c9c0b3424a83d3576517539128d6dc86fb2d9479bf1c86ab5f4794db",
+    "original_prompt_symbol": "laser_material",
+    "original_hyperparams_symbol": "laser_hparams",
+    "reference_dimensions_source": "reproduction/rag_ablation/reference/expected_dimensions.json",
+    "reference_case_id": "KEYHOLE",
+    "reference_dimensions_sha256": "72764f551ff87b286641978d8ed96addd0d80047028a351f06b0814329b04f98"
+  },
+  "resolved_hyperparameters": {
+    "output_variable": "e*",
+    "output_resolution": {
+      "status": "success",
+      "output_var": "e*",
+      "source": "structured_analyzer",
+      "requested": "e*",
+      "candidates": [
+        "source",
+        "Tv-T0",
+        "Lv",
+        "Lm",
+        "e",
+        "Ke",
+        "e*"
+      ]
+    },
+    "manual_hyperparams": {
+      "workflow_template": "auto_mechanism_adaptive",
+      "similarity_type": "auto",
+      "max_rational_denominator": 5,
+      "mi_param_used": 4,
+      "mi_method_used": "kraskov",
+      "cma_init_position": 0.1,
+      "cma_init_stepsize": 0.5
+    },
+    "effective_workflow": {
+      "status": "compiled",
+      "template": "auto_mechanism_adaptive",
+      "rationale": "A single-mechanism (single_regime_adaptive) workflow is appropriate because the prompt does not request multiple mechanisms or automatic mechanism screening. First-kind similarity (dependent-variable not scaled) is the default; optimize_output is set to false. With 90 samples the Kraskov mutual-information estimator is preferred (mi_param k=6). The problem specifies three independent base-Pi generators, so we keep start_count=1 and allow the runtime to determine the number of dominant Pi groups numerically. Both fixed_in_power and fixed_out_power dictionaries are present (empty here because no explicit exponent constraints were given) to respect the protocol. Other numeric thresholds (minimum samples, sparsification, MI screening tolerances) use conservative defaults suitable for the dataset size.",
+      "target_is_dimensionless": true,
+      "stages": [
+        "load_and_validate_data",
+        "gradient_regime_detection",
+        "validate_regime_partition",
+        "local_dominant_group_search",
+        "fan_out_local_workflows",
+        "aggregate_results",
+        "generate_report"
+      ],
+      "tool_ids": [
+        "calc_basis_tool",
+        "detect_gradient_regimes",
+        "run_local_dominant_group_workflow",
+        "rationalize_local_solution"
+      ],
+      "regime_detection": {
+        "n_clusters": null,
+        "candidate_cluster_counts": [
+          2,
+          3,
+          4
+        ],
+        "min_cluster_fraction": 0.05,
+        "min_cluster_samples": 60,
+        "max_intercluster_cosine": 0.9,
+        "eigenvalue_ratio_threshold": 50.0,
+        "require_convergence": true,
+        "exclude_low_confidence_points": false,
+        "assignment_confidence_threshold": 0.05
+      },
+      "resolved_gradient_regime_options": {
+        "surrogate": {
+          "mean_mode": "constant",
+          "max_train_samples": null,
+          "n_restarts_optimizer": 3,
+          "optimizer_maxiter": 2000,
+          "optimizer_ftol": 1e-10,
+          "optimizer_gtol": 1e-06,
+          "jitter": 1e-10,
+          "random_state": 42,
+          "log_sigma0_sq_bounds": [
+            -30.0,
+            30.0
+          ],
+          "log_sigma1_sq_bounds": [
+            -30.0,
+            30.0
+          ],
+          "log_sigma_u_sq_bounds": [
+            -30.0,
+            30.0
+          ],
+          "mean_parameter_bounds": [
+            null,
+            null
+          ],
+          "initial_noise_fraction": 1e-06,
+          "require_optimizer_success": false,
+          "regime_target_transform": "log"
+        },
+        "clustering": {
+          "n_clusters": null,
+          "candidate_cluster_counts": [
+            2,
+            3,
+            4
+          ],
+          "min_cluster_fraction": 0.05,
+          "min_cluster_samples": 60,
+          "max_intercluster_cosine": 0.9,
+          "eigenvalue_ratio_threshold": 50.0,
+          "n_init": 30,
+          "max_iter": 200,
+          "random_state": 42,
+          "initialization": "random_eigenpairs",
+          "max_initialization_attempts": 100,
+          "require_convergence": true,
+          "gradient_norm_tolerance": 1e-12,
+          "exclude_low_confidence_points": false,
+          "assignment_confidence_threshold": 0.05
+        }
+      },
+      "regime_configuration_precedence": [
+        "library_defaults",
+        "workflow_plan",
+        "nested_manual",
+        "flat_manual"
+      ],
+      "resolved_manual_regime_overrides": {},
+      "local_workflow": {
+        "start_count": 1,
+        "max_count": 3,
+        "absolute_score_drop_threshold": 0.08,
+        "require_two_counts_when_possible": true,
+        "similarity_type": "auto",
+        "optimize_output": null,
+        "output_scaling_reason": "Authoritative manual similarity_type='auto'; runtime numerical screening required.",
+        "output_scaling_confidence": "medium",
+        "similarity_screening_max_relative_mi_change": 0.15,
+        "similarity_screening_max_cosine_similarity": 0.7,
+        "mi_method": "kraskov",
+        "mi_param": 4,
+        "cma_restarts": 3,
+        "minimum_samples": 20,
+        "minimum_samples_per_mi_dimension": 20,
+        "minimum_samples_for_second_count": 40,
+        "fixed_in_power": {},
+        "fixed_out_power": {},
+        "sparsification_enabled": true,
+        "sparsify_exponent_threshold": 0.05,
+        "sparsify_max_score_increase": 0.05,
+        "rationalization_enabled": true,
+        "max_rational_denominator": 5,
+        "validate_after_rationalization": true
+      },
+      "replanning_triggers": [
+        "SURROGATE_FIT_FAILED",
+        "NO_ADMISSIBLE_REGIME_PARTITION",
+        "LOCAL_SAMPLE_SIZE_INSUFFICIENT",
+        "OPTIMIZATION_UNSTABLE",
+        "RATIONALIZATION_VALIDATION_FAILED",
+        "NO_ADMISSIBLE_REGIME_PARTITION",
+        "DIMENSIONLESS_TARGET_REQUIRED_FOR_GRADIENT_CLUSTERING",
+        "local_count_search_failed",
+        "no_successful_local_workflow"
+      ],
+      "max_replans": 2
+    },
+    "policy": "library defaults < LLM planner < manual_hyperparams"
+  },
+  "hyperparameter_provenance": {
+    "precedence": [
+      "library_defaults",
+      "llm_workflow_plan",
+      "manual_hyperparams"
+    ],
+    "manual_overrides": {
+      "template": "auto_mechanism_adaptive",
+      "local_analysis.mi_method": "kraskov",
+      "local_analysis.mi_param": 4,
+      "local_analysis.max_rational_denominator": 5,
+      "local_analysis.similarity_type": "auto",
+      "local_analysis.optimize_output": null
+    },
+    "passthrough_manual_hyperparameters": {
+      "cma_init_position": 0.1,
+      "cma_init_stepsize": 0.5
+    }
+  },
+  "workflow_plan": {
+    "template": "auto_mechanism_adaptive",
+    "rationale": "A single-mechanism (single_regime_adaptive) workflow is appropriate because the prompt does not request multiple mechanisms or automatic mechanism screening. First-kind similarity (dependent-variable not scaled) is the default; optimize_output is set to false. With 90 samples the Kraskov mutual-information estimator is preferred (mi_param k=6). The problem specifies three independent base-Pi generators, so we keep start_count=1 and allow the runtime to determine the number of dominant Pi groups numerically. Both fixed_in_power and fixed_out_power dictionaries are present (empty here because no explicit exponent constraints were given) to respect the protocol. Other numeric thresholds (minimum samples, sparsification, MI screening tolerances) use conservative defaults suitable for the dataset size.",
+    "target_is_dimensionless": true,
+    "stages": [
+      "load_and_validate_data",
+      "gradient_regime_detection",
+      "validate_regime_partition",
+      "local_dominant_group_search",
+      "fan_out_local_workflows",
+      "aggregate_results",
+      "generate_report"
+    ],
+    "regime_detection": {
+      "n_clusters": null,
+      "candidate_cluster_counts": [
+        2,
+        3,
+        4
+      ],
+      "min_cluster_fraction": 0.05,
+      "min_cluster_samples": 60,
+      "max_intercluster_cosine": 0.9,
+      "eigenvalue_ratio_threshold": 50.0,
+      "require_convergence": true,
+      "exclude_low_confidence_points": false,
+      "assignment_confidence_threshold": 0.05
+    },
+    "local_analysis": {
+      "start_count": 1,
+      "max_count": null,
+      "absolute_score_drop_threshold": 0.08,
+      "require_two_counts_when_possible": true,
+      "similarity_type": "auto",
+      "optimize_output": null,
+      "output_scaling_reason": "Authoritative manual similarity_type='auto'; runtime numerical screening required.",
+      "output_scaling_confidence": "medium",
+      "similarity_screening_max_relative_mi_change": 0.15,
+      "similarity_screening_max_cosine_similarity": 0.7,
+      "mi_method": "kraskov",
+      "mi_param": 4,
+      "cma_restarts": 3,
+      "minimum_samples": 20,
+      "minimum_samples_per_mi_dimension": 20,
+      "minimum_samples_for_second_count": 40,
+      "fixed_in_power": {},
+      "fixed_out_power": {},
+      "sparsification_enabled": true,
+      "sparsify_exponent_threshold": 0.05,
+      "sparsify_max_score_increase": 0.05,
+      "rationalization_enabled": true,
+      "max_rational_denominator": 5,
+      "validate_after_rationalization": true
+    },
+    "replanning_triggers": [
+      "SURROGATE_FIT_FAILED",
+      "NO_ADMISSIBLE_REGIME_PARTITION",
+      "LOCAL_SAMPLE_SIZE_INSUFFICIENT",
+      "OPTIMIZATION_UNSTABLE",
+      "RATIONALIZATION_VALIDATION_FAILED",
+      "NO_ADMISSIBLE_REGIME_PARTITION",
+      "DIMENSIONLESS_TARGET_REQUIRED_FOR_GRADIENT_CLUSTERING",
+      "local_count_search_failed",
+      "no_successful_local_workflow"
+    ]
+  },
+  "compiled_workflow": {
+    "status": "compiled",
+    "template": "auto_mechanism_adaptive",
+    "rationale": "A single-mechanism (single_regime_adaptive) workflow is appropriate because the prompt does not request multiple mechanisms or automatic mechanism screening. First-kind similarity (dependent-variable not scaled) is the default; optimize_output is set to false. With 90 samples the Kraskov mutual-information estimator is preferred (mi_param k=6). The problem specifies three independent base-Pi generators, so we keep start_count=1 and allow the runtime to determine the number of dominant Pi groups numerically. Both fixed_in_power and fixed_out_power dictionaries are present (empty here because no explicit exponent constraints were given) to respect the protocol. Other numeric thresholds (minimum samples, sparsification, MI screening tolerances) use conservative defaults suitable for the dataset size.",
+    "target_is_dimensionless": true,
+    "stages": [
+      "load_and_validate_data",
+      "gradient_regime_detection",
+      "validate_regime_partition",
+      "local_dominant_group_search",
+      "fan_out_local_workflows",
+      "aggregate_results",
+      "generate_report"
+    ],
+    "tool_ids": [
+      "calc_basis_tool",
+      "detect_gradient_regimes",
+      "run_local_dominant_group_workflow",
+      "rationalize_local_solution"
+    ],
+    "regime_detection": {
+      "n_clusters": null,
+      "candidate_cluster_counts": [
+        2,
+        3,
+        4
+      ],
+      "min_cluster_fraction": 0.05,
+      "min_cluster_samples": 60,
+      "max_intercluster_cosine": 0.9,
+      "eigenvalue_ratio_threshold": 50.0,
+      "require_convergence": true,
+      "exclude_low_confidence_points": false,
+      "assignment_confidence_threshold": 0.05
+    },
+    "resolved_gradient_regime_options": {
+      "surrogate": {
+        "mean_mode": "constant",
+        "max_train_samples": null,
+        "n_restarts_optimizer": 3,
+        "optimizer_maxiter": 2000,
+        "optimizer_ftol": 1e-10,
+        "optimizer_gtol": 1e-06,
+        "jitter": 1e-10,
+        "random_state": 42,
+        "log_sigma0_sq_bounds": [
+          -30.0,
+          30.0
+        ],
+        "log_sigma1_sq_bounds": [
+          -30.0,
+          30.0
+        ],
+        "log_sigma_u_sq_bounds": [
+          -30.0,
+          30.0
+        ],
+        "mean_parameter_bounds": [
+          null,
+          null
+        ],
+        "initial_noise_fraction": 1e-06,
+        "require_optimizer_success": false,
+        "regime_target_transform": "log"
+      },
+      "clustering": {
+        "n_clusters": null,
+        "candidate_cluster_counts": [
+          2,
+          3,
+          4
+        ],
+        "min_cluster_fraction": 0.05,
+        "min_cluster_samples": 60,
+        "max_intercluster_cosine": 0.9,
+        "eigenvalue_ratio_threshold": 50.0,
+        "n_init": 30,
+        "max_iter": 200,
+        "random_state": 42,
+        "initialization": "random_eigenpairs",
+        "max_initialization_attempts": 100,
+        "require_convergence": true,
+        "gradient_norm_tolerance": 1e-12,
+        "exclude_low_confidence_points": false,
+        "assignment_confidence_threshold": 0.05
+      }
+    },
+    "regime_configuration_precedence": [
+      "library_defaults",
+      "workflow_plan",
+      "nested_manual",
+      "flat_manual"
+    ],
+    "resolved_manual_regime_overrides": {},
+    "local_workflow": {
+      "start_count": 1,
+      "max_count": 3,
+      "absolute_score_drop_threshold": 0.08,
+      "require_two_counts_when_possible": true,
+      "similarity_type": "auto",
+      "optimize_output": null,
+      "output_scaling_reason": "Authoritative manual similarity_type='auto'; runtime numerical screening required.",
+      "output_scaling_confidence": "medium",
+      "similarity_screening_max_relative_mi_change": 0.15,
+      "similarity_screening_max_cosine_similarity": 0.7,
+      "mi_method": "kraskov",
+      "mi_param": 4,
+      "cma_restarts": 3,
+      "minimum_samples": 20,
+      "minimum_samples_per_mi_dimension": 20,
+      "minimum_samples_for_second_count": 40,
+      "fixed_in_power": {},
+      "fixed_out_power": {},
+      "sparsification_enabled": true,
+      "sparsify_exponent_threshold": 0.05,
+      "sparsify_max_score_increase": 0.05,
+      "rationalization_enabled": true,
+      "max_rational_denominator": 5,
+      "validate_after_rationalization": true
+    },
+    "replanning_triggers": [
+      "SURROGATE_FIT_FAILED",
+      "NO_ADMISSIBLE_REGIME_PARTITION",
+      "LOCAL_SAMPLE_SIZE_INSUFFICIENT",
+      "OPTIMIZATION_UNSTABLE",
+      "RATIONALIZATION_VALIDATION_FAILED",
+      "NO_ADMISSIBLE_REGIME_PARTITION",
+      "DIMENSIONLESS_TARGET_REQUIRED_FOR_GRADIENT_CLUSTERING",
+      "local_count_search_failed",
+      "no_successful_local_workflow"
+    ],
+    "max_replans": 2
+  }
+}

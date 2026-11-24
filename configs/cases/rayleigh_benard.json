@@ -1,0 +1,144 @@
+{
+  "schema_version": 1,
+  "case_id": "rayleigh_benard",
+  "title": "Rayleigh-Benard convection",
+  "dataset": "data/datasets/rayleigh_benard.csv",
+  "prompt": "Perform dimensional analysis for Rayleigh-Bénard convection in a planar horizontal layer of fluid heated from below, to derive the dimensionless form of the Nusselt number (denoted as Nu). \nThis analysis uses ONLY the following 7 physical quantities as input parameters: \nthe height of the container (h), the thermal conductivity (lambda), the temperature difference between the top and bottom surfaces (delta_T), the gravitational acceleration (g), the thermal expansion coefficient (alpha), the kinematic viscosity (nu), and the thermal diffusivity (kappa).",
+  "manual_hyperparams": {
+    "workflow_template": "auto_mechanism_adaptive",
+    "similarity_type": "auto",
+    "max_rational_denominator": 4,
+    "cma_init_position": 0.3,
+    "cma_init_stepsize": 0.5,
+    "mi_param_used": 6
+  },
+  "input_columns": [
+    "h",
+    "delta_T",
+    "lambda",
+    "g",
+    "alpha",
+    "nu",
+    "kappa"
+  ],
+  "output_column": "Nu",
+  "expected_dimensions": {
+    "dimension_order": [
+      "M",
+      "L",
+      "T",
+      "I",
+      "Theta",
+      "N",
+      "J"
+    ],
+    "inputs": {
+      "h": {
+        "M": 0,
+        "L": 1,
+        "T": 0,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "lambda": {
+        "M": 1,
+        "L": 1,
+        "T": -3,
+        "I": 0,
+        "Theta": -1,
+        "N": 0,
+        "J": 0
+      },
+      "delta_T": {
+        "M": 0,
+        "L": 0,
+        "T": 0,
+        "I": 0,
+        "Theta": 1,
+        "N": 0,
+        "J": 0
+      },
+      "g": {
+        "M": 0,
+        "L": 1,
+        "T": -2,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "alpha": {
+        "M": 0,
+        "L": 0,
+        "T": 0,
+        "I": 0,
+        "Theta": -1,
+        "N": 0,
+        "J": 0
+      },
+      "nu": {
+        "M": 0,
+        "L": 2,
+        "T": -1,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "kappa": {
+        "M": 0,
+        "L": 2,
+        "T": -1,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      }
+    },
+    "output": {
+      "M": 0,
+      "L": 0,
+      "T": 0,
+      "I": 0,
+      "Theta": 0,
+      "N": 0,
+      "J": 0
+    }
+  },
+  "data_metadata": {
+    "rows": 182,
+    "columns": [
+      "h",
+      "delta_T",
+      "lambda",
+      "g",
+      "alpha",
+      "nu",
+      "kappa",
+      "source",
+      "Ra",
+      "Nu"
+    ],
+    "auxiliary_columns": [
+      "source",
+      "Ra"
+    ],
+    "sha256": "db5d6dfda46ee68cbdab8cbaba0d070093f2a63d52c0b3eab82e6c5cb9da4a8a",
+    "original_filename": "dataset_rayben.csv",
+    "original_column_order_preserved": true,
+    "response_log_eligible_rows": 182
+  },
+  "provenance": {
+    "prompt_source": "author-supplied current agent definitions",
+    "manual_hyperparams_source": "author-supplied current agent definitions",
+    "source_sha256": "55a4a6f2c9c0b3424a83d3576517539128d6dc86fb2d9479bf1c86ab5f4794db",
+    "original_prompt_symbol": "rayleigh_benard",
+    "original_hyperparams_symbol": "rayleigh_benard_hparams",
+    "reference_dimensions_source": "reproduction/rag_ablation/reference/expected_dimensions.json",
+    "reference_case_id": "RAYLEIGH",
+    "reference_dimensions_sha256": "72764f551ff87b286641978d8ed96addd0d80047028a351f06b0814329b04f98"
+  },
+  "numerical_threads": 1
+}

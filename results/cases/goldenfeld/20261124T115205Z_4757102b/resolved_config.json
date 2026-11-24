@@ -1,0 +1,496 @@
+{
+  "schema_version": 1,
+  "case_id": "goldenfeld",
+  "title": "Goldenfeld rough-pipe similarity",
+  "dataset": "data/datasets/goldenfeld.csv",
+  "prompt": "Perform dimensional analysis for rough-wall turbulent pipe flow to derive the dimensionless form of the friction factor (denoted as cf). \nThis analysis uses ONLY the following 5 physical quantities as input parameters: \nthe fluid density (ρ), the dynamic viscosity (μ), the pipe diameter (D), the flow velocity (U), and the pipe wall roughness height (r). \nTo ensure uniqueness of results, the power of relative roughness height must be constrained to 0 for the OUTPUT formula.",
+  "manual_hyperparams": {
+    "workflow_template": "auto_mechanism_adaptive",
+    "similarity_type": "auto",
+    "normalize_input": "norm2",
+    "max_rational_denominator": 5,
+    "cma_init_position": 0.1,
+    "cma_init_stepsize": 0.1,
+    "cma_bounds_min": -0.1,
+    "cma_bounds_max": 0.5,
+    "use_collinearity_penalty": true,
+    "max_cosine_similarity": 0.7,
+    "mi_param_used": 5,
+    "mi_method_used": "kraskov"
+  },
+  "input_columns": [
+    "rho",
+    "mu",
+    "D",
+    "U",
+    "r"
+  ],
+  "output_column": "cf",
+  "expected_dimensions": {
+    "dimension_order": [
+      "M",
+      "L",
+      "T",
+      "I",
+      "Theta",
+      "N",
+      "J"
+    ],
+    "inputs": {
+      "rho": {
+        "M": 1,
+        "L": -3,
+        "T": 0,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "mu": {
+        "M": 1,
+        "L": -1,
+        "T": -1,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "D": {
+        "M": 0,
+        "L": 1,
+        "T": 0,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "U": {
+        "M": 0,
+        "L": 1,
+        "T": -1,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "r": {
+        "M": 0,
+        "L": 1,
+        "T": 0,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      }
+    },
+    "output": {
+      "M": 0,
+      "L": 0,
+      "T": 0,
+      "I": 0,
+      "Theta": 0,
+      "N": 0,
+      "J": 0
+    }
+  },
+  "data_metadata": {
+    "rows": 414,
+    "columns": [
+      "rho",
+      "mu",
+      "D",
+      "U",
+      "r",
+      "case",
+      "cf"
+    ],
+    "auxiliary_columns": [
+      "case"
+    ],
+    "sha256": "06df41e9d43219c99411d8a1ca1bf00325293242f5100095a45afbfbd0cdb544",
+    "original_filename": "dataset_goldenfeld.csv",
+    "original_column_order_preserved": true,
+    "response_log_eligible_rows": 414
+  },
+  "provenance": {
+    "prompt_source": "author-supplied current agent definitions",
+    "manual_hyperparams_source": "author-supplied current agent definitions",
+    "source_sha256": "55a4a6f2c9c0b3424a83d3576517539128d6dc86fb2d9479bf1c86ab5f4794db",
+    "original_prompt_symbol": "goldenfeld_",
+    "original_hyperparams_symbol": "goldenfeld_hparams",
+    "reference_dimensions_source": "reproduction/rag_ablation/reference/expected_dimensions.json",
+    "reference_case_id": "GOLDENFELD",
+    "reference_dimensions_sha256": "72764f551ff87b286641978d8ed96addd0d80047028a351f06b0814329b04f98"
+  },
+  "formula_constraints": {
+    "output_relative_roughness_power": 0
+  },
+  "resolved_hyperparameters": {
+    "output_variable": "cf",
+    "output_resolution": {
+      "status": "success",
+      "output_var": "cf",
+      "source": "structured_analyzer",
+      "requested": "cf",
+      "candidates": [
+        "cf"
+      ]
+    },
+    "manual_hyperparams": {
+      "workflow_template": "auto_mechanism_adaptive",
+      "similarity_type": "auto",
+      "normalize_input": "norm2",
+      "max_rational_denominator": 5,
+      "cma_init_position": 0.1,
+      "cma_init_stepsize": 0.1,
+      "cma_bounds_min": -0.1,
+      "cma_bounds_max": 0.5,
+      "use_collinearity_penalty": true,
+      "max_cosine_similarity": 0.7,
+      "mi_param_used": 5,
+      "mi_method_used": "kraskov"
+    },
+    "effective_workflow": {
+      "status": "compiled",
+      "template": "auto_mechanism_adaptive",
+      "rationale": "Use the single-regime adaptive template because the prompt describes a single physical mechanism (rough-wall turbulent pipe flow) but enforces an explicit output constraint that removes the roughness dependence from the output formula. Similarity policy is first-kind (classical Buckingham Pi) because the user requested a fixed exponent (Pi_2 power = 0) rather than incomplete-similarity or automatic similarity screening. Kraskov mutual-information estimator is selected because the sample size (414) is <= 800; k=5 is a typical Kraskov choice. The output exponent constraint is recorded in fixed_out_power to ensure the derived dimensionless output depends only on Pi_1. Regime detection is left null (n_clusters = null) for a single-mechanism analysis, with candidate cluster counts provided should the runtime need to test multi-mechanism hypotheses. Optimization of the output scaling is disabled (optimize_output = false) consistent with first-kind similarity.",
+      "target_is_dimensionless": true,
+      "stages": [
+        "load_and_validate_data",
+        "gradient_regime_detection",
+        "validate_regime_partition",
+        "local_dominant_group_search",
+        "fan_out_local_workflows",
+        "aggregate_results",
+        "generate_report"
+      ],
+      "tool_ids": [
+        "calc_basis_tool",
+        "detect_gradient_regimes",
+        "run_local_dominant_group_workflow",
+        "rationalize_local_solution"
+      ],
+      "regime_detection": {
+        "n_clusters": null,
+        "candidate_cluster_counts": [
+          2,
+          3,
+          4
+        ],
+        "min_cluster_fraction": 0.05,
+        "min_cluster_samples": 60,
+        "max_intercluster_cosine": 0.9,
+        "eigenvalue_ratio_threshold": 50.0,
+        "require_convergence": true,
+        "exclude_low_confidence_points": false,
+        "assignment_confidence_threshold": 0.05
+      },
+      "resolved_gradient_regime_options": {
+        "surrogate": {
+          "mean_mode": "constant",
+          "max_train_samples": null,
+          "n_restarts_optimizer": 3,
+          "optimizer_maxiter": 2000,
+          "optimizer_ftol": 1e-10,
+          "optimizer_gtol": 1e-06,
+          "jitter": 1e-10,
+          "random_state": 42,
+          "log_sigma0_sq_bounds": [
+            -30.0,
+            30.0
+          ],
+          "log_sigma1_sq_bounds": [
+            -30.0,
+            30.0
+          ],
+          "log_sigma_u_sq_bounds": [
+            -30.0,
+            30.0
+          ],
+          "mean_parameter_bounds": [
+            null,
+            null
+          ],
+          "initial_noise_fraction": 1e-06,
+          "require_optimizer_success": false,
+          "regime_target_transform": "log"
+        },
+        "clustering": {
+          "n_clusters": null,
+          "candidate_cluster_counts": [
+            2,
+            3,
+            4
+          ],
+          "min_cluster_fraction": 0.05,
+          "min_cluster_samples": 60,
+          "max_intercluster_cosine": 0.9,
+          "eigenvalue_ratio_threshold": 50.0,
+          "n_init": 30,
+          "max_iter": 200,
+          "random_state": 42,
+          "initialization": "random_eigenpairs",
+          "max_initialization_attempts": 100,
+          "require_convergence": true,
+          "gradient_norm_tolerance": 1e-12,
+          "exclude_low_confidence_points": false,
+          "assignment_confidence_threshold": 0.05
+        }
+      },
+      "regime_configuration_precedence": [
+        "library_defaults",
+        "workflow_plan",
+        "nested_manual",
+        "flat_manual"
+      ],
+      "resolved_manual_regime_overrides": {},
+      "local_workflow": {
+        "start_count": 1,
+        "max_count": 2,
+        "absolute_score_drop_threshold": 0.08,
+        "require_two_counts_when_possible": true,
+        "similarity_type": "auto",
+        "optimize_output": null,
+        "output_scaling_reason": "Authoritative manual similarity_type='auto'; runtime numerical screening required.",
+        "output_scaling_confidence": "medium",
+        "similarity_screening_max_relative_mi_change": 0.15,
+        "similarity_screening_max_cosine_similarity": 0.7,
+        "mi_method": "kraskov",
+        "mi_param": 5,
+        "cma_restarts": 3,
+        "minimum_samples": 20,
+        "minimum_samples_per_mi_dimension": 20,
+        "minimum_samples_for_second_count": 40,
+        "fixed_in_power": {},
+        "fixed_out_power": {
+          "Pi_2": 0.0
+        },
+        "sparsification_enabled": true,
+        "sparsify_exponent_threshold": 0.05,
+        "sparsify_max_score_increase": 0.05,
+        "rationalization_enabled": true,
+        "max_rational_denominator": 5,
+        "validate_after_rationalization": true
+      },
+      "replanning_triggers": [
+        "insufficient_MI_improvement",
+        "validation_failure"
+      ],
+      "max_replans": 2
+    },
+    "policy": "library defaults < LLM planner < manual_hyperparams"
+  },
+  "hyperparameter_provenance": {
+    "precedence": [
+      "library_defaults",
+      "llm_workflow_plan",
+      "manual_hyperparams"
+    ],
+    "manual_overrides": {
+      "template": "auto_mechanism_adaptive",
+      "local_analysis.mi_method": "kraskov",
+      "local_analysis.mi_param": 5,
+      "local_analysis.max_rational_denominator": 5,
+      "local_analysis.similarity_type": "auto",
+      "local_analysis.optimize_output": null
+    },
+    "passthrough_manual_hyperparameters": {
+      "normalize_input": "norm2",
+      "cma_init_position": 0.1,
+      "cma_init_stepsize": 0.1,
+      "cma_bounds_min": -0.1,
+      "cma_bounds_max": 0.5,
+      "use_collinearity_penalty": true,
+      "max_cosine_similarity": 0.7
+    }
+  },
+  "workflow_plan": {
+    "template": "auto_mechanism_adaptive",
+    "rationale": "Use the single-regime adaptive template because the prompt describes a single physical mechanism (rough-wall turbulent pipe flow) but enforces an explicit output constraint that removes the roughness dependence from the output formula. Similarity policy is first-kind (classical Buckingham Pi) because the user requested a fixed exponent (Pi_2 power = 0) rather than incomplete-similarity or automatic similarity screening. Kraskov mutual-information estimator is selected because the sample size (414) is <= 800; k=5 is a typical Kraskov choice. The output exponent constraint is recorded in fixed_out_power to ensure the derived dimensionless output depends only on Pi_1. Regime detection is left null (n_clusters = null) for a single-mechanism analysis, with candidate cluster counts provided should the runtime need to test multi-mechanism hypotheses. Optimization of the output scaling is disabled (optimize_output = false) consistent with first-kind similarity.",
+    "target_is_dimensionless": true,
+    "stages": [
+      "load_and_validate_data",
+      "gradient_regime_detection",
+      "validate_regime_partition",
+      "local_dominant_group_search",
+      "fan_out_local_workflows",
+      "aggregate_results",
+      "generate_report"
+    ],
+    "regime_detection": {
+      "n_clusters": null,
+      "candidate_cluster_counts": [
+        2,
+        3,
+        4
+      ],
+      "min_cluster_fraction": 0.05,
+      "min_cluster_samples": 60,
+      "max_intercluster_cosine": 0.9,
+      "eigenvalue_ratio_threshold": 50.0,
+      "require_convergence": true,
+      "exclude_low_confidence_points": false,
+      "assignment_confidence_threshold": 0.05
+    },
+    "local_analysis": {
+      "start_count": 1,
+      "max_count": null,
+      "absolute_score_drop_threshold": 0.08,
+      "require_two_counts_when_possible": true,
+      "similarity_type": "auto",
+      "optimize_output": null,
+      "output_scaling_reason": "Authoritative manual similarity_type='auto'; runtime numerical screening required.",
+      "output_scaling_confidence": "medium",
+      "similarity_screening_max_relative_mi_change": 0.15,
+      "similarity_screening_max_cosine_similarity": 0.7,
+      "mi_method": "kraskov",
+      "mi_param": 5,
+      "cma_restarts": 3,
+      "minimum_samples": 20,
+      "minimum_samples_per_mi_dimension": 20,
+      "minimum_samples_for_second_count": 40,
+      "fixed_in_power": {},
+      "fixed_out_power": {
+        "Pi_2": 0.0
+      },
+      "sparsification_enabled": true,
+      "sparsify_exponent_threshold": 0.05,
+      "sparsify_max_score_increase": 0.05,
+      "rationalization_enabled": true,
+      "max_rational_denominator": 5,
+      "validate_after_rationalization": true
+    },
+    "replanning_triggers": [
+      "insufficient_MI_improvement",
+      "validation_failure"
+    ]
+  },
+  "compiled_workflow": {
+    "status": "compiled",
+    "template": "auto_mechanism_adaptive",
+    "rationale": "Use the single-regime adaptive template because the prompt describes a single physical mechanism (rough-wall turbulent pipe flow) but enforces an explicit output constraint that removes the roughness dependence from the output formula. Similarity policy is first-kind (classical Buckingham Pi) because the user requested a fixed exponent (Pi_2 power = 0) rather than incomplete-similarity or automatic similarity screening. Kraskov mutual-information estimator is selected because the sample size (414) is <= 800; k=5 is a typical Kraskov choice. The output exponent constraint is recorded in fixed_out_power to ensure the derived dimensionless output depends only on Pi_1. Regime detection is left null (n_clusters = null) for a single-mechanism analysis, with candidate cluster counts provided should the runtime need to test multi-mechanism hypotheses. Optimization of the output scaling is disabled (optimize_output = false) consistent with first-kind similarity.",
+    "target_is_dimensionless": true,
+    "stages": [
+      "load_and_validate_data",
+      "gradient_regime_detection",
+      "validate_regime_partition",
+      "local_dominant_group_search",
+      "fan_out_local_workflows",
+      "aggregate_results",
+      "generate_report"
+    ],
+    "tool_ids": [
+      "calc_basis_tool",
+      "detect_gradient_regimes",
+      "run_local_dominant_group_workflow",
+      "rationalize_local_solution"
+    ],
+    "regime_detection": {
+      "n_clusters": null,
+      "candidate_cluster_counts": [
+        2,
+        3,
+        4
+      ],
+      "min_cluster_fraction": 0.05,
+      "min_cluster_samples": 60,
+      "max_intercluster_cosine": 0.9,
+      "eigenvalue_ratio_threshold": 50.0,
+      "require_convergence": true,
+      "exclude_low_confidence_points": false,
+      "assignment_confidence_threshold": 0.05
+    },
+    "resolved_gradient_regime_options": {
+      "surrogate": {
+        "mean_mode": "constant",
+        "max_train_samples": null,
+        "n_restarts_optimizer": 3,
+        "optimizer_maxiter": 2000,
+        "optimizer_ftol": 1e-10,
+        "optimizer_gtol": 1e-06,
+        "jitter": 1e-10,
+        "random_state": 42,
+        "log_sigma0_sq_bounds": [
+          -30.0,
+          30.0
+        ],
+        "log_sigma1_sq_bounds": [
+          -30.0,
+          30.0
+        ],
+        "log_sigma_u_sq_bounds": [
+          -30.0,
+          30.0
+        ],
+        "mean_parameter_bounds": [
+          null,
+          null
+        ],
+        "initial_noise_fraction": 1e-06,
+        "require_optimizer_success": false,
+        "regime_target_transform": "log"
+      },
+      "clustering": {
+        "n_clusters": null,
+        "candidate_cluster_counts": [
+          2,
+          3,
+          4
+        ],
+        "min_cluster_fraction": 0.05,
+        "min_cluster_samples": 60,
+        "max_intercluster_cosine": 0.9,
+        "eigenvalue_ratio_threshold": 50.0,
+        "n_init": 30,
+        "max_iter": 200,
+        "random_state": 42,
+        "initialization": "random_eigenpairs",
+        "max_initialization_attempts": 100,
+        "require_convergence": true,
+        "gradient_norm_tolerance": 1e-12,
+        "exclude_low_confidence_points": false,
+        "assignment_confidence_threshold": 0.05
+      }
+    },
+    "regime_configuration_precedence": [
+      "library_defaults",
+      "workflow_plan",
+      "nested_manual",
+      "flat_manual"
+    ],
+    "resolved_manual_regime_overrides": {},
+    "local_workflow": {
+      "start_count": 1,
+      "max_count": 2,
+      "absolute_score_drop_threshold": 0.08,
+      "require_two_counts_when_possible": true,
+      "similarity_type": "auto",
+      "optimize_output": null,
+      "output_scaling_reason": "Authoritative manual similarity_type='auto'; runtime numerical screening required.",
+      "output_scaling_confidence": "medium",
+      "similarity_screening_max_relative_mi_change": 0.15,
+      "similarity_screening_max_cosine_similarity": 0.7,
+      "mi_method": "kraskov",
+      "mi_param": 5,
+      "cma_restarts": 3,
+      "minimum_samples": 20,
+      "minimum_samples_per_mi_dimension": 20,
+      "minimum_samples_for_second_count": 40,
+      "fixed_in_power": {},
+      "fixed_out_power": {
+        "Pi_2": 0.0
+      },
+      "sparsification_enabled": true,
+      "sparsify_exponent_threshold": 0.05,
+      "sparsify_max_score_increase": 0.05,
+      "rationalization_enabled": true,
+      "max_rational_denominator": 5,
+      "validate_after_rationalization": true
+    },
+    "replanning_triggers": [
+      "insufficient_MI_improvement",
+      "validation_failure"
+    ],
+    "max_replans": 2
+  }
+}

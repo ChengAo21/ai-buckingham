@@ -1,0 +1,146 @@
+{
+  "model": "GPT-4o-mini",
+  "pair_id": "PRESGRAD_original_01",
+  "disposition": "confirmed",
+  "submitted_output": "U_tau/U_inf",
+  "bound_output": "U_tau/U_inf",
+  "error": null,
+  "source_sha256": "7e3b4af57ac75990aad4d23e412ff46d5c0757361932f97b6fa66aef08b27fd8",
+  "initial_sha256": "45a164fbfac4b35f4ccef6e244dd370da9778a4e9cec9d7eacff10cc67b1da05",
+  "prompt_sha256": "0b5f59702a52675da2661b02cce1f47f530ad9c609d7351bdfe77161fe0f707b",
+  "dataset_sha256": "a0fb4fc72d148bad914a890c96c163703695412008b757defbe72cd9e277c818",
+  "call": {
+    "parsed_response": {
+      "column_index": 7
+    },
+    "raw_tool_calls": [
+      {
+        "function": {
+          "arguments": "{\"column_index\":7}",
+          "name": "OutputColumnSelection"
+        },
+        "id": "call_IgD3qSYz63v1hPEtb08OAtOO",
+        "type": "function"
+      }
+    ],
+    "model_messages": [
+      {
+        "type": "system",
+        "content": "Independently identify the dependent response requested in the full problem. Distinguish the requested response from inputs, metadata, and other derived columns. Return its zero-based index from the CSV columns, or null if ambiguous. Check column binding only."
+      },
+      {
+        "type": "human",
+        "content": "{\"problem\": \"Perform dimensional analysis for turbulent boundary layers under pressure gradient effects to derive the dimensionless form of the friction velocity (denoted as U_tau/U_inf). \\nThis analysis uses ONLY the following 6 dimensional physical quantities as input parameters: \\nthe free-stream velocity (U_inf), the kinematic viscosity (nu), the integrated mean-flow kinetic energy (MKE, defined by the integral: ∫(0 to delta) U^2 dy), the boundary layer thickness at 99% of free-stream (delta), the boundary layer displacement thickness (delta*), and the boundary layer momentum thickness (theta).\", \"csv_columns_by_index\": {\"0\": \"case\", \"1\": \"U_inf\", \"2\": \"nu\", \"3\": \"MKE\", \"4\": \"delta\", \"5\": \"delta*\", \"6\": \"theta\", \"7\": \"U_tau/U_inf\"}}"
+      }
+    ],
+    "elapsed_s": 9.817209999950137,
+    "tokens": {
+      "input": 369,
+      "output": 985
+    }
+  },
+  "provenance": {
+    "run_id": "fd0f0f4f-4bf0-4fed-aa1b-9f2419542d9b",
+    "release": "run-provenance-2026-11-09",
+    "engine_sha256": "ae9a03710f9685d3be863b98acc1880d72c9ea3f04450af039b92f5459ee1ea9",
+    "started_utc": "2026-11-16T17:23:08Z",
+    "finished_utc": null,
+    "status": "running",
+    "dataset": {
+      "name": "dataset_presGrad.csv",
+      "sha256": "a0fb4fc72d148bad914a890c96c163703695412008b757defbe72cd9e277c818"
+    },
+    "problem_sha256": "0b5f59702a52675da2661b02cce1f47f530ad9c609d7351bdfe77161fe0f707b",
+    "manual_hyperparams_sha256": "1a77ac90efe4bc0a9be8c57fdd1e148af3616f2ddcc5fada158148b929b1e8a7",
+    "model_configuration": {
+      "analyzer": "gpt-5-mini",
+      "checker": "gpt-5-mini",
+      "planner": "gpt-5-mini",
+      "interpretation": "gpt-5-mini",
+      "output_binding_checker": "gpt-5-mini"
+    },
+    "package_versions": {
+      "numpy": "2.4.0",
+      "pandas": "2.3.3",
+      "scipy": "1.16.3",
+      "sympy": "1.14.0",
+      "scikit-learn": "1.8.0",
+      "cma": "4.4.4",
+      "pydantic": "2.12.5",
+      "openai": "2.14.0",
+      "httpx": "0.28.1",
+      "langchain-core": "1.2.5",
+      "langchain-openai": "1.1.6",
+      "langgraph": "1.0.5"
+    },
+    "tracing_enabled": false,
+    "wall_seconds": 9.830545200034976,
+    "node_timings": [
+      {
+        "node": "Analyzer",
+        "visit": 1,
+        "duration_seconds": 9.830377599981148,
+        "status": "returned",
+        "error_type": null
+      }
+    ],
+    "http_attempts": [
+      {
+        "attempt_id": "d4051c01-e659-4af9-83d8-cb15d08aaf08",
+        "node": "Output_Binding_Checker",
+        "node_visit": 1,
+        "kind": "llm",
+        "requested_model": "gpt-5-mini",
+        "response_model": "gpt-5-mini-2025-08-07",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 9.815128300047945,
+        "started_utc": "2026-11-16T17:23:08Z",
+        "input_tokens": 369,
+        "output_tokens": 985,
+        "total_tokens": 1354,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 960,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "c15755c06a77fdb712403f9019931d6904aa360214ccf13dbbcca2a09f172fb2",
+        "response_id": "chatcmpl-Ekui5Z0eZqJBXVmdm3lX6RSMsOoyf"
+      }
+    ],
+    "observation_warnings": [],
+    "output_binding_events": [
+      {
+        "action": "verify",
+        "submitted": "U_tau/U_inf",
+        "selected": "U_tau/U_inf",
+        "status": "confirmed",
+        "duration_seconds": 9.817265000019688,
+        "analyzer_visit": 1
+      }
+    ],
+    "workflow_status": null,
+    "scientific_status": null,
+    "totals": {
+      "http_attempt_count": 1,
+      "llm_http_attempt_count": 1,
+      "embedding_http_attempt_count": 0,
+      "usage_missing_attempt_count": 0,
+      "http_duration_seconds_sum": 9.815128300047945,
+      "node_duration_seconds_sum": 9.830377599981148,
+      "http_success_count": 1,
+      "http_error_count": 0,
+      "transport_error_count": 0,
+      "known_input_tokens": 369,
+      "input_tokens_missing_count": 0,
+      "known_output_tokens": 985,
+      "output_tokens_missing_count": 0,
+      "known_total_tokens": 1354,
+      "total_tokens_missing_count": 0,
+      "known_cached_input_tokens": 0,
+      "cached_input_tokens_missing_count": 0,
+      "known_reasoning_tokens": 960,
+      "reasoning_tokens_missing_count": 0
+    }
+  }
+}

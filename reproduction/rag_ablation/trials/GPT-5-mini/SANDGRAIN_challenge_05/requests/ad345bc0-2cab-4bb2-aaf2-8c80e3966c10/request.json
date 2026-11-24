@@ -1,0 +1,283 @@
+{
+  "method": "POST",
+  "url": "https://api.chatanywhere.tech/v1/chat/completions",
+  "body": {
+    "messages": [
+      {
+        "content": "Audit every named physical input in this exact typed ledger, including literal SI coordinate values. Do not substitute the correct definition or a KB vector for a wrong candidate and then claim PASSED. Return ledger_sha256 and each csv_name exactly once; before_si_exponents must copy the actual candidate. PASSED confirms the actual vector, CONFLICT requires a complete corrected suggested vector, and UNCERTAIN does not permit numerical execution. KB_RECORD requires actual entry_id citations from that variable's retrieved records. Canonical entity names are read by the program from the selected IDs; do not echo another quantity-name field. Your reason must explain why each cited record applies to this variable in the original problem, not merely why its vector matches. Cited vectors must support all known coordinates of the proposed/confirmed SI vector. INTERNAL_REASONING uses no IDs and must explain the physical meaning. Retrieval rank is relevance, not truth. Resolve symbol ambiguity from the original problem; do not choose an unrelated matching symbol. Known absent base dimensions must be explicit '0'; null means genuinely unknown, not unused. If any current coordinate is unknown, request revision or report UNCERTAIN; never call a partly known vector PASSED. Give a complete correction when physically justified. If a correction remains partly unknown, preserve null and explain what remains unresolved; the program will request revision rather than invent zeros. Lack of KB alone is not a physical contradiction. Matrix compilation and n/r/k are program tasks, not audit tasks.",
+        "role": "system"
+      },
+      {
+        "content": "Problem:\nPerform dimensional analysis for sand-grain roughness parameterization to derive the dimensionless relationship governing the normalized equivalent sand-grain roughness (denoted as ks/Ra).\nThis analysis uses ONLY the following 7 physical quantities as input parameters:\nthe first-order absolute moment of height fluctuations, Ra;\nthe peak-to-valley height, kt;\nthe root-mean-square height, k_rms;\nthe third central moment of roughness height fluctuations divided by the cube of their root-mean-square height, Sk;\nthe kurtosis of roughness height fluctuations, Ku;\nthe effective streamwise slope of the roughness, ES;\nthe surface porosity, Po.\n\nTyped ledger SHA256: ef8f3f2edf7c87d4041511c7a09090ea974f048cbce8f05a220fa89e9529359d\nTyped candidate ledger:\n{\"input_variable_names\": [\"Ra\", \"kt\", \"k_rms\", \"Sk\", \"Ku\", \"ES\", \"Po\"], \"output_variable_confidence\": \"high\", \"output_variable_name\": \"ks/Ra\", \"output_variable_reasoning\": \"Given the seven inputs there are three independent dimensional quantities (Ra, kt, k_rms) with dimension of length and four dimensionless shape parameters (Sk, Ku, ES, Po). Therefore the target normalized equivalent sand-grain roughness ks/Ra is dimensionless and can be expressed as a function of the dimensionless groups formed by dividing the length scales by Ra and the four dimensionless parameters: ks/Ra = f(kt/Ra, k_rms/Ra, Sk, Ku, ES, Po).\", \"variables\": [{\"csv_name\": \"Ra\", \"physical_definition\": \"Arithmetical mean of absolute deviations of surface height from the mean plane (first-order absolute moment of height fluctuations).\", \"quantity_name\": \"Ra (arithmetical mean roughness)\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"1\", \"M\": \"0\", \"N\": \"0\", \"T\": \"0\", \"Theta\": \"0\"}}, {\"csv_name\": \"kt\", \"physical_definition\": \"Peak-to-valley height: vertical distance between highest peak and deepest valley of the surface profile.\", \"quantity_name\": \"kt (peak-to-valley height)\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"1\", \"M\": \"0\", \"N\": \"0\", \"T\": \"0\", \"Theta\": \"0\"}}, {\"csv_name\": \"k_rms\", \"physical_definition\": \"Root-mean-square height: square root of the mean of squared deviations of surface height from the mean plane.\", \"quantity_name\": \"k_rms (root-mean-square height)\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"1\", \"M\": \"0\", \"N\": \"0\", \"T\": \"0\", \"Theta\": \"0\"}}, {\"csv_name\": \"Sk\", \"physical_definition\": \"Dimensionless skewness: third central moment of height fluctuations divided by the cube of the rms height (normalized third moment).\", \"quantity_name\": \"Sk (skewness, normalized third moment)\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"0\", \"M\": \"0\", \"N\": \"0\", \"T\": \"0\", \"Theta\": \"0\"}}, {\"csv_name\": \"Ku\", \"physical_definition\": \"Dimensionless kurtosis: fourth standardized moment of the surface height distribution (kurtosis).\", \"quantity_name\": \"Ku (kurtosis)\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"0\", \"M\": \"0\", \"N\": \"0\", \"T\": \"0\", \"Theta\": \"0\"}}, {\"csv_name\": \"ES\", \"physical_definition\": \"Effective streamwise slope of the roughness: characteristic slope in the flow (ratio of vertical to horizontal length scales).\", \"quantity_name\": \"ES (effective streamwise slope)\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"0\", \"M\": \"0\", \"N\": \"0\", \"T\": \"0\", \"Theta\": \"0\"}}, {\"csv_name\": \"Po\", \"physical_definition\": \"Surface porosity: fraction of surface area occupied by pores or voids (dimensionless, between 0 and 1).\", \"quantity_name\": \"Po (surface porosity)\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"0\", \"M\": \"0\", \"N\": \"0\", \"T\": \"0\", \"Theta\": \"0\"}}]}\n\nRetrieved dimensional evidence:\n### Input variable `Ra`\n- entry_id: pq_arithmetic_mean_roughness; canonical_quantity: arithmetic mean roughness; symbols: Ra; R_a; aliases: first-order moment of height fluctuations; arithmetic average roughness; definition: Mean absolute deviation of surface height from its mean level under the adopted surface definition.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: surface roughness; ambiguity_notes: Ra is a dimensional roughness-height statistic here; do not confuse it with the Rayleigh number Ra, which is dimensionless.; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: curated\n- entry_id: pq_equivalent_sandgrain_roughness; canonical_quantity: equivalent sand-grain roughness; symbols: ks; k_s; aliases: equivalent sand-grain height; equivalent sand roughness; definition: Hydraulic roughness length defined by equivalence to canonical sand-grain roughness behavior.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: rough-wall turbulence; ambiguity_notes: ; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: curated\n- entry_id: pq_rms_roughness_height; canonical_quantity: root-mean-square roughness height; symbols: k_rms; krms; aliases: RMS roughness; root mean square surface height; definition: Root-mean-square fluctuation of surface height about its mean.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: surface roughness; ambiguity_notes: ; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: curated\n### Input variable `kt`\n- entry_id: pq_peak_to_valley_height; canonical_quantity: mean peak-to-valley roughness height; symbols: Sx; k_t; kt; k_c; kc; aliases: mean peak-to-valley height; peak-to-trough roughness height; maximum peak-to-trough height; definition: A roughness-amplitude measure formed from vertical height differences between peaks and valleys.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: surface roughness; ambiguity_notes: The exact symbol and averaging convention are dataset-specific; any height difference retains length dimension.; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: high\n- entry_id: pq_equivalent_sandgrain_roughness; canonical_quantity: equivalent sand-grain roughness; symbols: ks; k_s; aliases: equivalent sand-grain height; equivalent sand roughness; definition: Hydraulic roughness length defined by equivalence to canonical sand-grain roughness behavior.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: rough-wall turbulence; ambiguity_notes: ; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: curated\n- entry_id: pq_mean_roughness_height; canonical_quantity: mean roughness height; symbols: k_avg; kavg; aliases: average roughness height; definition: Area-averaged surface height under the adopted roughness coordinate convention.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: surface roughness; ambiguity_notes: ; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: curated\n### Input variable `k_rms`\n- entry_id: pq_rms_roughness_height; canonical_quantity: root-mean-square roughness height; symbols: k_rms; krms; aliases: RMS roughness; root mean square surface height; definition: Root-mean-square fluctuation of surface height about its mean.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: surface roughness; ambiguity_notes: ; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: curated\n- entry_id: pq_equivalent_sandgrain_roughness; canonical_quantity: equivalent sand-grain roughness; symbols: ks; k_s; aliases: equivalent sand-grain height; equivalent sand roughness; definition: Hydraulic roughness length defined by equivalence to canonical sand-grain roughness behavior.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: rough-wall turbulence; ambiguity_notes: ; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: curated\n- entry_id: pq_mean_roughness_height; canonical_quantity: mean roughness height; symbols: k_avg; kavg; aliases: average roughness height; definition: Area-averaged surface height under the adopted roughness coordinate convention.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: surface roughness; ambiguity_notes: ; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: curated\n### Input variable `Sk`\n- entry_id: pq_height_skewness; canonical_quantity: surface-height skewness; symbols: Sk; S_k; aliases: height skewness; roughness skewness; definition: Third standardized moment of the surface-height distribution.; si_dimension: 1; dimension_vector: [0, 0, 0, 0, 0, 0, 0]; si_unit: 1; domain: surface roughness; turbulence; ambiguity_notes: Dimensionless standardized moment.; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: curated\n- entry_id: pq_equivalent_sandgrain_roughness; canonical_quantity: equivalent sand-grain roughness; symbols: ks; k_s; aliases: equivalent sand-grain height; equivalent sand roughness; definition: Hydraulic roughness length defined by equivalence to canonical sand-grain roughness behavior.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: rough-wall turbulence; ambiguity_notes: ; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: curated\n- entry_id: pq_rms_roughness_height; canonical_quantity: root-mean-square roughness height; symbols: k_rms; krms; aliases: RMS roughness; root mean square surface height; definition: Root-mean-square fluctuation of surface height about its mean.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: surface roughness; ambiguity_notes: ; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: curated\n### Input variable `Ku`\n- entry_id: pq_height_kurtosis; canonical_quantity: surface-height kurtosis; symbols: Ku; K_u; aliases: height kurtosis; roughness kurtosis; definition: Fourth standardized moment of the surface-height distribution.; si_dimension: 1; dimension_vector: [0, 0, 0, 0, 0, 0, 0]; si_unit: 1; domain: surface roughness; turbulence; ambiguity_notes: Dimensionless standardized moment.; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: curated\n- entry_id: pq_equivalent_sandgrain_roughness; canonical_quantity: equivalent sand-grain roughness; symbols: ks; k_s; aliases: equivalent sand-grain height; equivalent sand roughness; definition: Hydraulic roughness length defined by equivalence to canonical sand-grain roughness behavior.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: rough-wall turbulence; ambiguity_notes: ; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: curated\n- entry_id: pq_height_skewness; canonical_quantity: surface-height skewness; symbols: Sk; S_k; aliases: height skewness; roughness skewness; definition: Third standardized moment of the surface-height distribution.; si_dimension: 1; dimension_vector: [0, 0, 0, 0, 0, 0, 0]; si_unit: 1; domain: surface roughness; turbulence; ambiguity_notes: Dimensionless standardized moment.; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: curated\n### Input variable `ES`\n- entry_id: pq_effective_surface_slope; canonical_quantity: effective surface slope; symbols: ES; E_x; ES_x; aliases: mean absolute surface slope; streamwise effective slope; definition: Mean absolute gradient of surface height in a specified horizontal direction.; si_dimension: 1; dimension_vector: [0, 0, 0, 0, 0, 0, 0]; si_unit: 1; domain: surface roughness; turbulence; ambiguity_notes: A surface-height derivative is length divided by length and is dimensionless.; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: curated\n- entry_id: pq_equivalent_sandgrain_roughness; canonical_quantity: equivalent sand-grain roughness; symbols: ks; k_s; aliases: equivalent sand-grain height; equivalent sand roughness; definition: Hydraulic roughness length defined by equivalence to canonical sand-grain roughness behavior.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: rough-wall turbulence; ambiguity_notes: ; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: curated\n- entry_id: pq_absolute_wall_roughness; canonical_quantity: absolute wall roughness height; symbols: epsilon; ε; r; aliases: absolute roughness; pipe wall roughness; definition: Dimensional roughness height of a pipe wall before normalization by pipe diameter.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: rough pipe flow; ambiguity_notes: ; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: high\n### Input variable `Po`\n- entry_id: pq_porosity; canonical_quantity: porosity; symbols: Po; P_o; phi_p; ϕ; aliases: void fraction; surface porosity; definition: Fraction of void or open volume/area according to the chosen roughness or porous-medium definition.; si_dimension: 1; dimension_vector: [0, 0, 0, 0, 0, 0, 0]; si_unit: 1; domain: porous media; rough surfaces; ambiguity_notes: Dimensionless fraction; confirm the exact geometric definition in the dataset.; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: high\n- entry_id: pq_equivalent_sandgrain_roughness; canonical_quantity: equivalent sand-grain roughness; symbols: ks; k_s; aliases: equivalent sand-grain height; equivalent sand roughness; definition: Hydraulic roughness length defined by equivalence to canonical sand-grain roughness behavior.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: rough-wall turbulence; ambiguity_notes: ; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: curated\n- entry_id: pq_mean_roughness_height; canonical_quantity: mean roughness height; symbols: k_avg; kavg; aliases: average roughness height; definition: Area-averaged surface height under the adopted roughness coordinate convention.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: surface roughness; ambiguity_notes: ; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: curated",
+        "role": "user"
+      }
+    ],
+    "model": "gpt-5-mini",
+    "parallel_tool_calls": false,
+    "stream": false,
+    "tool_choice": {
+      "type": "function",
+      "function": {
+        "name": "CheckerDimensionAudit"
+      }
+    },
+    "tools": [
+      {
+        "type": "function",
+        "function": {
+          "name": "CheckerDimensionAudit",
+          "description": "",
+          "parameters": {
+            "additionalProperties": false,
+            "properties": {
+              "ledger_sha256": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "variables": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "csv_name": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "before_si_exponents": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "M": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "L": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "T": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "I": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "Theta": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "N": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "J": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "M",
+                        "L",
+                        "T",
+                        "I",
+                        "Theta",
+                        "N",
+                        "J"
+                      ],
+                      "type": "object"
+                    },
+                    "decision": {
+                      "enum": [
+                        "PASSED",
+                        "CONFLICT",
+                        "UNCERTAIN"
+                      ],
+                      "type": "string"
+                    },
+                    "suggested_si_exponents": {
+                      "anyOf": [
+                        {
+                          "additionalProperties": false,
+                          "properties": {
+                            "M": {
+                              "anyOf": [
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "null"
+                                }
+                              ],
+                              "title": "M"
+                            },
+                            "L": {
+                              "anyOf": [
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "null"
+                                }
+                              ],
+                              "title": "L"
+                            },
+                            "T": {
+                              "anyOf": [
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "null"
+                                }
+                              ],
+                              "title": "T"
+                            },
+                            "I": {
+                              "anyOf": [
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "null"
+                                }
+                              ],
+                              "title": "I"
+                            },
+                            "Theta": {
+                              "anyOf": [
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "null"
+                                }
+                              ],
+                              "title": "Theta"
+                            },
+                            "N": {
+                              "anyOf": [
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "null"
+                                }
+                              ],
+                              "title": "N"
+                            },
+                            "J": {
+                              "anyOf": [
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "null"
+                                }
+                              ],
+                              "title": "J"
+                            }
+                          },
+                          "required": [
+                            "M",
+                            "L",
+                            "T",
+                            "I",
+                            "Theta",
+                            "N",
+                            "J"
+                          ],
+                          "title": "SIVector",
+                          "type": "object"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "support_mode": {
+                      "enum": [
+                        "KB_RECORD",
+                        "INTERNAL_REASONING",
+                        "UNCERTAIN"
+                      ],
+                      "type": "string"
+                    },
+                    "evidence_entry_ids": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array"
+                    },
+                    "reason": {
+                      "minLength": 1,
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "csv_name",
+                    "before_si_exponents",
+                    "decision",
+                    "suggested_si_exponents",
+                    "support_mode",
+                    "evidence_entry_ids",
+                    "reason"
+                  ],
+                  "type": "object"
+                },
+                "minItems": 1,
+                "type": "array"
+              }
+            },
+            "required": [
+              "ledger_sha256",
+              "variables"
+            ],
+            "type": "object"
+          }
+        }
+      }
+    ]
+  },
+  "body_text": "{\"messages\":[{\"content\":\"Audit every named physical input in this exact typed ledger, including literal SI coordinate values. Do not substitute the correct definition or a KB vector for a wrong candidate and then claim PASSED. Return ledger_sha256 and each csv_name exactly once; before_si_exponents must copy the actual candidate. PASSED confirms the actual vector, CONFLICT requires a complete corrected suggested vector, and UNCERTAIN does not permit numerical execution. KB_RECORD requires actual entry_id citations from that variable's retrieved records. Canonical entity names are read by the program from the selected IDs; do not echo another quantity-name field. Your reason must explain why each cited record applies to this variable in the original problem, not merely why its vector matches. Cited vectors must support all known coordinates of the proposed/confirmed SI vector. INTERNAL_REASONING uses no IDs and must explain the physical meaning. Retrieval rank is relevance, not truth. Resolve symbol ambiguity from the original problem; do not choose an unrelated matching symbol. Known absent base dimensions must be explicit '0'; null means genuinely unknown, not unused. If any current coordinate is unknown, request revision or report UNCERTAIN; never call a partly known vector PASSED. Give a complete correction when physically justified. If a correction remains partly unknown, preserve null and explain what remains unresolved; the program will request revision rather than invent zeros. Lack of KB alone is not a physical contradiction. Matrix compilation and n/r/k are program tasks, not audit tasks.\",\"role\":\"system\"},{\"content\":\"Problem:\\nPerform dimensional analysis for sand-grain roughness parameterization to derive the dimensionless relationship governing the normalized equivalent sand-grain roughness (denoted as ks/Ra).\\nThis analysis uses ONLY the following 7 physical quantities as input parameters:\\nthe first-order absolute moment of height fluctuations, Ra;\\nthe peak-to-valley height, kt;\\nthe root-mean-square height, k_rms;\\nthe third central moment of roughness height fluctuations divided by the cube of their root-mean-square height, Sk;\\nthe kurtosis of roughness height fluctuations, Ku;\\nthe effective streamwise slope of the roughness, ES;\\nthe surface porosity, Po.\\n\\nTyped ledger SHA256: ef8f3f2edf7c87d4041511c7a09090ea974f048cbce8f05a220fa89e9529359d\\nTyped candidate ledger:\\n{\\\"input_variable_names\\\": [\\\"Ra\\\", \\\"kt\\\", \\\"k_rms\\\", \\\"Sk\\\", \\\"Ku\\\", \\\"ES\\\", \\\"Po\\\"], \\\"output_variable_confidence\\\": \\\"high\\\", \\\"output_variable_name\\\": \\\"ks/Ra\\\", \\\"output_variable_reasoning\\\": \\\"Given the seven inputs there are three independent dimensional quantities (Ra, kt, k_rms) with dimension of length and four dimensionless shape parameters (Sk, Ku, ES, Po). Therefore the target normalized equivalent sand-grain roughness ks/Ra is dimensionless and can be expressed as a function of the dimensionless groups formed by dividing the length scales by Ra and the four dimensionless parameters: ks/Ra = f(kt/Ra, k_rms/Ra, Sk, Ku, ES, Po).\\\", \\\"variables\\\": [{\\\"csv_name\\\": \\\"Ra\\\", \\\"physical_definition\\\": \\\"Arithmetical mean of absolute deviations of surface height from the mean plane (first-order absolute moment of height fluctuations).\\\", \\\"quantity_name\\\": \\\"Ra (arithmetical mean roughness)\\\", \\\"si_exponents\\\": {\\\"I\\\": \\\"0\\\", \\\"J\\\": \\\"0\\\", \\\"L\\\": \\\"1\\\", \\\"M\\\": \\\"0\\\", \\\"N\\\": \\\"0\\\", \\\"T\\\": \\\"0\\\", \\\"Theta\\\": \\\"0\\\"}}, {\\\"csv_name\\\": \\\"kt\\\", \\\"physical_definition\\\": \\\"Peak-to-valley height: vertical distance between highest peak and deepest valley of the surface profile.\\\", \\\"quantity_name\\\": \\\"kt (peak-to-valley height)\\\", \\\"si_exponents\\\": {\\\"I\\\": \\\"0\\\", \\\"J\\\": \\\"0\\\", \\\"L\\\": \\\"1\\\", \\\"M\\\": \\\"0\\\", \\\"N\\\": \\\"0\\\", \\\"T\\\": \\\"0\\\", \\\"Theta\\\": \\\"0\\\"}}, {\\\"csv_name\\\": \\\"k_rms\\\", \\\"physical_definition\\\": \\\"Root-mean-square height: square root of the mean of squared deviations of surface height from the mean plane.\\\", \\\"quantity_name\\\": \\\"k_rms (root-mean-square height)\\\", \\\"si_exponents\\\": {\\\"I\\\": \\\"0\\\", \\\"J\\\": \\\"0\\\", \\\"L\\\": \\\"1\\\", \\\"M\\\": \\\"0\\\", \\\"N\\\": \\\"0\\\", \\\"T\\\": \\\"0\\\", \\\"Theta\\\": \\\"0\\\"}}, {\\\"csv_name\\\": \\\"Sk\\\", \\\"physical_definition\\\": \\\"Dimensionless skewness: third central moment of height fluctuations divided by the cube of the rms height (normalized third moment).\\\", \\\"quantity_name\\\": \\\"Sk (skewness, normalized third moment)\\\", \\\"si_exponents\\\": {\\\"I\\\": \\\"0\\\", \\\"J\\\": \\\"0\\\", \\\"L\\\": \\\"0\\\", \\\"M\\\": \\\"0\\\", \\\"N\\\": \\\"0\\\", \\\"T\\\": \\\"0\\\", \\\"Theta\\\": \\\"0\\\"}}, {\\\"csv_name\\\": \\\"Ku\\\", \\\"physical_definition\\\": \\\"Dimensionless kurtosis: fourth standardized moment of the surface height distribution (kurtosis).\\\", \\\"quantity_name\\\": \\\"Ku (kurtosis)\\\", \\\"si_exponents\\\": {\\\"I\\\": \\\"0\\\", \\\"J\\\": \\\"0\\\", \\\"L\\\": \\\"0\\\", \\\"M\\\": \\\"0\\\", \\\"N\\\": \\\"0\\\", \\\"T\\\": \\\"0\\\", \\\"Theta\\\": \\\"0\\\"}}, {\\\"csv_name\\\": \\\"ES\\\", \\\"physical_definition\\\": \\\"Effective streamwise slope of the roughness: characteristic slope in the flow (ratio of vertical to horizontal length scales).\\\", \\\"quantity_name\\\": \\\"ES (effective streamwise slope)\\\", \\\"si_exponents\\\": {\\\"I\\\": \\\"0\\\", \\\"J\\\": \\\"0\\\", \\\"L\\\": \\\"0\\\", \\\"M\\\": \\\"0\\\", \\\"N\\\": \\\"0\\\", \\\"T\\\": \\\"0\\\", \\\"Theta\\\": \\\"0\\\"}}, {\\\"csv_name\\\": \\\"Po\\\", \\\"physical_definition\\\": \\\"Surface porosity: fraction of surface area occupied by pores or voids (dimensionless, between 0 and 1).\\\", \\\"quantity_name\\\": \\\"Po (surface porosity)\\\", \\\"si_exponents\\\": {\\\"I\\\": \\\"0\\\", \\\"J\\\": \\\"0\\\", \\\"L\\\": \\\"0\\\", \\\"M\\\": \\\"0\\\", \\\"N\\\": \\\"0\\\", \\\"T\\\": \\\"0\\\", \\\"Theta\\\": \\\"0\\\"}}]}\\n\\nRetrieved dimensional evidence:\\n### Input variable `Ra`\\n- entry_id: pq_arithmetic_mean_roughness; canonical_quantity: arithmetic mean roughness; symbols: Ra; R_a; aliases: first-order moment of height fluctuations; arithmetic average roughness; definition: Mean absolute deviation of surface height from its mean level under the adopted surface definition.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: surface roughness; ambiguity_notes: Ra is a dimensional roughness-height statistic here; do not confuse it with the Rayleigh number Ra, which is dimensionless.; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: curated\\n- entry_id: pq_equivalent_sandgrain_roughness; canonical_quantity: equivalent sand-grain roughness; symbols: ks; k_s; aliases: equivalent sand-grain height; equivalent sand roughness; definition: Hydraulic roughness length defined by equivalence to canonical sand-grain roughness behavior.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: rough-wall turbulence; ambiguity_notes: ; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: curated\\n- entry_id: pq_rms_roughness_height; canonical_quantity: root-mean-square roughness height; symbols: k_rms; krms; aliases: RMS roughness; root mean square surface height; definition: Root-mean-square fluctuation of surface height about its mean.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: surface roughness; ambiguity_notes: ; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: curated\\n### Input variable `kt`\\n- entry_id: pq_peak_to_valley_height; canonical_quantity: mean peak-to-valley roughness height; symbols: Sx; k_t; kt; k_c; kc; aliases: mean peak-to-valley height; peak-to-trough roughness height; maximum peak-to-trough height; definition: A roughness-amplitude measure formed from vertical height differences between peaks and valleys.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: surface roughness; ambiguity_notes: The exact symbol and averaging convention are dataset-specific; any height difference retains length dimension.; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: high\\n- entry_id: pq_equivalent_sandgrain_roughness; canonical_quantity: equivalent sand-grain roughness; symbols: ks; k_s; aliases: equivalent sand-grain height; equivalent sand roughness; definition: Hydraulic roughness length defined by equivalence to canonical sand-grain roughness behavior.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: rough-wall turbulence; ambiguity_notes: ; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: curated\\n- entry_id: pq_mean_roughness_height; canonical_quantity: mean roughness height; symbols: k_avg; kavg; aliases: average roughness height; definition: Area-averaged surface height under the adopted roughness coordinate convention.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: surface roughness; ambiguity_notes: ; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: curated\\n### Input variable `k_rms`\\n- entry_id: pq_rms_roughness_height; canonical_quantity: root-mean-square roughness height; symbols: k_rms; krms; aliases: RMS roughness; root mean square surface height; definition: Root-mean-square fluctuation of surface height about its mean.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: surface roughness; ambiguity_notes: ; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: curated\\n- entry_id: pq_equivalent_sandgrain_roughness; canonical_quantity: equivalent sand-grain roughness; symbols: ks; k_s; aliases: equivalent sand-grain height; equivalent sand roughness; definition: Hydraulic roughness length defined by equivalence to canonical sand-grain roughness behavior.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: rough-wall turbulence; ambiguity_notes: ; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: curated\\n- entry_id: pq_mean_roughness_height; canonical_quantity: mean roughness height; symbols: k_avg; kavg; aliases: average roughness height; definition: Area-averaged surface height under the adopted roughness coordinate convention.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: surface roughness; ambiguity_notes: ; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: curated\\n### Input variable `Sk`\\n- entry_id: pq_height_skewness; canonical_quantity: surface-height skewness; symbols: Sk; S_k; aliases: height skewness; roughness skewness; definition: Third standardized moment of the surface-height distribution.; si_dimension: 1; dimension_vector: [0, 0, 0, 0, 0, 0, 0]; si_unit: 1; domain: surface roughness; turbulence; ambiguity_notes: Dimensionless standardized moment.; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: curated\\n- entry_id: pq_equivalent_sandgrain_roughness; canonical_quantity: equivalent sand-grain roughness; symbols: ks; k_s; aliases: equivalent sand-grain height; equivalent sand roughness; definition: Hydraulic roughness length defined by equivalence to canonical sand-grain roughness behavior.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: rough-wall turbulence; ambiguity_notes: ; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: curated\\n- entry_id: pq_rms_roughness_height; canonical_quantity: root-mean-square roughness height; symbols: k_rms; krms; aliases: RMS roughness; root mean square surface height; definition: Root-mean-square fluctuation of surface height about its mean.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: surface roughness; ambiguity_notes: ; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: curated\\n### Input variable `Ku`\\n- entry_id: pq_height_kurtosis; canonical_quantity: surface-height kurtosis; symbols: Ku; K_u; aliases: height kurtosis; roughness kurtosis; definition: Fourth standardized moment of the surface-height distribution.; si_dimension: 1; dimension_vector: [0, 0, 0, 0, 0, 0, 0]; si_unit: 1; domain: surface roughness; turbulence; ambiguity_notes: Dimensionless standardized moment.; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: curated\\n- entry_id: pq_equivalent_sandgrain_roughness; canonical_quantity: equivalent sand-grain roughness; symbols: ks; k_s; aliases: equivalent sand-grain height; equivalent sand roughness; definition: Hydraulic roughness length defined by equivalence to canonical sand-grain roughness behavior.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: rough-wall turbulence; ambiguity_notes: ; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: curated\\n- entry_id: pq_height_skewness; canonical_quantity: surface-height skewness; symbols: Sk; S_k; aliases: height skewness; roughness skewness; definition: Third standardized moment of the surface-height distribution.; si_dimension: 1; dimension_vector: [0, 0, 0, 0, 0, 0, 0]; si_unit: 1; domain: surface roughness; turbulence; ambiguity_notes: Dimensionless standardized moment.; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: curated\\n### Input variable `ES`\\n- entry_id: pq_effective_surface_slope; canonical_quantity: effective surface slope; symbols: ES; E_x; ES_x; aliases: mean absolute surface slope; streamwise effective slope; definition: Mean absolute gradient of surface height in a specified horizontal direction.; si_dimension: 1; dimension_vector: [0, 0, 0, 0, 0, 0, 0]; si_unit: 1; domain: surface roughness; turbulence; ambiguity_notes: A surface-height derivative is length divided by length and is dimensionless.; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: curated\\n- entry_id: pq_equivalent_sandgrain_roughness; canonical_quantity: equivalent sand-grain roughness; symbols: ks; k_s; aliases: equivalent sand-grain height; equivalent sand roughness; definition: Hydraulic roughness length defined by equivalence to canonical sand-grain roughness behavior.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: rough-wall turbulence; ambiguity_notes: ; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: curated\\n- entry_id: pq_absolute_wall_roughness; canonical_quantity: absolute wall roughness height; symbols: epsilon; ε; r; aliases: absolute roughness; pipe wall roughness; definition: Dimensional roughness height of a pipe wall before normalization by pipe diameter.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: rough pipe flow; ambiguity_notes: ; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: high\\n### Input variable `Po`\\n- entry_id: pq_porosity; canonical_quantity: porosity; symbols: Po; P_o; phi_p; ϕ; aliases: void fraction; surface porosity; definition: Fraction of void or open volume/area according to the chosen roughness or porous-medium definition.; si_dimension: 1; dimension_vector: [0, 0, 0, 0, 0, 0, 0]; si_unit: 1; domain: porous media; rough surfaces; ambiguity_notes: Dimensionless fraction; confirm the exact geometric definition in the dataset.; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: high\\n- entry_id: pq_equivalent_sandgrain_roughness; canonical_quantity: equivalent sand-grain roughness; symbols: ks; k_s; aliases: equivalent sand-grain height; equivalent sand roughness; definition: Hydraulic roughness length defined by equivalence to canonical sand-grain roughness behavior.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: rough-wall turbulence; ambiguity_notes: ; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: curated\\n- entry_id: pq_mean_roughness_height; canonical_quantity: mean roughness height; symbols: k_avg; kavg; aliases: average roughness height; definition: Area-averaged surface height under the adopted roughness coordinate convention.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: surface roughness; ambiguity_notes: ; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: curated\",\"role\":\"user\"}],\"model\":\"gpt-5-mini\",\"parallel_tool_calls\":false,\"stream\":false,\"tool_choice\":{\"type\":\"function\",\"function\":{\"name\":\"CheckerDimensionAudit\"}},\"tools\":[{\"type\":\"function\",\"function\":{\"name\":\"CheckerDimensionAudit\",\"description\":\"\",\"parameters\":{\"additionalProperties\":false,\"properties\":{\"ledger_sha256\":{\"minLength\":1,\"type\":\"string\"},\"variables\":{\"items\":{\"additionalProperties\":false,\"properties\":{\"csv_name\":{\"minLength\":1,\"type\":\"string\"},\"before_si_exponents\":{\"additionalProperties\":false,\"properties\":{\"M\":{\"anyOf\":[{\"type\":\"string\"},{\"type\":\"null\"}]},\"L\":{\"anyOf\":[{\"type\":\"string\"},{\"type\":\"null\"}]},\"T\":{\"anyOf\":[{\"type\":\"string\"},{\"type\":\"null\"}]},\"I\":{\"anyOf\":[{\"type\":\"string\"},{\"type\":\"null\"}]},\"Theta\":{\"anyOf\":[{\"type\":\"string\"},{\"type\":\"null\"}]},\"N\":{\"anyOf\":[{\"type\":\"string\"},{\"type\":\"null\"}]},\"J\":{\"anyOf\":[{\"type\":\"string\"},{\"type\":\"null\"}]}},\"required\":[\"M\",\"L\",\"T\",\"I\",\"Theta\",\"N\",\"J\"],\"type\":\"object\"},\"decision\":{\"enum\":[\"PASSED\",\"CONFLICT\",\"UNCERTAIN\"],\"type\":\"string\"},\"suggested_si_exponents\":{\"anyOf\":[{\"additionalProperties\":false,\"properties\":{\"M\":{\"anyOf\":[{\"type\":\"string\"},{\"type\":\"null\"}],\"title\":\"M\"},\"L\":{\"anyOf\":[{\"type\":\"string\"},{\"type\":\"null\"}],\"title\":\"L\"},\"T\":{\"anyOf\":[{\"type\":\"string\"},{\"type\":\"null\"}],\"title\":\"T\"},\"I\":{\"anyOf\":[{\"type\":\"string\"},{\"type\":\"null\"}],\"title\":\"I\"},\"Theta\":{\"anyOf\":[{\"type\":\"string\"},{\"type\":\"null\"}],\"title\":\"Theta\"},\"N\":{\"anyOf\":[{\"type\":\"string\"},{\"type\":\"null\"}],\"title\":\"N\"},\"J\":{\"anyOf\":[{\"type\":\"string\"},{\"type\":\"null\"}],\"title\":\"J\"}},\"required\":[\"M\",\"L\",\"T\",\"I\",\"Theta\",\"N\",\"J\"],\"title\":\"SIVector\",\"type\":\"object\"},{\"type\":\"null\"}]},\"support_mode\":{\"enum\":[\"KB_RECORD\",\"INTERNAL_REASONING\",\"UNCERTAIN\"],\"type\":\"string\"},\"evidence_entry_ids\":{\"items\":{\"type\":\"string\"},\"type\":\"array\"},\"reason\":{\"minLength\":1,\"type\":\"string\"}},\"required\":[\"csv_name\",\"before_si_exponents\",\"decision\",\"suggested_si_exponents\",\"support_mode\",\"evidence_entry_ids\",\"reason\"],\"type\":\"object\"},\"minItems\":1,\"type\":\"array\"}},\"required\":[\"ledger_sha256\",\"variables\"],\"type\":\"object\"}}}]}"
+}

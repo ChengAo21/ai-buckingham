@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "case_id": "goldenfeld",
+  "title": "Goldenfeld rough-pipe similarity",
+  "dataset": "data/datasets/goldenfeld.csv",
+  "prompt": "Perform dimensional analysis for rough-wall turbulent pipe flow to derive the dimensionless form of the friction factor (denoted as cf). \nThis analysis uses ONLY the following 5 physical quantities as input parameters: \nthe fluid density (ρ), the dynamic viscosity (μ), the pipe diameter (D), the flow velocity (U), and the pipe wall roughness height (r). \nTo ensure uniqueness of results, the power of relative roughness height must be constrained to 0 for the OUTPUT formula.",
+  "manual_hyperparams": {
+    "workflow_template": "auto_mechanism_adaptive",
+    "similarity_type": "auto",
+    "normalize_input": "norm2",
+    "max_rational_denominator": 5,
+    "cma_init_position": 0.1,
+    "cma_init_stepsize": 0.1,
+    "cma_bounds_min": -0.1,
+    "cma_bounds_max": 0.5,
+    "use_collinearity_penalty": true,
+    "max_cosine_similarity": 0.7,
+    "mi_param_used": 5,
+    "mi_method_used": "kraskov"
+  },
+  "input_columns": [
+    "rho",
+    "mu",
+    "D",
+    "U",
+    "r"
+  ],
+  "output_column": "cf",
+  "expected_dimensions": {
+    "dimension_order": [
+      "M",
+      "L",
+      "T",
+      "I",
+      "Theta",
+      "N",
+      "J"
+    ],
+    "inputs": {
+      "rho": {
+        "M": 1,
+        "L": -3,
+        "T": 0,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "mu": {
+        "M": 1,
+        "L": -1,
+        "T": -1,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "D": {
+        "M": 0,
+        "L": 1,
+        "T": 0,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "U": {
+        "M": 0,
+        "L": 1,
+        "T": -1,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "r": {
+        "M": 0,
+        "L": 1,
+        "T": 0,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      }
+    },
+    "output": {
+      "M": 0,
+      "L": 0,
+      "T": 0,
+      "I": 0,
+      "Theta": 0,
+      "N": 0,
+      "J": 0
+    }
+  },
+  "data_metadata": {
+    "rows": 414,
+    "columns": [
+      "rho",
+      "mu",
+      "D",
+      "U",
+      "r",
+      "case",
+      "cf"
+    ],
+    "auxiliary_columns": [
+      "case"
+    ],
+    "sha256": "06df41e9d43219c99411d8a1ca1bf00325293242f5100095a45afbfbd0cdb544",
+    "original_filename": "dataset_goldenfeld.csv",
+    "original_column_order_preserved": true,
+    "response_log_eligible_rows": 414
+  },
+  "provenance": {
+    "prompt_source": "author-supplied current agent definitions",
+    "manual_hyperparams_source": "author-supplied current agent definitions",
+    "source_sha256": "55a4a6f2c9c0b3424a83d3576517539128d6dc86fb2d9479bf1c86ab5f4794db",
+    "original_prompt_symbol": "goldenfeld_",
+    "original_hyperparams_symbol": "goldenfeld_hparams",
+    "reference_dimensions_source": "reproduction/rag_ablation/reference/expected_dimensions.json",
+    "reference_case_id": "GOLDENFELD",
+    "reference_dimensions_sha256": "72764f551ff87b286641978d8ed96addd0d80047028a351f06b0814329b04f98"
+  },
+  "formula_constraints": {
+    "output_relative_roughness_power": 0
+  },
+  "numerical_threads": 1
+}

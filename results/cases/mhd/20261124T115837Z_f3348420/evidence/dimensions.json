@@ -1,0 +1,235 @@
+{
+  "dimension_ledger": {
+    "output_variable_name": "u*",
+    "output_variable_reasoning": "u* is the dimensionless form of the average flow velocity and is constructed from the listed input parameters (h, μ, ρ, η, dp/dx, B). All six input quantities have well-known SI dimensions (length, dynamic viscosity, density, electrical resistivity, pressure gradient, magnetic field), so the dimensional ledger for these inputs is complete and reliable.",
+    "output_variable_confidence": "high",
+    "input_variable_names": [
+      "h",
+      "mu",
+      "rho",
+      "eta",
+      "dp_dx",
+      "B"
+    ],
+    "variables": [
+      {
+        "csv_name": "h",
+        "quantity_name": "duct_side_length",
+        "physical_definition": "Side length of the square duct (characteristic length scale).",
+        "si_exponents": {
+          "M": "0",
+          "L": "1",
+          "T": "0",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "mu",
+        "quantity_name": "dynamic_viscosity",
+        "physical_definition": "Dynamic viscosity of the fluid (resistance to shear flow).",
+        "si_exponents": {
+          "M": "1",
+          "L": "-1",
+          "T": "-1",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "rho",
+        "quantity_name": "fluid_density",
+        "physical_definition": "Fluid mass density (mass per unit volume).",
+        "si_exponents": {
+          "M": "1",
+          "L": "-3",
+          "T": "0",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "eta",
+        "quantity_name": "electrical_resistivity",
+        "physical_definition": "Electrical resistivity of the fluid (resistance to electric current per unit length).",
+        "si_exponents": {
+          "M": "1",
+          "L": "3",
+          "T": "-3",
+          "I": "-2",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "dp_dx",
+        "quantity_name": "pressure_gradient",
+        "physical_definition": "Applied pressure gradient along the duct (rate of pressure change with distance).",
+        "si_exponents": {
+          "M": "1",
+          "L": "-2",
+          "T": "-2",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "B",
+        "quantity_name": "magnetic_field_magnitude",
+        "physical_definition": "Magnitude of the applied magnetic field.",
+        "si_exponents": {
+          "M": "1",
+          "L": "0",
+          "T": "-2",
+          "I": "-1",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      }
+    ]
+  },
+  "dimension_contract": {
+    "ledger_sha256": "b4f4c1eecd97d621fd4827f375b9ad557971eaf85493c1454179de61cff3129f",
+    "status": "complete",
+    "var_names": [
+      "h",
+      "mu",
+      "rho",
+      "eta",
+      "dp_dx",
+      "B"
+    ],
+    "output_var": "u*",
+    "n": 6,
+    "r": 4,
+    "k": 2,
+    "row_order": [
+      "M",
+      "L",
+      "T",
+      "I"
+    ],
+    "D_exact": [
+      [
+        "0",
+        "1",
+        "1",
+        "1",
+        "1",
+        "1"
+      ],
+      [
+        "1",
+        "-1",
+        "-3",
+        "3",
+        "-2",
+        "0"
+      ],
+      [
+        "0",
+        "-1",
+        "0",
+        "-3",
+        "-2",
+        "-2"
+      ],
+      [
+        "0",
+        "0",
+        "0",
+        "-2",
+        "0",
+        "-1"
+      ]
+    ],
+    "D_in": [
+      [
+        0.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      [
+        1.0,
+        -1.0,
+        -3.0,
+        3.0,
+        -2.0,
+        0.0
+      ],
+      [
+        0.0,
+        -1.0,
+        0.0,
+        -3.0,
+        -2.0,
+        -2.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        -2.0,
+        0.0,
+        -1.0
+      ]
+    ],
+    "unknown_coordinates": [],
+    "physical_correctness_scope": "Structure/rank only; physical assignments require audit and evidence."
+  },
+  "dimension_mat": "Rows = ['M', 'L', 'T', 'I']\nColumns = ['h', 'mu', 'rho', 'eta', 'dp_dx', 'B']\nM: ['0', '1', '1', '1', '1', '1']\nL: ['1', '-1', '-3', '3', '-2', '0']\nT: ['0', '-1', '0', '-3', '-2', '-2']\nI: ['0', '0', '0', '-2', '0', '-1']",
+  "basis_pi_formulas": {
+    "Pi_1": "(h^{3} * rho * dp_dx) / (mu^{2})",
+    "Pi_2": "(h * B) / (mu^{1/2} * eta^{1/2})"
+  },
+  "basis_pi_matrices": [
+    [
+      3.0,
+      -2.0,
+      1.0,
+      0.0,
+      1.0,
+      0.0
+    ],
+    [
+      1.0,
+      -0.5,
+      0.0,
+      -0.5,
+      0.0,
+      1.0
+    ]
+  ],
+  "input_vars": [
+    "h",
+    "mu",
+    "rho",
+    "eta",
+    "dp_dx",
+    "B"
+  ],
+  "output_var": "u*",
+  "output_resolution": {
+    "status": "success",
+    "output_var": "u*",
+    "source": "structured_analyzer",
+    "requested": "u*",
+    "candidates": [
+      "u",
+      "u*"
+    ]
+  }
+}

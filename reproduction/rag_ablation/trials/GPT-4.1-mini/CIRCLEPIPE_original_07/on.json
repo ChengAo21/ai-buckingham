@@ -1,0 +1,1603 @@
+{
+  "pair_id": "CIRCLEPIPE_original_07",
+  "arm": "on",
+  "initial_ledger_sha256": "515aaf1248e1a61ea18cd9f5650195708759ffb4f138a0bb1c5ae3c9d3c438db",
+  "checker_rounds": [
+    {
+      "candidate_ledger": {
+        "output_variable_name": "f_D",
+        "output_variable_reasoning": "The pipe friction factor f_D is a dimensionless quantity characterizing frictional losses in pipe flow, commonly defined as a function of Reynolds number and relative roughness, both dimensionless. Given the input variables (fluid density rho, dynamic viscosity mu, pipe diameter D, mean flow velocity U, and wall roughness height epsilon), the friction factor f_D is dimensionless by definition and does not carry any physical dimension.",
+        "output_variable_confidence": "high",
+        "input_variable_names": [
+          "rho",
+          "mu",
+          "D",
+          "U",
+          "epsilon"
+        ],
+        "variables": [
+          {
+            "csv_name": "rho",
+            "quantity_name": "density",
+            "physical_definition": "fluid density, mass per unit volume of the fluid",
+            "si_exponents": {
+              "M": "1",
+              "L": "-3",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "mu",
+            "quantity_name": "dynamic_viscosity",
+            "physical_definition": "dynamic viscosity, fluid's resistance to shear flow",
+            "si_exponents": {
+              "M": "1",
+              "L": "-1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "D",
+            "quantity_name": "length",
+            "physical_definition": "pipe diameter, characteristic length scale of the pipe",
+            "si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "U",
+            "quantity_name": "velocity",
+            "physical_definition": "mean flow velocity, average fluid velocity in the pipe",
+            "si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          },
+          {
+            "csv_name": "epsilon",
+            "quantity_name": "length",
+            "physical_definition": "absolute wall roughness height, characteristic roughness length scale of the pipe wall",
+            "si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            }
+          }
+        ]
+      },
+      "ledger_sha256": "515aaf1248e1a61ea18cd9f5650195708759ffb4f138a0bb1c5ae3c9d3c438db",
+      "gate": {
+        "gate_status": "PASSED",
+        "ledger_sha256": "515aaf1248e1a61ea18cd9f5650195708759ffb4f138a0bb1c5ae3c9d3c438db",
+        "checker_audit": {
+          "ledger_sha256": "515aaf1248e1a61ea18cd9f5650195708759ffb4f138a0bb1c5ae3c9d3c438db",
+          "variables": [
+            {
+              "csv_name": "rho",
+              "before_si_exponents": {
+                "M": "1",
+                "L": "-3",
+                "T": "0",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_mass_density"
+              ],
+              "reason": "The problem names this variable 'fluid density (rho)' and the retrieved record pq_mass_density has canonical_quantity 'mass density' with symbols including rho and the definition 'Mass per unit volume.' Its si_dimension M L^-3 (dimension_vector [1,-3,0,0,0,0,0]) exactly supplies the mass and length exponents used in the ledger. The record's domain (fluid mechanics) and the symbol rho resolve any ambiguity (electrical resistivity is a different record) and directly justify the candidate vector for rho in the pipe-flow context."
+            },
+            {
+              "csv_name": "mu",
+              "before_si_exponents": {
+                "M": "1",
+                "L": "-1",
+                "T": "-1",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_dynamic_viscosity"
+              ],
+              "reason": "The ledger labels mu as 'dynamic viscosity' and the retrieved record pq_dynamic_viscosity has canonical_quantity 'dynamic viscosity' with symbols mu/μ and definition 'Coefficient relating Newtonian viscous shear stress to velocity gradient.' Its si_dimension M L^-1 T^-1 (dimension_vector [1,-1,-1,0,0,0,0]) matches the candidate vector. The record's domain (fluid mechanics, rheology) and symbol mapping confirm this entry applies to mu in the pipe-flow problem."
+            },
+            {
+              "csv_name": "D",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "0",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_pipe_diameter"
+              ],
+              "reason": "The variable D is given as 'pipe diameter' in the problem. The retrieved record pq_pipe_diameter has canonical_quantity 'pipe diameter' and definition 'Diameter of a circular pipe' with si_dimension L (dimension_vector [0,1,0,0,0,0,0]). This record is specific to the pipe-flow context of the prompt, so it directly supports the ledger's length-only exponent for D."
+            },
+            {
+              "csv_name": "U",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "-1",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_mean_flow_velocity"
+              ],
+              "reason": "The problem states U is the 'mean flow velocity'. Retrieved record pq_mean_flow_velocity has canonical_quantity 'mean flow velocity' (symbols U, Umean) with definition 'Mean or bulk velocity used to characterize a flow' and si_dimension L T^-1 (dimension_vector [0,1,-1,0,0,0,0]). This directly matches the ledger vector and the role of U in pipe flow, so the entry justifies the candidate exponents."
+            },
+            {
+              "csv_name": "epsilon",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "0",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_absolute_wall_roughness"
+              ],
+              "reason": "The problem describes epsilon as 'absolute wall roughness height.' Retrieved record pq_absolute_wall_roughness has canonical_quantity 'absolute wall roughness height' with definition 'Dimensional roughness height of a pipe wall before normalization by pipe diameter' and si_dimension L (dimension_vector [0,1,0,0,0,0,0]). The record is specific to rough pipe flow and hence directly supports the ledger's length-only exponent for epsilon."
+            }
+          ]
+        },
+        "variable_results": [
+          {
+            "csv_name": "rho",
+            "decision": "PASSED",
+            "before": {
+              "M": "1",
+              "L": "-3",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "suggested": {
+              "M": "1",
+              "L": "-3",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "coordinate_diff": {},
+            "issues": [],
+            "referenced_entry_ids": [
+              "pq_mass_density"
+            ],
+            "selected_entities": [
+              {
+                "entry_id": "pq_mass_density",
+                "canonical_quantity": "mass density",
+                "source_identifier": "doi:10.59161/AUEZ1291"
+              }
+            ],
+            "cited_reference_si_exponents": {
+              "M": "1",
+              "L": "-3",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "known_coordinate_conflicts_with_reference": {}
+          },
+          {
+            "csv_name": "mu",
+            "decision": "PASSED",
+            "before": {
+              "M": "1",
+              "L": "-1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "suggested": {
+              "M": "1",
+              "L": "-1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "coordinate_diff": {},
+            "issues": [],
+            "referenced_entry_ids": [
+              "pq_dynamic_viscosity"
+            ],
+            "selected_entities": [
+              {
+                "entry_id": "pq_dynamic_viscosity",
+                "canonical_quantity": "dynamic viscosity",
+                "source_identifier": "doi:10.6028/NIST.SP.811e2008"
+              }
+            ],
+            "cited_reference_si_exponents": {
+              "M": "1",
+              "L": "-1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "known_coordinate_conflicts_with_reference": {}
+          },
+          {
+            "csv_name": "D",
+            "decision": "PASSED",
+            "before": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "suggested": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "coordinate_diff": {},
+            "issues": [],
+            "referenced_entry_ids": [
+              "pq_pipe_diameter"
+            ],
+            "selected_entities": [
+              {
+                "entry_id": "pq_pipe_diameter",
+                "canonical_quantity": "pipe diameter",
+                "source_identifier": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/"
+              }
+            ],
+            "cited_reference_si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "known_coordinate_conflicts_with_reference": {}
+          },
+          {
+            "csv_name": "U",
+            "decision": "PASSED",
+            "before": {
+              "M": "0",
+              "L": "1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "suggested": {
+              "M": "0",
+              "L": "1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "coordinate_diff": {},
+            "issues": [],
+            "referenced_entry_ids": [
+              "pq_mean_flow_velocity"
+            ],
+            "selected_entities": [
+              {
+                "entry_id": "pq_mean_flow_velocity",
+                "canonical_quantity": "mean flow velocity",
+                "source_identifier": "doi:10.59161/AUEZ1291"
+              }
+            ],
+            "cited_reference_si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "known_coordinate_conflicts_with_reference": {}
+          },
+          {
+            "csv_name": "epsilon",
+            "decision": "PASSED",
+            "before": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "suggested": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "coordinate_diff": {},
+            "issues": [],
+            "referenced_entry_ids": [
+              "pq_absolute_wall_roughness"
+            ],
+            "selected_entities": [
+              {
+                "entry_id": "pq_absolute_wall_roughness",
+                "canonical_quantity": "absolute wall roughness height",
+                "source_identifier": "doi:10.1017/jfm.2020.1085"
+              }
+            ],
+            "cited_reference_si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "known_coordinate_conflicts_with_reference": {}
+          }
+        ],
+        "issues": [],
+        "referenced_records": [
+          {
+            "csv_name": "rho",
+            "record": {
+              "variable_name": "rho",
+              "entry_id": "pq_mass_density",
+              "canonical_quantity": "mass density",
+              "symbols": "rho; ρ",
+              "aliases": "density; fluid density; material density; wall density",
+              "definition": "Mass per unit volume.",
+              "si_dimension": "M L^-3",
+              "dimension_vector": "[1, -3, 0, 0, 0, 0, 0]",
+              "si_unit": "kg m^-3",
+              "domain": "continuum mechanics; fluid mechanics; materials",
+              "ambiguity_notes": "The symbol rho/ρ may also denote electrical resistivity in electromagnetism; resolve by physical context.",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5514111301681729,
+              "hybrid_score": 0.8429938955588605,
+              "retrieval_mode": "hybrid"
+            }
+          },
+          {
+            "csv_name": "mu",
+            "record": {
+              "variable_name": "mu",
+              "entry_id": "pq_dynamic_viscosity",
+              "canonical_quantity": "dynamic viscosity",
+              "symbols": "mu; μ; eta; η",
+              "aliases": "absolute viscosity; viscosity coefficient; dynamic viscosity coefficient",
+              "definition": "Coefficient relating Newtonian viscous shear stress to velocity gradient.",
+              "si_dimension": "M L^-1 T^-1",
+              "dimension_vector": "[1, -1, -1, 0, 0, 0, 0]",
+              "si_unit": "Pa s",
+              "domain": "fluid mechanics; rheology",
+              "ambiguity_notes": "Symbols eta/η can instead denote electrical resistivity, magnetic diffusivity, or other quantities; symbols mu/μ are also used for magnetic permeability in some contexts.",
+              "source": "NIST SP 811, Guide for the Use of the International System of Units (SI)",
+              "source_identifier": "doi:10.6028/NIST.SP.811e2008",
+              "confidence": "curated",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5781863494629472,
+              "hybrid_score": 0.8523652223120315,
+              "retrieval_mode": "hybrid"
+            }
+          },
+          {
+            "csv_name": "D",
+            "record": {
+              "variable_name": "D",
+              "entry_id": "pq_pipe_diameter",
+              "canonical_quantity": "pipe diameter",
+              "symbols": "D",
+              "aliases": "circular-pipe diameter; hydraulic diameter in a circular pipe",
+              "definition": "Diameter of a circular pipe.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "pipe flow",
+              "ambiguity_notes": "",
+              "source": "NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer",
+              "source_identifier": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5270252206277528,
+              "hybrid_score": 0.8344588272197135,
+              "retrieval_mode": "hybrid"
+            }
+          },
+          {
+            "csv_name": "U",
+            "record": {
+              "variable_name": "U",
+              "entry_id": "pq_mean_flow_velocity",
+              "canonical_quantity": "mean flow velocity",
+              "symbols": "U; U_m; Umean; V",
+              "aliases": "bulk velocity; mean velocity; average flow velocity",
+              "definition": "Mean or bulk velocity used to characterize a flow.",
+              "si_dimension": "L T^-1",
+              "dimension_vector": "[0, 1, -1, 0, 0, 0, 0]",
+              "si_unit": "m s^-1",
+              "domain": "fluid mechanics",
+              "ambiguity_notes": "",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5731555302849684,
+              "hybrid_score": 0.850604435599739,
+              "retrieval_mode": "hybrid"
+            }
+          },
+          {
+            "csv_name": "epsilon",
+            "record": {
+              "variable_name": "epsilon",
+              "entry_id": "pq_absolute_wall_roughness",
+              "canonical_quantity": "absolute wall roughness height",
+              "symbols": "epsilon; ε; r",
+              "aliases": "absolute roughness; pipe wall roughness",
+              "definition": "Dimensional roughness height of a pipe wall before normalization by pipe diameter.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "rough pipe flow",
+              "ambiguity_notes": "",
+              "source": "Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics",
+              "source_identifier": "doi:10.1017/jfm.2020.1085",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.6513501239759305,
+              "hybrid_score": 0.8779725433915757,
+              "retrieval_mode": "hybrid"
+            }
+          }
+        ],
+        "feedback": "Typed ledger 515aaf1248e1a61ea18cd9f5650195708759ffb4f138a0bb1c5ae3c9d3c438db; program gate=PASSED\nVariable rho: decision=PASSED; reason=The problem names this variable 'fluid density (rho)' and the retrieved record pq_mass_density has canonical_quantity 'mass density' with symbols including rho and the definition 'Mass per unit volume.' Its si_dimension M L^-3 (dimension_vector [1,-3,0,0,0,0,0]) exactly supplies the mass and length exponents used in the ledger. The record's domain (fluid mechanics) and the symbol rho resolve any ambiguity (electrical resistivity is a different record) and directly justify the candidate vector for rho in the pipe-flow context.\nActual named SI={\"M\": \"1\", \"L\": \"-3\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"1\", \"L\": \"-3\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_mass_density\", \"canonical_quantity\": \"mass density\", \"source_identifier\": \"doi:10.59161/AUEZ1291\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for rho:\n{\"aliases\": \"density; fluid density; material density; wall density\", \"ambiguity_notes\": \"The symbol rho/ρ may also denote electrical resistivity in electromagnetism; resolve by physical context.\", \"canonical_quantity\": \"mass density\", \"confidence\": \"high\", \"definition\": \"Mass per unit volume.\", \"dimension_vector\": \"[1, -3, 0, 0, 0, 0, 0]\", \"domain\": \"continuum mechanics; fluid mechanics; materials\", \"entry_id\": \"pq_mass_density\", \"hybrid_score\": 0.8429938955588605, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.5514111301681729, \"si_dimension\": \"M L^-3\", \"si_unit\": \"kg m^-3\", \"source\": \"BIPM SI Brochure, 9th ed. (updated 2026)\", \"source_identifier\": \"doi:10.59161/AUEZ1291\", \"symbols\": \"rho; ρ\", \"variable_name\": \"rho\"}\n\nVariable mu: decision=PASSED; reason=The ledger labels mu as 'dynamic viscosity' and the retrieved record pq_dynamic_viscosity has canonical_quantity 'dynamic viscosity' with symbols mu/μ and definition 'Coefficient relating Newtonian viscous shear stress to velocity gradient.' Its si_dimension M L^-1 T^-1 (dimension_vector [1,-1,-1,0,0,0,0]) matches the candidate vector. The record's domain (fluid mechanics, rheology) and symbol mapping confirm this entry applies to mu in the pipe-flow problem.\nActual named SI={\"M\": \"1\", \"L\": \"-1\", \"T\": \"-1\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"1\", \"L\": \"-1\", \"T\": \"-1\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_dynamic_viscosity\", \"canonical_quantity\": \"dynamic viscosity\", \"source_identifier\": \"doi:10.6028/NIST.SP.811e2008\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for mu:\n{\"aliases\": \"absolute viscosity; viscosity coefficient; dynamic viscosity coefficient\", \"ambiguity_notes\": \"Symbols eta/η can instead denote electrical resistivity, magnetic diffusivity, or other quantities; symbols mu/μ are also used for magnetic permeability in some contexts.\", \"canonical_quantity\": \"dynamic viscosity\", \"confidence\": \"curated\", \"definition\": \"Coefficient relating Newtonian viscous shear stress to velocity gradient.\", \"dimension_vector\": \"[1, -1, -1, 0, 0, 0, 0]\", \"domain\": \"fluid mechanics; rheology\", \"entry_id\": \"pq_dynamic_viscosity\", \"hybrid_score\": 0.8523652223120315, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.5781863494629472, \"si_dimension\": \"M L^-1 T^-1\", \"si_unit\": \"Pa s\", \"source\": \"NIST SP 811, Guide for the Use of the International System of Units (SI)\", \"source_identifier\": \"doi:10.6028/NIST.SP.811e2008\", \"symbols\": \"mu; μ; eta; η\", \"variable_name\": \"mu\"}\n\nVariable D: decision=PASSED; reason=The variable D is given as 'pipe diameter' in the problem. The retrieved record pq_pipe_diameter has canonical_quantity 'pipe diameter' and definition 'Diameter of a circular pipe' with si_dimension L (dimension_vector [0,1,0,0,0,0,0]). This record is specific to the pipe-flow context of the prompt, so it directly supports the ledger's length-only exponent for D.\nActual named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_pipe_diameter\", \"canonical_quantity\": \"pipe diameter\", \"source_identifier\": \"https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for D:\n{\"aliases\": \"circular-pipe diameter; hydraulic diameter in a circular pipe\", \"ambiguity_notes\": \"\", \"canonical_quantity\": \"pipe diameter\", \"confidence\": \"high\", \"definition\": \"Diameter of a circular pipe.\", \"dimension_vector\": \"[0, 1, 0, 0, 0, 0, 0]\", \"domain\": \"pipe flow\", \"entry_id\": \"pq_pipe_diameter\", \"hybrid_score\": 0.8344588272197135, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.5270252206277528, \"si_dimension\": \"L\", \"si_unit\": \"m\", \"source\": \"NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer\", \"source_identifier\": \"https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/\", \"symbols\": \"D\", \"variable_name\": \"D\"}\n\nVariable U: decision=PASSED; reason=The problem states U is the 'mean flow velocity'. Retrieved record pq_mean_flow_velocity has canonical_quantity 'mean flow velocity' (symbols U, Umean) with definition 'Mean or bulk velocity used to characterize a flow' and si_dimension L T^-1 (dimension_vector [0,1,-1,0,0,0,0]). This directly matches the ledger vector and the role of U in pipe flow, so the entry justifies the candidate exponents.\nActual named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"-1\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"-1\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_mean_flow_velocity\", \"canonical_quantity\": \"mean flow velocity\", \"source_identifier\": \"doi:10.59161/AUEZ1291\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for U:\n{\"aliases\": \"bulk velocity; mean velocity; average flow velocity\", \"ambiguity_notes\": \"\", \"canonical_quantity\": \"mean flow velocity\", \"confidence\": \"high\", \"definition\": \"Mean or bulk velocity used to characterize a flow.\", \"dimension_vector\": \"[0, 1, -1, 0, 0, 0, 0]\", \"domain\": \"fluid mechanics\", \"entry_id\": \"pq_mean_flow_velocity\", \"hybrid_score\": 0.850604435599739, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.5731555302849684, \"si_dimension\": \"L T^-1\", \"si_unit\": \"m s^-1\", \"source\": \"BIPM SI Brochure, 9th ed. (updated 2026)\", \"source_identifier\": \"doi:10.59161/AUEZ1291\", \"symbols\": \"U; U_m; Umean; V\", \"variable_name\": \"U\"}\n\nVariable epsilon: decision=PASSED; reason=The problem describes epsilon as 'absolute wall roughness height.' Retrieved record pq_absolute_wall_roughness has canonical_quantity 'absolute wall roughness height' with definition 'Dimensional roughness height of a pipe wall before normalization by pipe diameter' and si_dimension L (dimension_vector [0,1,0,0,0,0,0]). The record is specific to rough pipe flow and hence directly supports the ledger's length-only exponent for epsilon.\nActual named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nSuggested named SI={\"M\": \"0\", \"L\": \"1\", \"T\": \"0\", \"I\": \"0\", \"Theta\": \"0\", \"N\": \"0\", \"J\": \"0\"}\nExact coordinate diff={}\nCited entity IDs/canonical names (program-read, not another model echo)=[{\"entry_id\": \"pq_absolute_wall_roughness\", \"canonical_quantity\": \"absolute wall roughness height\", \"source_identifier\": \"doi:10.1017/jfm.2020.1085\"}]\nKnown coordinate conflicts with cited record={}\nHard gate issues=[]\n\nReferenced KB original record for epsilon:\n{\"aliases\": \"absolute roughness; pipe wall roughness\", \"ambiguity_notes\": \"\", \"canonical_quantity\": \"absolute wall roughness height\", \"confidence\": \"high\", \"definition\": \"Dimensional roughness height of a pipe wall before normalization by pipe diameter.\", \"dimension_vector\": \"[0, 1, 0, 0, 0, 0, 0]\", \"domain\": \"rough pipe flow\", \"entry_id\": \"pq_absolute_wall_roughness\", \"hybrid_score\": 0.8779725433915757, \"lexical_score\": 1.0, \"retrieval_mode\": \"hybrid\", \"semantic_score\": 0.6513501239759305, \"si_dimension\": \"L\", \"si_unit\": \"m\", \"source\": \"Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics\", \"source_identifier\": \"doi:10.1017/jfm.2020.1085\", \"symbols\": \"epsilon; ε; r\", \"variable_name\": \"epsilon\"}",
+        "entity_policy": "Only Checker-selected visible record IDs identify cited canonical entities; no unselected-record or Analyzer-name anchor. Equal vectors do not establish equal physical entities.",
+        "physical_correctness_scope": "A passed contract is not a theorem of physical correctness. Record ID and coordinate checks establish citation consistency; semantic relevance/applicability in the reason and internal-reasoning physics remain model judgements."
+      },
+      "gate_status": "PASSED",
+      "retrieval": {
+        "status": "success",
+        "kb_path": "Q:\\Chengao_File\\CodeX_\\Dimsionless_learn\\1114_final\\Data_csv\\dimensional_physical_quantities.md",
+        "kb_sha256": "64d8ebb7988c9157401c6b023add3ed8681651bc6d4d1d1bbb7a7aa452fc9f60",
+        "embedding_cache_path": "Q:\\Chengao_File\\CodeX_\\Dimsionless_learn\\1114_final\\Codes_src\\RAG_ablation\\followup_live\\runs\\20261115_v2_paired_rag_rounds\\cache\\dimensional_physical_quantities-d1e3d1e7178395497e4f.npz",
+        "embedding_cache_source": null,
+        "embedding_model": "GLM-Embedding-3",
+        "embedding_provider": "Paratera",
+        "embedding_base_url": "https://llmapi.paratera.com/v1",
+        "embedding_status": "cache",
+        "retrieval_modes": [
+          "hybrid"
+        ],
+        "retrieved_variables": [
+          "rho",
+          "mu",
+          "D",
+          "U",
+          "epsilon"
+        ],
+        "n_retrieved_records": 15,
+        "top_k_per_variable": 3,
+        "max_evidence_rows": 30,
+        "lexical_weight": 0.65,
+        "semantic_weight": 0.35,
+        "min_hybrid_score": 0.22,
+        "allow_lexical_fallback": false,
+        "matches_by_variable": {
+          "rho": [
+            {
+              "variable_name": "rho",
+              "entry_id": "pq_mass_density",
+              "canonical_quantity": "mass density",
+              "symbols": "rho; ρ",
+              "aliases": "density; fluid density; material density; wall density",
+              "definition": "Mass per unit volume.",
+              "si_dimension": "M L^-3",
+              "dimension_vector": "[1, -3, 0, 0, 0, 0, 0]",
+              "si_unit": "kg m^-3",
+              "domain": "continuum mechanics; fluid mechanics; materials",
+              "ambiguity_notes": "The symbol rho/ρ may also denote electrical resistivity in electromagnetism; resolve by physical context.",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5514111301681729,
+              "hybrid_score": 0.8429938955588605,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "rho",
+              "entry_id": "pq_electrical_resistivity",
+              "canonical_quantity": "electrical resistivity",
+              "symbols": "eta; η; rho_e; ρ_e",
+              "aliases": "resistivity; specific electrical resistance; rho notation for electrical resistivity; ρ notation for electrical resistivity",
+              "definition": "Material property relating electric field to current density; equivalently electrical resistance times a length scale divided by area.",
+              "si_dimension": "M L^3 T^-3 I^-2",
+              "dimension_vector": "[1, 3, -3, -2, 0, 0, 0]",
+              "si_unit": "ohm m",
+              "domain": "electromagnetism; magnetohydrodynamics",
+              "ambiguity_notes": "Eta/η may denote dynamic viscosity or magnetic diffusivity; rho/ρ may denote mass density. In an MHD prompt explicitly saying electrical resistivity, use this record.",
+              "source": "MHD Flow in Simple Cubic Periodic Array Geometry, Journal of Fusion Energy (2023)",
+              "source_identifier": "doi:10.1007/s10894-023-00390-8",
+              "confidence": "curated",
+              "lexical_score": 0.74,
+              "semantic_score": 0.5015045999478149,
+              "hybrid_score": 0.6565266099817352,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "rho",
+              "entry_id": "pq_absolute_wall_roughness",
+              "canonical_quantity": "absolute wall roughness height",
+              "symbols": "epsilon; ε; r",
+              "aliases": "absolute roughness; pipe wall roughness",
+              "definition": "Dimensional roughness height of a pipe wall before normalization by pipe diameter.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "rough pipe flow",
+              "ambiguity_notes": "",
+              "source": "Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics",
+              "source_identifier": "doi:10.1017/jfm.2020.1085",
+              "confidence": "high",
+              "lexical_score": 0.4545454545454546,
+              "semantic_score": 0.556261975517837,
+              "hybrid_score": 0.4901462368857884,
+              "retrieval_mode": "hybrid"
+            }
+          ],
+          "mu": [
+            {
+              "variable_name": "mu",
+              "entry_id": "pq_dynamic_viscosity",
+              "canonical_quantity": "dynamic viscosity",
+              "symbols": "mu; μ; eta; η",
+              "aliases": "absolute viscosity; viscosity coefficient; dynamic viscosity coefficient",
+              "definition": "Coefficient relating Newtonian viscous shear stress to velocity gradient.",
+              "si_dimension": "M L^-1 T^-1",
+              "dimension_vector": "[1, -1, -1, 0, 0, 0, 0]",
+              "si_unit": "Pa s",
+              "domain": "fluid mechanics; rheology",
+              "ambiguity_notes": "Symbols eta/η can instead denote electrical resistivity, magnetic diffusivity, or other quantities; symbols mu/μ are also used for magnetic permeability in some contexts.",
+              "source": "NIST SP 811, Guide for the Use of the International System of Units (SI)",
+              "source_identifier": "doi:10.6028/NIST.SP.811e2008",
+              "confidence": "curated",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5781863494629472,
+              "hybrid_score": 0.8523652223120315,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "mu",
+              "entry_id": "pq_absolute_wall_roughness",
+              "canonical_quantity": "absolute wall roughness height",
+              "symbols": "epsilon; ε; r",
+              "aliases": "absolute roughness; pipe wall roughness",
+              "definition": "Dimensional roughness height of a pipe wall before normalization by pipe diameter.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "rough pipe flow",
+              "ambiguity_notes": "",
+              "source": "Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics",
+              "source_identifier": "doi:10.1017/jfm.2020.1085",
+              "confidence": "high",
+              "lexical_score": 0.41666666666666663,
+              "semantic_score": 0.5385614852057006,
+              "hybrid_score": 0.4593298531553285,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "mu",
+              "entry_id": "pq_friction_velocity",
+              "canonical_quantity": "friction velocity",
+              "symbols": "u_tau; uτ; U_tau; Uτ",
+              "aliases": "shear velocity; wall friction velocity",
+              "definition": "Velocity scale defined from wall shear stress and density, conventionally u_tau = sqrt(tau_w/rho).",
+              "si_dimension": "L T^-1",
+              "dimension_vector": "[0, 1, -1, 0, 0, 0, 0]",
+              "si_unit": "m s^-1",
+              "domain": "wall-bounded fluid mechanics",
+              "ambiguity_notes": "It is a velocity scale, not a stress; do not assign pressure dimensions.",
+              "source": "Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling",
+              "source_identifier": "https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8",
+              "confidence": "high",
+              "lexical_score": 0.38461538461538464,
+              "semantic_score": 0.54070417114668,
+              "hybrid_score": 0.439246459901338,
+              "retrieval_mode": "hybrid"
+            }
+          ],
+          "D": [
+            {
+              "variable_name": "D",
+              "entry_id": "pq_diameter",
+              "canonical_quantity": "diameter",
+              "symbols": "D; d",
+              "aliases": "characteristic diameter; pipe diameter",
+              "definition": "Geometric diameter.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "geometry; fluid mechanics",
+              "ambiguity_notes": "D may also denote a diffusivity in transport problems.",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5606542069747354,
+              "hybrid_score": 0.8462289724411574,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "D",
+              "entry_id": "pq_generic_diffusivity",
+              "canonical_quantity": "diffusivity",
+              "symbols": "D_m; D; mathcalD",
+              "aliases": "mass diffusivity; molecular diffusivity",
+              "definition": "Transport coefficient with area-per-time dimensions.",
+              "si_dimension": "L^2 T^-1",
+              "dimension_vector": "[0, 2, -1, 0, 0, 0, 0]",
+              "si_unit": "m^2 s^-1",
+              "domain": "transport phenomena",
+              "ambiguity_notes": "D is also commonly a geometric diameter. Resolve using context.",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.543009667939029,
+              "hybrid_score": 0.8400533837786601,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "D",
+              "entry_id": "pq_pipe_diameter",
+              "canonical_quantity": "pipe diameter",
+              "symbols": "D",
+              "aliases": "circular-pipe diameter; hydraulic diameter in a circular pipe",
+              "definition": "Diameter of a circular pipe.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "pipe flow",
+              "ambiguity_notes": "",
+              "source": "NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer",
+              "source_identifier": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5270252206277528,
+              "hybrid_score": 0.8344588272197135,
+              "retrieval_mode": "hybrid"
+            }
+          ],
+          "U": [
+            {
+              "variable_name": "U",
+              "entry_id": "pq_mean_flow_velocity",
+              "canonical_quantity": "mean flow velocity",
+              "symbols": "U; U_m; Umean; V",
+              "aliases": "bulk velocity; mean velocity; average flow velocity",
+              "definition": "Mean or bulk velocity used to characterize a flow.",
+              "si_dimension": "L T^-1",
+              "dimension_vector": "[0, 1, -1, 0, 0, 0, 0]",
+              "si_unit": "m s^-1",
+              "domain": "fluid mechanics",
+              "ambiguity_notes": "",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5731555302849684,
+              "hybrid_score": 0.850604435599739,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "U",
+              "entry_id": "pq_velocity",
+              "canonical_quantity": "velocity",
+              "symbols": "u; U; v; V",
+              "aliases": "speed; flow velocity; fluid velocity",
+              "definition": "Rate of displacement with time.",
+              "si_dimension": "L T^-1",
+              "dimension_vector": "[0, 1, -1, 0, 0, 0, 0]",
+              "si_unit": "m s^-1",
+              "domain": "mechanics; fluid mechanics",
+              "ambiguity_notes": "",
+              "source": "BIPM SI Brochure, 9th ed. (updated 2026)",
+              "source_identifier": "doi:10.59161/AUEZ1291",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.5318370462190221,
+              "hybrid_score": 0.8361429661766577,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "U",
+              "entry_id": "pq_absolute_wall_roughness",
+              "canonical_quantity": "absolute wall roughness height",
+              "symbols": "epsilon; ε; r",
+              "aliases": "absolute roughness; pipe wall roughness",
+              "definition": "Dimensional roughness height of a pipe wall before normalization by pipe diameter.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "rough pipe flow",
+              "ambiguity_notes": "",
+              "source": "Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics",
+              "source_identifier": "doi:10.1017/jfm.2020.1085",
+              "confidence": "high",
+              "lexical_score": 0.4296875,
+              "semantic_score": 0.5412521411146372,
+              "hybrid_score": 0.468735124390123,
+              "retrieval_mode": "hybrid"
+            }
+          ],
+          "epsilon": [
+            {
+              "variable_name": "epsilon",
+              "entry_id": "pq_absolute_wall_roughness",
+              "canonical_quantity": "absolute wall roughness height",
+              "symbols": "epsilon; ε; r",
+              "aliases": "absolute roughness; pipe wall roughness",
+              "definition": "Dimensional roughness height of a pipe wall before normalization by pipe diameter.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "rough pipe flow",
+              "ambiguity_notes": "",
+              "source": "Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics",
+              "source_identifier": "doi:10.1017/jfm.2020.1085",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.6513501239759305,
+              "hybrid_score": 0.8779725433915757,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "epsilon",
+              "entry_id": "pq_roughness_height",
+              "canonical_quantity": "roughness height",
+              "symbols": "k; r; epsilon; ε",
+              "aliases": "wall roughness height; absolute roughness; roughness amplitude",
+              "definition": "Geometric height scale characterizing surface roughness.",
+              "si_dimension": "L",
+              "dimension_vector": "[0, 1, 0, 0, 0, 0, 0]",
+              "si_unit": "m",
+              "domain": "rough-wall flows; surface metrology",
+              "ambiguity_notes": "epsilon/ε can denote other quantities such as strain or permittivity; r can denote radius.",
+              "source": "Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics",
+              "source_identifier": "doi:10.1017/jfm.2020.1085",
+              "confidence": "high",
+              "lexical_score": 1.0,
+              "semantic_score": 0.6028320812101364,
+              "hybrid_score": 0.8609912284235477,
+              "retrieval_mode": "hybrid"
+            },
+            {
+              "variable_name": "epsilon",
+              "entry_id": "pq_friction_velocity",
+              "canonical_quantity": "friction velocity",
+              "symbols": "u_tau; uτ; U_tau; Uτ",
+              "aliases": "shear velocity; wall friction velocity",
+              "definition": "Velocity scale defined from wall shear stress and density, conventionally u_tau = sqrt(tau_w/rho).",
+              "si_dimension": "L T^-1",
+              "dimension_vector": "[0, 1, -1, 0, 0, 0, 0]",
+              "si_unit": "m s^-1",
+              "domain": "wall-bounded fluid mechanics",
+              "ambiguity_notes": "It is a velocity scale, not a stress; do not assign pressure dimensions.",
+              "source": "Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling",
+              "source_identifier": "https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8",
+              "confidence": "high",
+              "lexical_score": 0.3481012658227848,
+              "semantic_score": 0.5231608282434069,
+              "hybrid_score": 0.4093721126700025,
+              "retrieval_mode": "hybrid"
+            }
+          ]
+        },
+        "evidence_markdown": "### Input variable `rho`\n- entry_id: pq_mass_density; canonical_quantity: mass density; symbols: rho; ρ; aliases: density; fluid density; material density; wall density; definition: Mass per unit volume.; si_dimension: M L^-3; dimension_vector: [1, -3, 0, 0, 0, 0, 0]; si_unit: kg m^-3; domain: continuum mechanics; fluid mechanics; materials; ambiguity_notes: The symbol rho/ρ may also denote electrical resistivity in electromagnetism; resolve by physical context.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_electrical_resistivity; canonical_quantity: electrical resistivity; symbols: eta; η; rho_e; ρ_e; aliases: resistivity; specific electrical resistance; rho notation for electrical resistivity; ρ notation for electrical resistivity; definition: Material property relating electric field to current density; equivalently electrical resistance times a length scale divided by area.; si_dimension: M L^3 T^-3 I^-2; dimension_vector: [1, 3, -3, -2, 0, 0, 0]; si_unit: ohm m; domain: electromagnetism; magnetohydrodynamics; ambiguity_notes: Eta/η may denote dynamic viscosity or magnetic diffusivity; rho/ρ may denote mass density. In an MHD prompt explicitly saying electrical resistivity, use this record.; source: MHD Flow in Simple Cubic Periodic Array Geometry, Journal of Fusion Energy (2023); source_identifier: doi:10.1007/s10894-023-00390-8; confidence: curated\n- entry_id: pq_absolute_wall_roughness; canonical_quantity: absolute wall roughness height; symbols: epsilon; ε; r; aliases: absolute roughness; pipe wall roughness; definition: Dimensional roughness height of a pipe wall before normalization by pipe diameter.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: rough pipe flow; ambiguity_notes: ; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: high\n### Input variable `mu`\n- entry_id: pq_dynamic_viscosity; canonical_quantity: dynamic viscosity; symbols: mu; μ; eta; η; aliases: absolute viscosity; viscosity coefficient; dynamic viscosity coefficient; definition: Coefficient relating Newtonian viscous shear stress to velocity gradient.; si_dimension: M L^-1 T^-1; dimension_vector: [1, -1, -1, 0, 0, 0, 0]; si_unit: Pa s; domain: fluid mechanics; rheology; ambiguity_notes: Symbols eta/η can instead denote electrical resistivity, magnetic diffusivity, or other quantities; symbols mu/μ are also used for magnetic permeability in some contexts.; source: NIST SP 811, Guide for the Use of the International System of Units (SI); source_identifier: doi:10.6028/NIST.SP.811e2008; confidence: curated\n- entry_id: pq_absolute_wall_roughness; canonical_quantity: absolute wall roughness height; symbols: epsilon; ε; r; aliases: absolute roughness; pipe wall roughness; definition: Dimensional roughness height of a pipe wall before normalization by pipe diameter.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: rough pipe flow; ambiguity_notes: ; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: high\n- entry_id: pq_friction_velocity; canonical_quantity: friction velocity; symbols: u_tau; uτ; U_tau; Uτ; aliases: shear velocity; wall friction velocity; definition: Velocity scale defined from wall shear stress and density, conventionally u_tau = sqrt(tau_w/rho).; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: wall-bounded fluid mechanics; ambiguity_notes: It is a velocity scale, not a stress; do not assign pressure dimensions.; source: Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling; source_identifier: https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8; confidence: high\n### Input variable `D`\n- entry_id: pq_diameter; canonical_quantity: diameter; symbols: D; d; aliases: characteristic diameter; pipe diameter; definition: Geometric diameter.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: geometry; fluid mechanics; ambiguity_notes: D may also denote a diffusivity in transport problems.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_generic_diffusivity; canonical_quantity: diffusivity; symbols: D_m; D; mathcalD; aliases: mass diffusivity; molecular diffusivity; definition: Transport coefficient with area-per-time dimensions.; si_dimension: L^2 T^-1; dimension_vector: [0, 2, -1, 0, 0, 0, 0]; si_unit: m^2 s^-1; domain: transport phenomena; ambiguity_notes: D is also commonly a geometric diameter. Resolve using context.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_pipe_diameter; canonical_quantity: pipe diameter; symbols: D; aliases: circular-pipe diameter; hydraulic diameter in a circular pipe; definition: Diameter of a circular pipe.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: pipe flow; ambiguity_notes: ; source: NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer; source_identifier: https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/; confidence: high\n### Input variable `U`\n- entry_id: pq_mean_flow_velocity; canonical_quantity: mean flow velocity; symbols: U; U_m; Umean; V; aliases: bulk velocity; mean velocity; average flow velocity; definition: Mean or bulk velocity used to characterize a flow.; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: fluid mechanics; ambiguity_notes: ; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_velocity; canonical_quantity: velocity; symbols: u; U; v; V; aliases: speed; flow velocity; fluid velocity; definition: Rate of displacement with time.; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: mechanics; fluid mechanics; ambiguity_notes: ; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_absolute_wall_roughness; canonical_quantity: absolute wall roughness height; symbols: epsilon; ε; r; aliases: absolute roughness; pipe wall roughness; definition: Dimensional roughness height of a pipe wall before normalization by pipe diameter.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: rough pipe flow; ambiguity_notes: ; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: high\n### Input variable `epsilon`\n- entry_id: pq_absolute_wall_roughness; canonical_quantity: absolute wall roughness height; symbols: epsilon; ε; r; aliases: absolute roughness; pipe wall roughness; definition: Dimensional roughness height of a pipe wall before normalization by pipe diameter.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: rough pipe flow; ambiguity_notes: ; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: high\n- entry_id: pq_roughness_height; canonical_quantity: roughness height; symbols: k; r; epsilon; ε; aliases: wall roughness height; absolute roughness; roughness amplitude; definition: Geometric height scale characterizing surface roughness.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: rough-wall flows; surface metrology; ambiguity_notes: epsilon/ε can denote other quantities such as strain or permittivity; r can denote radius.; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: high\n- entry_id: pq_friction_velocity; canonical_quantity: friction velocity; symbols: u_tau; uτ; U_tau; Uτ; aliases: shear velocity; wall friction velocity; definition: Velocity scale defined from wall shear stress and density, conventionally u_tau = sqrt(tau_w/rho).; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: wall-bounded fluid mechanics; ambiguity_notes: It is a velocity scale, not a stress; do not assign pressure dimensions.; source: Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling; source_identifier: https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8; confidence: high",
+        "evidence_records_visible_by_variable": {
+          "rho": [
+            "pq_mass_density",
+            "pq_electrical_resistivity",
+            "pq_absolute_wall_roughness"
+          ],
+          "mu": [
+            "pq_dynamic_viscosity",
+            "pq_absolute_wall_roughness",
+            "pq_friction_velocity"
+          ],
+          "D": [
+            "pq_diameter",
+            "pq_generic_diffusivity",
+            "pq_pipe_diameter"
+          ],
+          "U": [
+            "pq_mean_flow_velocity",
+            "pq_velocity",
+            "pq_absolute_wall_roughness"
+          ],
+          "epsilon": [
+            "pq_absolute_wall_roughness",
+            "pq_roughness_height",
+            "pq_friction_velocity"
+          ]
+        },
+        "queries_by_variable": {
+          "rho": "Target CSV variable: rho\nLocal problem description: the fluid density (rho), the dynamic viscosity (mu), the pipe diameter (D), the mean flow velocity (U), and the absolute wall roughness height (epsilon).\nProblem domain/context: Perform dimensional analysis for viscous flow in a rough circular pipe to derive the dimensionless relationship governing the pipe friction factor (denoted as f_D).\nAnalyzer interpretation: exact_column: rho; quantity_name: density; physical_definition: fluid density, mass per unit volume of the fluid",
+          "mu": "Target CSV variable: mu\nLocal problem description: the fluid density (rho), the dynamic viscosity (mu), the pipe diameter (D), the mean flow velocity (U), and the absolute wall roughness height (epsilon).\nProblem domain/context: Perform dimensional analysis for viscous flow in a rough circular pipe to derive the dimensionless relationship governing the pipe friction factor (denoted as f_D).\nAnalyzer interpretation: exact_column: mu; quantity_name: dynamic_viscosity; physical_definition: dynamic viscosity, fluid's resistance to shear flow",
+          "D": "Target CSV variable: D\nLocal problem description: Perform dimensional analysis for viscous flow in a rough circular pipe to derive the dimensionless relationship governing the pipe friction factor (denoted as f_D). the fluid density (rho), the dynamic viscosity (mu), the pipe diameter (D), the mean flow velocity (U), and the absolute wall roughness height (epsilon).\nProblem domain/context: Perform dimensional analysis for viscous flow in a rough circular pipe to derive the dimensionless relationship governing the pipe friction factor (denoted as f_D).\nAnalyzer interpretation: exact_column: D; quantity_name: length; physical_definition: pipe diameter, characteristic length scale of the pipe",
+          "U": "Target CSV variable: U\nLocal problem description: the fluid density (rho), the dynamic viscosity (mu), the pipe diameter (D), the mean flow velocity (U), and the absolute wall roughness height (epsilon).\nProblem domain/context: Perform dimensional analysis for viscous flow in a rough circular pipe to derive the dimensionless relationship governing the pipe friction factor (denoted as f_D).\nAnalyzer interpretation: exact_column: U; quantity_name: velocity; physical_definition: mean flow velocity, average fluid velocity in the pipe",
+          "epsilon": "Target CSV variable: epsilon\nLocal problem description: the fluid density (rho), the dynamic viscosity (mu), the pipe diameter (D), the mean flow velocity (U), and the absolute wall roughness height (epsilon).\nProblem domain/context: Perform dimensional analysis for viscous flow in a rough circular pipe to derive the dimensionless relationship governing the pipe friction factor (denoted as f_D).\nAnalyzer interpretation: exact_column: epsilon; quantity_name: length; physical_definition: absolute wall roughness height, characteristic roughness length scale of the pipe wall"
+        },
+        "query_sha256_by_variable": {
+          "rho": "11743a3e6d2f99a3360f4214cc1ad6cc9c856fae603791d1d0d83a86e910cc65",
+          "mu": "0095f7a64bddffcb29f0056a6eedd9ce62b23951d73e2552f602515f708e42af",
+          "D": "f309da939a63c57199b2946a3a7771c9c7a862225c62ce085a02c392d45a4b71",
+          "U": "a9371b040da3f1e10fab847d293852b9d0f1de378dc0f841ee9dcb5f85ffbeac",
+          "epsilon": "5d1a5f10f1c4779943883b742eec8de6e043e5c44b3797d27e91a185f6e49fc9"
+        },
+        "query_observed_in_retriever_by_variable": {
+          "rho": true,
+          "mu": true,
+          "D": true,
+          "U": true,
+          "epsilon": true
+        },
+        "query_scope": "Candidate SI powers excluded. Original problem and typed quantity/definition provide semantic context; they still require physical interpretation."
+      },
+      "provisional_zero_coordinates": [],
+      "checker_response": {
+        "ledger_sha256": "515aaf1248e1a61ea18cd9f5650195708759ffb4f138a0bb1c5ae3c9d3c438db",
+        "variables": [
+          {
+            "csv_name": "rho",
+            "before_si_exponents": {
+              "M": "1",
+              "L": "-3",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "decision": "PASSED",
+            "suggested_si_exponents": null,
+            "support_mode": "KB_RECORD",
+            "evidence_entry_ids": [
+              "pq_mass_density"
+            ],
+            "reason": "The problem names this variable 'fluid density (rho)' and the retrieved record pq_mass_density has canonical_quantity 'mass density' with symbols including rho and the definition 'Mass per unit volume.' Its si_dimension M L^-3 (dimension_vector [1,-3,0,0,0,0,0]) exactly supplies the mass and length exponents used in the ledger. The record's domain (fluid mechanics) and the symbol rho resolve any ambiguity (electrical resistivity is a different record) and directly justify the candidate vector for rho in the pipe-flow context."
+          },
+          {
+            "csv_name": "mu",
+            "before_si_exponents": {
+              "M": "1",
+              "L": "-1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "decision": "PASSED",
+            "suggested_si_exponents": null,
+            "support_mode": "KB_RECORD",
+            "evidence_entry_ids": [
+              "pq_dynamic_viscosity"
+            ],
+            "reason": "The ledger labels mu as 'dynamic viscosity' and the retrieved record pq_dynamic_viscosity has canonical_quantity 'dynamic viscosity' with symbols mu/μ and definition 'Coefficient relating Newtonian viscous shear stress to velocity gradient.' Its si_dimension M L^-1 T^-1 (dimension_vector [1,-1,-1,0,0,0,0]) matches the candidate vector. The record's domain (fluid mechanics, rheology) and symbol mapping confirm this entry applies to mu in the pipe-flow problem."
+          },
+          {
+            "csv_name": "D",
+            "before_si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "decision": "PASSED",
+            "suggested_si_exponents": null,
+            "support_mode": "KB_RECORD",
+            "evidence_entry_ids": [
+              "pq_pipe_diameter"
+            ],
+            "reason": "The variable D is given as 'pipe diameter' in the problem. The retrieved record pq_pipe_diameter has canonical_quantity 'pipe diameter' and definition 'Diameter of a circular pipe' with si_dimension L (dimension_vector [0,1,0,0,0,0,0]). This record is specific to the pipe-flow context of the prompt, so it directly supports the ledger's length-only exponent for D."
+          },
+          {
+            "csv_name": "U",
+            "before_si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "-1",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "decision": "PASSED",
+            "suggested_si_exponents": null,
+            "support_mode": "KB_RECORD",
+            "evidence_entry_ids": [
+              "pq_mean_flow_velocity"
+            ],
+            "reason": "The problem states U is the 'mean flow velocity'. Retrieved record pq_mean_flow_velocity has canonical_quantity 'mean flow velocity' (symbols U, Umean) with definition 'Mean or bulk velocity used to characterize a flow' and si_dimension L T^-1 (dimension_vector [0,1,-1,0,0,0,0]). This directly matches the ledger vector and the role of U in pipe flow, so the entry justifies the candidate exponents."
+          },
+          {
+            "csv_name": "epsilon",
+            "before_si_exponents": {
+              "M": "0",
+              "L": "1",
+              "T": "0",
+              "I": "0",
+              "Theta": "0",
+              "N": "0",
+              "J": "0"
+            },
+            "decision": "PASSED",
+            "suggested_si_exponents": null,
+            "support_mode": "KB_RECORD",
+            "evidence_entry_ids": [
+              "pq_absolute_wall_roughness"
+            ],
+            "reason": "The problem describes epsilon as 'absolute wall roughness height.' Retrieved record pq_absolute_wall_roughness has canonical_quantity 'absolute wall roughness height' with definition 'Dimensional roughness height of a pipe wall before normalization by pipe diameter' and si_dimension L (dimension_vector [0,1,0,0,0,0,0]). The record is specific to rough pipe flow and hence directly supports the ledger's length-only exponent for epsilon."
+          }
+        ]
+      },
+      "checker_elapsed_s": 17.6018572000321,
+      "checker_tokens": {
+        "input": 3770,
+        "output": 2648
+      },
+      "embedding_tokens": {
+        "input": 662,
+        "output": 0
+      },
+      "checker_call": {
+        "parsed_response": {
+          "ledger_sha256": "515aaf1248e1a61ea18cd9f5650195708759ffb4f138a0bb1c5ae3c9d3c438db",
+          "variables": [
+            {
+              "csv_name": "rho",
+              "before_si_exponents": {
+                "M": "1",
+                "L": "-3",
+                "T": "0",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_mass_density"
+              ],
+              "reason": "The problem names this variable 'fluid density (rho)' and the retrieved record pq_mass_density has canonical_quantity 'mass density' with symbols including rho and the definition 'Mass per unit volume.' Its si_dimension M L^-3 (dimension_vector [1,-3,0,0,0,0,0]) exactly supplies the mass and length exponents used in the ledger. The record's domain (fluid mechanics) and the symbol rho resolve any ambiguity (electrical resistivity is a different record) and directly justify the candidate vector for rho in the pipe-flow context."
+            },
+            {
+              "csv_name": "mu",
+              "before_si_exponents": {
+                "M": "1",
+                "L": "-1",
+                "T": "-1",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_dynamic_viscosity"
+              ],
+              "reason": "The ledger labels mu as 'dynamic viscosity' and the retrieved record pq_dynamic_viscosity has canonical_quantity 'dynamic viscosity' with symbols mu/μ and definition 'Coefficient relating Newtonian viscous shear stress to velocity gradient.' Its si_dimension M L^-1 T^-1 (dimension_vector [1,-1,-1,0,0,0,0]) matches the candidate vector. The record's domain (fluid mechanics, rheology) and symbol mapping confirm this entry applies to mu in the pipe-flow problem."
+            },
+            {
+              "csv_name": "D",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "0",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_pipe_diameter"
+              ],
+              "reason": "The variable D is given as 'pipe diameter' in the problem. The retrieved record pq_pipe_diameter has canonical_quantity 'pipe diameter' and definition 'Diameter of a circular pipe' with si_dimension L (dimension_vector [0,1,0,0,0,0,0]). This record is specific to the pipe-flow context of the prompt, so it directly supports the ledger's length-only exponent for D."
+            },
+            {
+              "csv_name": "U",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "-1",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_mean_flow_velocity"
+              ],
+              "reason": "The problem states U is the 'mean flow velocity'. Retrieved record pq_mean_flow_velocity has canonical_quantity 'mean flow velocity' (symbols U, Umean) with definition 'Mean or bulk velocity used to characterize a flow' and si_dimension L T^-1 (dimension_vector [0,1,-1,0,0,0,0]). This directly matches the ledger vector and the role of U in pipe flow, so the entry justifies the candidate exponents."
+            },
+            {
+              "csv_name": "epsilon",
+              "before_si_exponents": {
+                "M": "0",
+                "L": "1",
+                "T": "0",
+                "I": "0",
+                "Theta": "0",
+                "N": "0",
+                "J": "0"
+              },
+              "decision": "PASSED",
+              "suggested_si_exponents": null,
+              "support_mode": "KB_RECORD",
+              "evidence_entry_ids": [
+                "pq_absolute_wall_roughness"
+              ],
+              "reason": "The problem describes epsilon as 'absolute wall roughness height.' Retrieved record pq_absolute_wall_roughness has canonical_quantity 'absolute wall roughness height' with definition 'Dimensional roughness height of a pipe wall before normalization by pipe diameter' and si_dimension L (dimension_vector [0,1,0,0,0,0,0]). The record is specific to rough pipe flow and hence directly supports the ledger's length-only exponent for epsilon."
+            }
+          ]
+        },
+        "raw_tool_calls": [
+          {
+            "id": "call_98w9p40EdZtYFem3p8euv38x",
+            "type": "function",
+            "function": {
+              "name": "CheckerDimensionAudit",
+              "arguments": "{\"ledger_sha256\":\"515aaf1248e1a61ea18cd9f5650195708759ffb4f138a0bb1c5ae3c9d3c438db\",\"variables\":[{\"csv_name\":\"rho\",\"before_si_exponents\":{\"M\":\"1\",\"L\":\"-3\",\"T\":\"0\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"},\"decision\":\"PASSED\",\"suggested_si_exponents\":null,\"support_mode\":\"KB_RECORD\",\"evidence_entry_ids\":[\"pq_mass_density\"],\"reason\":\"The problem names this variable 'fluid density (rho)' and the retrieved record pq_mass_density has canonical_quantity 'mass density' with symbols including rho and the definition 'Mass per unit volume.' Its si_dimension M L^-3 (dimension_vector [1,-3,0,0,0,0,0]) exactly supplies the mass and length exponents used in the ledger. The record's domain (fluid mechanics) and the symbol rho resolve any ambiguity (electrical resistivity is a different record) and directly justify the candidate vector for rho in the pipe-flow context.\"},{\"csv_name\":\"mu\",\"before_si_exponents\":{\"M\":\"1\",\"L\":\"-1\",\"T\":\"-1\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"},\"decision\":\"PASSED\",\"suggested_si_exponents\":null,\"support_mode\":\"KB_RECORD\",\"evidence_entry_ids\":[\"pq_dynamic_viscosity\"],\"reason\":\"The ledger labels mu as 'dynamic viscosity' and the retrieved record pq_dynamic_viscosity has canonical_quantity 'dynamic viscosity' with symbols mu/μ and definition 'Coefficient relating Newtonian viscous shear stress to velocity gradient.' Its si_dimension M L^-1 T^-1 (dimension_vector [1,-1,-1,0,0,0,0]) matches the candidate vector. The record's domain (fluid mechanics, rheology) and symbol mapping confirm this entry applies to mu in the pipe-flow problem.\"},{\"csv_name\":\"D\",\"before_si_exponents\":{\"M\":\"0\",\"L\":\"1\",\"T\":\"0\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"},\"decision\":\"PASSED\",\"suggested_si_exponents\":null,\"support_mode\":\"KB_RECORD\",\"evidence_entry_ids\":[\"pq_pipe_diameter\"],\"reason\":\"The variable D is given as 'pipe diameter' in the problem. The retrieved record pq_pipe_diameter has canonical_quantity 'pipe diameter' and definition 'Diameter of a circular pipe' with si_dimension L (dimension_vector [0,1,0,0,0,0,0]). This record is specific to the pipe-flow context of the prompt, so it directly supports the ledger's length-only exponent for D.\"},{\"csv_name\":\"U\",\"before_si_exponents\":{\"M\":\"0\",\"L\":\"1\",\"T\":\"-1\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"},\"decision\":\"PASSED\",\"suggested_si_exponents\":null,\"support_mode\":\"KB_RECORD\",\"evidence_entry_ids\":[\"pq_mean_flow_velocity\"],\"reason\":\"The problem states U is the 'mean flow velocity'. Retrieved record pq_mean_flow_velocity has canonical_quantity 'mean flow velocity' (symbols U, Umean) with definition 'Mean or bulk velocity used to characterize a flow' and si_dimension L T^-1 (dimension_vector [0,1,-1,0,0,0,0]). This directly matches the ledger vector and the role of U in pipe flow, so the entry justifies the candidate exponents.\"},{\"csv_name\":\"epsilon\",\"before_si_exponents\":{\"M\":\"0\",\"L\":\"1\",\"T\":\"0\",\"I\":\"0\",\"Theta\":\"0\",\"N\":\"0\",\"J\":\"0\"},\"decision\":\"PASSED\",\"suggested_si_exponents\":null,\"support_mode\":\"KB_RECORD\",\"evidence_entry_ids\":[\"pq_absolute_wall_roughness\"],\"reason\":\"The problem describes epsilon as 'absolute wall roughness height.' Retrieved record pq_absolute_wall_roughness has canonical_quantity 'absolute wall roughness height' with definition 'Dimensional roughness height of a pipe wall before normalization by pipe diameter' and si_dimension L (dimension_vector [0,1,0,0,0,0,0]). The record is specific to rough pipe flow and hence directly supports the ledger's length-only exponent for epsilon.\"}]}"
+            }
+          }
+        ],
+        "model_messages": [
+          {
+            "type": "system",
+            "content": "Audit every named physical input in this exact typed ledger, including literal SI coordinate values. Do not substitute the correct definition or a KB vector for a wrong candidate and then claim PASSED. Return ledger_sha256 and each csv_name exactly once; before_si_exponents must copy the actual candidate. PASSED confirms the actual vector, CONFLICT requires a complete corrected suggested vector, and UNCERTAIN does not permit numerical execution. KB_RECORD requires actual entry_id citations from that variable's retrieved records. Canonical entity names are read by the program from the selected IDs; do not echo another quantity-name field. Your reason must explain why each cited record applies to this variable in the original problem, not merely why its vector matches. Cited vectors must support all known coordinates of the proposed/confirmed SI vector. INTERNAL_REASONING uses no IDs and must explain the physical meaning. Retrieval rank is relevance, not truth. Resolve symbol ambiguity from the original problem; do not choose an unrelated matching symbol. Known absent base dimensions must be explicit '0'; null means genuinely unknown, not unused. If any current coordinate is unknown, request revision or report UNCERTAIN; never call a partly known vector PASSED. Give a complete correction when physically justified. If a correction remains partly unknown, preserve null and explain what remains unresolved; the program will request revision rather than invent zeros. Lack of KB alone is not a physical contradiction. Matrix compilation and n/r/k are program tasks, not audit tasks."
+          },
+          {
+            "type": "human",
+            "content": "Problem:\nPerform dimensional analysis for viscous flow in a rough circular pipe to derive the dimensionless relationship governing the pipe friction factor (denoted as f_D).\nThis analysis uses ONLY the following 5 dimensional physical quantities as input parameters:\nthe fluid density (rho), the dynamic viscosity (mu), the pipe diameter (D), the mean flow velocity (U), and the absolute wall roughness height (epsilon).\n\nTyped ledger SHA256: 515aaf1248e1a61ea18cd9f5650195708759ffb4f138a0bb1c5ae3c9d3c438db\nTyped candidate ledger:\n{\"input_variable_names\": [\"rho\", \"mu\", \"D\", \"U\", \"epsilon\"], \"output_variable_confidence\": \"high\", \"output_variable_name\": \"f_D\", \"output_variable_reasoning\": \"The pipe friction factor f_D is a dimensionless quantity characterizing frictional losses in pipe flow, commonly defined as a function of Reynolds number and relative roughness, both dimensionless. Given the input variables (fluid density rho, dynamic viscosity mu, pipe diameter D, mean flow velocity U, and wall roughness height epsilon), the friction factor f_D is dimensionless by definition and does not carry any physical dimension.\", \"variables\": [{\"csv_name\": \"rho\", \"physical_definition\": \"fluid density, mass per unit volume of the fluid\", \"quantity_name\": \"density\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"-3\", \"M\": \"1\", \"N\": \"0\", \"T\": \"0\", \"Theta\": \"0\"}}, {\"csv_name\": \"mu\", \"physical_definition\": \"dynamic viscosity, fluid's resistance to shear flow\", \"quantity_name\": \"dynamic_viscosity\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"-1\", \"M\": \"1\", \"N\": \"0\", \"T\": \"-1\", \"Theta\": \"0\"}}, {\"csv_name\": \"D\", \"physical_definition\": \"pipe diameter, characteristic length scale of the pipe\", \"quantity_name\": \"length\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"1\", \"M\": \"0\", \"N\": \"0\", \"T\": \"0\", \"Theta\": \"0\"}}, {\"csv_name\": \"U\", \"physical_definition\": \"mean flow velocity, average fluid velocity in the pipe\", \"quantity_name\": \"velocity\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"1\", \"M\": \"0\", \"N\": \"0\", \"T\": \"-1\", \"Theta\": \"0\"}}, {\"csv_name\": \"epsilon\", \"physical_definition\": \"absolute wall roughness height, characteristic roughness length scale of the pipe wall\", \"quantity_name\": \"length\", \"si_exponents\": {\"I\": \"0\", \"J\": \"0\", \"L\": \"1\", \"M\": \"0\", \"N\": \"0\", \"T\": \"0\", \"Theta\": \"0\"}}]}\n\nRetrieved dimensional evidence:\n### Input variable `rho`\n- entry_id: pq_mass_density; canonical_quantity: mass density; symbols: rho; ρ; aliases: density; fluid density; material density; wall density; definition: Mass per unit volume.; si_dimension: M L^-3; dimension_vector: [1, -3, 0, 0, 0, 0, 0]; si_unit: kg m^-3; domain: continuum mechanics; fluid mechanics; materials; ambiguity_notes: The symbol rho/ρ may also denote electrical resistivity in electromagnetism; resolve by physical context.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_electrical_resistivity; canonical_quantity: electrical resistivity; symbols: eta; η; rho_e; ρ_e; aliases: resistivity; specific electrical resistance; rho notation for electrical resistivity; ρ notation for electrical resistivity; definition: Material property relating electric field to current density; equivalently electrical resistance times a length scale divided by area.; si_dimension: M L^3 T^-3 I^-2; dimension_vector: [1, 3, -3, -2, 0, 0, 0]; si_unit: ohm m; domain: electromagnetism; magnetohydrodynamics; ambiguity_notes: Eta/η may denote dynamic viscosity or magnetic diffusivity; rho/ρ may denote mass density. In an MHD prompt explicitly saying electrical resistivity, use this record.; source: MHD Flow in Simple Cubic Periodic Array Geometry, Journal of Fusion Energy (2023); source_identifier: doi:10.1007/s10894-023-00390-8; confidence: curated\n- entry_id: pq_absolute_wall_roughness; canonical_quantity: absolute wall roughness height; symbols: epsilon; ε; r; aliases: absolute roughness; pipe wall roughness; definition: Dimensional roughness height of a pipe wall before normalization by pipe diameter.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: rough pipe flow; ambiguity_notes: ; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: high\n### Input variable `mu`\n- entry_id: pq_dynamic_viscosity; canonical_quantity: dynamic viscosity; symbols: mu; μ; eta; η; aliases: absolute viscosity; viscosity coefficient; dynamic viscosity coefficient; definition: Coefficient relating Newtonian viscous shear stress to velocity gradient.; si_dimension: M L^-1 T^-1; dimension_vector: [1, -1, -1, 0, 0, 0, 0]; si_unit: Pa s; domain: fluid mechanics; rheology; ambiguity_notes: Symbols eta/η can instead denote electrical resistivity, magnetic diffusivity, or other quantities; symbols mu/μ are also used for magnetic permeability in some contexts.; source: NIST SP 811, Guide for the Use of the International System of Units (SI); source_identifier: doi:10.6028/NIST.SP.811e2008; confidence: curated\n- entry_id: pq_absolute_wall_roughness; canonical_quantity: absolute wall roughness height; symbols: epsilon; ε; r; aliases: absolute roughness; pipe wall roughness; definition: Dimensional roughness height of a pipe wall before normalization by pipe diameter.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: rough pipe flow; ambiguity_notes: ; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: high\n- entry_id: pq_friction_velocity; canonical_quantity: friction velocity; symbols: u_tau; uτ; U_tau; Uτ; aliases: shear velocity; wall friction velocity; definition: Velocity scale defined from wall shear stress and density, conventionally u_tau = sqrt(tau_w/rho).; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: wall-bounded fluid mechanics; ambiguity_notes: It is a velocity scale, not a stress; do not assign pressure dimensions.; source: Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling; source_identifier: https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8; confidence: high\n### Input variable `D`\n- entry_id: pq_diameter; canonical_quantity: diameter; symbols: D; d; aliases: characteristic diameter; pipe diameter; definition: Geometric diameter.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: geometry; fluid mechanics; ambiguity_notes: D may also denote a diffusivity in transport problems.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_generic_diffusivity; canonical_quantity: diffusivity; symbols: D_m; D; mathcalD; aliases: mass diffusivity; molecular diffusivity; definition: Transport coefficient with area-per-time dimensions.; si_dimension: L^2 T^-1; dimension_vector: [0, 2, -1, 0, 0, 0, 0]; si_unit: m^2 s^-1; domain: transport phenomena; ambiguity_notes: D is also commonly a geometric diameter. Resolve using context.; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_pipe_diameter; canonical_quantity: pipe diameter; symbols: D; aliases: circular-pipe diameter; hydraulic diameter in a circular pipe; definition: Diameter of a circular pipe.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: pipe flow; ambiguity_notes: ; source: NASA Glenn Beginner's Guide to Aeronautics: Boundary Layer; source_identifier: https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/; confidence: high\n### Input variable `U`\n- entry_id: pq_mean_flow_velocity; canonical_quantity: mean flow velocity; symbols: U; U_m; Umean; V; aliases: bulk velocity; mean velocity; average flow velocity; definition: Mean or bulk velocity used to characterize a flow.; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: fluid mechanics; ambiguity_notes: ; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_velocity; canonical_quantity: velocity; symbols: u; U; v; V; aliases: speed; flow velocity; fluid velocity; definition: Rate of displacement with time.; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: mechanics; fluid mechanics; ambiguity_notes: ; source: BIPM SI Brochure, 9th ed. (updated 2026); source_identifier: doi:10.59161/AUEZ1291; confidence: high\n- entry_id: pq_absolute_wall_roughness; canonical_quantity: absolute wall roughness height; symbols: epsilon; ε; r; aliases: absolute roughness; pipe wall roughness; definition: Dimensional roughness height of a pipe wall before normalization by pipe diameter.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: rough pipe flow; ambiguity_notes: ; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: high\n### Input variable `epsilon`\n- entry_id: pq_absolute_wall_roughness; canonical_quantity: absolute wall roughness height; symbols: epsilon; ε; r; aliases: absolute roughness; pipe wall roughness; definition: Dimensional roughness height of a pipe wall before normalization by pipe diameter.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: rough pipe flow; ambiguity_notes: ; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: high\n- entry_id: pq_roughness_height; canonical_quantity: roughness height; symbols: k; r; epsilon; ε; aliases: wall roughness height; absolute roughness; roughness amplitude; definition: Geometric height scale characterizing surface roughness.; si_dimension: L; dimension_vector: [0, 1, 0, 0, 0, 0, 0]; si_unit: m; domain: rough-wall flows; surface metrology; ambiguity_notes: epsilon/ε can denote other quantities such as strain or permittivity; r can denote radius.; source: Aghaei Jouybari et al., Data-driven prediction of the equivalent sand-grain height in rough-wall turbulent flows, Journal of Fluid Mechanics; source_identifier: doi:10.1017/jfm.2020.1085; confidence: high\n- entry_id: pq_friction_velocity; canonical_quantity: friction velocity; symbols: u_tau; uτ; U_tau; Uτ; aliases: shear velocity; wall friction velocity; definition: Velocity scale defined from wall shear stress and density, conventionally u_tau = sqrt(tau_w/rho).; si_dimension: L T^-1; dimension_vector: [0, 1, -1, 0, 0, 0, 0]; si_unit: m s^-1; domain: wall-bounded fluid mechanics; ambiguity_notes: It is a velocity scale, not a stress; do not assign pressure dimensions.; source: Wall-bounded turbulence literature defining friction Reynolds number and viscous scaling; source_identifier: https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/turbulent-drag-reduction-by-spanwise-wall-forcing-part-1-largeeddy-simulations/D7CF9DD1DBF460C91ECC85DBC9B4CEA8; confidence: high"
+          }
+        ],
+        "elapsed_s": 17.6018572000321
+      },
+      "retrieval_elapsed_s": 28.836450500006322
+    }
+  ],
+  "final_ledger": {
+    "output_variable_name": "f_D",
+    "output_variable_reasoning": "The pipe friction factor f_D is a dimensionless quantity characterizing frictional losses in pipe flow, commonly defined as a function of Reynolds number and relative roughness, both dimensionless. Given the input variables (fluid density rho, dynamic viscosity mu, pipe diameter D, mean flow velocity U, and wall roughness height epsilon), the friction factor f_D is dimensionless by definition and does not carry any physical dimension.",
+    "output_variable_confidence": "high",
+    "input_variable_names": [
+      "rho",
+      "mu",
+      "D",
+      "U",
+      "epsilon"
+    ],
+    "variables": [
+      {
+        "csv_name": "rho",
+        "quantity_name": "density",
+        "physical_definition": "fluid density, mass per unit volume of the fluid",
+        "si_exponents": {
+          "M": "1",
+          "L": "-3",
+          "T": "0",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "mu",
+        "quantity_name": "dynamic_viscosity",
+        "physical_definition": "dynamic viscosity, fluid's resistance to shear flow",
+        "si_exponents": {
+          "M": "1",
+          "L": "-1",
+          "T": "-1",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "D",
+        "quantity_name": "length",
+        "physical_definition": "pipe diameter, characteristic length scale of the pipe",
+        "si_exponents": {
+          "M": "0",
+          "L": "1",
+          "T": "0",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "U",
+        "quantity_name": "velocity",
+        "physical_definition": "mean flow velocity, average fluid velocity in the pipe",
+        "si_exponents": {
+          "M": "0",
+          "L": "1",
+          "T": "-1",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      },
+      {
+        "csv_name": "epsilon",
+        "quantity_name": "length",
+        "physical_definition": "absolute wall roughness height, characteristic roughness length scale of the pipe wall",
+        "si_exponents": {
+          "M": "0",
+          "L": "1",
+          "T": "0",
+          "I": "0",
+          "Theta": "0",
+          "N": "0",
+          "J": "0"
+        }
+      }
+    ]
+  },
+  "workflow_status": "basis_ready",
+  "basis_built": true,
+  "basis": {
+    "workflow_status": "basis_ready",
+    "input_vars": [
+      "rho",
+      "mu",
+      "D",
+      "U",
+      "epsilon"
+    ],
+    "output_var": "f_D",
+    "basis_pi_formulas": {
+      "Pi_1": "(rho * D * U) / (mu)",
+      "Pi_2": "(epsilon) / (D)"
+    },
+    "basis_pi_matrices": [
+      [
+        1.0,
+        -1.0,
+        1.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        -1.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "basis_tool_history": [
+      {
+        "args": {
+          "D_in": [
+            [
+              1.0,
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              -3.0,
+              -1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            [
+              0.0,
+              -1.0,
+              0.0,
+              -1.0,
+              0.0
+            ]
+          ],
+          "var_names": [
+            "rho",
+            "mu",
+            "D",
+            "U",
+            "epsilon"
+          ]
+        },
+        "result": {
+          "status": "success",
+          "pi_formulas": {
+            "Pi_1": "(rho * D * U) / (mu)",
+            "Pi_2": "(epsilon) / (D)"
+          },
+          "basis_matrices": [
+            [
+              1.0,
+              -1.0,
+              1.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              -1.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "basis_matrices_display": [
+            [
+              1.0,
+              -1.0,
+              1.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              -1.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "null_space_residual_inf": 0.0,
+          "basis_precision_note": "basis_matrices stores full floating-point precision; basis_matrices_display is rounded for display only."
+        }
+      }
+    ],
+    "output_resolution": {
+      "status": "success",
+      "output_var": "f_D",
+      "source": "structured_analyzer",
+      "requested": "f_D",
+      "candidates": [
+        "f_D"
+      ]
+    }
+  },
+  "revision_calls": [],
+  "elapsed_s": 46.51076810003724,
+  "error": null,
+  "infrastructure_error": [],
+  "node_sequence": [
+    "Analyzer",
+    "Hallu_Checker",
+    "Basis_Decider",
+    "Basis_Executor"
+  ],
+  "provenance": {
+    "run_id": "84f8acd1-eb56-4555-a561-6750b0e826a1",
+    "release": "run-provenance-2026-11-09",
+    "engine_sha256": "ae9a03710f9685d3be863b98acc1880d72c9ea3f04450af039b92f5459ee1ea9",
+    "started_utc": "2026-11-15T15:57:56Z",
+    "finished_utc": null,
+    "status": "running",
+    "dataset": {
+      "name": "dataset_pipe.csv",
+      "sha256": "b8c037a820e3532144f7626caa8eb9cd042c03ce558257e83e689edd16362178"
+    },
+    "problem_sha256": "1c6f5d517f948b930f959362567249c8bc022aae9e9edce6be49b3ad517a5948",
+    "manual_hyperparams_sha256": "1a77ac90efe4bc0a9be8c57fdd1e148af3616f2ddcc5fada158148b929b1e8a7",
+    "model_configuration": {
+      "analyzer": "gpt-4.1-mini",
+      "checker": "gpt-5-mini",
+      "planner": "gpt-5-mini",
+      "interpretation": "gpt-5-mini"
+    },
+    "package_versions": {
+      "numpy": "2.4.0",
+      "pandas": "2.3.3",
+      "scipy": "1.16.3",
+      "sympy": "1.14.0",
+      "scikit-learn": "1.8.0",
+      "cma": "4.4.4",
+      "pydantic": "2.12.5",
+      "openai": "2.14.0",
+      "httpx": "0.28.1",
+      "langchain-core": "1.2.5",
+      "langchain-openai": "1.1.6",
+      "langgraph": "1.0.5"
+    },
+    "tracing_enabled": false,
+    "wall_seconds": 46.51006880000932,
+    "node_timings": [
+      {
+        "node": "Analyzer",
+        "visit": 1,
+        "duration_seconds": 0.02149050001753494,
+        "status": "returned",
+        "error_type": null
+      },
+      {
+        "node": "Hallu_Checker",
+        "visit": 1,
+        "duration_seconds": 46.44632119999733,
+        "status": "returned",
+        "error_type": null
+      },
+      {
+        "node": "Basis_Decider",
+        "visit": 1,
+        "duration_seconds": 0.010041900037322193,
+        "status": "returned",
+        "error_type": null
+      },
+      {
+        "node": "Basis_Executor",
+        "visit": 1,
+        "duration_seconds": 0.02862340002320707,
+        "status": "returned",
+        "error_type": null
+      }
+    ],
+    "http_attempts": [
+      {
+        "attempt_id": "1950fae2-3a2b-4db3-9953-f71d40cf7d28",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 3.4545457999920473,
+        "started_utc": "2026-11-15T15:57:56Z",
+        "input_tokens": 125,
+        "output_tokens": 0,
+        "total_tokens": 125,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "d3cc77d4e3ea313cd1f34529ba4ba665c2c3527d3e3dce31e433df5f5392fe24",
+        "response_id": null
+      },
+      {
+        "attempt_id": "cc3f8fa8-42d5-412b-9700-b135ac3599f7",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 3.852550500014331,
+        "started_utc": "2026-11-15T15:58:00Z",
+        "input_tokens": 130,
+        "output_tokens": 0,
+        "total_tokens": 130,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "8e5be944259f73354017364a060125b0271ca53f1dcfd0ff4f79bc034514ea46",
+        "response_id": null
+      },
+      {
+        "attempt_id": "b32ebd5a-16d5-4a3b-962d-3741b7ff973b",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 6.674915199982934,
+        "started_utc": "2026-11-15T15:58:04Z",
+        "input_tokens": 154,
+        "output_tokens": 0,
+        "total_tokens": 154,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "96517561e731c182df2e5e7cabb20012325cd4b1b320ceb745f878a610fdefa6",
+        "response_id": null
+      },
+      {
+        "attempt_id": "ec81d8e4-b8d6-4486-ab54-e6ecde64ca95",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 4.280399799987208,
+        "started_utc": "2026-11-15T15:58:10Z",
+        "input_tokens": 123,
+        "output_tokens": 0,
+        "total_tokens": 123,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "16ea5bb54c0bfdb103ae37027e2fd42ece11370002a9c2175454a673a8515abd",
+        "response_id": null
+      },
+      {
+        "attempt_id": "2302cb43-d094-48ad-bc84-7b0990f44559",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 10.435181700042449,
+        "started_utc": "2026-11-15T15:58:15Z",
+        "input_tokens": 130,
+        "output_tokens": 0,
+        "total_tokens": 130,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "b7a42cc9cd04dc721eade76b59214a4c971cade5fac80c565dffc15d913b57c1",
+        "response_id": null
+      },
+      {
+        "attempt_id": "f575b0e7-b29d-4979-8b0a-a7f0b1a2e95e",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "llm",
+        "requested_model": "gpt-5-mini",
+        "response_model": "gpt-5-mini",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 17.598034299968276,
+        "started_utc": "2026-11-15T15:58:25Z",
+        "input_tokens": 3770,
+        "output_tokens": 2648,
+        "total_tokens": 6418,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 0,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "981eccb612c43592cdc9bc651899a01b32e087bb40db0d8ad434fc56d1812ce5",
+        "response_id": "chatcmpl-202611151558270038502548268d9d69Wa7yYlA"
+      }
+    ],
+    "observation_warnings": [],
+    "workflow_status": "basis_ready",
+    "scientific_status": null,
+    "totals": {
+      "http_attempt_count": 6,
+      "llm_http_attempt_count": 1,
+      "embedding_http_attempt_count": 5,
+      "usage_missing_attempt_count": 0,
+      "http_duration_seconds_sum": 46.295627299987245,
+      "node_duration_seconds_sum": 46.50647700007539,
+      "http_success_count": 6,
+      "http_error_count": 0,
+      "transport_error_count": 0,
+      "known_input_tokens": 4432,
+      "input_tokens_missing_count": 0,
+      "known_output_tokens": 2648,
+      "output_tokens_missing_count": 0,
+      "known_total_tokens": 7080,
+      "total_tokens_missing_count": 0,
+      "known_cached_input_tokens": 0,
+      "cached_input_tokens_missing_count": 5,
+      "known_reasoning_tokens": 0,
+      "reasoning_tokens_missing_count": 5
+    }
+  }
+}

@@ -1,0 +1,689 @@
+{
+  "workflow_plan": {
+    "template": "auto_mechanism_adaptive",
+    "rationale": "The user requested a dimensional-analysis derivation for u* using only six specified input quantities and provided two base-Pi generators. There is no request for multiple mechanisms, incomplete similarity, or automatic similarity screening, so the single-regime adaptive template with first-kind (classical) similarity is appropriate. Sample size (483) is <=800 so the Kraskov estimator with k=4 is selected for mutual-information tasks. Optimization of the output scaling is disabled (first-kind similarity). The workflow will search for 1..k dominant Pi groups starting at 1 and validate using MI-based criteria.",
+    "target_is_dimensionless": true,
+    "stages": [
+      "load_and_validate_data",
+      "gradient_regime_detection",
+      "validate_regime_partition",
+      "local_dominant_group_search",
+      "fan_out_local_workflows",
+      "aggregate_results",
+      "generate_report"
+    ],
+    "regime_detection": {
+      "n_clusters": null,
+      "candidate_cluster_counts": [
+        2,
+        3,
+        4
+      ],
+      "min_cluster_fraction": 0.05,
+      "min_cluster_samples": 60,
+      "max_intercluster_cosine": 0.9,
+      "eigenvalue_ratio_threshold": 50.0,
+      "require_convergence": true,
+      "exclude_low_confidence_points": false,
+      "assignment_confidence_threshold": 0.05
+    },
+    "local_analysis": {
+      "start_count": 1,
+      "max_count": null,
+      "absolute_score_drop_threshold": 0.08,
+      "require_two_counts_when_possible": true,
+      "similarity_type": "auto",
+      "optimize_output": null,
+      "output_scaling_reason": "Authoritative manual similarity_type='auto'; runtime numerical screening required.",
+      "output_scaling_confidence": "medium",
+      "similarity_screening_max_relative_mi_change": 0.15,
+      "similarity_screening_max_cosine_similarity": 0.7,
+      "mi_method": "kraskov",
+      "mi_param": 4,
+      "cma_restarts": 3,
+      "minimum_samples": 20,
+      "minimum_samples_per_mi_dimension": 20,
+      "minimum_samples_for_second_count": 40,
+      "fixed_in_power": {},
+      "fixed_out_power": {},
+      "sparsification_enabled": true,
+      "sparsify_exponent_threshold": 0.05,
+      "sparsify_max_score_increase": 0.05,
+      "rationalization_enabled": true,
+      "max_rational_denominator": 5,
+      "validate_after_rationalization": true
+    },
+    "replanning_triggers": [
+      "insufficient_samples",
+      "poor_mi_convergence",
+      "regime_detection_changed"
+    ]
+  },
+  "compiled_workflow": {
+    "status": "compiled",
+    "template": "auto_mechanism_adaptive",
+    "rationale": "The user requested a dimensional-analysis derivation for u* using only six specified input quantities and provided two base-Pi generators. There is no request for multiple mechanisms, incomplete similarity, or automatic similarity screening, so the single-regime adaptive template with first-kind (classical) similarity is appropriate. Sample size (483) is <=800 so the Kraskov estimator with k=4 is selected for mutual-information tasks. Optimization of the output scaling is disabled (first-kind similarity). The workflow will search for 1..k dominant Pi groups starting at 1 and validate using MI-based criteria.",
+    "target_is_dimensionless": true,
+    "stages": [
+      "load_and_validate_data",
+      "gradient_regime_detection",
+      "validate_regime_partition",
+      "local_dominant_group_search",
+      "fan_out_local_workflows",
+      "aggregate_results",
+      "generate_report"
+    ],
+    "tool_ids": [
+      "calc_basis_tool",
+      "detect_gradient_regimes",
+      "run_local_dominant_group_workflow",
+      "rationalize_local_solution"
+    ],
+    "regime_detection": {
+      "n_clusters": null,
+      "candidate_cluster_counts": [
+        2,
+        3,
+        4
+      ],
+      "min_cluster_fraction": 0.05,
+      "min_cluster_samples": 60,
+      "max_intercluster_cosine": 0.9,
+      "eigenvalue_ratio_threshold": 50.0,
+      "require_convergence": true,
+      "exclude_low_confidence_points": false,
+      "assignment_confidence_threshold": 0.05
+    },
+    "resolved_gradient_regime_options": {
+      "surrogate": {
+        "mean_mode": "constant",
+        "max_train_samples": null,
+        "n_restarts_optimizer": 3,
+        "optimizer_maxiter": 2000,
+        "optimizer_ftol": 1e-10,
+        "optimizer_gtol": 1e-06,
+        "jitter": 1e-10,
+        "random_state": 42,
+        "log_sigma0_sq_bounds": [
+          -30.0,
+          30.0
+        ],
+        "log_sigma1_sq_bounds": [
+          -30.0,
+          30.0
+        ],
+        "log_sigma_u_sq_bounds": [
+          -30.0,
+          30.0
+        ],
+        "mean_parameter_bounds": [
+          null,
+          null
+        ],
+        "initial_noise_fraction": 1e-06,
+        "require_optimizer_success": false,
+        "regime_target_transform": "log"
+      },
+      "clustering": {
+        "n_clusters": null,
+        "candidate_cluster_counts": [
+          2,
+          3,
+          4
+        ],
+        "min_cluster_fraction": 0.05,
+        "min_cluster_samples": 60,
+        "max_intercluster_cosine": 0.9,
+        "eigenvalue_ratio_threshold": 50.0,
+        "n_init": 30,
+        "max_iter": 200,
+        "random_state": 42,
+        "initialization": "random_eigenpairs",
+        "max_initialization_attempts": 100,
+        "require_convergence": true,
+        "gradient_norm_tolerance": 1e-12,
+        "exclude_low_confidence_points": false,
+        "assignment_confidence_threshold": 0.05
+      }
+    },
+    "regime_configuration_precedence": [
+      "library_defaults",
+      "workflow_plan",
+      "nested_manual",
+      "flat_manual"
+    ],
+    "resolved_manual_regime_overrides": {},
+    "local_workflow": {
+      "start_count": 1,
+      "max_count": 2,
+      "absolute_score_drop_threshold": 0.08,
+      "require_two_counts_when_possible": true,
+      "similarity_type": "auto",
+      "optimize_output": null,
+      "output_scaling_reason": "Authoritative manual similarity_type='auto'; runtime numerical screening required.",
+      "output_scaling_confidence": "medium",
+      "similarity_screening_max_relative_mi_change": 0.15,
+      "similarity_screening_max_cosine_similarity": 0.7,
+      "mi_method": "kraskov",
+      "mi_param": 4,
+      "cma_restarts": 3,
+      "minimum_samples": 20,
+      "minimum_samples_per_mi_dimension": 20,
+      "minimum_samples_for_second_count": 40,
+      "fixed_in_power": {},
+      "fixed_out_power": {},
+      "sparsification_enabled": true,
+      "sparsify_exponent_threshold": 0.05,
+      "sparsify_max_score_increase": 0.05,
+      "rationalization_enabled": true,
+      "max_rational_denominator": 5,
+      "validate_after_rationalization": true
+    },
+    "replanning_triggers": [
+      "insufficient_samples",
+      "poor_mi_convergence",
+      "regime_detection_changed"
+    ],
+    "max_replans": 2
+  },
+  "resolved_hyperparameters": {
+    "output_variable": "u*",
+    "output_resolution": {
+      "status": "success",
+      "output_var": "u*",
+      "source": "structured_analyzer",
+      "requested": "u*",
+      "candidates": [
+        "u",
+        "u*"
+      ]
+    },
+    "manual_hyperparams": {
+      "workflow_template": "auto_mechanism_adaptive",
+      "similarity_type": "auto",
+      "max_rational_denominator": 5,
+      "mi_method_used": "kraskov",
+      "mi_param_used": 4,
+      "cma_init_position": 0.1,
+      "cma_init_stepsize": 0.5
+    },
+    "effective_workflow": {
+      "status": "compiled",
+      "template": "auto_mechanism_adaptive",
+      "rationale": "The user requested a dimensional-analysis derivation for u* using only six specified input quantities and provided two base-Pi generators. There is no request for multiple mechanisms, incomplete similarity, or automatic similarity screening, so the single-regime adaptive template with first-kind (classical) similarity is appropriate. Sample size (483) is <=800 so the Kraskov estimator with k=4 is selected for mutual-information tasks. Optimization of the output scaling is disabled (first-kind similarity). The workflow will search for 1..k dominant Pi groups starting at 1 and validate using MI-based criteria.",
+      "target_is_dimensionless": true,
+      "stages": [
+        "load_and_validate_data",
+        "gradient_regime_detection",
+        "validate_regime_partition",
+        "local_dominant_group_search",
+        "fan_out_local_workflows",
+        "aggregate_results",
+        "generate_report"
+      ],
+      "tool_ids": [
+        "calc_basis_tool",
+        "detect_gradient_regimes",
+        "run_local_dominant_group_workflow",
+        "rationalize_local_solution"
+      ],
+      "regime_detection": {
+        "n_clusters": null,
+        "candidate_cluster_counts": [
+          2,
+          3,
+          4
+        ],
+        "min_cluster_fraction": 0.05,
+        "min_cluster_samples": 60,
+        "max_intercluster_cosine": 0.9,
+        "eigenvalue_ratio_threshold": 50.0,
+        "require_convergence": true,
+        "exclude_low_confidence_points": false,
+        "assignment_confidence_threshold": 0.05
+      },
+      "resolved_gradient_regime_options": {
+        "surrogate": {
+          "mean_mode": "constant",
+          "max_train_samples": null,
+          "n_restarts_optimizer": 3,
+          "optimizer_maxiter": 2000,
+          "optimizer_ftol": 1e-10,
+          "optimizer_gtol": 1e-06,
+          "jitter": 1e-10,
+          "random_state": 42,
+          "log_sigma0_sq_bounds": [
+            -30.0,
+            30.0
+          ],
+          "log_sigma1_sq_bounds": [
+            -30.0,
+            30.0
+          ],
+          "log_sigma_u_sq_bounds": [
+            -30.0,
+            30.0
+          ],
+          "mean_parameter_bounds": [
+            null,
+            null
+          ],
+          "initial_noise_fraction": 1e-06,
+          "require_optimizer_success": false,
+          "regime_target_transform": "log"
+        },
+        "clustering": {
+          "n_clusters": null,
+          "candidate_cluster_counts": [
+            2,
+            3,
+            4
+          ],
+          "min_cluster_fraction": 0.05,
+          "min_cluster_samples": 60,
+          "max_intercluster_cosine": 0.9,
+          "eigenvalue_ratio_threshold": 50.0,
+          "n_init": 30,
+          "max_iter": 200,
+          "random_state": 42,
+          "initialization": "random_eigenpairs",
+          "max_initialization_attempts": 100,
+          "require_convergence": true,
+          "gradient_norm_tolerance": 1e-12,
+          "exclude_low_confidence_points": false,
+          "assignment_confidence_threshold": 0.05
+        }
+      },
+      "regime_configuration_precedence": [
+        "library_defaults",
+        "workflow_plan",
+        "nested_manual",
+        "flat_manual"
+      ],
+      "resolved_manual_regime_overrides": {},
+      "local_workflow": {
+        "start_count": 1,
+        "max_count": 2,
+        "absolute_score_drop_threshold": 0.08,
+        "require_two_counts_when_possible": true,
+        "similarity_type": "auto",
+        "optimize_output": null,
+        "output_scaling_reason": "Authoritative manual similarity_type='auto'; runtime numerical screening required.",
+        "output_scaling_confidence": "medium",
+        "similarity_screening_max_relative_mi_change": 0.15,
+        "similarity_screening_max_cosine_similarity": 0.7,
+        "mi_method": "kraskov",
+        "mi_param": 4,
+        "cma_restarts": 3,
+        "minimum_samples": 20,
+        "minimum_samples_per_mi_dimension": 20,
+        "minimum_samples_for_second_count": 40,
+        "fixed_in_power": {},
+        "fixed_out_power": {},
+        "sparsification_enabled": true,
+        "sparsify_exponent_threshold": 0.05,
+        "sparsify_max_score_increase": 0.05,
+        "rationalization_enabled": true,
+        "max_rational_denominator": 5,
+        "validate_after_rationalization": true
+      },
+      "replanning_triggers": [
+        "insufficient_samples",
+        "poor_mi_convergence",
+        "regime_detection_changed"
+      ],
+      "max_replans": 2
+    },
+    "policy": "library defaults < LLM planner < manual_hyperparams"
+  },
+  "hyperparameter_provenance": {
+    "precedence": [
+      "library_defaults",
+      "llm_workflow_plan",
+      "manual_hyperparams"
+    ],
+    "manual_overrides": {
+      "template": "auto_mechanism_adaptive",
+      "local_analysis.mi_method": "kraskov",
+      "local_analysis.mi_param": 4,
+      "local_analysis.max_rational_denominator": 5,
+      "local_analysis.similarity_type": "auto",
+      "local_analysis.optimize_output": null
+    },
+    "passthrough_manual_hyperparameters": {
+      "cma_init_position": 0.1,
+      "cma_init_stepsize": 0.5
+    }
+  },
+  "workflow_status": "workflow_compiled",
+  "run_provenance": {
+    "run_id": "a0a9e11b-4db7-4b21-8bef-972e146b9811",
+    "release": "ai-buckingham",
+    "engine_sha256": "27a45190607b96de0cf0d0dbdb3c255833f4f27cb481894a5107fb1428a36a4d",
+    "started_utc": "2026-11-24T11:58:41Z",
+    "finished_utc": null,
+    "status": "running",
+    "dataset": {
+      "name": "mhd.csv",
+      "sha256": "1a0b1a751a9f1d9d3b70f234b4e753c7bddfc7400d794a7972be9cdba90a2a4f"
+    },
+    "problem_sha256": "db4ad06d6c1afe2050b1ec1d69d7802d000d04d91283fe0d4fc7d1d306b9dcd3",
+    "manual_hyperparams_sha256": "a6f3bbf3481148fef9799628aeab4c8bb70f63f24107cd769bd6e508f2e2bd88",
+    "model_configuration": {
+      "analyzer": "gpt-5-mini",
+      "checker": "gpt-5-mini",
+      "planner": "gpt-5-mini",
+      "interpretation": "gpt-5-mini",
+      "output_binding_checker": "gpt-5-mini"
+    },
+    "package_versions": {
+      "numpy": "2.4.0",
+      "pandas": "2.3.3",
+      "scipy": "1.16.3",
+      "sympy": "1.14.0",
+      "scikit-learn": "1.8.0",
+      "cma": "4.4.4",
+      "pydantic": "2.12.5",
+      "openai": "2.14.0",
+      "httpx": "0.28.1",
+      "langchain-core": "1.2.5",
+      "langchain-openai": "1.1.6",
+      "langgraph": "1.0.5"
+    },
+    "tracing_enabled": false,
+    "wall_seconds": 102.93595980000009,
+    "node_timings": [
+      {
+        "node": "Analyzer",
+        "visit": 1,
+        "duration_seconds": 52.960685099999864,
+        "status": "returned",
+        "error_type": null
+      },
+      {
+        "node": "Hallu_Checker",
+        "visit": 1,
+        "duration_seconds": 27.878489299999956,
+        "status": "returned",
+        "error_type": null
+      },
+      {
+        "node": "Basis_Decider",
+        "visit": 1,
+        "duration_seconds": 0.011423899999954301,
+        "status": "returned",
+        "error_type": null
+      },
+      {
+        "node": "Basis_Executor",
+        "visit": 1,
+        "duration_seconds": 0.027352699999937613,
+        "status": "returned",
+        "error_type": null
+      },
+      {
+        "node": "Workflow_Planner",
+        "visit": 1,
+        "duration_seconds": 21.556798600000093,
+        "status": "returned",
+        "error_type": null
+      }
+    ],
+    "http_attempts": [
+      {
+        "attempt_id": "2cb89d37-3d33-4e5b-9dd7-316597291862",
+        "node": "Analyzer",
+        "node_visit": 1,
+        "kind": "llm",
+        "requested_model": "gpt-5-mini",
+        "response_model": "gpt-5-mini-2025-08-07",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 21.48893309999994,
+        "started_utc": "2026-11-24T11:58:41Z",
+        "input_tokens": 873,
+        "output_tokens": 2425,
+        "total_tokens": 3298,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 1664,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "b79df3940a571a2c8da8a0f84baaa90b7b2c1f934cac71d723ee16f4172d3509",
+        "response_id": "chatcmpl-EnjSSHw7V2mIXIWFUyrl0Yf99J64C"
+      },
+      {
+        "attempt_id": "37a9de99-3cc5-415e-83cb-30eae455743d",
+        "node": "Output_Binding_Checker",
+        "node_visit": 1,
+        "kind": "llm",
+        "requested_model": "gpt-5-mini",
+        "response_model": "gpt-5-mini-2025-08-07",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 31.403005799999846,
+        "started_utc": "2026-11-24T11:59:02Z",
+        "input_tokens": 343,
+        "output_tokens": 4313,
+        "total_tokens": 4656,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 4288,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "47ccfcaed3c3e51b83a09b4a9e0acfdda93b59ff625495ab7572c217304dcc67",
+        "response_id": "chatcmpl-EnjSoZYbkNEIL0geIBzuJyIFnWV51"
+      },
+      {
+        "attempt_id": "f4a1351d-9a82-4863-8054-60e0f4164c5d",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 0.27462179999997716,
+        "started_utc": "2026-11-24T11:59:34Z",
+        "input_tokens": 144,
+        "output_tokens": 0,
+        "total_tokens": 144,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "15d41f273d688937987788062c9812f04633c06421880fbcdaafa8db8351f271",
+        "response_id": null
+      },
+      {
+        "attempt_id": "73ca591d-3e7b-402d-a097-eafb00e6e42c",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 0.21108360000016546,
+        "started_utc": "2026-11-24T11:59:34Z",
+        "input_tokens": 147,
+        "output_tokens": 0,
+        "total_tokens": 147,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "e8315b9f34ec38ca38d694818e97a1f99f362e8adb6d44946dd804ada46cbb35",
+        "response_id": null
+      },
+      {
+        "attempt_id": "347870d1-70d5-450e-9a6b-fdba0e411b78",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 0.20418880000011086,
+        "started_utc": "2026-11-24T11:59:34Z",
+        "input_tokens": 143,
+        "output_tokens": 0,
+        "total_tokens": 143,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "122003ed929144a070cd777799f56b97dcdebda49c34a493100358dc807e9e9f",
+        "response_id": null
+      },
+      {
+        "attempt_id": "a62428dd-635f-4d6a-8797-a92cc06aa785",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 0.21682659999987663,
+        "started_utc": "2026-11-24T11:59:34Z",
+        "input_tokens": 150,
+        "output_tokens": 0,
+        "total_tokens": 150,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "6acada7168b2c8e8745beec441bd1586b0c586dcd942fbf0332738730ba9e843",
+        "response_id": null
+      },
+      {
+        "attempt_id": "66b06876-9d5b-4e4a-9411-71be84a5890b",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 0.2278156999998373,
+        "started_utc": "2026-11-24T11:59:35Z",
+        "input_tokens": 101,
+        "output_tokens": 0,
+        "total_tokens": 101,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "761d2759d3062c917b6a6f267a64c9abfe40eea3fe8805267f6971555dc6e02a",
+        "response_id": null
+      },
+      {
+        "attempt_id": "9c20bc2a-9be0-42d6-9b7b-e6d961b1f985",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "embedding",
+        "requested_model": "GLM-Embedding-3",
+        "response_model": "GLM-Embedding-3",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 0.20198279999999613,
+        "started_utc": "2026-11-24T11:59:35Z",
+        "input_tokens": 142,
+        "output_tokens": 0,
+        "total_tokens": 142,
+        "cached_input_tokens": null,
+        "reasoning_tokens": null,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "7505fb690b18072b3c0ebc86e1eacdf4ddbdfce08e930c812d090812bc45d16d",
+        "response_id": null
+      },
+      {
+        "attempt_id": "cc8369e3-5f06-4d89-ba70-47e543aba4a6",
+        "node": "Hallu_Checker",
+        "node_visit": 1,
+        "kind": "llm",
+        "requested_model": "gpt-5-mini",
+        "response_model": "gpt-5-mini-2025-08-07",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 26.295503000000053,
+        "started_utc": "2026-11-24T11:59:35Z",
+        "input_tokens": 4450,
+        "output_tokens": 2877,
+        "total_tokens": 7327,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 1728,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "3fb778faf6fbe0565316ddc1164e85a35624072808b630b76c6cfabfb7c867e8",
+        "response_id": "chatcmpl-EnjTL1vczFrG8ANsRopcw3bZevDYU"
+      },
+      {
+        "attempt_id": "6acecf24-dece-4031-99b3-b016cf08c922",
+        "node": "Workflow_Planner",
+        "node_visit": 1,
+        "kind": "llm",
+        "requested_model": "gpt-5-mini",
+        "response_model": "gpt-5-mini-2025-08-07",
+        "http_status": 200,
+        "outcome": "http_success",
+        "duration_seconds": 21.54821630000015,
+        "started_utc": "2026-11-24T12:00:02Z",
+        "input_tokens": 1556,
+        "output_tokens": 2686,
+        "total_tokens": 4242,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 2048,
+        "usage_reported": true,
+        "sdk_retry_index": 0,
+        "error_type": null,
+        "request_sha256": "b3c6ad1e148dd1d8e62e940713299f62700c70c89966ed849cac5a932cdca405",
+        "response_id": "chatcmpl-EnjTmRY6qqqkgUR0M6qzfQDlNdo67"
+      }
+    ],
+    "observation_warnings": [],
+    "output_binding_events": [
+      {
+        "action": "verify",
+        "submitted": "u*",
+        "selected": "u*",
+        "status": "confirmed",
+        "duration_seconds": 31.405157800000097,
+        "analyzer_visit": 1
+      }
+    ],
+    "workflow_status": "workflow_compiled",
+    "scientific_status": null,
+    "totals": {
+      "http_attempt_count": 10,
+      "llm_http_attempt_count": 4,
+      "embedding_http_attempt_count": 6,
+      "usage_missing_attempt_count": 0,
+      "http_duration_seconds_sum": 102.07217749999995,
+      "node_duration_seconds_sum": 102.4347495999998,
+      "http_success_count": 10,
+      "http_error_count": 0,
+      "transport_error_count": 0,
+      "known_input_tokens": 8049,
+      "input_tokens_missing_count": 0,
+      "known_output_tokens": 12301,
+      "output_tokens_missing_count": 0,
+      "known_total_tokens": 20350,
+      "total_tokens_missing_count": 0,
+      "known_cached_input_tokens": 0,
+      "cached_input_tokens_missing_count": 6,
+      "known_reasoning_tokens": 9728,
+      "reasoning_tokens_missing_count": 6
+    }
+  }
+}

@@ -1,0 +1,485 @@
+{
+  "schema_version": 1,
+  "case_id": "pressure_gradient",
+  "title": "Turbulent boundary-layer skin friction under pressure gradients",
+  "dataset": "data/datasets/pressure_gradient.csv",
+  "prompt": "Perform dimensional analysis for turbulent boundary layers under pressure gradient effects to derive the dimensionless form of the friction velocity (denoted as U_tau/U_inf). \nThis analysis uses ONLY the following 6 physical quantities as input parameters: \nthe free-stream velocity (U_inf), the kinematic viscosity (nu), the integrated mean-flow kinetic energy (MKE, defined by the integral: ∫(0 to delta) U^2 dy), the boundary layer thickness at 99% of free-stream (delta), the boundary layer displacement thickness (delta*), and the boundary layer momentum thickness (theta).",
+  "manual_hyperparams": {
+    "workflow_template": "auto_mechanism_adaptive",
+    "max_rational_denominator": 5,
+    "display_ipt_Pi": "none",
+    "mi_param_used": 3,
+    "mi_method_used": "kraskov",
+    "cma_init_position": 0.1,
+    "cma_init_stepsize": 0.5
+  },
+  "input_columns": [
+    "U_inf",
+    "nu",
+    "MKE",
+    "delta",
+    "delta*",
+    "theta"
+  ],
+  "output_column": "U_tau/U_inf",
+  "expected_dimensions": {
+    "dimension_order": [
+      "M",
+      "L",
+      "T",
+      "I",
+      "Theta",
+      "N",
+      "J"
+    ],
+    "inputs": {
+      "U_inf": {
+        "M": 0,
+        "L": 1,
+        "T": -1,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "nu": {
+        "M": 0,
+        "L": 2,
+        "T": -1,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "MKE": {
+        "M": 0,
+        "L": 3,
+        "T": -2,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "delta": {
+        "M": 0,
+        "L": 1,
+        "T": 0,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "delta*": {
+        "M": 0,
+        "L": 1,
+        "T": 0,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      },
+      "theta": {
+        "M": 0,
+        "L": 1,
+        "T": 0,
+        "I": 0,
+        "Theta": 0,
+        "N": 0,
+        "J": 0
+      }
+    },
+    "output": {
+      "M": 0,
+      "L": 0,
+      "T": 0,
+      "I": 0,
+      "Theta": 0,
+      "N": 0,
+      "J": 0
+    }
+  },
+  "data_metadata": {
+    "rows": 144,
+    "columns": [
+      "case",
+      "U_inf",
+      "nu",
+      "MKE",
+      "delta",
+      "delta*",
+      "theta",
+      "U_tau/U_inf"
+    ],
+    "auxiliary_columns": [
+      "case"
+    ],
+    "sha256": "a0fb4fc72d148bad914a890c96c163703695412008b757defbe72cd9e277c818",
+    "original_filename": "dataset_presGrad.csv",
+    "original_column_order_preserved": true,
+    "response_log_eligible_rows": 144
+  },
+  "provenance": {
+    "prompt_source": "author-supplied current agent definitions",
+    "manual_hyperparams_source": "author-supplied current agent definitions",
+    "source_sha256": "55a4a6f2c9c0b3424a83d3576517539128d6dc86fb2d9479bf1c86ab5f4794db",
+    "original_prompt_symbol": "presGrad_",
+    "original_hyperparams_symbol": "presGrad_hparams",
+    "reference_dimensions_source": "reproduction/rag_ablation/reference/expected_dimensions.json",
+    "reference_case_id": "PRESGRAD",
+    "reference_dimensions_sha256": "72764f551ff87b286641978d8ed96addd0d80047028a351f06b0814329b04f98"
+  },
+  "resolved_hyperparameters": {
+    "output_variable": "U_tau/U_inf",
+    "output_resolution": {
+      "status": "success",
+      "output_var": "U_tau/U_inf",
+      "source": "structured_analyzer",
+      "requested": "U_tau/U_inf",
+      "candidates": [
+        "U_tau/U_inf"
+      ]
+    },
+    "manual_hyperparams": {
+      "workflow_template": "auto_mechanism_adaptive",
+      "max_rational_denominator": 5,
+      "display_ipt_Pi": "none",
+      "mi_param_used": 3,
+      "mi_method_used": "kraskov",
+      "cma_init_position": 0.1,
+      "cma_init_stepsize": 0.5
+    },
+    "effective_workflow": {
+      "status": "compiled",
+      "template": "auto_mechanism_adaptive",
+      "rationale": "Dataset has 144 rows (<=800) so the Kraskov MI estimator with k=5 is appropriate. The user did not request incomplete similarity or automatic similarity screening, so first-kind (complete similarity) is the default; therefore optimize_output is set to false. No explicit exponent constraints were provided in the problem, so fixed_in_power and fixed_out_power are empty. Single-mechanism (single_regime_adaptive) is used because the prompt specifies turbulent boundary layers under pressure gradient effects but does not explicitly request multiple distinct mechanisms or automatic mechanism screening. The analysis will therefore search for dominant Pi-groups starting from k=1 and increase as numerically warranted by MI-score trends and validation. Sparsification and rationalization are enabled to prefer simple integer/rational exponents where supported by the data.",
+      "target_is_dimensionless": true,
+      "stages": [
+        "load_and_validate_data",
+        "gradient_regime_detection",
+        "validate_regime_partition",
+        "local_dominant_group_search",
+        "fan_out_local_workflows",
+        "aggregate_results",
+        "generate_report"
+      ],
+      "tool_ids": [
+        "calc_basis_tool",
+        "detect_gradient_regimes",
+        "run_local_dominant_group_workflow",
+        "rationalize_local_solution"
+      ],
+      "regime_detection": {
+        "n_clusters": null,
+        "candidate_cluster_counts": [
+          2,
+          3,
+          4
+        ],
+        "min_cluster_fraction": 0.05,
+        "min_cluster_samples": 60,
+        "max_intercluster_cosine": 0.9,
+        "eigenvalue_ratio_threshold": 50.0,
+        "require_convergence": true,
+        "exclude_low_confidence_points": false,
+        "assignment_confidence_threshold": 0.05
+      },
+      "resolved_gradient_regime_options": {
+        "surrogate": {
+          "mean_mode": "constant",
+          "max_train_samples": null,
+          "n_restarts_optimizer": 3,
+          "optimizer_maxiter": 2000,
+          "optimizer_ftol": 1e-10,
+          "optimizer_gtol": 1e-06,
+          "jitter": 1e-10,
+          "random_state": 42,
+          "log_sigma0_sq_bounds": [
+            -30.0,
+            30.0
+          ],
+          "log_sigma1_sq_bounds": [
+            -30.0,
+            30.0
+          ],
+          "log_sigma_u_sq_bounds": [
+            -30.0,
+            30.0
+          ],
+          "mean_parameter_bounds": [
+            null,
+            null
+          ],
+          "initial_noise_fraction": 1e-06,
+          "require_optimizer_success": false,
+          "regime_target_transform": "log"
+        },
+        "clustering": {
+          "n_clusters": null,
+          "candidate_cluster_counts": [
+            2,
+            3,
+            4
+          ],
+          "min_cluster_fraction": 0.05,
+          "min_cluster_samples": 60,
+          "max_intercluster_cosine": 0.9,
+          "eigenvalue_ratio_threshold": 50.0,
+          "n_init": 30,
+          "max_iter": 200,
+          "random_state": 42,
+          "initialization": "random_eigenpairs",
+          "max_initialization_attempts": 100,
+          "require_convergence": true,
+          "gradient_norm_tolerance": 1e-12,
+          "exclude_low_confidence_points": false,
+          "assignment_confidence_threshold": 0.05
+        }
+      },
+      "regime_configuration_precedence": [
+        "library_defaults",
+        "workflow_plan",
+        "nested_manual",
+        "flat_manual"
+      ],
+      "resolved_manual_regime_overrides": {},
+      "local_workflow": {
+        "start_count": 1,
+        "max_count": 4,
+        "absolute_score_drop_threshold": 0.08,
+        "require_two_counts_when_possible": true,
+        "similarity_type": "first_kind",
+        "optimize_output": false,
+        "output_scaling_reason": "First-kind similarity is the default/null policy unless output scaling or automatic similarity screening is explicitly requested.",
+        "output_scaling_confidence": "high",
+        "similarity_screening_max_relative_mi_change": 0.15,
+        "similarity_screening_max_cosine_similarity": 0.7,
+        "mi_method": "kraskov",
+        "mi_param": 3,
+        "cma_restarts": 3,
+        "minimum_samples": 20,
+        "minimum_samples_per_mi_dimension": 20,
+        "minimum_samples_for_second_count": 40,
+        "fixed_in_power": {},
+        "fixed_out_power": {},
+        "sparsification_enabled": true,
+        "sparsify_exponent_threshold": 0.05,
+        "sparsify_max_score_increase": 0.05,
+        "rationalization_enabled": true,
+        "max_rational_denominator": 5,
+        "validate_after_rationalization": true
+      },
+      "replanning_triggers": [
+        "insufficient_samples_for_mi",
+        "no_convergence_in_rationalization",
+        "multiple_mechanisms_detected"
+      ],
+      "max_replans": 2
+    },
+    "policy": "library defaults < LLM planner < manual_hyperparams"
+  },
+  "hyperparameter_provenance": {
+    "precedence": [
+      "library_defaults",
+      "llm_workflow_plan",
+      "manual_hyperparams"
+    ],
+    "manual_overrides": {
+      "template": "auto_mechanism_adaptive",
+      "local_analysis.mi_method": "kraskov",
+      "local_analysis.mi_param": 3,
+      "local_analysis.max_rational_denominator": 5
+    },
+    "passthrough_manual_hyperparameters": {
+      "display_ipt_Pi": "none",
+      "cma_init_position": 0.1,
+      "cma_init_stepsize": 0.5
+    }
+  },
+  "workflow_plan": {
+    "template": "auto_mechanism_adaptive",
+    "rationale": "Dataset has 144 rows (<=800) so the Kraskov MI estimator with k=5 is appropriate. The user did not request incomplete similarity or automatic similarity screening, so first-kind (complete similarity) is the default; therefore optimize_output is set to false. No explicit exponent constraints were provided in the problem, so fixed_in_power and fixed_out_power are empty. Single-mechanism (single_regime_adaptive) is used because the prompt specifies turbulent boundary layers under pressure gradient effects but does not explicitly request multiple distinct mechanisms or automatic mechanism screening. The analysis will therefore search for dominant Pi-groups starting from k=1 and increase as numerically warranted by MI-score trends and validation. Sparsification and rationalization are enabled to prefer simple integer/rational exponents where supported by the data.",
+    "target_is_dimensionless": true,
+    "stages": [
+      "load_and_validate_data",
+      "gradient_regime_detection",
+      "validate_regime_partition",
+      "local_dominant_group_search",
+      "fan_out_local_workflows",
+      "aggregate_results",
+      "generate_report"
+    ],
+    "regime_detection": {
+      "n_clusters": null,
+      "candidate_cluster_counts": [
+        2,
+        3,
+        4
+      ],
+      "min_cluster_fraction": 0.05,
+      "min_cluster_samples": 60,
+      "max_intercluster_cosine": 0.9,
+      "eigenvalue_ratio_threshold": 50.0,
+      "require_convergence": true,
+      "exclude_low_confidence_points": false,
+      "assignment_confidence_threshold": 0.05
+    },
+    "local_analysis": {
+      "start_count": 1,
+      "max_count": null,
+      "absolute_score_drop_threshold": 0.08,
+      "require_two_counts_when_possible": true,
+      "similarity_type": "first_kind",
+      "optimize_output": false,
+      "output_scaling_reason": "First-kind similarity is the default/null policy unless output scaling or automatic similarity screening is explicitly requested.",
+      "output_scaling_confidence": "high",
+      "similarity_screening_max_relative_mi_change": 0.15,
+      "similarity_screening_max_cosine_similarity": 0.7,
+      "mi_method": "kraskov",
+      "mi_param": 3,
+      "cma_restarts": 3,
+      "minimum_samples": 20,
+      "minimum_samples_per_mi_dimension": 20,
+      "minimum_samples_for_second_count": 40,
+      "fixed_in_power": {},
+      "fixed_out_power": {},
+      "sparsification_enabled": true,
+      "sparsify_exponent_threshold": 0.05,
+      "sparsify_max_score_increase": 0.05,
+      "rationalization_enabled": true,
+      "max_rational_denominator": 5,
+      "validate_after_rationalization": true
+    },
+    "replanning_triggers": [
+      "insufficient_samples_for_mi",
+      "no_convergence_in_rationalization",
+      "multiple_mechanisms_detected"
+    ]
+  },
+  "compiled_workflow": {
+    "status": "compiled",
+    "template": "auto_mechanism_adaptive",
+    "rationale": "Dataset has 144 rows (<=800) so the Kraskov MI estimator with k=5 is appropriate. The user did not request incomplete similarity or automatic similarity screening, so first-kind (complete similarity) is the default; therefore optimize_output is set to false. No explicit exponent constraints were provided in the problem, so fixed_in_power and fixed_out_power are empty. Single-mechanism (single_regime_adaptive) is used because the prompt specifies turbulent boundary layers under pressure gradient effects but does not explicitly request multiple distinct mechanisms or automatic mechanism screening. The analysis will therefore search for dominant Pi-groups starting from k=1 and increase as numerically warranted by MI-score trends and validation. Sparsification and rationalization are enabled to prefer simple integer/rational exponents where supported by the data.",
+    "target_is_dimensionless": true,
+    "stages": [
+      "load_and_validate_data",
+      "gradient_regime_detection",
+      "validate_regime_partition",
+      "local_dominant_group_search",
+      "fan_out_local_workflows",
+      "aggregate_results",
+      "generate_report"
+    ],
+    "tool_ids": [
+      "calc_basis_tool",
+      "detect_gradient_regimes",
+      "run_local_dominant_group_workflow",
+      "rationalize_local_solution"
+    ],
+    "regime_detection": {
+      "n_clusters": null,
+      "candidate_cluster_counts": [
+        2,
+        3,
+        4
+      ],
+      "min_cluster_fraction": 0.05,
+      "min_cluster_samples": 60,
+      "max_intercluster_cosine": 0.9,
+      "eigenvalue_ratio_threshold": 50.0,
+      "require_convergence": true,
+      "exclude_low_confidence_points": false,
+      "assignment_confidence_threshold": 0.05
+    },
+    "resolved_gradient_regime_options": {
+      "surrogate": {
+        "mean_mode": "constant",
+        "max_train_samples": null,
+        "n_restarts_optimizer": 3,
+        "optimizer_maxiter": 2000,
+        "optimizer_ftol": 1e-10,
+        "optimizer_gtol": 1e-06,
+        "jitter": 1e-10,
+        "random_state": 42,
+        "log_sigma0_sq_bounds": [
+          -30.0,
+          30.0
+        ],
+        "log_sigma1_sq_bounds": [
+          -30.0,
+          30.0
+        ],
+        "log_sigma_u_sq_bounds": [
+          -30.0,
+          30.0
+        ],
+        "mean_parameter_bounds": [
+          null,
+          null
+        ],
+        "initial_noise_fraction": 1e-06,
+        "require_optimizer_success": false,
+        "regime_target_transform": "log"
+      },
+      "clustering": {
+        "n_clusters": null,
+        "candidate_cluster_counts": [
+          2,
+          3,
+          4
+        ],
+        "min_cluster_fraction": 0.05,
+        "min_cluster_samples": 60,
+        "max_intercluster_cosine": 0.9,
+        "eigenvalue_ratio_threshold": 50.0,
+        "n_init": 30,
+        "max_iter": 200,
+        "random_state": 42,
+        "initialization": "random_eigenpairs",
+        "max_initialization_attempts": 100,
+        "require_convergence": true,
+        "gradient_norm_tolerance": 1e-12,
+        "exclude_low_confidence_points": false,
+        "assignment_confidence_threshold": 0.05
+      }
+    },
+    "regime_configuration_precedence": [
+      "library_defaults",
+      "workflow_plan",
+      "nested_manual",
+      "flat_manual"
+    ],
+    "resolved_manual_regime_overrides": {},
+    "local_workflow": {
+      "start_count": 1,
+      "max_count": 4,
+      "absolute_score_drop_threshold": 0.08,
+      "require_two_counts_when_possible": true,
+      "similarity_type": "first_kind",
+      "optimize_output": false,
+      "output_scaling_reason": "First-kind similarity is the default/null policy unless output scaling or automatic similarity screening is explicitly requested.",
+      "output_scaling_confidence": "high",
+      "similarity_screening_max_relative_mi_change": 0.15,
+      "similarity_screening_max_cosine_similarity": 0.7,
+      "mi_method": "kraskov",
+      "mi_param": 3,
+      "cma_restarts": 3,
+      "minimum_samples": 20,
+      "minimum_samples_per_mi_dimension": 20,
+      "minimum_samples_for_second_count": 40,
+      "fixed_in_power": {},
+      "fixed_out_power": {},
+      "sparsification_enabled": true,
+      "sparsify_exponent_threshold": 0.05,
+      "sparsify_max_score_increase": 0.05,
+      "rationalization_enabled": true,
+      "max_rational_denominator": 5,
+      "validate_after_rationalization": true
+    },
+    "replanning_triggers": [
+      "insufficient_samples_for_mi",
+      "no_convergence_in_rationalization",
+      "multiple_mechanisms_detected"
+    ],
+    "max_replans": 2
+  }
+}
