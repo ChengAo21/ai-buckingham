@@ -21,7 +21,9 @@ def style() -> None:
     .block-container {max-width:1450px;padding-top:2.4rem;padding-bottom:3rem;}
     h1,h2,h3 {font-family:Georgia,'Times New Roman',serif;letter-spacing:-.025em;color:#142a3a;}
     h1 {font-size:2.8rem;} h2 {font-size:1.9rem;} h3 {font-size:1.45rem;}
-    .ab-masthead {border-top:4px solid #17374c;border-bottom:1px solid #cdd8e4;padding:1rem 0 1.4rem;margin-bottom:1.5rem;}
+    .ab-masthead {position:relative;overflow:hidden;border-top:4px solid #17374c;border-bottom:1px solid #cdd8e4;padding:1rem 235px 1.4rem 0;margin-bottom:1.5rem;}
+    .ab-motif {position:absolute;right:8px;top:22px;width:210px;height:125px;opacity:.3;pointer-events:none;}
+    @media (max-width:900px) {.ab-masthead {padding-right:0;}.ab-motif {display:none;}}
     .ab-kicker {font-size:.85rem;letter-spacing:.15em;font-weight:700;color:#245b78;text-transform:uppercase;}
     .ab-deck {color:#55677a;font-size:1.05rem;line-height:1.6;max-width:1100px;}
     .ab-tag {display:inline-block;border:1px solid #bdd2e0;background:#edf5fa;color:#245b78;border-radius:3px;padding:.2rem .6rem;font-size:.85rem;margin:.2rem .35rem .2rem 0;}
@@ -35,15 +37,37 @@ def style() -> None:
 
 
 def masthead(title: str, description: str, tag: str = "Evidence explorer") -> None:
-    st.markdown(f'<div class="ab-masthead"><div class="ab-kicker">AI Buckingham · {html.escape(tag)}</div>'
+    motif = ('<svg class="ab-motif" viewBox="0 0 210 125" aria-hidden="true" focusable="false">'
+             '<g fill="none" stroke="#209b88" stroke-width="1.4">'
+             '<path d="M6 105C44 107 40 33 78 42S119 109 151 66S180 28 204 17"/>'
+             '<path d="M6 115C43 117 43 51 81 57S120 119 154 81S183 45 204 36" opacity=".45"/>'
+             '<path d="M6 95C41 97 37 16 75 27S116 96 148 51S177 11 204 3" opacity=".45"/>'
+             '</g><g fill="#245b78"><circle cx="78" cy="42" r="3.5"/>'
+             '<circle cx="151" cy="66" r="3.5"/><circle cx="188" cy="27" r="3.5"/></g>'
+             '<path d="M5 121H207M10 121V8" fill="none" stroke="#245b78" opacity=".35"/></svg>')
+    st.markdown(f'<div class="ab-masthead">{motif}<div class="ab-kicker">AI Buckingham · {html.escape(tag)}</div>'
                 f'<h1>{html.escape(title)}</h1><div class="ab-deck">{html.escape(description)}</div></div>', unsafe_allow_html=True)
 
 
 def chart(fig: go.Figure, key: str | None = None) -> None:
+    # Keep the title above the plotting area and the legend below the axes.
+    # A shared top strip made long titles collide with Plotly Express legend
+    # headings, especially when two comparisons share a Streamlit row.
+    legend_traces = [trace for trace in fig.data if hasattr(trace, "showlegend") and trace.showlegend is not False]
+    has_legend = (fig.layout.showlegend is not False
+                  and (fig.layout.showlegend is True or len(legend_traces)>1
+                       or any(trace.showlegend is True for trace in legend_traces)))
     fig.update_layout(template="plotly_white", colorway=COLORS, paper_bgcolor="rgba(0,0,0,0)",
                       font={"family": "Arial, sans-serif", "size": 14, "color": "#20384b"},
-                      margin={"l": 30, "r": 25, "t": 50, "b": 40},
-                      legend={"orientation": "h", "yanchor": "bottom", "y": 1.02, "x": 0})
+                      height=fig.layout.height or 520,
+                      title={"x":0,"xanchor":"left","y":.98,"yanchor":"top","automargin":True,
+                             "font":{"size":18}},
+                      margin={"l": 45, "r": 35, "t": 85 if fig.layout.title.text else 35, "b": 125 if has_legend else 60,
+                              "autoexpand":True},
+                      legend={"orientation":"h","yanchor":"top","y":-.22,"x":0,"xanchor":"left",
+                              "title":{"side":"top"},"font":{"size":12},"maxheight":100})
+    fig.update_xaxes(automargin=True, title_standoff=16)
+    fig.update_yaxes(automargin=True, title_standoff=12)
     st.plotly_chart(fig, width="stretch", key=key,
                     config={"displaylogo": False, "toImageButtonOptions": {"format": "png", "scale": 3}})
 

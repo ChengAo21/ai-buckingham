@@ -1,8 +1,14 @@
-"""Build original vector branding and data-backed repository showcase figures.
+"""Build branding, the author's workflow figure, and data-backed showcase figures.
 
 Only docs/assets (or an explicit --output-dir) is written. No model, optimizer,
 scientific result, or original figure is changed. PNGs are rendered directly
 from the included numeric exports rather than resized screenshots or cards.
+
+The default reuses and verifies the committed figure-only workflow PNG and its
+source metadata. The complete manuscript is neither needed nor distributed.
+To rebuild that PNG from the author's local original PDF, optionally run:
+    python scripts/build_showcase_assets.py --workflow-only --workflow-pdf PATH
+The fixed crop is Fig. 2 on PDF page 5 and excludes its caption and article text.
 """
 from __future__ import annotations
 
@@ -11,6 +17,7 @@ import hashlib
 import html
 import json
 from pathlib import Path
+import shutil
 
 ROOT = Path(__file__).resolve().parents[1]
 INK = "#143342"
@@ -18,10 +25,99 @@ BLUE = "#245B78"
 TEAL = "#159F94"
 GOLD = "#C67A36"
 PALE = "#D8E4E8"
+WORKFLOW_PAGE = 5
+WORKFLOW_CROP_TOP_LEFT = (70.0, 50.0, 540.0, 414.0)
 
 
 def sha256(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def workflow_asset(output, source_pdf=None, dpi=400):
+    """Use the authorized figure crop, never a complete manuscript page.
+
+    The crop is given in 1/72-inch PDF points, from the top-left of the upright
+    page: left, top, right, bottom. Rendering is a direct PDFium page-region
+    operation; no raster image is retouched or reinterpreted.
+    """
+    output.mkdir(parents=True, exist_ok=True)
+    target = output / "workflow.png"
+    if source_pdf is not None:
+        try:
+            import pypdfium2 as pdfium
+        except ImportError as error:
+            raise RuntimeError("Optional PDF extraction requires pypdfium2; the default build does not.") from error
+        source_pdf = Path(source_pdf).resolve()
+        document = pdfium.PdfDocument(str(source_pdf))
+        if len(document) < WORKFLOW_PAGE:
+            raise ValueError("The supplied source has no workflow figure on page 5.")
+        page = document[WORKFLOW_PAGE - 1]
+        width, height = page.get_size()
+        left, top, right, bottom = WORKFLOW_CROP_TOP_LEFT
+        if not (0 <= left < right <= width and 0 <= top < bottom <= height):
+            raise ValueError("The fixed workflow crop does not fit the supplied page.")
+        margins = (left, height - bottom, width - right, top)
+        bitmap = page.render(scale=dpi / 72.0, crop=margins)
+        pixel_size = [bitmap.width, bitmap.height]
+        bitmap.to_pil().save(str(target))
+        bitmap.close()
+        page.close()
+        document.close()
+        return {
+            "file": "workflow.png",
+            "mode": "user_authorized_original_figure_crop",
+            "description": "The author's complete three-layer workflow schematic, original Fig. 2 panels (a)-(c), cropped without the caption, article text, title or authors.",
+            "source_files": {},
+            "external_source": {
+                "filename": source_pdf.name, "sha256": sha256(source_pdf),
+                "figure": "Fig. 2", "pdf_page_one_based": WORKFLOW_PAGE,
+                "pdf_page_size_points": [width, height],
+                "crop_top_left_points": list(WORKFLOW_CROP_TOP_LEFT),
+                "crop_bottom_left_points": [left, height - bottom, right, height - top],
+                "coordinate_units": "PDF points (1/72 inch)",
+                "render_dpi": dpi,
+                "pixel_size": pixel_size,
+                "complete_source_pdf_distributed": False,
+                "permission": "User explicitly authorized reuse of their own manuscript figure.",
+                "interpretation": "This is the original workflow schematic; small numerical examples inside it are schematic labels, not replacements for current run metrics.",
+            },
+            "rebuild": "python scripts/build_showcase_assets.py --workflow-only --workflow-pdf PATH_TO_LOCAL_ORIGINAL_PDF",
+            "sha256": sha256(target),
+        }
+    # Rebuilding the public repository needs only the committed crop and record.
+    # Custom output directories may reuse that same verified crop byte-for-byte.
+    for folder in [output, ROOT / "docs/assets"]:
+        manifest_path = folder / "manifest.json"
+        if not manifest_path.is_file():
+            continue
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        record = next((entry for entry in manifest.get("assets", []) if entry["file"] == "workflow.png"), None)
+        if record is not None:
+            original = folder / "workflow.png"
+            if not original.is_file() or sha256(original) != record["sha256"]:
+                raise ValueError("The committed workflow crop does not match its manifest.")
+            if original.resolve() != target.resolve():
+                shutil.copyfile(original, target)
+            return record
+    raise FileNotFoundError("Provide the committed workflow.png and manifest, or use --workflow-pdf to rebuild the figure-only crop.")
+
+
+def update_workflow_only(output, source_pdf=None, dpi=400):
+    """Replace only the workflow asset and its metadata; leave galleries intact."""
+    manifest_path = output / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    record = workflow_asset(output, source_pdf, dpi)
+    manifest["assets"] = [entry for entry in manifest["assets"] if entry["file"] not in {"workflow.svg", "workflow.png"}]
+    manifest["assets"].insert(1, record)
+    manifest["preferred_workflow_asset"] = "workflow.png"
+    manifest["generator_sha256"] = sha256(Path(__file__))
+    manifest["policy"] = "Original branding, an authorized figure-only workflow crop, and plotting of included numerical exports. No complete manuscript is distributed; no scientific source or result is modified."
+    manifest["png_canvas"]["applies_to"] = [entry["file"] for entry in manifest["assets"] if entry["file"].endswith(".png") and entry["file"] != "workflow.png"]
+    manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    obsolete = output / "workflow.svg"
+    if obsolete.is_file():
+        obsolete.unlink()
+    return manifest
 
 
 def text(x, y, value, size=19, fill=INK, weight="400", family="Arial, sans-serif", extra=""):
@@ -65,47 +161,6 @@ def hero_svg():
     return "\n".join(s) + "\n"
 
 
-def workflow_svg():
-    s = ['<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="820" viewBox="0 0 1200 820" role="img" aria-labelledby="title desc">',
-         '<title id="title">AI Buckingham workflow</title>',
-         '<desc id="desc">Semantic formulation, retrieval-grounded dimensional audit, symbolic Buckingham basis and protocol planning, gradient regimes, Type I or Type II local mutual-information learning, simplification and conditional collapse validation, followed by physical interpretation and evidence export.</desc>',
-         '<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#348B89"/></marker></defs>',
-         '<rect width="1200" height="820" fill="#F6F9FA"/>',
-         text(35, 54, "From a physical question to interpretable scaling", 34, INK, "400", "Georgia, serif"),
-         text(35, 89, "Fixed scientific tools, explicit decisions, and evidence at every stage.", 20, "#556E79"),
-         '<rect x="20" y="116" width="1160" height="210" rx="12" fill="#FFFFFF" stroke="#D4E1E5"/>',
-         text(40, 149, "SEMANTIC PLANNING & RETRIEVAL", 15, BLUE, "700", extra='letter-spacing="1.5"'),
-         '<rect x="20" y="397" width="1160" height="249" rx="12" fill="#FFFFFF" stroke="#D4E1E5"/>',
-         text(40, 431, "NUMERICAL INFERENCE", 15, BLUE, "700", extra='letter-spacing="1.5"')]
-
-    def card(x, y, number, title, lines, height=130):
-        out = [f'<rect x="{x}" y="{y}" width="340" height="{height}" rx="8" fill="#EEF5F6" stroke="#CBDEE1"/>',
-               f'<rect x="{x}" y="{y}" width="4" height="{height}" rx="2" fill="#268F88"/>',
-               text(x+18,y+30,number,15,TEAL,"700"),text(x+50,y+32,title,21,INK,"600")]
-        for i, line in enumerate(lines):
-            out.append(text(x+19,y+65+i*27,line,18,"#45606C"))
-        return out
-
-    s += card(40,174,"01","Formulate the problem",["Natural language + observations", "Identify quantities and response"])
-    s += card(430,174,"02","Audit the dimensions",["Retrieve physical-quantity records", "Check SI exponents and citations"])
-    s += card(820,174,"03","Construct the basis",["Symbolic null space of D", "Plan policies and constraints"])
-    s += ['<g fill="none" stroke="#348B89" stroke-width="2.5" marker-end="url(#arrow)"><path d="M382 239H423"/><path d="M772 239H813"/><path d="M990 305V355H210V451"/></g>',
-          '<path d="M600 174V162H210V174" fill="none" stroke="#8BA8AF" stroke-width="1.7" stroke-dasharray="5 5" marker-end="url(#arrow)"/>',
-          '<rect x="390" y="151" width="205" height="20" fill="#FFFFFF"/>', text(396,166,"revision when needed",15,"#6D8B94")]
-    s += card(40,456,"04","Resolve the regimes",["Analytical GPR gradients", "Single or multiple physical regimes", "Local inference within each regime"],168)
-    s += card(430,456,"05","Learn the scaling",["MI objective · CMA-ES / scalar search", "Type I: keep the response unchanged", "Type II: learn output rescaling", "Select the number of groups"],168)
-    s += card(820,456,"06","Simplify and validate",["Sparsify and rationalize", "Separate GPR collapse validation", "Preserve the numerical evidence"],168)
-    s += ['<g fill="none" stroke="#348B89" stroke-width="2.5" marker-end="url(#arrow)"><path d="M382 540H423"/><path d="M772 540H813"/><path d="M990 625V678"/></g>',
-          '<rect x="40" y="685" width="1120" height="107" rx="9" fill="#103C49"/>',
-          text(63,723,"SYNTHESIS & EVIDENCE",15,"#85D4C9","700",extra='letter-spacing="1.5"'),
-          text(63,756,"Physical interpretation with retrieved relations",24,"#F5FAFB","400","Georgia, serif"),
-          text(63,781,"Scaling laws · result cards · numerical tables · figures · run provenance",18,"#C0DFE2"),
-          text(749,716,"Conditional validation evaluates the",16,"#C0DFE2"),
-          text(749,739,"selected representation; it does not",16,"#C0DFE2"),
-          text(749,762,"retrain the complete discovery workflow.",16,"#C0DFE2"), '</svg>']
-    return "\n".join(s) + "\n"
-
-
 def selected_run(case_id):
     index = json.loads((ROOT / "results/index.json").read_text(encoding="utf-8"))
     case = next(record for record in index["cases"] if record["case_id"] == case_id)
@@ -116,7 +171,7 @@ def selected_run(case_id):
     return run
 
 
-def build(output):
+def build(output, source_pdf=None, workflow_dpi=400):
     import numpy as np
     import pandas as pd
     import matplotlib
@@ -134,8 +189,12 @@ def build(output):
                         "source_files": {str(p.relative_to(ROOT)).replace("\\", "/"):sha256(p) for p in sources},
                         "sha256":sha256(output/filename)})
 
-    for name, markup, description in [("hero.svg",hero_svg(),"Original project branding with illustrative, non-numeric scaling curves."),
-                                       ("workflow.svg",workflow_svg(),"Original vector diagram of the implemented scientific workflow.")]:
+    workflow = workflow_asset(output, source_pdf, workflow_dpi)
+    records.append(workflow)
+    obsolete = output / "workflow.svg"
+    if obsolete.is_file():
+        obsolete.unlink()
+    for name, markup, description in [("hero.svg",hero_svg(),"Original project branding with illustrative, non-numeric scaling curves.")]:
         (output/name).write_text(markup,encoding="utf-8")
         records.append({"file":name,"mode":"original_repository_vector_artwork","description":description,"source_files":{},"sha256":sha256(output/name)})
 
@@ -269,8 +328,9 @@ def build(output):
     save(fig,"velocity_transformations.png",[folder/"transformed_native_profiles.csv",folder/"incompressible_reference.csv"],"The archived algebraic AI Buckingham transformation is displayed without any fresh discovery, interpolation or fitting.")
 
     manifest={"schema_version":1,"generator":"scripts/build_showcase_assets.py","generator_sha256":sha256(Path(__file__)),
-              "policy":"Original vector branding and direct plotting of included numerical exports. No scientific source/result file, original figure, model, optimizer or fit is modified.",
-              "png_canvas":{"width":1200,"height":550,"dpi":100,"main_font_points":15,"maximum_panels":2},
+              "policy":"Original branding, an authorized figure-only workflow crop, and plotting of included numerical exports. No complete manuscript is distributed; no scientific source or result is modified.",
+              "preferred_workflow_asset":"workflow.png",
+              "png_canvas":{"width":1200,"height":550,"dpi":100,"main_font_points":15,"maximum_panels":2,"applies_to":[entry["file"] for entry in records if entry["file"].endswith(".png") and entry["file"]!="workflow.png"]},
               "attribution":"Project-created showcase graphics. Underlying datasets and third-party materials retain the terms documented in THIRD_PARTY_NOTICES.md.",
               "assets":records}
     (output/"manifest.json").write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
@@ -280,8 +340,16 @@ def build(output):
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output-dir",type=Path,default=ROOT/"docs/assets")
+    parser.add_argument("--workflow-pdf", type=Path, help="Optional local author manuscript used only to render Fig. 2; it is never copied into the output.")
+    parser.add_argument("--workflow-only", action="store_true", help="Update/verify only workflow.png and its manifest entry; leave all other assets unchanged.")
+    parser.add_argument("--workflow-dpi", type=int, default=400)
     args=parser.parse_args()
-    manifest=build(args.output_dir.resolve())
+    if args.workflow_dpi < 72:
+        parser.error("--workflow-dpi must be at least 72")
+    if args.workflow_only:
+        manifest=update_workflow_only(args.output_dir.resolve(), args.workflow_pdf, args.workflow_dpi)
+    else:
+        manifest=build(args.output_dir.resolve(), args.workflow_pdf, args.workflow_dpi)
     print(json.dumps({"assets":len(manifest["assets"]),"output":str(args.output_dir.resolve())}))
 
 

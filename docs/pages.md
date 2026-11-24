@@ -1,6 +1,6 @@
 # Research page on GitHub Pages
 
-The public research page is served at [chengao21.github.io/ai-buckingham](https://chengao21.github.io/ai-buckingham/). It presents the project and selected recorded results. The separate Streamlit application provides the interactive workflow and live-analysis interface described in [app.md](app.md).
+The public research page is served at [chengao21.github.io/ai-buckingham](https://chengao21.github.io/ai-buckingham/). It presents the project and selected recorded results. The separate [hosted Streamlit application](https://ai-buckingham.streamlit.app/) provides the interactive workflow and live-analysis interface. Its local setup and operating details are described in [app.md](app.md).
 
 ## Build and publication
 

@@ -6,7 +6,7 @@
 
 [![Results explorer](https://img.shields.io/badge/Results-Open_explorer-087f8c?style=flat-square)](https://chengao21.github.io/ai-buckingham/)
 [![LangGraph notebooks](https://img.shields.io/badge/LangGraph-10_notebooks-245b78?style=flat-square)](notebooks/cases/)
-[![Streamlit locally](https://img.shields.io/badge/Streamlit-Run_locally-FF4B4B?style=flat-square&logo=streamlit&logoColor=white)](#run-locally)
+[![Streamlit app](https://img.shields.io/badge/Streamlit-Open_app-FF4B4B?style=flat-square&logo=streamlit&logoColor=white)](https://ai-buckingham.streamlit.app/)
 [![Python 3.12](https://img.shields.io/badge/Python-3.12-536e70?style=flat-square)](pyproject.toml)
 [![MIT License](https://img.shields.io/badge/License-MIT-d38b50?style=flat-square)](LICENSE)
 
@@ -28,7 +28,9 @@ The examples span fluid mechanics, magnetohydrodynamics, thermal convection and 
 
 ## Workflow
 
-![AI Buckingham workflow: physical reasoning and retrieved knowledge, dimensional basis, gradient-based regimes, mutual-information learning, simplification and validation](docs/assets/workflow.svg)
+![AI Buckingham workflow: physical reasoning and retrieved knowledge, dimensional basis, gradient-based regimes, mutual-information learning, simplification and validation](docs/assets/workflow.png)
+
+The authors’ Figure 2 illustrates the workflow. Case-specific numerical results are reported below and in the linked result cards.
 
 Two knowledge bases contain **247 physical quantities** and **251 dimensionless relations**. Retrieved records support dimensional checking and physical interpretation. Gradient-based clustering identifies local mechanisms; mutual information guides group-count selection, with sparsification and rationalization producing compact expressions. The recorded evidence includes variable-level retrieval, dimensional ledgers, candidate partitions, actual optimizer generations and validation splits.
 
@@ -97,7 +99,7 @@ Original row counts are listed above. Analysis-eligible counts and excluded zero
 
 **[Open the browser-based results page](https://chengao21.github.io/ai-buckingham/)** to view the selected figures, explore all ten cases and open their complete saved result cards without installation or API credentials.
 
-The **Streamlit evidence explorer** adds detailed controls for the full workflow:
+**[Open the Streamlit evidence explorer](https://ai-buckingham.streamlit.app/)** for detailed controls across the full workflow. Browsing the saved results requires no API keys.
 
 | View | What to inspect |
 |---|---|
@@ -107,7 +109,7 @@ The **Streamlit evidence explorer** adds detailed controls for the full workflow
 | Comparisons | Dimensional-checking trials, Cess regional relevance, velocity transforms and roughness predictions |
 | Run analysis | A new model-backed LangGraph calculation with its own downloadable evidence bundle |
 
-Run Streamlit locally using the commands below. GitHub Pages serves the saved results; new Python calculations run through Streamlit or the CLI. See the [application guide](docs/app.md) and [Pages guide](docs/pages.md).
+The app is hosted on Streamlit Community Cloud; the commands below also let you run it locally. GitHub Pages serves the static results gallery and complete saved cards. New Python calculations run through Streamlit or the CLI with configured model access. See the [application guide](docs/app.md) and [Pages guide](docs/pages.md).
 
 ## Run locally
 
@@ -190,7 +192,7 @@ knowledge/              Two knowledge bases and their GLM embedding NPZ indexes
 notebooks/cases/        Ten complete executed LangGraph notebooks
 results/                States, cards, tables, optimizer histories and original figures
 reproduction/           Four historical/numerical reproduction packages
-docs/assets/            Source-linked gallery figures and original SVG schematics
+docs/assets/            Source-linked gallery figures, workflow image and SVG branding
 site/                   Buildable static GitHub Pages results explorer
 scripts/                Execution, validation and presentation builders
 tests/                  Offline scientific and interface acceptance checks
@@ -204,3 +206,7 @@ See [module boundaries and adaptations](docs/refactoring.md) for the source refa
 Use [`CITATION.cff`](CITATION.cff) to cite this software and acknowledge the original dataset sources you use. Original project code is released under the [MIT License](LICENSE); third-party terms are listed in [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).
 
 The repository distributes code, datasets and result evidence. Manuscript PDFs, reference-publication PDFs and local credential files are excluded.
+
+## Acknowledgements
+
+We thank GPT-6.2 (OpenAI), used through Codex, for assistance with code organization, reproducibility checks, documentation and the design of the results explorers. The authors reviewed the assisted changes and remain responsible for the scientific methods, results and interpretation. We also thank the developers of the open-source tools and the contributors of the datasets acknowledged in this repository.

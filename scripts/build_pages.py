@@ -43,7 +43,7 @@ DESCRIPTIONS = {
     "rough_pipe": "Gradient-based identification separates Reynolds-number and roughness-dominated dependencies.",
 }
 ASSETS = (
-    "hero.svg", "workflow.svg", "mhd_mi_landscape.png", "cess_regimes.png",
+    "hero.svg", "workflow.png", "mhd_mi_landscape.png", "cess_regimes.png",
     "rough_pipe_regimes.png", "sandgrain_predictions.png", "velocity_transformations.png",
     "manifest.json",
 )

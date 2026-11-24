@@ -12,6 +12,23 @@ from .components import chart, json_panel, masthead, selected_run, table
 from .data import ROOT, case_catalog, dataset_path, first, json_lines, read_csv, read_json, reproduction
 
 
+def mi_contour(pivot: pd.DataFrame) -> go.Contour:
+    """Render the saved MI grid with 80 color bands; retain every input value."""
+    finite = pivot.to_numpy(dtype=float)
+    finite = finite[np.isfinite(finite)]
+    contours = {"coloring":"fill", "showlines":False}
+    settings = {}
+    if finite.size and finite.max() > finite.min():
+        low, high = float(finite.min()), float(finite.max())
+        contours.update(start=low, end=high, size=(high-low)/80)
+        settings["autocontour"] = False
+    return go.Contour(x=pivot.columns, y=pivot.index, z=pivot.values,
+                      colorscale="Blues", ncontours=80, contours=contours,
+                      colorbar={"title":{"text":"MI", "side":"top"}, "nticks":8,
+                                "tickformat":".3g", "thickness":16, "len":.85},
+                      name="Conditional MI", **settings)
+
+
 def gradient_view(detection: dict, case_id: str):
     coordinates = detection.get("feature_coordinates", [])
     gradients = detection.get("surrogate_gradients", [])
@@ -144,7 +161,7 @@ def landscape_view(case_id):
         json_panel("Landscape metadata",metadata,key="landscape_metadata")
         return
     pivot = frame.pivot(index="coefficient_y",columns="coefficient_x",values="mutual_information")
-    figure = go.Figure(go.Contour(x=pivot.columns,y=pivot.index,z=pivot.values,colorscale="Blues",colorbar={"title":"MI"},name="Conditional MI"))
+    figure = go.Figure(mi_contour(pivot))
     selected_record = None
     ix, iy = 0, 1
     coefficients = (result.get("plot_info") or {}).get("selected_coefficients", [])
@@ -173,7 +190,9 @@ def landscape_view(case_id):
     st.caption("The contour is an exported conditional MI grid. The overlaid mean path is a projection of the actual search; unplotted coefficients can change along the path and need not equal the fixed slice values. Finite negative MI estimates are retained.")
     view = st.radio("Landscape rendering",["Contour","3D surface"],horizontal=True,key="landscape_rendering")
     if view=="3D surface":
-        surface=go.Figure(go.Surface(x=pivot.columns,y=pivot.index,z=pivot.values,colorscale="Blues",colorbar={"title":"MI"}))
+        surface=go.Figure(go.Surface(x=pivot.columns,y=pivot.index,z=pivot.values,colorscale="Blues",
+                                    colorbar={"title":{"text":"MI","side":"top"},"nticks":8,
+                                              "tickformat":".3g","thickness":16,"len":.85}))
         surface.update_layout(scene={"xaxis_title":f"c{ix+1}","yaxis_title":f"c{iy+1}","zaxis_title":"MI"},height=580)
         chart(surface,"landscape_3d_surface")
     if not history.empty:
@@ -223,7 +242,7 @@ def mi_view(state: dict, run, case_id):
             frame = read_csv(path)
             if {"coefficient_x","coefficient_y","mutual_information"}.issubset(frame.columns):
                 pivot = frame.pivot(index="coefficient_y", columns="coefficient_x", values="mutual_information")
-                chart(go.Figure(go.Contour(x=pivot.columns, y=pivot.index, z=pivot.values, colorscale="Blues", colorbar_title="MI")), f"mi_surface_{i}")
+                chart(go.Figure(mi_contour(pivot)), f"mi_surface_{i}")
                 st.caption("Conditional two-coordinate MI slice. Other coefficients are fixed to the exported slice definition.")
                 table(frame, f"mi_surface_{i}.csv")
     st.caption("Restart and subsampling uncertainty measure different sources of variation. Full-precision values remain available in the saved state and tables.")
@@ -277,7 +296,9 @@ def trace_view(path):
         points = pd.DataFrame({"x":[v[ix] for v in means],"y":[v[iy] for v in means],"generation":frame["generation"]})
         points = points[points["generation"]<=generation]
         fig = go.Figure()
-        fig.add_trace(go.Scatter(x=points.x,y=points.y, mode="lines+markers",marker={"color":points.generation,"colorscale":"Blues","size":7,"colorbar":{"title":"Generation"}},customdata=points.generation,hovertemplate="θx=%{x}<br>θy=%{y}<br>Generation %{customdata}<extra></extra>",name="Recorded mean"))
+        fig.add_trace(go.Scatter(x=points.x,y=points.y, mode="lines+markers",marker={"color":points.generation,"colorscale":"Blues","size":7,
+                                "colorbar":{"title":{"text":"Generation","side":"top"},"thickness":16,"len":.85,"nticks":7}},
+                                customdata=points.generation,hovertemplate="θx=%{x}<br>θy=%{y}<br>Generation %{customdata}<extra></extra>",name="Recorded mean"))
         fig.add_trace(go.Scatter(x=[points.x.iloc[-1]],y=[points.y.iloc[-1]],mode="markers",marker={"size":15,"symbol":"diamond","color":"#C17837"},name="Selected generation"))
         fig.update_layout(xaxis_title=f"θ{ix+1}",yaxis_title=f"θ{iy+1}",height=530)
         chart(fig,"trace_projection")

@@ -1,8 +1,10 @@
 # Interactive evidence explorer
 
-The Streamlit app is a local, repository-backed scientific results explorer. It
-does not require model credentials for browsing and is not deployed by the
-repository-preparation workflow.
+[Open the hosted Streamlit evidence explorer](https://ai-buckingham.streamlit.app/)
+to browse the complete recorded workflow without installation or model credentials.
+The app reads the evidence committed in this repository.
+
+To run the same explorer locally, use Python 3.12 and run from the repository root:
 
 ```bash
 python -m pip install -e ".[app]"
@@ -69,17 +71,20 @@ the current manifest and generation-trace availability are visible while a job
 runs. Cancellation retains partial evidence with a cancelled status. Reduced
 budgets are labelled exploratory and do not reproduce the manuscript budget.
 
-## Hosting later
+## Hosted application
 
-The same app can be deployed separately after the repository is uploaded. Use a
-read-only evidence deployment for the public results explorer and provision the
-compute/API capacity needed for enabled live runs. Runtime artifacts require
-durable storage if they must survive restarts. Do not commit credentials or
-`.streamlit/secrets.toml`; use the deployment platform's secret settings.
+The public application is hosted at [ai-buckingham.streamlit.app](https://ai-buckingham.streamlit.app/),
+separately from the [GitHub Pages research page](https://chengao21.github.io/ai-buckingham/).
+GitHub Pages serves static results; Streamlit provides the interactive Python interface.
 
-Static data and plots support offline browsing. Long CMA-ES searches are actual
-compute tasks; a deployment must accommodate their duration and concurrent
-memory/CPU use. This repository does not claim an always-on online deployment.
+Saved evidence can also be browsed locally without API credentials. New analyses
+require the configured model services and enough compute for their selected budgets.
+Long CMA-ES searches consume actual CPU and memory; use a local installation when
+more compute or durable run storage is needed. Runtime artifacts require durable
+storage if they must survive hosted-app restarts.
+
+Keep deployment credentials in the platform's secret settings, outside the repository;
+do not commit `.streamlit/secrets.toml`.
 
 ## Additional recorded numerical evidence
 

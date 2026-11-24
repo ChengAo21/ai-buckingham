@@ -96,7 +96,9 @@ def cess():
         else:
             st.info("Pointwise regional category arrays are unavailable for this selection.")
     with right:
-        chart(px.scatter(coordinates,x="Re_tau",y="eta",color="original_regime",log_x=True,log_y=True,hover_data=["row_id","y_plus"],title="AI Buckingham · recorded gradient partition"),"cess_gradient")
+        chart(px.scatter(coordinates,x="Re_tau",y="eta",color="original_regime",log_x=True,log_y=True,hover_data=["row_id","y_plus"],
+                         labels={"original_regime":"Physical regime"},
+                         title="AI Buckingham<br><sup>Recorded gradient partition</sup>"),"cess_gradient")
     st.caption("Both panels use the same 1,000 Cess observations. M controls the geometric partition resolution; K identifies the gradient regimes. The shaded band spans the recorded intermediate samples.")
     table(selected,"selected_regional_scores.csv")
     if not sensitivity.empty:
@@ -126,9 +128,9 @@ def velocity():
     colors={"Raw":"#95A3B1","TL":"#8B6BA5","IT-pi":"#C17837","AI Buckingham":"#245B78"}
     for method in methods:
         x,y=coordinates[method]
-        for profile in selected_profiles:
+        for i, profile in enumerate(selected_profiles):
             subset=frame[frame.case==profile]
-            fig.add_trace(go.Scatter(x=subset[x],y=subset[y],mode="lines",name=f"{method} · profile {profile}",legendgroup=method,
+            fig.add_trace(go.Scatter(x=subset[x],y=subset[y],mode="lines",name=method,legendgroup=method,showlegend=i==0,
                                     line={"color":colors[method],"width":1.5},hovertemplate=f"{method} · profile {profile}<br>x=%{{x:.3g}}<br>U=%{{y:.3g}}<extra></extra>"))
     if not reference.empty:
         fig.add_trace(go.Scatter(x=reference.y_plus,y=reference.U_plus,mode="lines",name="Incompressible reference",line={"color":"#142A3A","width":3,"dash":"dash"}))

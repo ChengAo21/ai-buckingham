@@ -1,10 +1,10 @@
 # Preparation validation
 
-These reports describe verification of the scientific repository and its presentation assets. GitHub Pages publication uses the separate workflow described in [pages.md](../pages.md); the Streamlit application remains a separately runnable Python service.
+These reports describe verification of the scientific repository and its presentation assets. GitHub Pages publication uses the separate workflow described in [pages.md](../pages.md); the [hosted Streamlit application](https://ai-buckingham.streamlit.app/) is a separate Python service and can also be run locally.
 
 | Record | Scope |
 |---|---|
-| [`unit_tests.json`](unit_tests.json) | Complete 76-test offline suite |
+| [`unit_tests.json`](unit_tests.json) | Complete 79-test offline suite |
 | [`web_smoke.json`](web_smoke.json) | Current API-blocked checks across all six Streamlit views |
 | [`final_web.json`](final_web.json) | Final checks of actual gradients, verified rough-pipe metrics, zero failed included runs and the pressure-gradient baseline |
 | [`publication_alignment.json`](publication_alignment.json) | 309 acceptance checks against the author numerical tables, including all ten cases |
