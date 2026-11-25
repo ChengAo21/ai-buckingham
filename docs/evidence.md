@@ -50,6 +50,7 @@ The original selection rule is retained: the primary-seed candidate is the repor
 - Similarity-type screening coefficients are diagnostic. The formal selected representation comes from the subsequent learning stage.
 - Invertible power transformations, group ordering, and cluster-label permutations may describe equivalent representations. Type II output-rescaling exponents must not be normalized like an input-direction display.
 - `Ra^(1/3)` as an input coordinate does not establish `Nu proportional to Ra^(1/3)`.
+- Selected groups parameterize a response relation `Pi_out ≈ F(Pi_1, ..., Pi_k)` within each scope. Generated interpretation commentary is preserved verbatim as part of the execution record; it does not define an additional fitted law. The structured selected coordinates, output rescaling and validation values specify the numerical result.
 - Sand-grain roughness includes the declared `Sk + 2` transformation and a source-stratified 83/21 split. Comparisons of raw and learned predictors must use the same split; extrapolation outside the training hull is marked.
 - The rough-pipe CSV is generated from a prescribed piecewise relationship with a switch at Re = 3000. This is not an experimentally discovered transition threshold.
 - Blasius has 200 original observations and 196 positive-response observations; velocity has 1,109 original and 1,103 positive-response observations. Surrogate training selection is separate from collapse-validation splitting.

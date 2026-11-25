@@ -90,6 +90,12 @@ def main(argv=None) -> int:
                        collapse_path.is_relative_to(case_run_path(case_id))
                        and any(frame.equals(expected) for frame in point_tables),
                        {"selected_collapse": str(collapse_path.relative_to(ROOT)), "rows": len(expected)})
+                if case_id == "velocity_scaling":
+                    saved = read_json(case_run_path(case_id) / "state.json")
+                    output = saved["workflow_result"]["local_workflows"][0]["final_solution"]["output_dimensionless_formula"]
+                    record("Type II response relation retains the complete recorded output rescaling",
+                           any(element.value == output for element in app.code)
+                           and any("Π_out ≈ F(Π1)" in element.value for element in app.caption))
             app.selectbox(key="workflow_case").set_value("blasius").run()
             app.toggle(key="show_complete_card").set_value(True).run()
             record("Saved complete HTML card is displayed on explicit toggle", len(app.get("iframe")) == 1)
@@ -100,6 +106,12 @@ def main(argv=None) -> int:
             predictions = frames_with("reference", "original_seven", "learned_groups", "split")
             record("Sandgrain prediction interaction selects the same 21 test observations",
                    len(predictions) == 1 and len(predictions[0]) == 21 and set(predictions[0]["split"]) == {"test"})
+            saved = read_json(case_run_path("sandgrain") / "state.json")
+            commentary = next(element for element in app.expander if element.label == "Archived model commentary")
+            record("Sandgrain shows a two-input response and preserves model commentary in its closed archive",
+                   any("Π_out ≈ F(Π1, Π2)" in element.value for element in app.caption)
+                   and any(element.value == saved["final_report"] for element in commentary.markdown)
+                   and not commentary.proto.expanded)
 
             app.selectbox(key="workflow_case").set_value("rough_pipe").run()
             mi = [float(m.value) for m in app.metric if m.label == "Mutual information"]

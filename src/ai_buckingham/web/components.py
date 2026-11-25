@@ -86,6 +86,14 @@ def table(frame: pd.DataFrame, name: str, key: str | None = None) -> None:
                        file_name=name, mime="text/csv", key=key or f"download_{name}")
 
 
+def interpretation_commentary(text: str | None) -> None:
+    if not text:
+        return
+    with st.expander("Archived model commentary", expanded=False):
+        st.caption("Original generated commentary, preserved verbatim. The structured results define the selected input coordinates, output rescaling and individual scopes.")
+        st.markdown(text)
+
+
 def json_panel(title: str, value, key: str | None = None, expanded: bool = False) -> None:
     with st.expander(title, expanded=expanded):
         st.json(scrub(value), expanded=False)

@@ -14,7 +14,7 @@ import uuid
 import pandas as pd
 import streamlit as st
 
-from .components import json_panel, masthead, table
+from .components import interpretation_commentary, json_panel, masthead, table
 from .data import ROOT, archive_bytes, case_catalog, load_run, read_json, scrub
 
 MARKER = "AI_BUCKINGHAM_EVENT "
@@ -93,9 +93,7 @@ def progress():
             st.download_button("Download result card · HTML",report.read_bytes(),file_name="analysis_report.html",mime="text/html",key="live_report")
         st.download_button("Download this run · ZIP",archive_bytes(path),file_name=path.name+".zip",mime="application/zip",key="live_bundle")
         state=read_json(path/"state.json")
-        if state.get("final_report"):
-            st.markdown("### Physical interpretation")
-            st.markdown(state["final_report"])
+        interpretation_commentary(state.get("final_report"))
         if st.button("Clear finished job from this session",key="clear_job"):
             del st.session_state["analysis_job"]
             st.rerun()

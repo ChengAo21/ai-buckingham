@@ -4,7 +4,7 @@ import plotly.express as px
 import streamlit as st
 import streamlit.components.v1 as components
 
-from .components import chart, figures, json_panel, masthead, selected_run, table
+from .components import chart, figures, interpretation_commentary, json_panel, masthead, selected_run, table
 from .data import ROOT, archive_bytes, case_catalog, dataset_path, first, read_csv, read_json
 
 
@@ -74,6 +74,10 @@ def render():
             values[1].metric("Mutual information", str(final.get("mutual_information", "Not recorded")))
             r2 = (final.get("gpr_validation") or {}).get("test_r2_mean", final.get("gpr_test_r2", "Not recorded"))
             values[2].metric("Conditional held-out R²", str(r2))
+            inputs = final.get("input_formulas", [])
+            if inputs:
+                coordinates = ", ".join(f"Π{i+1}" for i in range(len(inputs)))
+                st.caption(f"Selected response: Π_out ≈ F({coordinates}). The input coordinates and output rescaling are defined below for this scope.")
             for formula in final.get("input_formulas", []):
                 st.code(formula, language=None)
             if final.get("output_dimensionless_formula"):
@@ -82,7 +86,7 @@ def render():
             json_panel("Local evidence " + str(i+1), local, key=f"local_evidence_{i}")
         if not locals_:
             _values("Selected relations", first(state, "selected_relations", "final_solution"))
-        _values("Physical interpretation", state.get("final_report"))
+        interpretation_commentary(state.get("final_report"))
         _values("Interpretation retrieval", state.get("interpretation_knowledge_retrieval"))
         if run:
             st.markdown("#### Interactive data collapse")
@@ -113,7 +117,7 @@ def render():
             report = run["path"] / "report.html"
             if report.is_file():
                 if st.toggle("Display the complete recorded result card", value=False, key="show_complete_card"):
-                    st.caption("The complete card is read from the saved HTML, including the original evidence figures. Displaying it does not rerun any analysis.")
+                    st.caption("The complete card is the original execution record, including generated commentary and evidence figures. The structured relations specify the selected coordinates and output rescaling. Displaying the card does not rerun any analysis.")
                     components.html(report.read_text(encoding="utf-8"), height=950, scrolling=True)
                 st.download_button("Download complete result card · HTML", report.read_bytes(), file_name=f"{case_id}_report.html", mime="text/html")
             st.download_button("Download recorded run bundle · ZIP", archive_bytes(run["path"]), file_name=f"{case_id}_{run['path'].name}.zip", mime="application/zip")
