@@ -252,7 +252,7 @@ class RunRecorder:
         state = portable(self.last_state)
         report = str(state.get("final_report") or "")
         intro = f"# AI Buckingham — {self.case_id}\n\nRun: `{self.run_dir.name}`  \nStatus: {self.manifest['status']}  \nMode: {self.mode}\n\n"
-        (self.run_dir / "report.md").write_text(intro + report + "\n\nFull structured evidence is in state.json, events.jsonl and evidence/.\n", encoding="utf-8")
+        (self.run_dir / "report.md").write_text(intro + ("## Model output\n\n" if report else "") + report + "\n\nFull structured evidence is in state.json, events.jsonl and evidence/.\n", encoding="utf-8")
         cards = []
         for data in self.rich_outputs:
             if "text/html" in data:
@@ -261,7 +261,7 @@ class RunRecorder:
                 cards.append('<img style="max-width:100%" src="data:image/png;base64,' + data["image/png"] + '" alt="Recorded output">')
             elif "text/plain" in data:
                 cards.append("<pre>" + html.escape(data["text/plain"]) + "</pre>")
-        rendered = "\n".join(cards) or ("<pre>" + html.escape(report or "No rich display outputs were recorded for this run.") + "</pre>")
+        rendered = "\n".join(cards) or (("<h2>Model output</h2>" if report else "") + "<pre>" + html.escape(report or "No rich display outputs were recorded for this run.") + "</pre>")
         rendered += saved_figures_html(self.run_dir)
         page = '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AI Buckingham — ' + html.escape(self.case_id) + '</title><style>body{font:16px/1.55 system-ui;margin:32px auto;max-width:1240px;padding:0 20px;color:#17202a}pre{white-space:pre-wrap;overflow-wrap:anywhere}img{max-width:100%}.identity{padding:14px;border:1px solid #ccd7de;background:#f0f6f9}</style></head><body><h1>AI Buckingham — ' + html.escape(self.case_id) + '</h1><p class="identity">' + html.escape(self.manifest["interpretation"]) + '<br>Run: ' + html.escape(self.run_dir.name) + ' · Status: ' + html.escape(self.manifest["status"]) + '</p>' + rendered + '</body></html>'
         (self.run_dir / "report.html").write_text(page, encoding="utf-8")

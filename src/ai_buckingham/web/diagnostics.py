@@ -1,4 +1,4 @@
-"""Numerical decisions and the actual generation trace of each CMA-ES search."""
+"""Numerical decisions and CMA-ES optimization histories."""
 from __future__ import annotations
 
 import json
@@ -26,7 +26,7 @@ def mi_contour(pivot: pd.DataFrame) -> go.Contour:
                       colorscale="Blues", ncontours=80, contours=contours,
                       colorbar={"title":{"text":"MI", "side":"top"}, "nticks":8,
                                 "tickformat":".3g", "thickness":16, "len":.85},
-                      name="Conditional MI", **settings)
+                      name="MI", **settings)
 
 
 def gradient_view(detection: dict, case_id: str):
@@ -54,7 +54,7 @@ def gradient_view(detection: dict, case_id: str):
                                    showarrow=True, arrowhead=2, arrowsize=.8, arrowwidth=1, arrowcolor="#243b50")
             fig.update_layout(xaxis_title=f"z{ix+1} · orthonormal log-Pi", yaxis_title=f"z{iy+1} · orthonormal log-Pi", height=570)
             chart(fig, "gradient_field")
-            st.caption("Arrows show projections of normalized, recorded posterior-mean gradients. The scatter uses the recorded coordinate system and valid sample indices.")
+            st.caption("Normalized gradient directions in the displayed coordinates.")
             table(pd.concat([frame, pd.DataFrame(g, columns=[f"gradient_z{i+1}" for i in range(g.shape[1])])], axis=1), "gradient_field.csv")
             return
     if case_id in {"cess_channel", "cess"}:
@@ -62,7 +62,7 @@ def gradient_view(detection: dict, case_id: str):
         if not frame.empty:
             chart(px.scatter(frame, x="Re_tau", y="eta", color="original_regime", log_x=True, log_y=True,
                              hover_data=["row_id", "y_plus"], height=570), "recorded_cess_partition")
-            st.caption("Historical pointwise partition. The supplied comparison archive does not contain its underlying gradient vectors; arrows cannot be reconstructed from memberships alone.")
+            st.caption("Gradient vectors are unavailable for this archived partition.")
             table(frame, "recorded_gradient_membership.csv")
             return
     st.info("Gradient coordinates and vectors were not recorded for this source. Run an analysis to export the full numerical state.")
@@ -142,7 +142,6 @@ def partition_view(detection: dict, run=None, case_id=None):
             json_panel(f"Full K={k} candidate", candidate, key=f"full_candidate_{k}")
     json_panel("Regime selection criteria", detection.get("acceptance_criteria", {}))
     json_panel("Final regime decision", {k: detection.get(k) for k in ["status","best_k","selection_basis","decision_evidence","k2_direction_action","single_regime_baseline"]})
-    st.caption("Global leading-eigenvalue fraction is diagnostic only. Automatic multiple-regime selection requires an admissible candidate and K=2 directional separation. A prescribed multi-regime policy follows its own route.")
 
 
 def landscape_view(case_id):
@@ -150,7 +149,7 @@ def landscape_view(case_id):
     surface_path = folder / "response_surface.csv"
     if not surface_path.is_file():
         return
-    st.markdown("#### MI landscape and optimization history")
+    st.markdown("#### MI optimization landscape")
     metadata = read_json(folder / "run_metadata.json")
     result = read_json(folder / "optimization_result.json")
     st.caption("Source: " + str(metadata.get("mode", "case calculation")))
@@ -173,9 +172,13 @@ def landscape_view(case_id):
         selected_generation = st.select_slider("Landscape history generation",generations,value=generations[-1],key="landscape_generation") if len(generations)>1 else generations[0]
         subset = history[history.generation<=selected_generation]
         selected_record = subset.iloc[-1]
-        xcol,ycol = f"mean_c_{ix}",f"mean_c_{iy}"
+        bounded = [f"bounded_mean_c_{axis}" for axis in (ix, iy)]
+        if all(column in subset for column in bounded):
+            xcol, ycol = bounded
+        else:
+            xcol, ycol = f"mean_c_{ix}", f"mean_c_{iy}"
         if xcol in subset and ycol in subset:
-            figure.add_trace(go.Scatter(x=subset[xcol],y=subset[ycol],mode="lines+markers",name="Optimizer mean projection",
+            figure.add_trace(go.Scatter(x=subset[xcol],y=subset[ycol],mode="lines+markers",name="CMA-ES trajectory",
                                        line={"color":"#C17837","width":2},marker={"size":6},customdata=subset.generation,
                                        hovertemplate="Generation %{customdata}<br>x=%{x}<br>y=%{y}<extra></extra>"))
             figure.add_trace(go.Scatter(x=[selected_record[xcol]],y=[selected_record[ycol]],mode="markers",name="Selected generation",marker={"size":15,"symbol":"diamond","color":"#D25264"}))
@@ -187,7 +190,7 @@ def landscape_view(case_id):
             stats[2].metric("Step size σ",f"{selected_record['sigma']:.6g}")
     figure.update_layout(xaxis_title=f"c{ix+1}",yaxis_title=f"c{iy+1}",height=590)
     chart(figure,"landscape_conditional_plot")
-    st.caption("The contour is a fixed two-coefficient MI slice. The path projects the optimizer mean onto the same axes; any undisplayed coefficients may vary during the search. Negative MI estimates are retained.")
+    st.caption("The surface varies the displayed coefficients with other coefficients fixed; the trajectory is projected onto the same axes.")
     view = st.radio("Landscape rendering",["Contour","3D surface"],horizontal=True,key="landscape_rendering")
     if view=="3D surface":
         surface=go.Figure(go.Surface(x=pivot.columns,y=pivot.index,z=pivot.values,colorscale="Blues",
@@ -219,20 +222,20 @@ def mi_view(state: dict, run, case_id):
         for candidate in local.get("dimension_path", []):
             records.append({"Stage": f"k={candidate.get('pi_count', '?')}",
                             "MI": candidate.get("mutual_information"),
-                            "Information score": candidate.get("normalized_information_score")})
+                            "Normalized information score ε": candidate.get("normalized_information_score")})
         for name, field in [("Sparse", "sparsification"), ("Rationalized", "rationalization")]:
             result = local.get(field) or {}
             solution = result.get("final", result.get("candidate", {})) or {}
             if solution:
                 records.append({"Stage": name, "MI": solution.get("mutual_information"),
-                                "Information score": solution.get("normalized_information_score")})
+                                "Normalized information score ε": solution.get("normalized_information_score")})
         frame = pd.DataFrame(records)
         if not frame.empty:
             a, b = st.columns(2)
             with a:
                 chart(px.line(frame, x="Stage", y="MI", markers=True), f"mi_path_{i}")
             with b:
-                chart(px.line(frame, x="Stage", y="Information score", markers=True), f"epsilon_path_{i}")
+                chart(px.line(frame, x="Stage", y="Normalized information score ε", markers=True), f"epsilon_path_{i}")
             table(frame, f"mi_path_{i}.csv")
         json_panel(f"Similarity screening · {i+1}", local.get("similarity_screening", {}), key=f"screen_{i}")
         json_panel(f"Count and simplification decisions · {i+1}", {key:local.get(key) for key in ["count_decisions","lock_reason","sparsification","rationalization"]}, key=f"simplify_{i}")
@@ -243,9 +246,8 @@ def mi_view(state: dict, run, case_id):
             if {"coefficient_x","coefficient_y","mutual_information"}.issubset(frame.columns):
                 pivot = frame.pivot(index="coefficient_y", columns="coefficient_x", values="mutual_information")
                 chart(go.Figure(mi_contour(pivot)), f"mi_surface_{i}")
-                st.caption("Conditional two-coordinate MI slice. Other coefficients are fixed to the exported slice definition.")
+                st.caption("MI optimization landscape for the displayed coefficients; other coefficients are fixed.")
                 table(frame, f"mi_surface_{i}.csv")
-    st.caption("Restart and subsampling uncertainty measure different sources of variation. Full-precision values remain available in the saved state and tables.")
 
 
 def trace_view(path):
@@ -308,7 +310,7 @@ def trace_view(path):
 
 
 def render():
-    masthead("Numerical diagnostics", "Inspect the evidence behind regime selection, similarity screening, dimensionality and optimization.", "Numerical inference")
+    masthead("Numerical diagnostics")
     catalog = case_catalog()
     case_id = st.selectbox("Physical system", list(catalog), format_func=lambda k:catalog[k]["title"], key="diagnostic_case")
     run = selected_run(case_id, key="diagnostic_run")

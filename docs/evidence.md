@@ -1,59 +1,47 @@
-# Evidence, reproduction, and scientific interpretation
+# Result files and numerical validation
 
-## Execution identities
+## Run records
 
-Historical evidence, historical replay, fresh numerical recomputation, and a fresh complete agent execution answer different questions. Run manifests identify the execution mode and hashes. A new model response is not expected to reproduce the historical response byte-for-byte; fixed model names do not freeze a hosted service. The original archival evidence remains immutable.
+The included case results are stored under `results/cases/<case_id>/<run_id>/`. By default, new analyses are written under `generated/cases/<case_id>/<run_id>/`. Each run's manifest identifies its configuration and data sources.
 
-The repository provides datasets, analysis results and reproduction tools for the accompanying paper.
-
-## Evidence by stage
-
-| Stage | Inspect |
+| Workflow stage | Files and fields to inspect |
 |---|---|
-| Problem formulation | Exact prompt, input column order, dependent variable, semantic records and confidence |
-| Physical consistency | Quantity-specific query, top-k results, lexical/semantic/hybrid scores, record citations, candidate and revised dimensions, gate and revision history |
-| Dimensional basis | Ordered variables, dimensional matrix, rank/nullity, symbolic basis, orthonormal screening basis |
-| Analysis protocol | Planner output, manual overrides, resolved settings and parameter provenance |
-| Mechanism evidence | Eligible row mapping, surrogate settings, gradients, candidate cluster counts, eigenvalue ratios, sample fractions, directional evidence and acceptance reasons |
-| Local selection | Similarity-type screening, formal local learning, group-count candidates, MI and epsilon, restart and subsampling uncertainty |
-| Selected relations | Full, sparse and rationalized exponents; accepted/rejected simplifications and measured information loss |
-| Validation and figures | Exact training/test rows, predictions and evaluation settings, per-regime collapse and final plots |
+| Problem formulation | Prompt, input column order, dependent variable and dimensional records |
+| Dimensional checking | Retrieval queries, ranked knowledge-base records, dimensional assignments and Checker decisions |
+| Buckingham–Π basis construction | Ordered variables, dimensional matrix, rank, nullity and basis |
+| Workflow planning | Planner output, manual overrides and resolved settings |
+| Physical-regime identification | Sample mapping, GPR settings, gradients, candidate partitions and partition-selection criteria |
+| Dimensionless learning | Similarity-type screening, candidate group counts, MI and normalized information score ε |
+| Sparsification and rationalization | Physical exponents, proposed simplifications and changes in MI and ε |
+| Validation | Training/test rows, predictions, GPR settings and data-collapse plots |
 
-`state.json` is the full JSON export. Stage-oriented files under `evidence/` provide views of the same data. `events.jsonl` contains node events and attempt statuses. HTML cards contain the notebook display output.
+`state.json` contains the full run state. Files under `evidence/` provide stage-specific views. `events.jsonl` contains node events and run status updates.
 
-## Optimizer generations
+## Optimization records
 
-`evidence/optimization_trace.jsonl` is append-only. A generation record is written after the original `ask` / objective-evaluation / `tell` operations. Recording does not evaluate the objective again, consume scientific random draws, or change the selected candidate.
+`evidence/optimization_trace.jsonl` contains optimizer generations and endpoints. Records include the local scope, search identifier, random seed, group count, generation number, evaluation count, objective value and coefficient vectors. Direct evaluation and scalar optimization have endpoint records with no CMA-ES generation number.
 
-Records identify the local scope, phase, search, seed, group count and whether output scaling is optimized. They contain generation number, evaluations, sigma, best objective, population statistics and coefficient vectors. Scalar/direct paths record an `optimizer_end`; they do not have CMA generations. Unavailable trajectories are labelled as missing.
+The optimization objective includes infeasibility and collinearity penalties; it should be distinguished from MI. A trajectory projected onto two coefficients is also distinct from an MI landscape evaluated on a coefficient grid.
 
-For feasible candidates the search objective is negative MI; original feasibility and collinearity penalties also contribute. A plot of `-objective` is therefore not universally an MI plot. A two-coordinate projection of a higher-dimensional trajectory is not an independently recomputed MI landscape. Fresh landscape grids are available through the separate reproduction package.
+The primary-seed candidate supplies the reported result. Additional restarts provide optimization-variability estimates, as described in SI §3.5.
 
-The primary-seed candidate is the reported result; other restarts quantify variability.
+## Collapse validation
 
-## Figure coverage
+Test-set R² evaluates predictive collapse conditional on the selected representation, as described in [SI §3.5 of the accompanying paper](https://arxiv.org/html/2611.33961v1). The validation records include the evaluation coordinates, train/test indices and GPR settings.
 
-| Study content | Corresponding evidence |
-|---|---|
-| MHD discovery | Dimensional matrix/basis, MI landscape, group count and simplification, collapse |
-| Four Type I examples | Pressure-gradient, Rayleigh–Bénard, keyhole and Blasius landscape/selection/collapse |
-| Sand-grain roughness | Raw surface statistics, two-group surface, training convex hull and seven-predictor/two-group comparison |
-| Type II examples | Velocity and Goldenfeld input groups, output rescaling and before/after coordinates |
-| Multiple regimes | Cess and rough-pipe gradients, partitions, selection criteria and local collapse |
-| Dimensional-checking benchmark | 600 trials, 730 rounds, initial/revision/gate evidence and API statistics |
-| Velocity comparison | Six profiles, transformations, matched-coordinate RMS and interval errors |
-| Regime comparison | IT–Pi regional relevance with several region counts versus gradient partition and sensitivity |
+For sand-grain roughness parameterization, the inputs include the `Sk + 2` transformation. Predictions from the seven surface statistics and the two rationalized groups use the same 83 training and 21 test samples (Figure 5 and SI Table 19).
 
-## Limits that matter when reading results
+Samples with non-finite or non-positive values are excluded where logarithmic coordinates are used. The Blasius and compressible-velocity cases contain 200 and 1,109 observations, with 196 and 1,103 used for their regime-identification GPR fits, respectively (SI Table 7).
 
-- A held-out score calculated after selecting a representation evaluates conditional data collapse. It is not a strict out-of-sample estimate for the complete discovery procedure.
-- Similarity-type screening coefficients are diagnostic. The formal selected representation comes from the subsequent learning stage.
-- Invertible power transformations, group ordering, and cluster-label permutations may describe equivalent representations. Type II output-rescaling exponents must not be normalized like an input-direction display.
-- `Ra^(1/3)` as an input coordinate does not establish `Nu proportional to Ra^(1/3)`.
-- Selected groups parameterize a response relation `Pi_out ≈ F(Pi_1, ..., Pi_k)` within each scope. Generated interpretation commentary is preserved verbatim as part of the execution record; it does not define an additional fitted law. The structured selected coordinates, output rescaling and validation values specify the numerical result.
-- Sand-grain roughness includes the declared `Sk + 2` transformation and a source-stratified 83/21 split. Comparisons of raw and learned predictors must use the same split; extrapolation outside the training hull is marked.
-- The rough-pipe CSV is generated from a prescribed piecewise relationship with a switch at Re = 3000. This is not an experimentally discovered transition threshold.
-- Blasius has 200 original observations and 196 positive-response observations; velocity has 1,109 original and 1,103 positive-response observations. Surrogate training selection is separate from collapse-validation splitting.
-- The dimensional-checking benchmark compares three parsing models, ten cases, two wording variants and ten repetitions, with the same Checker model and at most one revision. It is not a complete paired RAG-on/off experiment.
-- Full semantic ranking can be recomputed for 60 archived Sandgrain rounds with saved query vectors. Other rounds support top-k score replay; full-ranking reconstruction requires the query vectors.
-- Default Cess and velocity comparison reproduction replots the saved fitted model or partition where documented. A new complete agent execution is a separate analysis.
+During sparsification, candidate removal uses normalized input-group exponents. For Type II similarity, the corresponding absolute output-rescaling exponent is checked against the 0.05 threshold without normalization (SI §3.4).
+
+## Case and comparison files
+
+The rough circular pipe dataset uses the prescribed laminar/Colebrook branch switch at Re = 3000 (main text §2.3.2). Its input samples, candidate partitions and regime-wise results are available in the case directory.
+
+Comparison packages document their inputs and commands separately:
+
+- [LLM ablation and API usage in dimensional checking](../reproduction/rag_ablation/) includes trial records, Checker decisions and summary tables.
+- [Relation to the Trettel–Larsson transformation](../reproduction/velocity_comparison/): six velocity profiles, transformations and RMS errors.
+- [Physical-regime detection in IT–π and AI Buckingham](../reproduction/regime_comparison/): global IT–π groups, regional relevance scores and Cess partitions.
+- [MI optimization landscapes](../reproduction/mi_landscapes/) includes coefficient grids and optimizer histories for MHD and the four Type I cases in Figure 4.

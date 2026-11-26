@@ -1,6 +1,6 @@
 # Case-study inputs
 
-`datasets/` contains the ten author-supplied analysis inputs, totaling 4,926 observations. File names use public case IDs; bytes, column spellings and column order are unchanged. `manifest.json` records SHA-256 and original file names. Only supplied `current_/data` inputs were used; no dataset copies from the source-code folder were substituted.
+`datasets/` contains the ten case-study inputs, totaling 4,926 observations. File names use the case IDs. `manifest.json` records the file names, columns and SHA-256 checksums.
 
 | Case ID | Rows | Source and preparation |
 |---|---:|---|
@@ -15,7 +15,7 @@
 | `cess_channel` | 1,000 | Zhang et al.; numerical evaluation of the Cess eddy-viscosity relation |
 | `rough_pipe` | 1,200 | Zhang et al.; piecewise laminar/Colebrook relation |
 
-Case prompts, exact manual overrides and reference dimensions are in `configs/cases/`. Ancillary source/series columns are retained. `MKE` is the wall-normal integral of squared mean streamwise velocity. For Sandgrain, `ks/Ra` is the response and `Ra, kt, k_rms, Sk, Ku, ES, Po` are the seven predictors. The workflow applies its declared dimensionless `Sk + 2` shift without editing the CSV.
+Case prompts, numerical settings and reference dimensions are in `configs/cases/`. Ancillary columns identify data sources or series. `MKE` is the wall-normal integral of squared mean streamwise velocity. For sand-grain roughness parameterization, `ks/Ra` is the response and `Ra, kt, k_rms, Sk, Ku, ES, Po` are the seven predictors. The `Sk + 2` transformation is applied during the analysis.
 
 Logarithmic regime analysis has 196 eligible Blasius and 1,103 eligible velocity observations after omitting zero responses. Cess and rough-pipe surrogate settings use 800 and 1,100 training observations respectively, separate from final collapse-validation splits.
 

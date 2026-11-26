@@ -15,4 +15,4 @@ Append any of `blasius goldenfeld cess_channel rough_pipe` to generate a subset.
 | `rough_pipe` | 1,200 | Sample with `default_rng(42)`; `64/Re` for `Re <= 3000`, Colebrook above |
 | `cess_channel` | 1,000 | Sample with `default_rng(30)` in archived wall-distance bands; evaluate Cess relation |
 
-Scientific calculations and column orders are unchanged from the supplied script; only public case/file names changed. Original generation was verified with Python 3.12.12, NumPy 2.4.0, pandas 2.3.3 and SciPy 1.16.3 on Windows. Other platforms or solver versions can change final floating-point digits. Central input hashes are in `data/manifest.json`.
+`environments/data-generation.txt` pins NumPy 2.4.0, pandas 2.3.3 and SciPy 1.16.3. The numerical reference environment uses Python 3.12.12 on Windows. Other platforms or solver versions can change final floating-point digits. Input checksums are in `data/manifest.json`.

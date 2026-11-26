@@ -51,7 +51,7 @@ def test_published_integrity_entry_point_works_outside_repository_without_changi
     assert completed.returncode == 0, completed.stdout + completed.stderr
     report = read_json(output)
     assert report["status"] == "passed"
-    assert report["counts_by_archive"]["rag_ablation"] == 4640
+    assert report["counts_by_archive"]["rag_ablation"] == 4637
     assert report["counts_by_archive"]["case_inputs"] == 12
     assert report["counts_by_archive"]["regime_comparison"] > 0
     assert report["counts_by_archive"]["velocity_comparison"] > 0
@@ -86,16 +86,34 @@ def test_reference_scoring_preserves_the_wrong_output_exclusion(trials):
     assert row["evaluated_ledger_output"] == "u" and row["expected_output"] == "u*"
 
 
-def test_checker_summary_distinguishes_vector_replay_from_recorded_scores():
+def test_checker_summary_rechecks_returned_records_without_query_vectors():
     summary = read_json(RAG / "results" / "rag_replay_summary.json")
     rounds = read_csv(RAG / "results" / "rag_replay_rounds.csv")
     assert len(rounds) == summary["checker_rounds"] == 730
     assert summary["trials"] == dict.fromkeys(MODELS, 200)
-    assert summary["semantic_replay_rounds"] == {"recorded_scores": 670, "full_query_vectors": 60}
+    assert summary["semantic_replay_rounds"] == {"recorded_scores": 730}
+    assert summary["replay_scope"] == {
+        "semantic_scores": "archived_returned_records",
+        "query_vectors_distributed": False,
+        "full_index_semantic_ranking_recomputed": False,
+    }
     assert dict(Counter(row["semantic_replay"] for row in rounds)) == summary["semantic_replay_rounds"]
     assert dict(Counter(row["replayed_gate"] for row in rounds)) == summary["replayed_gate_status"]
     assert summary["rounds_with_replay_discrepancies"] == 0
-    assert summary["maximum_semantic_or_hybrid_score_error"] <= summary["semantic_score_absolute_tolerance"]
+    assert summary["raw_evidence"] == {
+        "trials": 60,
+        "successful_attempts": 600,
+        "full_response_bodies": 180,
+        "embedding_metadata_only_responses": 420,
+        "transport_attempts": 46,
+        "trials_with_issues": 0,
+    }
+    audit = read_json(RAG / "results" / "raw_evidence_audit.json")
+    assert len(audit) == 60
+    for field in ("successful_attempts", "full_response_bodies", "embedding_metadata_only_responses",
+                  "transport_attempts"):
+        assert sum(row[field] for row in audit) == summary["raw_evidence"][field]
+    assert not any(row["issues"] for row in audit)
     for row in rounds:
         assert row["archived_gate"] == row["replayed_gate"]
         assert not row["discrepancies"]

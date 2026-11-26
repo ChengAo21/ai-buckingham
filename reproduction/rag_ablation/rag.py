@@ -1,8 +1,8 @@
 """AI Buckingham RAG module for physical-quantity retrieval and dimensional checking.
 
-The supplied agent source has SHA-256 59ed37f40af4791040e6aac079d467347837d593c5132e0975860dbee0c964dd.
-Source identities and scientific-definition comparisons are in reference/source_identity.json.
-Defaults point to the reproduction data. Replay injects a score source.
+Defaults use package-local reference data. Offline replay injects archived
+semantic scores from returned records into the retrieval path and reconstructs
+Checker messages and gate decisions.
 The optional embedding adapter loads the OpenAI SDK on demand and omits
 the full agent's HTTP recorder.
 """

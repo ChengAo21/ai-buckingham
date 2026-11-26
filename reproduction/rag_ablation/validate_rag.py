@@ -15,7 +15,11 @@ from raw_evidence import load_trial_evidence
 
 
 class ArchivedScoreRetriever(rag.DimensionalKnowledgeRetriever):
-    """Re-rank the archived scores using zero as the lower bound for missing scores."""
+    """Recheck returned records with archived semantic scores and recomputed lexical scores.
+
+    A zero lower bound for unreturned records supports the existing retrieval
+    path; it does not reconstruct their scores or verify the full semantic rank.
+    """
 
     def __init__(self):
         super().__init__(embedding_cache_path=rag.DATA_DIRECTORY / "physical_quantity_index.npz")
@@ -26,16 +30,10 @@ class ArchivedScoreRetriever(rag.DimensionalKnowledgeRetriever):
         self.matches_by_variable = matches_by_variable
         self.query_history = []
 
-    vectors_by_query = None
-
     def _semantic_scores(self, query):
         current = self.query_history[-1]
         if current["query"] != query:
             raise ValueError("Archived query record differs from the replayed query")
-        if self.vectors_by_query is not None:
-            vector = np.asarray(self.vectors_by_query[query], dtype=float)
-            vector = vector / max(float(np.linalg.norm(vector)), 1.0e-15)
-            return np.maximum(self.documents @ vector, 0.0)
         scores = np.zeros(len(self.row_by_id))
         for match in self.matches_by_variable[current["variable_name"]]:
             score = match["semantic_score"]
@@ -142,26 +140,6 @@ def replay_round(archived_round, prompt, columns, retriever, embedding_request_d
     ):
         checks[key] = replayed[key] == archived[key]
 
-    score_error = 0.0
-    if retriever.vectors_by_query is not None:
-        # Recomputing normalized dot products may change the last floating-point
-        # bit across numerical libraries. All record identities/order and text
-        # remain exact; only semantic/hybrid scores allow an absolute 1e-12 error.
-        records_match = set(replayed["matches_by_variable"]) == set(archived["matches_by_variable"])
-        for name, actual_rows in replayed["matches_by_variable"].items():
-            expected_rows = archived["matches_by_variable"].get(name, [])
-            records_match &= len(actual_rows) == len(expected_rows)
-            for actual, expected in zip(actual_rows, expected_rows):
-                records_match &= set(actual) == set(expected)
-                for key in actual:
-                    if key in ("semantic_score", "hybrid_score"):
-                        error = abs(actual[key] - expected[key])
-                        score_error = max(score_error, error)
-                        records_match &= error <= 1e-12
-                    else:
-                        records_match &= actual[key] == expected[key]
-        checks["matches_by_variable"] = records_match
-
     archived_call = archived_round["checker_call"]
     expected_messages = rag.checker_messages(
         prompt, ledger, digest, provisional, replayed["evidence_markdown"]
@@ -226,8 +204,7 @@ def replay_round(archived_round, prompt, columns, retriever, embedding_request_d
         "archived_gate": archived_round["gate_status"],
         "replayed_gate": gate_status,
         "archived_embedding_status": archived["embedding_status"],
-        "semantic_replay": "full_query_vectors" if retriever.vectors_by_query is not None else "recorded_scores",
-        "maximum_semantic_or_hybrid_score_error": score_error,
+        "semantic_replay": "recorded_scores",
         "variables": len(inputs),
         "retrieved_records": archived["n_retrieved_records"],
         "query_digest_mismatch_variables": ",".join(digest_mismatches),
@@ -260,14 +237,12 @@ def main():
         if trial["pair_id"] != pair_id:
             raise ValueError(f"Trial pair ID does not match its directory for {analyzer}/{pair_id}")
         prompt, columns = schedule[pair_id]
-        retriever.vectors_by_query = None
         if (trial_path.parent / "requests").is_dir():
             records = [trial, read_json(trial_path.with_name("initial.json"))]
             binding_path = trial_path.with_name("binding.json")
             if binding_path.is_file():
                 records.append(read_json(binding_path))
             evidence = load_trial_evidence(trial_path.parent, records)
-            retriever.vectors_by_query = evidence.pop("vectors_by_query")
             raw_evidence_rows.append({"analyzer": analyzer, "pair_id": pair_id, **evidence})
         trials_by_model[analyzer] += 1
         checked.add((analyzer, pair_id))
@@ -319,27 +294,25 @@ def main():
         "raw_evidence": {
             "trials": len(raw_evidence_rows),
             "successful_attempts": sum(row["successful_attempts"] for row in raw_evidence_rows),
+            "full_response_bodies": sum(row["full_response_bodies"] for row in raw_evidence_rows),
+            "embedding_metadata_only_responses": sum(
+                row["embedding_metadata_only_responses"] for row in raw_evidence_rows
+            ),
             "transport_attempts": sum(row["transport_attempts"] for row in raw_evidence_rows),
             "trials_with_issues": sum(bool(row["issues"]) for row in raw_evidence_rows),
         },
         "semantic_replay_rounds": dict(Counter(row["semantic_replay"] for row in rounds)),
-        "maximum_semantic_or_hybrid_score_error": max(
-            row["maximum_semantic_or_hybrid_score_error"] for row in rounds
-        ),
-        "semantic_score_absolute_tolerance": 1e-12,
+        "replay_scope": {
+            "semantic_scores": "archived_returned_records",
+            "query_vectors_distributed": False,
+            "full_index_semantic_ranking_recomputed": False,
+        },
         "document_embedding_index": {
             "kb_sha256": retriever.kb_hash,
             "index_sha256": rag._sha256_file(Path(retriever.embedding_cache_path)),
             "record_count": retriever.documents.shape[0],
             "embedding_dimension": retriever.documents.shape[1],
         },
-        "semantic_replay": (
-            "For trials with archived raw embedding responses, replay recomputes all 247 cosine "
-            "similarities from the original query vector and document index, then verifies the full "
-            "retrieval ranking. Other trials retain the recorded top-k semantic scores and assign "
-            "a zero lower bound to unreturned records. Both paths verify lexical scores, hybrid "
-            "arithmetic, evidence, Checker messages and gate decisions."
-        ),
     }
     output = rag.PACKAGE_DIR / "results"
     output.mkdir(exist_ok=True)

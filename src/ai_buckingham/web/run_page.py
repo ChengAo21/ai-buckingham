@@ -90,7 +90,7 @@ def progress():
     if code is not None and manifest:
         report=path/"report.html"
         if report.is_file():
-            st.download_button("Download result card · HTML",report.read_bytes(),file_name="analysis_report.html",mime="text/html",key="live_report")
+            st.download_button("Download model report · HTML",report.read_bytes(),file_name="analysis_report.html",mime="text/html",key="live_report")
         st.download_button("Download this run · ZIP",archive_bytes(path),file_name=path.name+".zip",mime="application/zip",key="live_bundle")
         state=read_json(path/"state.json")
         interpretation_commentary(state.get("final_report"))
@@ -105,12 +105,14 @@ def saved_runs():
         if not available:
             st.info("No saved runs are available.")
             return
+        catalog = case_catalog()
         records = []
         for path in available:
             manifest = read_json(path / "manifest.json")
-            records.append({"Case": manifest.get("case_id", path.parent.name), "Run": path.name,
+            case_id = manifest.get("case_id", path.parent.name)
+            records.append({"Case": catalog.get(case_id, {}).get("title", case_id), "Run": path.name,
                             "Status": manifest.get("status", "unknown"),
-                            "Source": "Paper results" if path.is_relative_to(ROOT / "results") else "New analysis"})
+                            "Source": "Included run data" if path.is_relative_to(ROOT / "results") else "New analysis"})
         frame = pd.DataFrame(records)
         statuses = frame["Status"]
         columns = st.columns(3)
@@ -119,18 +121,18 @@ def saved_runs():
         columns[2].metric("Failed / stopped", int(statuses.isin(["failed", "blocked", "cancelled", "warning"]).sum()))
         table(frame, "saved_runs.csv", "saved_runs_csv")
         selected = st.selectbox("Saved run", available,
-                                format_func=lambda path: f"{path.parent.name} · {path.name}", key="saved_run_selection")
+                                format_func=lambda path: f"{catalog.get(path.parent.name, {}).get('title', path.parent.name)} · {path.name}", key="saved_run_selection")
         json_panel("Saved run details", read_json(selected / "manifest.json"), key="saved_run_details")
         report = selected / "report.html"
         if report.is_file():
-            st.download_button("Download result card · HTML", report.read_bytes(),
+            st.download_button("Download raw run report · HTML", report.read_bytes(),
                                file_name=f"{selected.parent.name}_{selected.name}.html", mime="text/html", key="saved_run_report")
         st.download_button("Download run bundle · ZIP", archive_bytes(selected),
                            file_name=f"{selected.parent.name}_{selected.name}.zip", mime="application/zip", key="saved_run_bundle")
 
 
 def render():
-    masthead("Run a new analysis", "Run AI Buckingham with a supplied case or your own CSV. Each run produces a downloadable result bundle.", "Live execution")
+    masthead("Run analysis")
     st.markdown("A new run sends the problem description, relevant data previews and retrieval queries to the configured model providers. "
                 "Credentials entered here are used only for this session's isolated calculation and are excluded from the saved scientific configuration.")
     saved_runs()

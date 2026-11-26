@@ -6,7 +6,7 @@ import plotly.graph_objects as go
 import streamlit as st
 
 from .components import chart, figures, json_panel, masthead, table
-from .data import read_csv, read_json, reproduction
+from .data import ALIASES, case_catalog, read_csv, read_json, reproduction
 
 
 def benchmark():
@@ -17,7 +17,9 @@ def benchmark():
         return
     models = st.multiselect("Parsing models", sorted(frame.analyzer.unique()), default=sorted(frame.analyzer.unique()), key="benchmark_models")
     cols = st.columns(2)
-    cases = cols[0].multiselect("Cases", sorted(frame.case.unique()), default=sorted(frame.case.unique()), key="benchmark_cases")
+    catalog = case_catalog()
+    cases = cols[0].multiselect("Cases", sorted(frame.case.unique()), default=sorted(frame.case.unique()),
+                               format_func=lambda case: catalog.get(ALIASES.get(case, case), {}).get("title", case), key="benchmark_cases")
     variants = cols[1].multiselect("Prompt variants", sorted(frame.prompt_variant.unique()), default=sorted(frame.prompt_variant.unique()), key="benchmark_variants")
     selected = frame[frame.analyzer.isin(models) & frame.case.isin(cases) & frame.prompt_variant.isin(variants)].copy()
     metrics = st.columns(4)
@@ -33,15 +35,12 @@ def benchmark():
             usage = selected.groupby("analyzer")[usage_fields].mean().reset_index().melt(id_vars="analyzer",var_name="Stage",value_name="Known tokens per scheduled trial")
             chart(px.bar(usage,x="analyzer",y="Known tokens per scheduled trial",color="Stage",labels={"analyzer":"Parsing model"}),"benchmark_tokens")
         table(selected, "selected_trial_audit.csv")
-    st.caption("Three parsing LLMs, ten cases, two prompt variants and ten repeats produce 600 scheduled trials. "
-               "GPT-5 mini checks every model's assignments. Final success includes at most one parsing revision. "
-               "These comparisons do not constitute a separate RAG-on versus RAG-off experiment.")
     a,b = st.columns(2)
     with a:
         json_panel("Reference-scored model aggregates", read_json(base/"results"/"model_aggregates.json"))
     with b:
         json_panel("Recorded archive coverage", read_json(base/"results"/"coverage.json"))
-    st.markdown("#### Retrieval replay across the recorded checking rounds")
+    st.markdown("#### Dimensional-checking rounds")
     rounds = read_csv(base/"results"/"rag_replay_rounds.csv")
     if not rounds.empty:
         if models:
@@ -51,13 +50,12 @@ def benchmark():
         if variants:
             rounds = rounds[rounds.pair_id.str.split("_").str[1].isin(variants)]
         if not rounds.empty:
-            chart(px.histogram(rounds,x="replayed_gate",color="analyzer",barmode="group",labels={"replayed_gate":"Replayed gate outcome"}),"benchmark_rounds")
+            chart(px.histogram(rounds,x="replayed_gate",color="analyzer",barmode="group",labels={"replayed_gate":"Checker decision"}),"benchmark_rounds")
         table(rounds,"selected_checker_rounds.csv")
-    json_panel("Replay coverage and exactness",read_json(base/"results"/"rag_replay_summary.json"))
+    json_panel("Verification summary",read_json(base/"results"/"rag_replay_summary.json"))
     with st.expander("Published summary tables and API accounting"):
         for filename in ["table1_success.csv","table30_display.csv","api_usage_by_variant.csv"]:
             table(read_csv(base/"results"/filename),filename,"benchmark_"+filename)
-    st.caption("Known token totals do not impute missing usage from transport failures. API durations include recorded attempts and retries. Reference scoring can differ from the original gate outcome when the response column changed.")
 
 
 def cess():
@@ -99,7 +97,7 @@ def cess():
         chart(px.scatter(coordinates,x="Re_tau",y="eta",color="original_regime",log_x=True,log_y=True,hover_data=["row_id","y_plus"],
                          labels={"original_regime":"Physical regime"},
                          title="AI Buckingham<br><sup>Recorded gradient partition</sup>"),"cess_gradient",compact_title=True)
-    st.caption("Both panels use the same 1,000 Cess observations. M controls the geometric partition resolution; K identifies the gradient regimes. The shaded band spans the recorded intermediate samples.")
+    st.caption("Shading indicates the intermediate regime.")
     table(selected,"selected_regional_scores.csv")
     if not sensitivity.empty:
         subset=sensitivity[(sensitivity.conditioning==condition)]
@@ -110,7 +108,7 @@ def cess():
         table(subset,"regional_sensitivity.csv")
     json_panel("Recorded global fit configuration",read_json(base/"results"/"global_itpi_config.json"))
     figures(base/"results","cess_recorded")
-    st.caption("This page reads the recorded global IT-pi fit and gradient memberships. Changing M or seed selects an archived regional calculation; it does not repeat the global optimization. Negative MI estimates and ratios outside [0,1] are retained in the data.")
+    st.caption("Selections display saved comparisons.")
 
 
 def velocity():
@@ -136,7 +134,6 @@ def velocity():
         fig.add_trace(go.Scatter(x=reference.y_plus,y=reference.U_plus,mode="lines",name="Incompressible reference",line={"color":"#142A3A","width":3,"dash":"dash"}))
     fig.update_layout(xaxis_type="log",xaxis_title="Matched wall-distance coordinate",yaxis_title="Transformed velocity",height=580)
     chart(fig,"velocity_profiles_plot")
-    st.caption("Four compressible channel profiles and two pipe profiles are compared with the same incompressible reference. Plot selections do not change the recorded numerical error calculation.")
     left,right=st.columns(2)
     rms=read_csv(base/"results"/"six_profile_pointwise_RMS.csv")
     with left:
@@ -156,7 +153,7 @@ def velocity():
 
 
 def render():
-    masthead("Comparisons & evaluation", "Explore recorded semantic-checking outcomes, regional relevance and velocity-transform accuracy.", "Evaluation")
+    masthead("Comparisons & evaluation")
     selection=st.radio("Evaluation",["LLM benchmark & retrieval replay","Cess regime comparison","Velocity transformations"],horizontal=True,key="comparison_page")
     if selection=="LLM benchmark & retrieval replay": benchmark()
     elif selection=="Cess regime comparison": cess()

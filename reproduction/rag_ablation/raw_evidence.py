@@ -1,13 +1,9 @@
-"""Verify archived request/response bodies and recover captured query vectors."""
+"""Verify archived requests, model responses and embedding response metadata."""
 
-import base64
 from collections import Counter
 from hashlib import sha256
 import json
 from pathlib import Path
-
-import numpy as np
-
 
 RAW_FILENAMES = {
     "attempt.json",
@@ -65,18 +61,16 @@ def _usage_fields(response):
     }
 
 
-def _query_vector(response):
+def _verify_embedding_metadata(response, envelope):
+    """Check retained metadata without claiming to reconstruct the omitted body."""
+    if envelope.get("body_omitted") != "query_embedding_vector" or "body_text" in envelope:
+        raise ValueError("Embedding response must explicitly omit its original vector-bearing body")
+    if type(envelope.get("body_byte_length")) is not int or envelope["body_byte_length"] <= 0:
+        raise ValueError("Embedding response must retain the original body byte count")
     data = response["data"]
-    if len(data) != 1 or data[0]["index"] != 0:
-        raise ValueError("Expected one embedding vector for one query")
-    values = data[0]["embedding"]
-    if isinstance(values, str):
-        vector = np.frombuffer(base64.b64decode(values, validate=True), dtype="<f4").astype(float)
-    else:
-        vector = np.asarray(values, dtype=float)
-    if vector.shape != (2048,) or not np.isfinite(vector).all() or np.linalg.norm(vector) == 0:
-        raise ValueError("Query embedding must be a finite, nonzero 2048-coordinate vector")
-    return vector
+    if (response.get("object") != "list" or len(data) != 1
+            or data[0] != {"index": 0, "object": "embedding"}):
+        raise ValueError("Expected metadata for one embedding query, without its vector")
 
 
 def _verify_call(call, request, response):
@@ -98,18 +92,21 @@ def _verify_call(call, request, response):
 
 
 def load_trial_evidence(trial_directory, records):
-    """Return raw-evidence counts, validation issues and exact query vectors.
+    """Return retained-evidence counts and validation issues.
 
     Repeated provenance snapshots are deduplicated by HTTP attempt ID. Failed
     transport attempts retain their accounting through the supplied audit file.
-    A trial without a raw archive returns available=False.
+    Embedding responses retain metadata and historical body digests only; their
+    original response-body hashes cannot be recomputed after vector omission.
+    A trial without a request archive returns available=False.
     """
     trial = Path(trial_directory)
     request_root = trial / "requests"
     result = {
         "available": request_root.is_dir(),
-        "vectors_by_query": {},
         "successful_attempts": 0,
+        "full_response_bodies": 0,
+        "embedding_metadata_only_responses": 0,
         "transport_attempts": 0,
         "duplicate_receipts": 0,
         "issues": [],
@@ -150,12 +147,20 @@ def load_trial_evidence(trial_directory, records):
             body = json.loads(request["body_text"])
             if body != request["body"] or body["model"] != attempt["requested_model"]:
                 raise ValueError("Request body or model identity is inconsistent")
-            if sha256(envelope["body_text"].encode("utf-8")).hexdigest() != envelope["body_sha256"]:
-                raise ValueError("Response envelope checksum is inconsistent")
+            digest = envelope["body_sha256"]
+            if not isinstance(digest, str) or len(digest) != 64 or any(c not in "0123456789abcdef" for c in digest):
+                raise ValueError("Historical response checksum is invalid")
             if envelope["body_sha256"] != attempt["response_sha256"]:
                 raise ValueError("Response checksum differs from the scientific receipt")
-            if json.loads(envelope["body_text"]) != response:
-                raise ValueError("Response JSON differs from its captured envelope")
+            if attempt["kind"] == "embedding":
+                _verify_embedding_metadata(response, envelope)
+                result["embedding_metadata_only_responses"] += 1
+            else:
+                if sha256(envelope["body_text"].encode("utf-8")).hexdigest() != digest:
+                    raise ValueError("Response envelope checksum is inconsistent")
+                if json.loads(envelope["body_text"]) != response:
+                    raise ValueError("Response JSON differs from its captured envelope")
+                result["full_response_bodies"] += 1
             if response.get("model") != attempt["response_model"]:
                 raise ValueError("Response model differs from the scientific receipt")
             if any(attempt.get(key) != value for key, value in _usage_fields(response).items()):
@@ -172,11 +177,6 @@ def load_trial_evidence(trial_directory, records):
                 query = body["input"]
                 if not isinstance(query, str):
                     raise ValueError("Expected an exact single-query string")
-                vector = _query_vector(response)
-                prior = result["vectors_by_query"].get(query)
-                if prior is not None and not np.array_equal(prior, vector):
-                    raise ValueError("Repeated query has different recorded embedding vectors")
-                result["vectors_by_query"][query] = vector
             else:
                 call_key = (attempt["node"], attempt["node_visit"])
                 _verify_call(model_calls[call_key], body, response)

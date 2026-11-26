@@ -1,24 +1,22 @@
-# Reproduction and recorded evidence
+# Reproduction
 
-Run commands from the repository root. None of the commands below calls an API. Generated outputs are separate from the published snapshots.
+Run commands from the repository root after installing the corresponding [dependency set](../environments/README.md). These commands use included files and do not require model-service credentials.
 
-| Task | Command | What is repeated |
+| Task | Command | Calculation |
 |---|---|---|
-| Input/archive integrity | `python reproduction/verify_integrity.py` | SHA-256 checks for case data, knowledge bases and historical evidence |
-| RAG benchmark | `python -B reproduction/rag_ablation/reproduce.py` | Retrieval/checker replay and summary statistics from 600 recorded trials |
-| Velocity comparison | `python -B reproduction/velocity_comparison/reproduce.py` | Six profile transformations, error tables and comparison figure |
-| Regional comparison | `python -B reproduction/regime_comparison/reproduce.py` | Regional MI and membership diagnostics using the recorded global IT-pi fit and recorded gradient partition |
-| MI landscapes | `python reproduction/mi_landscapes/reproduce.py` | A new CMA-ES search for four cases, optimization histories, grids and figures |
+| Input integrity | `python reproduction/verify_integrity.py` | Checksums for case data, knowledge bases and comparison inputs |
+| LLM ablation and API usage in dimensional checking (SI §5.2) | `python -B reproduction/rag_ablation/reproduce.py` | Dimensional-checking results and API usage for 600 trials |
+| Relation to the Trettel–Larsson transformation (SI §5.3) | `python -B reproduction/velocity_comparison/reproduce.py` | Six-profile transformations, RMS-error tables and figure |
+| Physical-regime detection in IT–π and AI Buckingham (SI §5.4) | `python -B reproduction/regime_comparison/reproduce.py` | Regional MI calculations and figures using the included global IT–π fit and Cess partition |
+| MI optimization landscapes | `python reproduction/mi_landscapes/reproduce.py` | The four Type I cases in Figure 4. Use `--case mhd` for the MHD landscape. |
 
-Use the package-specific `--output-dir` argument to select a separate output directory. RAG and the comparisons write to package-local `generated/` directories by default. The MI command writes to `reproduction/mi_landscapes/generated/optimize/`.
+Use `--output-dir` to choose an output directory. The dimensional-checking and comparison wrappers write to their package-local `generated/` directories by default. The MI-landscape command writes to `reproduction/mi_landscapes/generated/optimize/`.
 
-Install the corresponding dependency set in [environments](../environments/README.md). Original package requirements and verification reports are retained as historical records; those reports do not certify a fresh execution on another machine.
+## Package inputs
 
-## Scope and provenance
+- [Dimensional checking](rag_ablation/) includes Analyzer responses, retrieved records, Checker decisions and API usage.
+- [Velocity transformations](velocity_comparison/): six compressible profiles and an incompressible reference. The package-local velocity CSV has a different column order from the central dataset; use the inputs named by this package.
+- [Physical-regime comparison](regime_comparison/): the IT–π implementation and license, a fitted global two-group representation, regional calculations and the Cess gradient-based partition.
+- [MI optimization landscapes](mi_landscapes/) includes the numerical notebook and the settings for the five CMA-ES searches.
 
-- `rag_ablation/` retains all 600 trial identities, 730 recorded Checker rounds, source identity audits, request/response evidence and `SHA256SUMS`. Sandgrain's 60 rounds support full semantic ranking replay using archived query vectors. The other 670 rounds replay recorded top-k scores; complete historical query vectors are unavailable. These are retrieval-grounded checking and revision outcomes, not a fresh live-model experiment.
-- `regime_comparison/` retains third-party `vendor/IT_PI.py` and its license. Its default entry point does not repeat global IT-pi optimization or infer a fresh gradient partition.
-- `velocity_comparison/` retains a historical input CSV whose column order differs from the central velocity dataset. All rows match by column name. Both byte identities are preserved because historical manifests identify the local copy.
-- `mi_landscapes/MI_landscape_4cases.ipynb` is the original unexecuted numerical source. The CLI resolves its four datasets to current `data/datasets/` names, records input hashes and exports fresh numerical results. A fresh optimizer trajectory is not claimed to be the historical trajectory used for a published figure.
-
-Internal historical file names, absolute provenance paths and embedded identifiers are unchanged. New public case identifiers are mapped in `configs/cases/`. Use the wrapper entry points: running the original RAG scripts or comparison notebooks directly can overwrite local `results/` snapshots.
+The wrapper commands write separate outputs for comparison with the included results. Directly running the source notebooks or the original dimensional-checking scripts can write into the package's `results/` directory; use the wrappers for a separate reproduction run.

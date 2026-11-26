@@ -1,30 +1,40 @@
-# Regional comparison with IT-pi
+# Physical-regime detection in IT–π and AI Buckingham
 
-This directory reproduces Supplementary Section 5.4 from the recorded global IT-pi fit and the recorded gradient-based partition of the Cess dataset. The author's vendor/IT_PI.py and license, the supplied notebook, data, and result snapshots are preserved.
+This package provides the calculations and figures for SI §5.4. Inputs include a global IT–π fit, the gradient-based partition of the Cess dataset, the numerical notebook and `vendor/IT_PI.py` with its license.
 
-Run from any directory with Python 3.12.
+Use Python 3.12 and run from this directory:
 
-    python -m pip install -r requirements.txt
-    python -B reproduce.py
+```bash
+python -m pip install -r requirements.txt
+python -B reproduce.py
+```
 
-Use --no-plots to recompute and verify only the diagnostic tables and membership arrays. Use --output-dir PATH to choose a separate output directory. The command copies the recorded global fit into generated/, runs the notebook's regional calculations, and produces both comparison figures there. It compares two CSV tables and all 100 membership arrays with results/, then writes generated/verification.json. Recorded inputs and results are checked for changes before the command finishes.
+Use `--no-plots` to recompute the diagnostic tables and membership arrays, or `--output-dir PATH` to choose a separate output directory. The command uses the included global fit, performs the regional calculations and writes figures and tables under `generated/`. It compares the two CSV tables and 100 membership arrays with the included results, then writes `generated/verification.json`.
 
-The supplied reproduce_cess.ipynb remains available. Its default REFIT_GLOBAL=False uses the recorded fit. Running its cells directly writes to results/, so use the CLI for a separate verification run. Repeating global optimization can be computationally expensive and changes the calculation being compared with the recorded regional diagnostics.
+The notebook `reproduce_cess.ipynb` uses the included global fit when `REFIT_GLOBAL=False`. Its cells write to `results/`; use the CLI for a separate run.
 
-## Calculation and data
+## Calculation settings
 
-The cached global fit contains two input dimensionless groups from the author's IT-pi implementation. Regions are fitted with KMeans to StandardScaler(log1p(input_PI)). Regional mutual-information estimates are computed for both raw values and globally standardized logarithms of the inputs and response. Each condition is evaluated for region counts M=2,3,5,8,10 and seeds 42 through 46, giving 50 runs. The main figure uses standardized logarithms, M=3 and 5, and seed 42. Local classification uses the author's estimator with k=5 and threshold 0.9. Negative estimates and ratios outside [0,1] remain in the diagnostics.
+The global fit contains two input dimensionless groups from IT–π. The notebook partitions `StandardScaler(log1p(input_PI))` coordinates using KMeans and calculates regional MI-based relevance scores.
 
-- data/dataset_cess_channel.csv contains 1,000 observations.
-- data/recorded_gradient_membership.csv gives the recorded gradient partition and physical plotting coordinates Re_tau, eta=y/h, and y_plus.
-- results/global_itpi_result.npz contains the recorded global dimensionless groups and coefficients.
-- results/regional_cell_scores.csv gives cell-level MI values, MI ratios, categories, counts, and overlap with the recorded intermediate group.
-- results/regional_sensitivity.csv summarizes all 50 region-count, seed, and conditioning combinations.
-- results/regional_memberships.npz stores pointwise region and category assignments. Keys follow conditioning__M<count>__seed<seed>__region or __category. Category codes are X1=0, X2=1, Both=2.
-- results/figure_settings.json records figure controls and calculation settings.
-- results/Cess_ITPI_comparison.png and .pdf are the main comparison.
-- results/regional_count_sweep/ contains the region-count diagnostic figure.
+The paper's comparison figure uses logarithmic coordinates, M = 3 and M = 5, and seed 42. The package also includes diagnostic tables for raw and standardized-log coordinates, M = 2, 3, 5, 8 and 10, and seeds 42–46. These settings give 50 diagnostic calculations. The regional estimator uses k = 5 and a relevance threshold of 0.9.
 
-The recorded gradient groups contain 779 near-wall samples, 114 intermediate samples, and 107 outer samples. The intermediate group's eta range is approximately 0.13005 to 0.35561.
+## Files
 
-CSV verification uses relative tolerance 1e-9 and absolute tolerance 1e-10. Membership arrays must agree exactly. The cached global fit is reused, so this entry point performs regional MI calculations and plotting without repeating the CMA-ES global fit. The computation uses local files.
+| Path | Contents |
+|---|---|
+| `data/dataset_cess_channel.csv` | 1,000 Cess-model samples |
+| `data/recorded_gradient_membership.csv` | Gradient-based partition and physical plotting coordinates: Reτ, η = y/h and y⁺ |
+| `results/global_itpi_result.npz` | Global IT–π groups and coefficients |
+| `results/regional_cell_scores.csv` | Regional MI, relevance scores, categories, counts and overlap with the intermediate region |
+| `results/regional_sensitivity.csv` | The 50 diagnostic calculations |
+| `results/regional_memberships.npz` | Pointwise region and category assignments |
+| `results/figure_settings.json` | Figure and calculation settings |
+| `results/Cess_ITPI_comparison.png`, `.pdf` | Comparison figure |
+| `results/regional_count_sweep/` | Region-count diagnostic figure |
+
+Membership-array keys use `conditioning__M<count>__seed<seed>__region` or `__category`. Category codes are X1 = 0, X2 = 1 and Both = 2.
+
+The included gradient-based partition has 779 near-wall, 114 intermediate-transition and 107 outer samples. Its intermediate samples span η ≈ 0.13005–0.35561.
+
+CSV verification uses relative tolerance 1e-9 and absolute tolerance 1e-10; membership arrays are compared exactly. The default command reuses the global fit and repeats the regional calculations.

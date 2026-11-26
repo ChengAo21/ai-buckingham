@@ -3,8 +3,7 @@
 Run from any working directory with the app dependencies installed. The checks
 read the included publication snapshot, change real Streamlit controls, and
 forbid both HTTPX requests and starting a live-analysis subprocess. They never
-modify scientific results. The default report is an ignored runtime artifact;
-pass --report docs/validation/web_smoke.json to refresh the release QA record.
+modify scientific results. Use --report to save a local verification report.
 """
 from __future__ import annotations
 
@@ -14,6 +13,7 @@ import hashlib
 import json
 from pathlib import Path
 import sys
+import tempfile
 import traceback
 from unittest.mock import patch
 
@@ -27,7 +27,7 @@ def sha256(path: Path) -> str:
 
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--report", type=Path, default=ROOT / "generated" / "web_smoke.json")
+    parser.add_argument("--report", type=Path, default=Path(tempfile.gettempdir()) / "ai-buckingham-checks" / "web_smoke.json")
     parser.add_argument("--timeout", type=int, default=60)
     args = parser.parse_args(argv)
     from streamlit.testing.v1 import AppTest
@@ -60,6 +60,21 @@ def main(argv=None) -> int:
     def select_by_label(label):
         return next(widget for widget in app.selectbox if widget.label == label)
 
+    def axis_checkbox(axis):
+        return next(widget for widget in app.checkbox if widget.label == f"Logarithmic {axis}-axis")
+
+    def verify_collapse_axes(name, expected):
+        case_id = app.selectbox(key="workflow_case").value
+        path = Path(select_by_label("Scope").value)
+        panel = path.stem.removesuffix("_collapse")
+        key = f"case_collapse_{case_id}_{path.parents[1].name}_{panel}"
+        plot = next(element for element in app.get("plotly_chart") if element.proto.id.endswith("-" + key))
+        layout = json.loads(plot.proto.spec)["layout"]
+        actual = (layout["xaxis"]["type"], layout["yaxis"]["type"])
+        controls = (axis_checkbox("x").value, axis_checkbox("y").value)
+        record(name, actual == tuple(expected) and controls == tuple(axis == "log" for axis in expected),
+               {"case": case_id, "panel": panel, "axes": actual, "controls": controls})
+
     def case_run_path(case_id):
         candidates = [p for p in runs(case_id) if read_json(p / "manifest.json").get("status") == "completed"]
         if len(candidates) != 1:
@@ -71,20 +86,19 @@ def main(argv=None) -> int:
              patch("httpx.AsyncClient.send", side_effect=AssertionError("HTTP is forbidden during offline web QA")) as async_send, \
              patch("ai_buckingham.web.run_page.start_job", side_effect=AssertionError("Live analysis is forbidden during offline web QA")) as start_job:
             app = AppTest.from_file(str(ROOT / "streamlit_app.py"), default_timeout=args.timeout).run()
-            metrics = {m.label: str(m.value) for m in app.metric}
             record("Overview renders the final publication snapshot")
-            record("Overview emphasizes paper coverage and observations",
-                   metrics.get("Physical systems") == "10"
-                   and metrics.get("Observations") == "4,926"
-                   and metrics.get("Paper case coverage") == "10/10"
-                   and metrics.get("Dimensional-checking trials") == "600"
-                   and not {"Completed runs", "Running runs", "Failed / stopped"}.intersection(metrics),
-                   metrics)
-            inventory = frames_with("Physical system", "Observations")
-            record("Overview presents research results and a case inventory without run status",
-                   any(element.value == "### Selected results" for element in app.markdown)
-                   and len(inventory) == 1 and len(inventory[0]) == 10
-                   and not {"Completed runs", "Running runs", "Failed / stopped runs"}.intersection(inventory[0].columns))
+            metadata = read_json(ROOT / "docs/paper_cases.json")
+            paper_cases = {case["id"]: case for case in metadata["cases"]}
+            headings = [element.value.removeprefix("### ") for element in app.main
+                        if element.type == "markdown" and element.value.startswith("### ")]
+            categories = [element.value.removeprefix("## ") for element in app.main
+                          if element.type == "markdown" and element.value.startswith("## ")]
+            record("Overview shows all ten figures and paper case names in order",
+                   headings == [case["title"] for case in metadata["cases"]]
+                   and len(app.get("image")) == 10)
+            record("Overview uses the paper's three similarity categories without a count dashboard",
+                   categories == [group["title"] for group in metadata["groups"]]
+                   and not app.metric and not app.dataframe and not app.get("plotly_chart"))
 
             navigate("Case workflow")
             case_ids = sorted(p.stem for p in (ROOT / "configs" / "cases").glob("*.json"))
@@ -97,16 +111,42 @@ def main(argv=None) -> int:
                        collapse_path.is_relative_to(case_run_path(case_id))
                        and any(frame.equals(expected) for frame in point_tables),
                        {"selected_collapse": str(collapse_path.relative_to(ROOT)), "rows": len(expected)})
+                panel = collapse_path.stem.removesuffix("_collapse")
+                paper_case = paper_cases[case_id]
+                axes = paper_case.get("collapse_axes_by_panel", {}).get(panel, paper_case["collapse_axes"])
+                verify_collapse_axes(f"Collapse axes match the paper defaults independently: {case_id}/{panel}", axes)
                 if case_id == "velocity_scaling":
                     saved = read_json(case_run_path(case_id) / "state.json")
                     output = saved["workflow_result"]["local_workflows"][0]["final_solution"]["output_dimensionless_formula"]
                     record("Type II response relation retains the complete recorded output rescaling",
-                           any(element.value == output for element in app.code)
-                           and any("Π_out ≈ F(Π1)" in element.value for element in app.caption))
-            app.selectbox(key="workflow_case").set_value("blasius").run()
-            app.toggle(key="show_complete_card").set_value(True).run()
-            record("Saved complete HTML card is displayed on explicit toggle", len(app.get("iframe")) == 1)
-            app.toggle(key="show_complete_card").set_value(False).run()
+                           any(element.value == output for element in app.code))
+                saved = read_json(case_run_path(case_id) / "state.json")
+                record(f"Paper case does not display unreviewed model interpretation: {case_id}",
+                       not any(element.value == saved.get("final_report") for element in app.markdown)
+                       and not app.get("iframe"))
+
+            app.selectbox(key="workflow_case").set_value("mhd").run()
+            axis_checkbox("x").set_value(False).run()
+            verify_collapse_axes("The x-axis control changes independently of the y-axis", ("linear", "log"))
+            app.selectbox(key="workflow_case").set_value("velocity_scaling").run()
+            verify_collapse_axes("Case switching applies both Type II paper defaults", paper_cases["velocity_scaling"]["collapse_axes"])
+            axis_checkbox("y").set_value(True).run()
+            verify_collapse_axes("The y-axis control remains usable after switching cases", ("log", "log"))
+            app.selectbox(key="workflow_case").set_value("goldenfeld").run()
+            verify_collapse_axes("Goldenfeld does not inherit logarithmic controls from another case", paper_cases["goldenfeld"]["collapse_axes"])
+            app.selectbox(key="workflow_case").set_value("velocity_scaling").run()
+            verify_collapse_axes("Returning to a case restores its own paper defaults", paper_cases["velocity_scaling"]["collapse_axes"])
+            axis_checkbox("x").set_value(False).run()
+            verify_collapse_axes("Manual x-axis changes remain available after returning", ("linear", "linear"))
+
+            app.selectbox(key="workflow_case").set_value("rough_pipe").run()
+            for panel in ["regime_0", "regime_1"]:
+                select_by_label("Scope").set_value(case_run_path("rough_pipe") / "tables" / f"{panel}_collapse.csv").run()
+                verify_collapse_axes(f"Rough-pipe panel uses its own paper axes: {panel}",
+                                     paper_cases["rough_pipe"]["collapse_axes_by_panel"][panel])
+                if panel == "regime_0":
+                    axis_checkbox("x").set_value(False).run()
+                    verify_collapse_axes("Rough-pipe scope controls can be changed independently", ("linear", "linear"))
 
             app.selectbox(key="workflow_case").set_value("sandgrain").run()
             app.multiselect(key="prediction_split").set_value(["test"]).run()
@@ -114,15 +154,14 @@ def main(argv=None) -> int:
             record("Sandgrain prediction interaction selects the same 21 test observations",
                    len(predictions) == 1 and len(predictions[0]) == 21 and set(predictions[0]["split"]) == {"test"})
             saved = read_json(case_run_path("sandgrain") / "state.json")
-            commentary = next(element for element in app.expander if element.label == "Archived model commentary")
-            record("Sandgrain shows a two-input response and preserves model commentary in its closed archive",
-                   any("Π_out ≈ F(Π1, Π2)" in element.value for element in app.caption)
-                   and any(element.value == saved["final_report"] for element in commentary.markdown)
-                   and not commentary.proto.expanded)
+            inputs = saved["workflow_result"]["local_workflows"][0]["final_solution"]["input_formulas"]
+            record("Sandgrain displays both selected groups without a model-generated response law",
+                   len(inputs) == 2 and all(any(element.value == value for element in app.code) for value in inputs)
+                   and not any(element.value == saved["final_report"] for element in app.markdown))
 
             app.selectbox(key="workflow_case").set_value("rough_pipe").run()
             mi = [float(m.value) for m in app.metric if m.label == "Mutual information"]
-            r2 = [float(m.value) for m in app.metric if m.label == "Conditional held-out R²"]
+            r2 = [float(m.value) for m in app.metric if m.label == "Test R²"]
             record("Corrected rough-pipe results reach the case metrics",
                    sorted(round(v, 3) for v in mi) == [2.198, 3.085]
                    and sorted(round(v, 3) for v in r2) == [0.974, 0.984],

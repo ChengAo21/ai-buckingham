@@ -1,6 +1,6 @@
-# Mutual-information landscapes
+# MI optimization landscapes
 
-The original unexecuted notebook retains numerical definitions and settings for four examples in Main Fig. 4. The CLI uses the central `data/datasets/` inputs with public case IDs and leaves the notebook source unchanged.
+This package generates MI optimization landscapes for the MHD power generator and the four Type I cases in Figure 4. Each case uses the notebook's CMA-ES search and MI estimator with the corresponding inputs in `data/datasets/`.
 
 From the repository root, after installing `environments/mi-landscapes.txt`:
 
@@ -8,14 +8,20 @@ From the repository root, after installing `environments/mi-landscapes.txt`:
 python reproduction/mi_landscapes/reproduce.py
 ```
 
-This starts fresh CMA-ES searches with seed 42 and a 101 x 101 objective grid. `--case` accepts `rayleigh_benard`, `pressure_gradient`, `laser_keyhole`, or `blasius`. Outputs go to `generated/optimize/<case_id>/` within this package unless `--output-dir` is provided.
+The command runs the four Figure 4 cases with seed 42 and evaluates a 101 × 101 grid for each. To run the MHD case with the same notebook, use the following command.
 
-Each run exports the numeric grid, optimization history, basis-selection table, coefficients, input hashes, environment metadata and rendered landscape. Search trajectories and slice selection can vary with optimizer and numerical-library behavior. Fresh runs are not represented as byte-identical historical figure trajectories.
+```bash
+python reproduction/mi_landscapes/reproduce.py --case mhd
+```
 
-For a reduced execution check:
+To run a single Figure 4 case, pass `--case pressure_gradient`, `--case rayleigh_benard`, `--case laser_keyhole` or `--case blasius`. Outputs go to `generated/optimize/<case_id>/` within this package unless `--output-dir` is provided.
+
+Each run exports the grid, optimization history, basis-selection table, coefficients, input hashes, environment metadata and figures. See [Numerical configuration](../../docs/configuration.md) for the notebook and case-workflow settings.
+
+For a short execution check:
 
 ```bash
 python reproduction/mi_landscapes/reproduce.py --case blasius --maxiter 2 --popsize 8 --grid-size 15
 ```
 
-The reduced settings are recorded in run metadata and must not be reported as the full manuscript optimization.
+The selected budget is saved in the output metadata.

@@ -1,12 +1,11 @@
-"""Build the static GitHub Pages evidence explorer from reviewed saved results.
+"""Build static case pages from figures and saved structured results.
 
-This entry point uses only the Python standard library. It never imports the
-agent, initializes models, recalculates scientific results, or accesses a network.
+Only the Python standard library is used. The builder reads published files;
+it does not import the scientific engine or execute a numerical analysis.
 """
 from __future__ import annotations
 
 import argparse
-import csv
 import hashlib
 import html
 import json
@@ -19,34 +18,6 @@ from urllib.parse import quote, unquote, urlsplit
 ROOT = Path(__file__).resolve().parents[1]
 TEMPLATES = Path(__file__).with_name("pages")
 REPOSITORY = "https://github.com/ChengAo21/ai-buckingham"
-CASE_ORDER = (
-    "mhd", "pressure_gradient", "rayleigh_benard", "laser_keyhole", "blasius",
-    "sandgrain", "velocity_scaling", "goldenfeld", "cess_channel", "rough_pipe",
-)
-SHORT_NAMES = {
-    "mhd": "MHD duct flow", "pressure_gradient": "Pressure-gradient friction",
-    "rayleigh_benard": "Rayleigh–Bénard convection", "laser_keyhole": "Laser keyhole",
-    "blasius": "Blasius boundary layer", "sandgrain": "Sand-grain roughness",
-    "velocity_scaling": "Compressible velocity", "goldenfeld": "Goldenfeld similarity",
-    "cess_channel": "Cess channel flow", "rough_pipe": "Rough circular pipe",
-}
-DESCRIPTIONS = {
-    "mhd": "A pressure–viscous coordinate emerges while magnetic variables are removed during simplification.",
-    "pressure_gradient": "One coordinate combines viscosity, integral-profile energy and boundary-layer thicknesses.",
-    "rayleigh_benard": "An invertible Rayleigh-number coordinate organizes the convection measurements.",
-    "laser_keyhole": "The learned coordinate recovers a power-equivalent Keyhole-number representation.",
-    "blasius": "The selected coordinate recovers the classical similarity variable for a laminar boundary layer.",
-    "sandgrain": "Two learned groups retain complementary roughness information, evaluated on the source-stratified 83/21 split.",
-    "velocity_scaling": "Type II similarity rescales both the wall-normal coordinate and the normalized mean velocity.",
-    "goldenfeld": "Joint coordinate learning and output scaling recover an incomplete-similarity rough-pipe representation.",
-    "cess_channel": "Three local relations distinguish outer, intermediate and near-wall dependence.",
-    "rough_pipe": "Gradient-based identification separates Reynolds-number and roughness-dominated dependencies.",
-}
-ASSETS = (
-    "hero.svg", "workflow.png", "mhd_mi_landscape.png", "cess_regimes.png",
-    "rough_pipe_regimes.png", "sandgrain_predictions.png", "velocity_transformations.png",
-    "manifest.json",
-)
 
 
 def read_json(path: Path):
@@ -69,17 +40,118 @@ def github(path: str, *, repository: str, branch: str, directory=False) -> str:
     return f"{repository}/{kind}/{quote(branch, safe='')}/{quote(path, safe='/')}"
 
 
+def link(url: str, label: str, class_name: str = "") -> str:
+    attribute = f' class="{html.escape(class_name)}"' if class_name else ""
+    return f'<a{attribute} href="{html.escape(url, quote=True)}">{html.escape(label)}</a>'
+
+
 def formula(value: str) -> str:
     escaped = html.escape(value)
     return re.sub(r"\^\{([^{}]+)\}", r"<sup>\1</sup>", escaped).replace(" * ", " · ")
 
 
-def scope_name(case_id: str, scope: str) -> str:
-    names = {
-        "cess_channel": {"regime_0": "Outer", "regime_1": "Intermediate", "regime_2": "Near wall"},
-        "rough_pipe": {"regime_0": "Roughness dominated", "regime_1": "Reynolds dominated"},
-    }
-    return names.get(case_id, {}).get(scope, "Global")
+def selected_metrics(state: dict) -> list[dict]:
+    metrics = []
+    for scope in state["workflow_result"]["local_workflows"]:
+        if scope.get("status") != "success":
+            raise ValueError("A selected case contains an unsuccessful local workflow")
+        final = scope["final_solution"]
+        scope_id = scope["scope_id"]
+        metrics.append({
+            "scope_id": scope_id,
+            "scope": "Global" if scope_id == "global" else scope_id.replace("_", " ").capitalize(),
+            "samples": scope["n_samples"],
+            "groups": scope["locked_count"],
+            "mutual_information": final["mutual_information"],
+            "epsilon": final["normalized_information_score"],
+            "conditional_test_r2": final["gpr_validation"]["test_r2_mean"],
+            "input_formulas": final["input_formulas"],
+            "output_formula": final["output_dimensionless_formula"],
+        })
+    if not metrics:
+        raise ValueError("A selected case has no structured numerical results")
+    return metrics
+
+
+def metric_table(metrics: list[dict]) -> str:
+    rows = "".join(
+        f'<tr><th scope="row">{html.escape(item["scope"])}</th>'
+        f'<td>{item["samples"]:,}</td><td>{item["groups"]}</td>'
+        f'<td>{item["mutual_information"]:.3f}</td><td>{item["epsilon"]:.3f}</td>'
+        f'<td>{item["conditional_test_r2"]:.3f}</td></tr>'
+        for item in metrics
+    )
+    return ('<div class="table-scroll"><table class="metric-table">'
+            '<thead><tr><th scope="col">Scope</th><th scope="col">Samples</th>'
+            '<th scope="col">Groups</th><th scope="col">MI</th>'
+            '<th scope="col">ε</th><th scope="col">Test R²</th></tr></thead>'
+            f'<tbody>{rows}</tbody></table></div>')
+
+
+def selected_relations(metrics: list[dict]) -> str:
+    rows = []
+    for item in metrics:
+        inputs = "".join(
+            f'<div class="formula"><span>Input {number}</span>{formula(value)}</div>'
+            for number, value in enumerate(item["input_formulas"], 1)
+        )
+        rows.append(f'<div class="formula-row"><h4>{html.escape(item["scope"])}</h4>'
+                    + inputs
+                    + f'<div class="formula"><span>Output</span>{formula(item["output_formula"])}</div></div>')
+    return "".join(rows)
+
+
+def case_figure(entry: dict, prefix: str = "") -> str:
+    image = html.escape(prefix + entry["image"], quote=True)
+    title = html.escape(entry["title"], quote=True)
+    return (f'<figure class="case-figure"><a href="{image}">'
+            f'<img src="{image}" alt="{title}" width="1600" height="760" loading="lazy" decoding="async">'
+            '</a></figure>')
+
+
+def case_article(entry: dict) -> str:
+    actions = "".join([
+        link(entry["full_card"], "Result card", "button"),
+        link(entry["notebook"], "Notebook", "button button-outline"),
+        link(entry["evidence"], "Data", "button button-outline"),
+    ])
+    return f'''<article class="case-panel" id="case-{entry["case_id"]}">
+  <div class="case-heading"><h3>{html.escape(entry["title"])}</h3></div>
+  {case_figure(entry)}
+  <div class="case-actions">{actions}</div>
+  <details class="result-details"><summary>Numerical results and selected relations</summary>{metric_table(entry["metrics"])}{selected_relations(entry["metrics"])}</details>
+</article>'''
+
+
+def public_card(entry: dict, paper: dict, repository: str) -> str:
+    title = html.escape(entry["title"])
+    source_links = [
+        link(entry["notebook"], "Notebook"),
+        link(entry["dataset"], "Dataset · CSV"),
+        link(entry["state"], "State · JSON"),
+        link(entry["config"], "Case settings · JSON"),
+        link(entry["evidence"], "Run data"),
+    ]
+    if entry["optimizer_trace"]:
+        source_links.append(link(entry["optimizer_trace"], "Optimizer trace · JSONL"))
+    tables = "".join(f'<li>{link(item["url"], item["name"])}</li>' for item in entry["tables"])
+    table_links = f'<h3>Tables</h3><ul class="source-files">{tables}</ul>' if tables else ""
+    return f'''<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{title} · AI Buckingham</title><link rel="stylesheet" href="../assets/style.css"></head>
+<body>
+  <a class="skip-link" href="#main">Skip to results</a>
+  <header class="site-header"><div class="header-inner"><a class="wordmark" href="../index.html">AI Buckingham</a><nav aria-label="Main navigation"><a href="../index.html#cases">Cases</a>{link(paper["url"], "Paper")}{link(repository, "GitHub")}</nav></div></header>
+  <main class="card-page" id="main">
+    <header class="card-heading"><p class="case-meta">{html.escape(entry["tag"])}</p><h1>{title}</h1><p>{link('../index.html#case-' + entry['case_id'], 'All cases')}</p></header>
+    {case_figure(entry, "../")}
+    <section class="card-section"><h2>Numerical results</h2>{metric_table(entry["metrics"])}</section>
+    <section class="card-section"><h2>Selected relations</h2>{selected_relations(entry["metrics"])}</section>
+    <section class="card-section"><h2>Data and settings</h2><div class="source-links">{"".join(source_links)}</div>{table_links}</section>
+  </main>
+</body>
+</html>
+'''
 
 
 def remove_previous_generated_files(output: Path) -> None:
@@ -104,21 +176,103 @@ def build(output: Path, repository: str, branch: str) -> dict:
         "notebooks", "docs", "tests", "environments", ".git", ".github",
     }:
         raise ValueError("Pages output cannot overwrite published source or evidence")
+    specification = read_json(local_source("docs/paper_cases.json"))
+    paper = specification["paper"]
+    groups = specification["groups"]
+    cases = specification["cases"]
+    group_ids = {group["id"] for group in groups}
+    case_ids = {case["id"] for case in cases}
+    if len(cases) != 10 or len(case_ids) != len(cases) or len(group_ids) != len(groups):
+        raise ValueError("Paper metadata must identify ten cases and unique groups")
+    if any(not re.fullmatch(r"[a-z][a-z0-9_]*", name) for name in case_ids | group_ids):
+        raise ValueError("Paper metadata contains an invalid case or group identifier")
+    if any(case["group"] not in group_ids for case in cases):
+        raise ValueError("A paper case has no matching group")
     index = read_json(local_source("results/index.json"))
-    manifest = read_json(local_source("data/manifest.json"))
-    benchmark = read_json(local_source("reproduction/rag_ablation/package_manifest.json"))
-    with local_source("results/summary.csv").open(encoding="utf-8-sig", newline="") as stream:
-        summary = list(csv.DictReader(stream))
+    data_manifest = read_json(local_source("data/manifest.json"))
     by_id = {case["case_id"]: case for case in index["cases"]}
-    if set(by_id) != set(CASE_ORDER):
-        raise ValueError("The Pages explorer requires the ten published cases")
-    sources = []
-    for name in ASSETS:
-        sources.append(local_source(f"docs/assets/{name}"))
+    if set(by_id) != case_ids:
+        raise ValueError("Paper metadata and the result index identify different cases")
+    assets = [
+        (local_source("docs/assets/workflow.png"), "assets/workflow.png"),
+        (local_source("docs/assets/manifest.json"), "assets/manifest.json"),
+        (local_source("docs/assets/cases/manifest.json"), "assets/cases/manifest.json"),
+    ]
+    source_files = [local_source("docs/paper_cases.json"), local_source("results/index.json")]
+    entries = []
+    total_generations = 0
+    for published in cases:
+        case_id = published["id"]
+        case = by_id[case_id]
+        selected = [run for run in case["runs"] if run["run_id"] == case["selected_run"]]
+        if len(selected) != 1 or selected[0]["status"] != "completed":
+            raise ValueError(f"Case {case_id} does not select one completed run")
+        run = selected[0]
+        state_path = local_source(f"{run['directory']}/state.json")
+        config_relative = f"configs/cases/{case_id}.json"
+        config_path = local_source(config_relative)
+        config = read_json(config_path)
+        dataset = local_source(config["dataset"]).relative_to(ROOT).as_posix()
+        image_relative = f"docs/assets/cases/{case_id}.png"
+        if published["image"] != image_relative:
+            raise ValueError(f"Unexpected case image path for {case_id}")
+        image = f"assets/cases/{case_id}.png"
+        assets.append((local_source(image_relative), image))
+        source_files.extend([state_path, config_path])
+        trace_relative = f"{run['directory']}/evidence/optimization_trace.jsonl"
+        trace = github(trace_relative, repository=repository, branch=branch) if (ROOT / trace_relative).is_file() else None
+        tables = [{"name": path.name, "url": github(path.relative_to(ROOT).as_posix(), repository=repository, branch=branch)}
+                  for path in sorted((state_path.parent / "tables").glob("*.csv"))]
+        group = next(item for item in groups if item["id"] == published["group"])
+        entries.append({
+            "case_id": case_id, "title": published["title"], "short_name": published["title"],
+            "group": published["group"], "tag": group["title"], "section": published["section"],
+            "figure": published["figure"], "image": image, "samples": config["data_metadata"]["rows"],
+            "run_id": run["run_id"], "full_card": f"cards/{case_id}.html",
+            "notebook": github(case["notebook"], repository=repository, branch=branch),
+            "evidence": github(run["directory"], repository=repository, branch=branch, directory=True),
+            "dataset": github(dataset, repository=repository, branch=branch),
+            "state": github(state_path.relative_to(ROOT).as_posix(), repository=repository, branch=branch),
+            "config": github(config_relative, repository=repository, branch=branch),
+            "optimizer_trace": trace, "tables": tables,
+            "figures": [{"file": image, "source": image_relative, "name": case_id}],
+            "metrics": selected_metrics(read_json(state_path)),
+        })
+        total_generations += int(run.get("optimizer_generations", 0))
+    payload = {
+        "repository": repository, "branch": branch, "paper": paper, "groups": groups, "cases": entries,
+        "observation_count": sum(item["rows"] for item in data_manifest["datasets"]),
+        "optimizer_generations": total_generations,
+        "source_index_sha256": digest(ROOT / "results/index.json"),
+        "source_summary_sha256": digest(local_source("results/summary.csv")),
+    }
+    sections = []
+    for group in groups:
+        articles = "\n".join(case_article(entry) for entry in entries if entry["group"] == group["id"])
+        sections.append(f'<section class="case-group" id="{group["id"]}" aria-labelledby="title-{group["id"]}">'
+                        f'<h2 id="title-{group["id"]}">{html.escape(group["title"])}</h2>'
+                        f'<div class="case-grid">{articles}</div></section>')
+    authors = paper.get("authors", ["Ao Cheng", "Lei Zhang", "Guowei He"])
+    author_line = ", ".join(authors[:-1]) + " and " + authors[-1] if len(authors) > 1 else authors[0]
+    replacements = {
+        "__PAPER_TITLE__": html.escape(paper["title"]),
+        "__AUTHORS__": html.escape(author_line),
+        "__PAPER_URL__": html.escape(paper["url"], quote=True),
+        "__REPO_URL__": html.escape(repository, quote=True),
+        "__BRANCH__": quote(branch, safe=""),
+        "__CASE_GROUPS__": "\n".join(sections),
+        "__WORKFLOW_CAPTION__": html.escape(paper.get("workflow_caption", "Schematic of the AI Buckingham workflow.")),
+        "__PAGE_DATA__": json.dumps(payload, ensure_ascii=False).replace("<", "\\u003c"),
+    }
+    template = (TEMPLATES / "index.html").read_text(encoding="utf-8")
+    for token, value in replacements.items():
+        template = template.replace(token, value)
+    if re.search(r"__[A-Z_]+__", template):
+        raise ValueError("Unresolved Pages template token")
     remove_previous_generated_files(output)
     output.mkdir(parents=True, exist_ok=True)
-    produced: list[str] = []
-    source_records: list[dict] = []
+    produced = []
+    source_records = []
 
     def write(relative: str, content: str) -> None:
         destination = output / relative
@@ -126,120 +280,19 @@ def build(output: Path, repository: str, branch: str) -> dict:
         destination.write_text(content, encoding="utf-8", newline="\n")
         produced.append(relative)
 
-    def copy(source: Path, relative: str) -> None:
+    for source, relative in assets:
         destination = output / relative
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(source, destination)
         produced.append(relative)
-        source_records.append({
-            "source": source.relative_to(ROOT).as_posix(), "output": relative,
-            "sha256": digest(source), "bytes": source.stat().st_size,
-        })
-
-    for source in sources:
-        copy(source, f"assets/{source.name}")
-    entries = []
-    articles = []
-    selectors = []
-    total_generations = 0
-    for case_id in CASE_ORDER:
-        case = by_id[case_id]
-        selected = [run for run in case["runs"] if run["run_id"] == case["selected_run"]]
-        if len(selected) != 1 or selected[0]["status"] != "completed":
-            raise ValueError(f"Case {case_id} does not select one completed run")
-        run = selected[0]
-        metrics = [row for row in summary if row["case_id"] == case_id]
-        if not metrics or any(row["run_id"] != run["run_id"] for row in metrics):
-            raise ValueError(f"Summary/index mismatch for {case_id}")
-        config = read_json(local_source(f"configs/cases/{case_id}.json"))
-        sample_count = config["data_metadata"]["rows"]
-        card = f"cards/{case_id}.html"
-        copy(local_source(run["report"]), card)
-        figures = []
-        for relative in run["figures"]:
-            if relative.lower().endswith(".png"):
-                source = local_source(relative)
-                target = f"assets/cases/{case_id}/{source.name}"
-                copy(source, target)
-                figures.append({"file": target, "source": relative, "name": source.stem})
-        if not figures:
-            raise ValueError(f"Case {case_id} has no recorded PNG figure")
-        primary = next((figure for figure in figures if figure["name"].endswith("regime_partition")), figures[0])
-        total_generations += int(run.get("optimizer_generations", 0))
-        multiple = len(metrics) > 1
-        second_kind = any(row["similarity_type"] == "second_kind" for row in metrics)
-        tag = "Multiple regimes" if multiple else "Type II similarity" if second_kind else "Type I similarity"
-        notebook = github(case["notebook"], repository=repository, branch=branch)
-        evidence = github(run["directory"], repository=repository, branch=branch, directory=True)
-        trace_relative = f"{run['directory']}/evidence/optimization_trace.jsonl"
-        trace = github(trace_relative, repository=repository, branch=branch) if (ROOT / trace_relative).is_file() else None
-        entry = {
-            "case_id": case_id, "title": case["title"], "short_name": SHORT_NAMES[case_id],
-            "description": DESCRIPTIONS[case_id], "samples": sample_count, "tag": tag,
-            "run_id": run["run_id"], "full_card": card, "notebook": notebook,
-            "evidence": evidence, "optimizer_trace": trace, "figures": figures,
-            "metrics": [{
-                "scope": scope_name(case_id, row["scope_id"]), "samples": int(row["local_samples"]),
-                "groups": int(row["group_count"]), "mutual_information": float(row["mutual_information"]),
-                "epsilon": float(row["information_score"]), "conditional_test_r2": float(row["conditional_test_r2"]),
-                "input_formulas": json.loads(row["input_formulas"]), "output_formula": row["output_formula"],
-            } for row in metrics],
-        }
-        entries.append(entry)
-        selectors.append(f'<a class="case-option" href="#case-{case_id}" role="tab" id="tab-{case_id}" aria-controls="case-{case_id}" aria-selected="false">{html.escape(SHORT_NAMES[case_id])}</a>')
-        metric_rows = "".join(
-            f'<tr><th scope="row">{html.escape(metric["scope"])}</th><td>{metric["samples"]:,}</td><td>{metric["groups"]}</td><td>{metric["mutual_information"]:.3f}</td><td>{metric["epsilon"]:.3f}</td><td>{metric["conditional_test_r2"]:.3f}</td></tr>'
-            for metric in entry["metrics"]
-        )
-        formula_rows = "".join(
-            f'<div class="formula-row"><strong>{html.escape(metric["scope"])}</strong>'
-            + "".join(f'<div class="formula">{formula(value)}</div>' for value in metric["input_formulas"])
-            + f'<div class="output-formula">Response: {formula(metric["output_formula"])}</div></div>'
-            for metric in entry["metrics"]
-        )
-        extras = [figure for figure in figures if figure is not primary]
-        extra_html = ""
-        if extras:
-            extra_html = '<details class="more-figures"><summary>More figures</summary>' + "".join(
-                f'<figure><a href="{figure["file"]}" target="_blank" rel="noopener"><img src="{figure["file"]}" loading="lazy" decoding="async" alt="Results for {html.escape(SHORT_NAMES[case_id])}"></a></figure>'
-                for figure in extras
-            ) + '</details>'
-        trace_html = f'<a href="{trace}">Optimizer trace</a>' if trace else ''
-        articles.append(f'''<article class="case-panel" id="case-{case_id}" role="tabpanel" aria-labelledby="tab-{case_id}" data-case="{case_id}">
-  <div class="case-heading"><div><p class="eyebrow">{html.escape(tag)} <span>·</span> {sample_count:,} observations</p><h3>{html.escape(case["title"])}</h3></div><a class="text-link" href="{evidence}">Run evidence</a></div>
-  <p class="case-description">{html.escape(DESCRIPTIONS[case_id])}</p>
-  <figure class="case-figure"><a href="{primary["file"]}" target="_blank" rel="noopener"><img src="{primary["file"]}" loading="lazy" decoding="async" alt="Results for {html.escape(SHORT_NAMES[case_id])}"></a><figcaption>Open the image for full resolution.</figcaption></figure>
-  <div class="table-scroll"><table class="metric-table"><caption>Selected representation · numerical results</caption><thead><tr><th scope="col">Scope</th><th scope="col">Samples</th><th scope="col">Groups</th><th scope="col">MI</th><th scope="col">ε</th><th scope="col">Test R²</th></tr></thead><tbody>{metric_rows}</tbody></table></div>
-  <details class="formulas"><summary>Selected dimensionless relations</summary>{formula_rows}</details>
-  <div class="case-actions"><a class="button" href="{card}">Read full result card</a><a class="button button-outline" href="{notebook}">Open executed notebook</a></div>
-  <div class="case-text-links">{trace_html}<a href="{github(f'configs/cases/{case_id}.json', repository=repository, branch=branch)}">Exact case settings</a></div>
-  {extra_html}
-</article>''')
-    payload = {
-        "repository": repository, "branch": branch, "cases": entries,
-        "observation_count": sum(item["rows"] for item in manifest["datasets"]),
-        "optimizer_generations": total_generations,
-        "source_index_sha256": digest(ROOT / "results/index.json"),
-        "source_summary_sha256": digest(ROOT / "results/summary.csv"),
-    }
-    template = (TEMPLATES / "index.html").read_text(encoding="utf-8")
-    replacements = {
-        "__REPO_URL__": html.escape(repository),
-        "__BRANCH__": quote(branch, safe=""),
-        "__CASE_COUNT__": str(len(entries)),
-        "__TRIAL_COUNT__": f'{benchmark["trial_count"]:,}',
-        "__CHECKER_ROUNDS__": f'{benchmark["checker_rounds"]:,}',
-        "__OBSERVATION_COUNT__": f'{payload["observation_count"]:,}',
-        "__GENERATION_COUNT__": f'{total_generations:,}',
-        "__CASE_SELECTORS__": "\n".join(selectors),
-        "__CASE_ARTICLES__": "\n".join(articles),
-        "__PAGE_DATA__": json.dumps(payload, ensure_ascii=False).replace("<", "\\u003c"),
-    }
-    for token, value in replacements.items():
-        template = template.replace(token, value)
-    if re.search(r"__[A-Z_]+__", template):
-        raise ValueError("Unresolved Pages template token")
+        source_records.append({"source": source.relative_to(ROOT).as_posix(), "output": relative,
+                               "sha256": digest(source), "bytes": source.stat().st_size})
+    for source in source_files:
+        source_records.append({"source": source.relative_to(ROOT).as_posix(),
+                               "sha256": digest(source), "bytes": source.stat().st_size})
     write("index.html", template)
+    for entry in entries:
+        write(entry["full_card"], public_card(entry, paper, repository))
     for name in ("style.css", "app.js"):
         write(f"assets/{name}", (TEMPLATES / name).read_text(encoding="utf-8"))
     write("data/cases.json", json.dumps(payload, ensure_ascii=False, indent=2) + "\n")
@@ -248,14 +301,15 @@ def build(output: Path, repository: str, branch: str) -> dict:
         "source_index_sha256": payload["source_index_sha256"],
         "source_summary_sha256": payload["source_summary_sha256"],
         "case_count": len(entries), "observation_count": payload["observation_count"],
-        "sources": source_records, "method": "Static copy of reviewed saved evidence; no scientific execution or API calls.",
+        "sources": source_records, "method": "Case figures and saved structured results.",
     }, indent=2) + "\n")
-    produced.extend([".pages-build.json"])
+    produced.append(".pages-build.json")
     (output / ".pages-build.json").write_text(json.dumps({"files": sorted(produced)}, indent=2) + "\n", encoding="utf-8")
     checked = check_local_links(output)
-    repository_targets = check_repository_targets(output / "index.html", repository, branch)
-    size = sum((output / relative).stat().st_size for relative in produced)
-    return {"output": output.relative_to(ROOT).as_posix(), "cases": len(entries), "files": len(produced), "bytes": size, "local_links_checked": checked, "repository_targets_checked": repository_targets}
+    repository_targets = sum(check_repository_targets(document, repository, branch) for document in output.rglob("*.html"))
+    return {"output": output.relative_to(ROOT).as_posix(), "cases": len(entries), "files": len(produced),
+            "bytes": sum((output / relative).stat().st_size for relative in produced),
+            "local_links_checked": checked, "repository_targets_checked": repository_targets}
 
 
 def check_repository_targets(document: Path, repository: str, branch: str) -> int:
@@ -282,7 +336,7 @@ def check_repository_targets(document: Path, repository: str, branch: str) -> in
 
 
 def check_local_links(output: Path) -> int:
-    """Check references without fetching GitHub or the deployment endpoint."""
+    """Check local files and anchors without fetching deployment endpoints."""
     from html.parser import HTMLParser
 
     class Links(HTMLParser):
@@ -299,21 +353,22 @@ def check_local_links(output: Path) -> int:
                 if attribute in values:
                     self.refs.append(values[attribute])
 
-    checked = 0
+    documents = {}
     for document in output.rglob("*.html"):
         parser = Links()
         parser.feed(document.read_text(encoding="utf-8"))
+        documents[document.resolve()] = parser
+    checked = 0
+    for document, parser in documents.items():
         for ref in parser.refs:
             parsed = urlsplit(ref)
             if parsed.scheme or parsed.netloc:
                 continue
-            if not parsed.path:
-                if parsed.fragment and parsed.fragment not in parser.ids:
-                    raise ValueError(f"Broken HTML anchor in {document.name}: {ref}")
-            else:
-                target = (document.parent / parsed.path).resolve()
-                if not target.is_relative_to(output.resolve()) or not target.is_file():
-                    raise ValueError(f"Broken local Pages reference in {document.name}: {ref}")
+            target = (document.parent / unquote(parsed.path)).resolve() if parsed.path else document
+            if not target.is_relative_to(output.resolve()) or not target.is_file():
+                raise ValueError(f"Broken local Pages reference in {document.name}: {ref}")
+            if parsed.fragment and target in documents and unquote(parsed.fragment) not in documents[target].ids:
+                raise ValueError(f"Broken HTML anchor in {document.name}: {ref}")
             checked += 1
     return checked
 
@@ -325,10 +380,7 @@ def main() -> None:
     parser.add_argument("--branch", default="main")
     args = parser.parse_args()
     output = args.output if args.output.is_absolute() else ROOT / args.output
-    report = build(output, args.repository_url.rstrip("/"), args.branch)
-    print(json.dumps(report, indent=2))
-    if report["bytes"] > 20 * 1024 * 1024:
-        print("Note: Pages output exceeds the preferred 20 MiB presentation budget.")
+    print(json.dumps(build(output, args.repository_url.rstrip("/"), args.branch), indent=2))
 
 
 if __name__ == "__main__":

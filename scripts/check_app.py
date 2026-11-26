@@ -3,6 +3,7 @@ from pathlib import Path
 import argparse
 import json
 import sys
+import tempfile
 from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -11,7 +12,8 @@ sys.path.insert(0, str(ROOT / "src"))
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--report", type=Path, default=ROOT / "generated" / "web_checks.json")
+    parser.add_argument("--report", type=Path, default=Path(tempfile.gettempdir()) / "ai-buckingham-checks" / "web_checks.json")
+    parser.add_argument("--timeout", type=int, default=60)
     args = parser.parse_args()
     from streamlit.testing.v1 import AppTest
     checks = []
@@ -20,15 +22,16 @@ def main():
             raise AssertionError(name)
         checks.append({"check": name, "passed": True})
     with patch("httpx.Client.send", side_effect=AssertionError("Network is forbidden in offline UI checks")), patch("httpx.AsyncClient.send", side_effect=AssertionError("Network is forbidden in offline UI checks")):
-        app = AppTest.from_file(str(ROOT / "streamlit_app.py"), default_timeout=30).run()
+        app = AppTest.from_file(str(ROOT / "streamlit_app.py"), default_timeout=args.timeout).run()
         record("Overview has no exception", not app.exception)
-        metrics = {metric.label: str(metric.value) for metric in app.metric}
-        record("Overview shows research coverage and observation counts",
-               metrics.get("Physical systems") == "10" and metrics.get("Observations") == "4,926"
-               and metrics.get("Paper case coverage") == "10/10"
-               and metrics.get("Dimensional-checking trials") == "600")
-        record("Overview leaves run status on the analysis page",
-               not {"Completed runs", "Running runs", "Failed / stopped"}.intersection(metrics))
+        metadata = json.loads((ROOT / "docs/paper_cases.json").read_text(encoding="utf-8"))
+        headings = [item.value.removeprefix("### ") for item in app.main
+                    if item.type == "markdown" and item.value.startswith("### ")]
+        record("Overview shows all ten cases in paper order",
+               headings == [case["title"] for case in metadata["cases"]]
+               and len(app.get("image")) == 10)
+        record("Overview has no count dashboard or sample-count chart",
+               not app.metric and not app.dataframe and not app.get("plotly_chart"))
         app.sidebar.radio[0].set_value("Numerical diagnostics").run()
         for case_id in ["blasius", "mhd", "cess_channel", "rough_pipe", "sandgrain", "velocity_scaling"]:
             app.selectbox(key="diagnostic_case").set_value(case_id).run()
@@ -42,7 +45,7 @@ def main():
         record("Pressure-gradient baseline category filter retains 120 actual rows", not app.exception and len(baseline) == 1 and len(baseline[0]) == 120)
         app.selectbox(key="workflow_case").set_value("rough_pipe").run()
         mi = [float(metric.value) for metric in app.metric if metric.label == "Mutual information"]
-        r2 = [float(metric.value) for metric in app.metric if metric.label == "Conditional held-out R²"]
+        r2 = [float(metric.value) for metric in app.metric if metric.label == "Test R²"]
         record("Rough-pipe page displays the verified final mutual information", not app.exception and sorted(round(value, 3) for value in mi) == [2.198, 3.085])
         record("Rough-pipe page displays the verified final validation scores", sorted(round(value, 3) for value in r2) == [0.974, 0.984])
         app.sidebar.radio[0].set_value("Run analysis").run()

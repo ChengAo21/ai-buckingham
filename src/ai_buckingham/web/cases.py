@@ -2,10 +2,10 @@
 import pandas as pd
 import plotly.express as px
 import streamlit as st
-import streamlit.components.v1 as components
 
-from .components import chart, figures, interpretation_commentary, json_panel, masthead, selected_run, table
+from .components import chart, collapse_axis_controls, figures, json_panel, masthead, selected_run, table
 from .data import ROOT, archive_bytes, case_catalog, dataset_path, first, read_csv, read_json
+from .publication import paper_cases
 
 
 def _values(title, value):
@@ -18,14 +18,14 @@ def _values(title, value):
 
 
 def render():
-    masthead("Case workflow", "Read the input, inspect the decisions, and download the complete result.", "Case study")
+    masthead("Case workflow")
     catalog = case_catalog()
     case_id = st.selectbox("Physical system", list(catalog), format_func=lambda key: catalog[key]["title"], key="workflow_case")
     item = catalog[case_id]
     run = selected_run(case_id, key="workflow_run")
     state = run["state"] if run else {}
     config = run["config"] if run and run["config"] else item["config"]
-    tabs = st.tabs(["Input & formulation", "Dimensions & basis", "Analysis protocol", "Mechanism evidence", "Selected relations", "Figures & downloads"])
+    tabs = st.tabs(["Input & formulation", "Dimensions & basis", "Analysis protocol", "Physical-regime identification", "Selected relations", "Figures & downloads"])
     with tabs[0]:
         prompt = state.get("prompt_problem") or config.get("prompt_problem") or config.get("prompt") or config.get("problem_description")
         _values("Problem description", prompt)
@@ -40,8 +40,6 @@ def render():
                 y = ycol.selectbox("Response coordinate", numeric, index=len(numeric)-1, key="case_scatter_y")
                 chart(px.scatter(frame, x=x, y=y, hover_data=list(frame.columns)[:12], opacity=.75), "case_input_scatter")
         _values("Variable ledger", state.get("dimension_ledger"))
-        if case_id == "sandgrain":
-            st.caption("The study translates skewness by Sk + 2 before non-integer powers. See the saved preprocessing record for the executed transform.")
     with tabs[1]:
         _values("Dimensional matrix", state.get("dimension_mat", first(state, "dimensional_matrix")))
         basis = state.get("basis_pi_formulas")
@@ -56,15 +54,19 @@ def render():
         _values("Planner proposal", state.get("workflow_plan"))
         _values("Configuration provenance", state.get("hyperparameter_provenance"))
         _values("Compiled workflow", state.get("compiled_workflow"))
-        st.caption("Explicit user settings take precedence over planner suggestions and defaults. A prescribed policy and an automatic decision are distinct records.")
     with tabs[3]:
         detection = first(state, "regime_detection")
-        _values("Mechanism assessment", detection)
+        _values("Physical-regime identification", detection)
         if run and run["events"]:
             table(pd.json_normalize(run["events"]), "workflow_events.csv")
         if not detection:
             st.markdown("The archived Cess partition and regional comparison are available under **Numerical diagnostics** and **Comparisons**.")
     with tabs[4]:
+        paper_case = paper_cases().get(case_id)
+        if paper_case:
+            image = ROOT / paper_case["image"]
+            if image.is_file():
+                st.image(str(image), width="stretch")
         locals_ = first(state, "local_workflows", default=[])
         for i, local in enumerate(locals_ if isinstance(locals_, list) else []):
             st.markdown("#### " + str(local.get("scope_id", f"Regime {i+1}")).replace("_", " ").title())
@@ -73,11 +75,7 @@ def render():
             values[0].metric("Selected groups", local.get("locked_count", "Not recorded"))
             values[1].metric("Mutual information", str(final.get("mutual_information", "Not recorded")))
             r2 = (final.get("gpr_validation") or {}).get("test_r2_mean", final.get("gpr_test_r2", "Not recorded"))
-            values[2].metric("Conditional held-out R²", str(r2))
-            inputs = final.get("input_formulas", [])
-            if inputs:
-                coordinates = ", ".join(f"Π{i+1}" for i in range(len(inputs)))
-                st.caption(f"Selected response: Π_out ≈ F({coordinates}). The input coordinates and output rescaling are defined below for this scope.")
+            values[2].metric("Test R²", str(r2))
             for formula in final.get("input_formulas", []):
                 st.code(formula, language=None)
             if final.get("output_dimensionless_formula"):
@@ -86,7 +84,6 @@ def render():
             json_panel("Local evidence " + str(i+1), local, key=f"local_evidence_{i}")
         if not locals_:
             _values("Selected relations", first(state, "selected_relations", "final_solution"))
-        interpretation_commentary(state.get("final_report"))
         _values("Interpretation retrieval", state.get("interpretation_knowledge_retrieval"))
         if run:
             st.markdown("#### Interactive data collapse")
@@ -96,11 +93,19 @@ def render():
                 frame = read_csv(path)
                 pi_columns = [c for c in frame if c.startswith("pi_")]
                 if pi_columns and "response_transformed" in frame:
-                    x = st.selectbox("Dimensionless coordinate", pi_columns, key="collapse_coordinate")
-                    logarithmic = st.checkbox("Logarithmic collapse axes", value=True, key="collapse_log")
-                    valid = frame[(frame[x]>0)&(frame.response_transformed>0)] if logarithmic else frame
-                    chart(px.scatter(valid, x=x, y="response_transformed", log_x=logarithmic, log_y=logarithmic,
-                                     hover_data=[c for c in ["csv_row","response_original","output_scale"] if c in valid], opacity=.75), "case_collapse")
+                    panel = path.stem.removesuffix("_collapse")
+                    control_key = f"collapse_{case_id}_{run['path'].name}_{panel}"
+                    x = st.selectbox("Dimensionless coordinate", pi_columns, key=f"{control_key}_coordinate")
+                    log_x, log_y = collapse_axis_controls(case_id, panel, key=control_key)
+                    valid = frame
+                    if log_x:
+                        valid = valid[valid[x] > 0]
+                    if log_y:
+                        valid = valid[valid.response_transformed > 0]
+                    figure = px.scatter(valid, x=x, y="response_transformed", log_x=log_x, log_y=log_y,
+                                        hover_data=[c for c in ["csv_row","response_original","output_scale"] if c in valid], opacity=.75)
+                    figure.update_layout(xaxis_type="log" if log_x else "linear", yaxis_type="log" if log_y else "linear")
+                    chart(figure, f"case_{control_key}")
                     table(frame, path.name, "case_collapse_download")
             else:
                 st.info("Pointwise collapse coordinates are not present in this run.")
@@ -116,10 +121,7 @@ def render():
                     table(read_csv(path), path.name, "case_table_" + path.stem)
             report = run["path"] / "report.html"
             if report.is_file():
-                if st.toggle("Display the complete result card", value=False, key="show_complete_card"):
-                    st.caption("Complete result card, including model commentary and figures. See the structured results for the selected relations.")
-                    components.html(report.read_text(encoding="utf-8"), height=950, scrolling=True)
-                st.download_button("Download complete result card · HTML", report.read_bytes(), file_name=f"{case_id}_report.html", mime="text/html")
+                st.download_button("Download raw run report · HTML", report.read_bytes(), file_name=f"{case_id}_raw_report.html", mime="text/html")
             st.download_button("Download run bundle · ZIP", archive_bytes(run["path"]), file_name=f"{case_id}_{run['path'].name}.zip", mime="application/zip")
             json_panel("Run manifest", run["manifest"])
         else:
@@ -157,7 +159,6 @@ def prediction_view():
             chart(figure, f"sandgrain_prediction_{i}")
     table(filtered, "sandgrain_predictions.csv", "prediction_download")
     figures(folder, "sandgrain_prediction_figures")
-    st.caption("Offline validation refit comparing both representations on the same 83 training and 21 test samples.")
 
 
 def pressure_baseline_view():
@@ -167,7 +168,6 @@ def pressure_baseline_view():
         return
     st.markdown("#### Reynolds-number baseline")
     manifest = read_json(folder / "manifest.json")
-    st.caption("Direct coordinate evaluation from all 144 supplied observations. Source labels are retained: zeroPG → ZPG (84), advPG → APG (36), favPG → FPG (24). No model is fitted.")
     classes = st.multiselect("Pressure-gradient classes", ["ZPG", "APG", "FPG"], default=["ZPG", "APG", "FPG"], key="pressure_baseline_classes")
     selected = frame[frame.pressure_gradient_class.isin(classes)]
     figure = px.scatter(selected, x="Re_delta", y="U_tau_over_U_inf", color="pressure_gradient_class",
@@ -180,7 +180,6 @@ def pressure_baseline_view():
                         height=500)
     figure.update_traces(marker={"size":8,"line":{"width":1.3}})
     chart(figure, "pressure_baseline_scatter")
-    st.caption("This plot examines the conventional Reynolds-number coordinate; the discovered dimensionless relation and its collapse are shown above.")
     table(selected, "pressure_gradient_baseline_points.csv", "pressure_baseline_csv")
     with st.expander("Original baseline figure and vector downloads"):
         figures(folder, "pressure_baseline_original")

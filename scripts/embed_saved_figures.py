@@ -1,8 +1,4 @@
-"""Embed real saved PNGs in notebooks/reports; no analysis or API is rerun.
-
-Notebook attachments explicitly identify their source run and file hashes.
-Existing execution counts and scientific outputs are not changed.
-"""
+"""Embed saved PNG figures in notebooks and reports."""
 from pathlib import Path
 import base64
 import json
@@ -26,7 +22,7 @@ def main():
         if not figures:
             continue
         nb.cells = [cell for cell in nb.cells if cell.metadata.get("ai_buckingham_role") != "saved_figure_gallery"]
-        gallery = nbformat.v4.new_markdown_cell("## Saved evidence figures\n\nThe following images are the original PNGs saved by run `" + run_dir.name + "`. This gallery embeds existing files; it does not rerun or reconstruct the analysis.\n\n" + "\n\n".join(f"**{p.name}**\n\n![{p.stem}](attachment:{p.name})" for p in figures))
+        gallery = nbformat.v4.new_markdown_cell("## Figures\n\n" + "\n\n".join(f"**{p.name}**\n\n![{p.stem}](attachment:{p.name})" for p in figures))
         gallery.metadata["ai_buckingham_role"] = "saved_figure_gallery"
         gallery.attachments = {p.name: {"image/png": base64.b64encode(p.read_bytes()).decode("ascii")} for p in figures}
         gallery.metadata["source_sha256"] = {p.name: sha256_file(p) for p in figures}

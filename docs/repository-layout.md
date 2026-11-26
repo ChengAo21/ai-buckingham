@@ -1,15 +1,26 @@
-# Repository layout and naming
+# Repository layout
 
-The reusable implementation lives in `src/ai_buckingham/`. Notebooks and the web app call that implementation. Case IDs are shared by configuration files, dataset names, notebook names and run directories. Module names use lower-case snake_case; callable and state-field compatibility aliases are documented in `refactoring.md`.
+| Path | Contents |
+|---|---|
+| `src/ai_buckingham/` | Scientific implementation, CLI and Streamlit views |
+| `configs/cases/` | Case prompts, input/output columns and numerical settings |
+| `data/datasets/` | Case input CSVs |
+| `data/generation/` | Dataset generators and source information |
+| `knowledge/` | Physical-quantity and dimensionless-relation knowledge bases and embedding indexes |
+| `notebooks/cases/` | Executed case notebooks |
+| `results/cases/<case_id>/<run_id>/` | Included case results, settings, tables, figures and execution records |
+| `reproduction/` | Dimensional-checking statistics, comparison calculations and MI-landscape examples |
+| `docs/` | Usage, configuration and file-format guides |
+| `site/` | Static results explorer |
+| `scripts/` | Execution, export and validation commands |
+| `tests/` | Automated checks |
 
-`data/datasets/` contains the case inputs. `data/generation/` contains the generators and provenance. `knowledge/` holds the two separately cited knowledge bases and read-only embedding indexes.
+Case IDs identify the corresponding configuration, dataset, notebook and run directory. Reference dimensions in case metadata are used for validation. Runtime settings are resolved from library defaults, planner output and explicit case settings; see [Numerical configuration](configuration.md).
 
-`configs/cases/` preserves each exact prompt and manual override. Reference dimensions are metadata for validation, not forced answers. Shared numerical defaults remain in `config.py` and the existing numerical routines, avoiding a second editable copy that can drift from the implementation.
+New analyses, caches and reproduction outputs use `generated/`, which is excluded from Git. Each analysis has a separate run directory. Create a new run when changing settings.
 
-`results/cases/<case_id>/<run_id>/` holds included fixed runs. `generated/` is ignored and reserved for future user runs, caches and reproduction outputs. A result manifest prevents overwriting a completed or partial run. To change settings, create a new run.
+Within a run, `plots/` contains figures referenced by the state, and `figures/` contains the copies used by the viewer and reports. PDF files in result directories contain generated figures.
 
-Within a run, `plots/` preserves the original routines' output paths referenced by the recorded state; `figures/` contains exact copies for the shared viewer and report interface. The case notebook is also copied into its run directory so the public latest notebook and every retained attempt remain traceable.
+The velocity-comparison package uses its own input CSV and column order. Follow that package's [input and reproduction instructions](../reproduction/velocity_comparison/README.md).
 
-`reproduction/` preserves the original scientific evidence packages and exposes safe entry points. Internal historical IDs and file bytes are retained even when their spelling differs from current naming conventions. In particular, the velocity comparison's historical CSV uses a different column order and must not be replaced with the central CSV.
-
-PDF files inside numerical result directories contain generated figures.
+See [Architecture and execution](refactoring.md) for module responsibilities and entry points.

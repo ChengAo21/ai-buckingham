@@ -13,6 +13,8 @@ from typing import Any
 
 import pandas as pd
 
+from .publication import paper_cases
+
 ROOT = Path(__file__).resolve().parents[3]
 CASES = {
     "mhd": ("MHD power generator", "Type I", "dataset_mhd.csv"),
@@ -74,16 +76,19 @@ def case_configs() -> dict[str, dict]:
 
 def case_catalog() -> dict[str, dict]:
     configs = case_configs()
+    published = paper_cases()
     result = {}
     for key, config in configs.items():
         canonical = ALIASES.get(key, key)
         title, kind, filename = CASES.get(canonical, (key.replace("_", " ").title(), "Recorded case", ""))
-        result[key] = {"title": config.get("title", config.get("name", title)), "kind": kind,
+        display_title = published.get(canonical, {}).get("title", config.get("title", config.get("name", title)))
+        result[key] = {"title": display_title, "kind": kind,
                        "filename": filename, "config": config}
     if not result:
-        result = {key: {"title": value[0], "kind": value[1], "filename": value[2], "config": {}}
+        result = {key: {"title": published.get(key, {}).get("title", value[0]), "kind": value[1], "filename": value[2], "config": {}}
                   for key, value in CASES.items()}
-    return result
+    order = {case_id: index for index, case_id in enumerate(published)}
+    return dict(sorted(result.items(), key=lambda item: order.get(ALIASES.get(item[0], item[0]), len(order))))
 
 
 def dataset_path(case_id: str) -> Path:

@@ -9,12 +9,13 @@ if str(ROOT/"src") not in sys.path:
 import streamlit as st
 from ai_buckingham.web.components import style
 from ai_buckingham.web import overview, cases, rag, diagnostics, comparisons, run_page
+from ai_buckingham.web.publication import publication
 
-st.set_page_config(page_title="AI Buckingham · Evidence Explorer",page_icon="Π",layout="wide",initial_sidebar_state="expanded")
+st.set_page_config(page_title="AI Buckingham",page_icon="Π",layout="wide",initial_sidebar_state="expanded")
 style()
 with st.sidebar:
     st.markdown("## AI Buckingham")
-    st.caption("Agentic discovery of dimensionless scaling laws across physical regimes")
+    st.markdown(f"[Paper]({publication()['paper']['url']})")
     selection=st.radio("Explore",["Overview","Case workflow","Retrieval evidence","Numerical diagnostics","Comparisons","Run analysis"],key="page_navigation")
     st.divider()
     st.caption("Browse saved results without API credentials.")

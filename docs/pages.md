@@ -1,32 +1,24 @@
-# Research page on GitHub Pages
+# Static results explorer
 
-The public research page is served at [chengao21.github.io/ai-buckingham](https://chengao21.github.io/ai-buckingham/). It presents the project and selected recorded results. The separate [hosted Streamlit application](https://ai-buckingham.streamlit.app/) provides the interactive workflow and live-analysis interface. Its local setup and operating details are described in [app.md](app.md).
+The [results explorer](https://chengao21.github.io/ai-buckingham/) presents the ten cases and links to their notebooks and result records. The [Streamlit application](https://ai-buckingham.streamlit.app/) provides the interactive workflow and analysis interface.
 
-## Build and publication
+## Build and preview
 
-`.github/workflows/pages.yml` builds and publishes the site when `main` changes or when a maintainer runs the workflow manually. The build uses Python 3.12 and the standard library:
-
-```bash
-python scripts/build_pages.py
-```
-
-The builder reads the committed result index and summaries, and stages the static page and selected assets under `site/`. The workflow publishes this directory.
-
-Build steps have repository-read access. Only the deployment job receives `pages: write` and `id-token: write`. Deployment requires the successful build job, uses the `github-pages` environment, and publishes only from `main`.
-
-## Repository setting
-
-In the repository's **Settings → Pages → Build and deployment**, set **Source** to **GitHub Actions**. The corresponding REST API value is `build_type: workflow`. A branch-based publishing source would start a different build pipeline and should not be used with this workflow.
-
-After publication, check the latest **Publish research page** run at the current commit. Both **Build static research page** and **Deploy research page** should succeed, and the deployment environment should link to the public page.
-
-## Local preview
+From the repository root, use Python 3.12:
 
 ```bash
 python scripts/build_pages.py
 python -m http.server 8000 --bind 127.0.0.1 --directory site
 ```
 
-Open [localhost:8000](http://127.0.0.1:8000/) to inspect the page. Regenerate the static output after changing the showcase content or committed results, then publish through the same workflow.
+Open [localhost:8000](http://127.0.0.1:8000/). The builder reads the included case index, summaries and figures, then writes the static files to `site/`.
 
-The workflow follows GitHub's official [custom Pages workflow guidance](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#publishing-with-a-custom-github-actions-workflow) and uses the official [Pages artifact action](https://github.com/actions/upload-pages-artifact) and [deployment action](https://github.com/actions/deploy-pages).
+The page uses the final case figures listed in `docs/paper_cases.json`.
+
+## GitHub Pages deployment
+
+In **Settings → Pages → Build and deployment**, set **Source** to **GitHub Actions**.
+
+`.github/workflows/pages.yml` builds and publishes `site/` when `main` changes or when a maintainer starts the workflow manually. Check the current **Publish research page** run for the build and deployment status.
+
+See GitHub's [Pages workflow guidance](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#publishing-with-a-custom-github-actions-workflow) for deployment configuration.

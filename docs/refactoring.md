@@ -39,7 +39,7 @@ The rough-pipe affine-sigmoid GPR fit is sensitive to the native linear algebra 
 
 ## Selection and run isolation
 
-Local learning proceeds through group-count search, sparsification and rationalization. The reported CMA result is the **primary-seed candidate**; additional successful restarts provide diagnostic uncertainty and stability statistics. A failed primary restart is reported as `primary_restart_failed`, even if a diagnostic restart succeeds.
+Dimensionless learning proceeds through group-count search, sparsification and rationalization. The reported CMA-ES result is the **primary-seed candidate**; additional successful restarts provide optimization-variability estimates. A failed primary restart is reported as `primary_restart_failed`, even if another restart succeeds.
 
 The output path is resolved through a `ContextVar`. Within `record_run(run_dir)`, plotting and report code writes beneath that run directory. Leaving the context restores the previous path, including after an exception. Published datasets and knowledge files are read-only inputs. Missing or stale embedding indexes are rebuilt under `generated/cache/` or an explicitly configured private cache.
 
@@ -59,4 +59,4 @@ From the repository root, run the offline checks for scientific execution contra
 python -m pytest tests/test_scientific_contract.py tests/test_input_bindings.py
 ```
 
-See [Evidence, reproduction, and scientific interpretation](evidence.md) for result records and their interpretation, and [Numerical configuration and case exceptions](configuration.md) for reproducibility settings.
+See [Result files and numerical validation](evidence.md) for result records and [Numerical configuration](configuration.md) for reproducibility settings.

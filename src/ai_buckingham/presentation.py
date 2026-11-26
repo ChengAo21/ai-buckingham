@@ -389,7 +389,7 @@ def _stage_identity(title: str) -> tuple[str, str]:
         "Stage 2/7 · Physics consistency audit": ("Stage 02", "Physical consistency"),
         "Stage 3/7 · Buckingham–Pi basis": ("Stage 03", "Dimensional basis"),
         "Stage 4/7 · Workflow planner": ("Stage 04", "Analysis protocol"),
-        "Stage 5/7 · Mechanism screening": ("Stage 05A", "Mechanism evidence"),
+        "Stage 5/7 · Mechanism screening": ("Stage 05A", "Physical-regime identification"),
         "Stage 5/7 · Numerical workflow execution": ("Stage 05B", "Local model selection"),
         "Stage 6/7 · Final summary": ("Stage 06", "Selected relations"),
         "Stage 7/7 · Data-collapse visualization": ("Stage 07", "Evidence figures"),
@@ -603,7 +603,7 @@ def display_agent_run_header(
     display_workflow_path(
         [
             "problem formulation", "physical consistency", "dimensional basis",
-            "analysis protocol", "mechanism evidence", "local model selection",
+            "analysis protocol", "physical-regime identification", "local model selection",
             "selected relations", "evidence figures",
         ],
         current="problem formulation",
@@ -736,7 +736,7 @@ def _display_mechanism_running(clustering, template, hyperparameters=None):
     _inject_agent_editorial_styles()
     summary = ('Collecting all requested partition evidence and checking K=2 directional support.'
                if template == 'auto_mechanism_adaptive' else 'Collecting the explicitly requested partition evidence.')
-    card = "<div class='daa-shell'><section class='daa-card' data-tone='info'><div class='daa-card-head'><div><div class='daa-card-label'>Stage 05A</div><h3 class='daa-card-title'>Mechanism evidence</h3></div><span class='daa-status info'>Running</span></div><div class='daa-summary'>" + html.escape(summary) + '</div>' + _mechanism_gate_html(clustering) + '</section></div>'
+    card = "<div class='daa-shell'><section class='daa-card' data-tone='info'><div class='daa-card-head'><div><div class='daa-card-label'>Stage 05A</div><h3 class='daa-card-title'>Physical-regime identification</h3></div><span class='daa-status info'>Running</span></div><div class='daa-summary'>" + html.escape(summary) + '</div>' + _mechanism_gate_html(clustering) + '</section></div>'
     return display(HTML(card), display_id=True)
 
 
@@ -822,7 +822,7 @@ def display_regime_detection_summary(detection: dict, hyperparameters=None, disp
     for failure in detection.get('clustering_failures', []) or []:
         failure_rows.append('<tr><td>K=' + html.escape(str(failure.get('k', '—'))) + '</td><td>' + html.escape(str(failure.get('status') or 'No valid candidate partition returned')) + '</td></tr>')
     failure_html = "<div class='daa-section-title'>Requested K without usable partition evidence</div><table class='daa-diagnostic-table'><thead><tr><th>K</th><th>Status</th></tr></thead><tbody>" + ''.join(failure_rows) + '</tbody></table>' if failure_rows else ''
-    card = f"\n    <div class='daa-shell'>\n      <section class='daa-card' data-tone='{tone}'>\n        <div class='daa-card-head'>\n          <div>\n            <div class='daa-card-label'>Stage 05A</div>\n            <h3 class='daa-card-title'>Mechanism evidence</h3>\n          </div>\n          <span class='daa-status {('success' if tone == 'success' else 'warning')}'>{html.escape(status_label)}</span>\n        </div>\n        <div class='daa-summary'>{html.escape(str(headline))}</div>\n        {configuration_html}\n{metric_html}\n        {gpr_details_html}\n        {global_html}\n        {candidate_html}\n        {failure_html}\n        {candidate_detail_html}\n      </section>\n    </div>\n    "
+    card = f"\n    <div class='daa-shell'>\n      <section class='daa-card' data-tone='{tone}'>\n        <div class='daa-card-head'>\n          <div>\n            <div class='daa-card-label'>Stage 05A</div>\n            <h3 class='daa-card-title'>Physical-regime identification</h3>\n          </div>\n          <span class='daa-status {('success' if tone == 'success' else 'warning')}'>{html.escape(status_label)}</span>\n        </div>\n        <div class='daa-summary'>{html.escape(str(headline))}</div>\n        {configuration_html}\n{metric_html}\n        {gpr_details_html}\n        {global_html}\n        {candidate_html}\n        {failure_html}\n        {candidate_detail_html}\n      </section>\n    </div>\n    "
     if display_handle is not None and hasattr(display_handle, 'update'):
         display_handle.update(HTML(card))
     else:
@@ -862,7 +862,7 @@ def display_local_candidate(
         rows=[
             ("Mutual information", candidate.get("mutual_information")),
             (
-                "Information score",
+                "Normalized information score ε",
                 candidate.get("normalized_information_score"),
             ),
             ("Uncertainty", _candidate_uncertainty_text(candidate)),
@@ -1336,7 +1336,7 @@ def display_final_workflow_summary(
 
         display(HTML(
             "<div class='daa-shell'><section class='daa-card' data-tone='muted'>"
-            "<div class='daa-card-label'>Physical reading</div>"
+            "<div class='daa-card-label'>Model output</div>"
             f"<div class='daa-summary'>{html.escape(_ui_text(report_text, 2000))}</div>"
             f"{grounding_note}"
             f"{rag_evidence_html}"
@@ -1438,7 +1438,7 @@ def save_State_2md(state: dict, save_name: str, if_save=False):
         preprocessing = result.get('dimensionless_input_preprocessing', {})
         if preprocessing:
             write_table(f, [('Dimensionless input preprocessing', _workflow._format_preprocessed_input_terms(preprocessing))])
-        f.write('## 4. Mechanism evidence\n\n')
+        f.write('## 4. Physical-regime identification\n\n')
         if not regime_detection or regime_detection.get('status') in {None, 'not_requested'}:
             f.write('Mechanism screening was not requested.\n\n')
         else:
@@ -1512,7 +1512,7 @@ def save_State_2md(state: dict, save_name: str, if_save=False):
             if similarity_screen.get('status') == 'success':
                 f.write('**Similarity-class screening**\n\n')
                 write_table(f, [('Requested class', local.get('similarity_type_requested', 'auto')), ('Selected class', similarity_screen.get('selected_similarity_type')), ('Screening k', similarity_screen.get('screening_k')), ('MI, fixed output', similarity_screen.get('fixed_output_mutual_information')), ('MI, joint output', similarity_screen.get('joint_output_mutual_information')), ('Relative MI loss without output scaling', similarity_screen.get('relative_mi_loss_without_output_scaling')), ('Maximum allowed relative MI change', similarity_screen.get('max_relative_mi_change')), ('Screening cosine threshold', similarity_screen.get('screening_max_cosine_similarity'))])
-            write_table(f, [('Status', local.get('status', '—')), ('Selected count', local.get('locked_count', '—')), ('Counts tested', local.get('tested_counts', [])), ('Similarity', str(local.get('similarity_type', '—')).replace('_', ' ')), ('Mutual information', final.get('mutual_information', '—')), ('Residual score', final.get('normalized_information_score', '—')), ('Held-out R²', gpr.get('test_r2_mean', final.get('gpr_test_r2', '—'))), ('Sparsification', (local.get('sparsification') or {}).get('status', '—')), ('Rationalization', 'accepted' if (local.get('rationalization') or {}).get('accepted') else (local.get('rationalization') or {}).get('status', 'not adopted'))])
+            write_table(f, [('Status', local.get('status', '—')), ('Selected count', local.get('locked_count', '—')), ('Counts tested', local.get('tested_counts', [])), ('Similarity', str(local.get('similarity_type', '—')).replace('_', ' ')), ('Mutual information', final.get('mutual_information', '—')), ('Normalized information score ε', final.get('normalized_information_score', '—')), ('Held-out R²', gpr.get('test_r2_mean', final.get('gpr_test_r2', '—'))), ('Sparsification', (local.get('sparsification') or {}).get('status', '—')), ('Rationalization', 'accepted' if (local.get('rationalization') or {}).get('accepted') else (local.get('rationalization') or {}).get('status', 'not adopted'))])
             input_formulas = final.get('input_formulas', []) or []
             basis_formulas = final.get('input_basis_coordinate_formulas_display', []) or final.get('input_basis_expanded_formulas_display', []) or []
             output_formula = final.get('output_dimensionless_formula')
@@ -1531,7 +1531,7 @@ def save_State_2md(state: dict, save_name: str, if_save=False):
             f.write('\n```\n\n</details>\n\n')
         final_report = state.get('final_report')
         if final_report:
-            f.write('## 6. Physical interpretation\n\n')
+            f.write('## 6. Model output\n\n')
             f.write(md_text(final_report, 5000) + '\n\n')
             interpretation_rag = state.get('interpretation_knowledge_retrieval', {}) or {}
             if interpretation_rag:
@@ -1542,7 +1542,7 @@ def save_State_2md(state: dict, save_name: str, if_save=False):
                     interpretation_rows.append([rank, match.get('canonical_name', '—'), match.get('symbols', '—'), match.get('aliases', '—'), match.get('defining_expression', '—'), match.get('physical_interpretation', '—'), match.get('domain', '—'), match.get('retrieval_score', '—'), match.get('lexical_score', '—'), match.get('semantic_score', '—'), match.get('retrieval_mode', '—'), match.get('source', '—'), match.get('source_identifier', '—'), match.get('confidence', '—')])
                 if interpretation_rows:
                     write_wide_table(f, headers=['Rank', 'Canonical name', 'Symbols', 'Aliases', 'Defining expression', 'Physical interpretation', 'Domain', 'Retrieval score', 'Lexical score', 'Semantic score', 'Retrieval mode', 'Source', 'Source identifier', 'Confidence'], rows=interpretation_rows)
-                write_rag_evidence_block(f, 'Exact dimensionless-relation evidence supplied to Physical reading', interpretation_rag.get('evidence_markdown', ''))
+                write_rag_evidence_block(f, 'Dimensionless-relation evidence supplied to Model output', interpretation_rag.get('evidence_markdown', ''))
         figures = state.get('visualization_files', []) or []
         if figures:
             f.write('## 7. Generated figures\n\n')
@@ -1748,7 +1748,7 @@ def _frontend_audit_html(audit, raw=None):
                 text += '<br><strong>Known conflict with the cited KB vector:</strong> ' + '; '.join(html.escape(str(base)) + ': candidate/suggestion ' + html.escape(str(values.get('candidate_or_suggestion'))) + ', cited record ' + html.escape(str(values.get('cited_record'))) for base, values in conflicts.items())
             program_notes.append('<div class="daa-note"><strong>Program checks for ' + _frontend_escape(name) + ':</strong> ' + text + '</div>')
         reasons.append('<article class="daa-result"><h4>' + _frontend_escape(name) + '</h4>' + ('<p>' + _frontend_escape(reason) + '</p>' if reason else '<p>No structured Checker reason was returned.</p>') + ('<p><strong>Program issues:</strong> ' + _frontend_escape(issues) + '</p>' if issues else '') + '</article>')
-    result = _frontend_table(['Input', 'Checker decision', 'Actual SI', 'Suggested SI', 'Coordinate changes', 'Evidence / support'], rows) if rows else "<div class='daa-note'>No usable structured variable audit is available. The program decision and failure reason remain recorded below.</div>"
+    result = _frontend_table(['Input', 'Checker decision', 'Candidate SI exponents', 'Suggested SI', 'Coordinate changes', 'Evidence / support'], rows) if rows else "<div class='daa-note'>No usable structured variable audit is available. The program decision and failure reason remain recorded below.</div>"
     result += "<div class='daa-front-caption'>Checker decisions are model judgments. The program gate is reported separately above; ? denotes an unknown coordinate, never zero.</div>" + ''.join(program_notes)
     if reasons:
         result += _frontend_details('Per-variable physical reasoning and program checks', "<div class='daa-result-grid'>" + ''.join(reasons) + '</div>')
@@ -1923,7 +1923,7 @@ def _write_frontend_markdown(handle, state):
         handle.write('### Physical audit round '+str(number)+'\n\n')
         table(['Field','Value'],[('Program decision',audit.get('gate_status')),('Revision limit exhausted',audit.get('retry_budget_exhausted',False)),('Ledger SHA256',audit.get('ledger_sha256'))])
         checker = {v.get('csv_name'):v for v in (audit.get('checker_audit') or {}).get('variables',[])}
-        table(['Input','Checker decision','Actual SI','Suggested SI','Coordinate changes','Evidence IDs / reason'],[[v.get('csv_name'),v.get('decision'),_frontend_si(v.get('before')),_frontend_si(v.get('suggested')),'; '.join(str(b)+': '+str(d.get('before'))+' -> '+str(d.get('suggested')) for b,d in (v.get('coordinate_diff') or {}).items()),_frontend_text(v.get('referenced_entry_ids'))+'; '+str(checker.get(v.get('csv_name'),{}).get('reason','Not recorded'))] for v in audit.get('variable_results',[])])
+        table(['Input','Checker decision','Candidate SI exponents','Suggested SI','Coordinate changes','Evidence IDs / reason'],[[v.get('csv_name'),v.get('decision'),_frontend_si(v.get('before')),_frontend_si(v.get('suggested')),'; '.join(str(b)+': '+str(d.get('before'))+' -> '+str(d.get('suggested')) for b,d in (v.get('coordinate_diff') or {}).items()),_frontend_text(v.get('referenced_entry_ids'))+'; '+str(checker.get(v.get('csv_name'),{}).get('reason','Not recorded'))] for v in audit.get('variable_results',[])])
         feedback=audit.get('feedback') or '\n'.join(map(str,audit.get('issues',[])))
         if feedback:
             handle.write('<details><summary>Exact feedback returned to Analyzer</summary>\n\n'+str(feedback)+'\n\n</details>\n\n')
@@ -2000,7 +2000,7 @@ def _recorded_costs_rows(provenance):
     role_names = {
         "Analyzer": "Analyzer", "Hallu_Checker": "Physics audit",
         "Output_Binding_Checker": "Output column check",
-        "Workflow_Planner": "Planner", "Workflow_Report": "Physical interpretation",
+        "Workflow_Planner": "Planner", "Workflow_Report": "Model output",
     }
     rows = []
     for (node, kind, model), stats in _recorded_costs_summary(provenance)["groups"]:

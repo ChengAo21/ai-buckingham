@@ -1,10 +1,15 @@
 {
-  "mode": "offline_landscape_evaluation_with_recorded_trajectory",
+  "mode": "new_notebook_optimization",
   "case_id": "mhd",
   "status": "complete",
-  "source_run": "results/cases/mhd/20261124T115837Z_f3348420",
-  "source_state_sha256": "05ab72c5715909f2f5cacc3f6a942099315f9a983f877a1e66b8fc7d6c042cd3",
+  "started_utc": "2026-11-26T18:43:31.289263+00:00",
+  "finished_utc": "2026-11-26T18:44:16.044132+00:00",
+  "notebook": "reproduction/mi_landscapes/MI_landscape_4cases.ipynb",
+  "notebook_sha256": "5e8844195652d6c76ed19617ee7a77be9c523475696ec4c5e304d959d685e558",
+  "dataset": "data/datasets/mhd.csv",
   "dataset_sha256": "1a0b1a751a9f1d9d3b70f234b4e753c7bddfc7400d794a7972be9cdba90a2a4f",
+  "rows_before_dropna": 483,
+  "rows_after_dropna": 483,
   "input_variables": [
     "h",
     "mu",
@@ -13,6 +18,7 @@
     "dp_dx",
     "B"
   ],
+  "output_variable": "u*",
   "basis_matrices": [
     [
       3.0,
@@ -33,21 +39,93 @@
   ],
   "mi_method": "kraskov",
   "mi_parameter": 4,
+  "seed": 42,
   "response_surface_grid": 101,
   "grid_bounds": [
-    -1,
+    -1.0,
+    1.0
+  ],
+  "trajectory_generations": 53,
+  "trajectory_mode": "CMA-ES center in the bounded coefficient space; Start and End from this single notebook-function run",
+  "trajectory_coordinate_columns": [
+    "bounded_mean_c_0",
+    "bounded_mean_c_1"
+  ],
+  "trajectory_start": [
+    0.6389007532491996,
+    0.06695443922834145
+  ],
+  "trajectory_end": [
+    0.7051938232278384,
+    -0.011127637910423142
+  ],
+  "boundary_mapping": {
+    "boundary_handler": "cma.boundary_handler.BoundTransform",
+    "bounds": [
+      [
+        -1.0,
+        -1.0
+      ],
+      [
+        1.0,
+        1.0
+      ]
+    ],
+    "genotype_phenotype": "cma.transformations.GenoPheno(dim=2), no scaling/typical/fixed-variable transformations",
+    "operation": "gp.pheno(raw_center, into_bounds=boundary_handler.repair)",
+    "center_definition": "CMA-ES distribution center mapped to bounded coefficient space, not an arithmetic mean of the population.",
+    "saved_internal_center_columns": [
+      "mean_c_0",
+      "mean_c_1"
+    ],
+    "bounded_center_columns": [
+      "bounded_mean_c_0",
+      "bounded_mean_c_1"
+    ]
+  },
+  "bounded_mean_endpoint_mi": 3.5553560115750433,
+  "plot_basis_indices": [
+    0,
     1
   ],
-  "trajectory_search_id": "7f5dd1c4-2c14-4cd1-8503-4379c46f9d74",
-  "trajectory_generations": 53,
-  "trajectory_mode": "actual recorded primary-seed search, before sparsification",
-  "method": "Fresh pointwise MI evaluation on the full two-coefficient input basis. The recorded optimizer trajectory is overlaid without running another search. Finite negative MI estimates are retained.",
+  "notebook_optimizer_tolfun": 1e-06,
+  "case_configuration": "configs/cases/mhd.json",
+  "case_configuration_sha256": "b221963dd8b67000b94097752cd202fd1468de3ed9fb9ee5a25e1fe151819f47",
+  "package_versions": {
+    "numpy": "2.4.0",
+    "pandas": "2.3.3",
+    "scipy": "1.16.3",
+    "cma": "4.4.4",
+    "matplotlib": "3.10.8"
+  },
+  "source_files": {
+    "reproduction/mi_landscapes/MI_landscape_4cases.ipynb": "5e8844195652d6c76ed19617ee7a77be9c523475696ec4c5e304d959d685e558",
+    "data/datasets/mhd.csv": "1a0b1a751a9f1d9d3b70f234b4e753c7bddfc7400d794a7972be9cdba90a2a4f",
+    "configs/cases/mhd.json": "b221963dd8b67000b94097752cd202fd1468de3ed9fb9ee5a25e1fe151819f47"
+  },
+  "configuration": {
+    "mi_method": "kraskov",
+    "cma_popsize": 300,
+    "cma_maxiter": 50000,
+    "cma_init_stepsize": 0.5,
+    "cma_lower_bound": -1.0,
+    "cma_upper_bound": 1.0,
+    "mi_param": 4,
+    "cma_init_position": 0.1
+  },
+  "parameter_sources": {
+    "optimizer_and_estimator": "reproduction/mi_landscapes/MI_landscape_4cases.ipynb: original definitions and execution-cell CMA defaults.",
+    "mhd_configuration": "configs/cases/mhd.json: k=4, initial center=0.1 and initial sigma=0.5.",
+    "basis": "MHD two-group basis in Fig.3b, in input-variable order.",
+    "trajectory": "New notebook-function run with fixed seed 42; not a recovered original Fig.3c history."
+  },
   "files": {
-    "generation_history.csv": "9e8b5b20898ef156b8945114f1c01c5c808c9f6750c8a10bed77fe524d4d5413",
-    "mhd_landscape.pdf": "23962484e26fcfa19b7fedac88673756ed8a00800fd69b5c8799b487a1be4674",
-    "mhd_landscape.png": "78a5b56a2511a1137ba3d35502ef3c17d8649057e4eb0d00bf35958ab6bce141",
-    "mhd_landscape.svg": "c82dfdd868a0d5f83d1215e8969678ac4ac66933bdc41e6bf9f3bbd93cfa258d",
+    "generation_history.csv": "c092de7f205997809547b223df43e6c50ac1f95a3539abd9aa94c9168c1e40f2",
+    "mhd_landscape.pdf": "3db8ac5fd858bec2f9328e91c2e30889abd2036bf6c776c917b0c764e544376b",
+    "mhd_landscape.png": "eee38f34765720ee528376694496637511f67f23b0ef3a6700eaaacf83793530",
+    "mhd_landscape.svg": "fe49fa999b0e9bfb701aa387673dba085c26e5fce3250596b2d146a28c81e3ad",
+    "optimization_result.json": "ced10a958aef4035b5b3623c6094ce0852ff53f8a4aff806ad67870d85cdbb41",
     "response_surface.csv": "5db25e61b8b667756fc97708b91662b3aa80fc3bfa0c42ed5c48009af9fcabe1",
-    "response_surface.npz": "7aecbbb8a6d6e20f8e584d7601a86b7a8b2bdec488657553547989cb6912dcb8"
+    "response_surface.npz": "c1d3ddb22b95cf818283f6eb25f1fe092960748ac2af6a759be1701a9e092584"
   }
 }

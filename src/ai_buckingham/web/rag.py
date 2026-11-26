@@ -1,10 +1,10 @@
-"""Variable-level retrieval and checking evidence from the historical benchmark."""
+"""Variable-level retrieval and dimensional-checking trial records."""
 import pandas as pd
 import plotly.express as px
 import streamlit as st
 
 from .components import chart, json_panel, masthead, table
-from .data import case_catalog, first, read_csv, read_json, reproduction, runs, load_run
+from .data import ALIASES, case_catalog, first, read_csv, read_json, reproduction, runs, load_run
 
 
 def _rounds_from_state(state, events=None):
@@ -31,7 +31,7 @@ def _rounds_from_state(state, events=None):
 
 
 def render():
-    masthead("Retrieval evidence", "Inspect the exact query, retrieved definitions, dimensional assignments, and the checking decision for each variable.", "Grounded reasoning")
+    masthead("Retrieval evidence")
     base = reproduction("rag_ablation")
     source = st.radio("Evidence source", ["Archived 600-trial benchmark", "Included case run"], horizontal=True, key="rag_source")
     events = []
@@ -39,17 +39,18 @@ def render():
         trials = base / "trials"
         models = sorted(p.name for p in trials.iterdir() if p.is_dir()) if trials.is_dir() else []
         if not models:
-            st.info("The historical trial archive has not been installed.")
+            st.info("The dimensional-checking trial archive is unavailable.")
             return
         c1, c2, c3 = st.columns([1, 1, 2])
         model = c1.selectbox("Analyzer model", models, key="rag_model")
         available = sorted(p for p in (trials / model).iterdir() if p.is_dir() and (p / "on.json").is_file())
         case_codes = sorted({p.name.split("_")[0] for p in available})
-        case_code = c2.selectbox("Benchmark case", case_codes, key="rag_case")
+        catalog = case_catalog()
+        case_code = c2.selectbox("Benchmark case", case_codes,
+                                 format_func=lambda case: catalog.get(ALIASES.get(case, case), {}).get("title", case), key="rag_case")
         selected = c3.selectbox("Trial identifier", [p for p in available if p.name.startswith(case_code + "_")], format_func=lambda p: p.name, key=f"rag_trial_{model}_{case_code}")
         record = read_json(selected / "on.json")
         initial = read_json(selected / "initial.json")
-        st.caption("Historical record · Rephrased prompts are identified as challenge in the archive. IDs and source bytes are preserved.")
         json_panel("Initial Analyzer response", initial, key="rag_initial")
     else:
         available = runs()
@@ -59,7 +60,6 @@ def render():
         path = st.selectbox("Case and run", available, format_func=lambda p: f"{p.parent.name} / {p.name}", key="rag_case_run")
         loaded = load_run(path)
         record, events = loaded["state"], loaded["events"]
-        st.caption("Dimensional-checking results for the selected case.")
     rounds = _rounds_from_state(record, events)
     if not rounds:
         st.info("This source contains no recorded dimensional-checking round. A failed initial response may stop before retrieval.")
@@ -127,5 +127,3 @@ def render():
         st.code(retrieval.get("evidence_markdown", "Not recorded"), language="markdown", wrap_lines=True)
     json_panel("Gate audit", selected_round.get("gate", {}), key="rag_gate")
     json_panel("Complete checking round", selected_round, key="rag_complete")
-    st.caption("Historical replay recomputes all 247 semantic rankings for Sandgrain using archived query vectors. "
-               "For the other nine cases, recorded top-k semantic scores are replayed; missing full query vectors limit full-ranking reconstruction.")
