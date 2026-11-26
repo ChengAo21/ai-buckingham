@@ -36,7 +36,7 @@ DESCRIPTIONS = {
     "rayleigh_benard": "An invertible Rayleigh-number coordinate organizes the convection measurements.",
     "laser_keyhole": "The learned coordinate recovers a power-equivalent Keyhole-number representation.",
     "blasius": "The selected coordinate recovers the classical similarity variable for a laminar boundary layer.",
-    "sandgrain": "Two learned groups retain complementary roughness information, evaluated on the recorded source-stratified 83/21 split.",
+    "sandgrain": "Two learned groups retain complementary roughness information, evaluated on the source-stratified 83/21 split.",
     "velocity_scaling": "Type II similarity rescales both the wall-normal coordinate and the normalized mean velocity.",
     "goldenfeld": "Joint coordinate learning and output scaling recover an incomplete-similarity rough-pipe representation.",
     "cess_channel": "Three local relations distinguish outer, intermediate and near-wall dependence.",
@@ -200,16 +200,16 @@ def build(output: Path, repository: str, branch: str) -> dict:
         extras = [figure for figure in figures if figure is not primary]
         extra_html = ""
         if extras:
-            extra_html = '<details class="more-figures"><summary>More recorded figures</summary>' + "".join(
-                f'<figure><a href="{figure["file"]}" target="_blank" rel="noopener"><img src="{figure["file"]}" loading="lazy" decoding="async" alt="Additional recorded evidence for {html.escape(SHORT_NAMES[case_id])}"></a></figure>'
+            extra_html = '<details class="more-figures"><summary>More figures</summary>' + "".join(
+                f'<figure><a href="{figure["file"]}" target="_blank" rel="noopener"><img src="{figure["file"]}" loading="lazy" decoding="async" alt="Results for {html.escape(SHORT_NAMES[case_id])}"></a></figure>'
                 for figure in extras
             ) + '</details>'
-        trace_html = f'<a href="{trace}">Recorded optimizer trace</a>' if trace else ''
+        trace_html = f'<a href="{trace}">Optimizer trace</a>' if trace else ''
         articles.append(f'''<article class="case-panel" id="case-{case_id}" role="tabpanel" aria-labelledby="tab-{case_id}" data-case="{case_id}">
   <div class="case-heading"><div><p class="eyebrow">{html.escape(tag)} <span>·</span> {sample_count:,} observations</p><h3>{html.escape(case["title"])}</h3></div><a class="text-link" href="{evidence}">Run evidence</a></div>
   <p class="case-description">{html.escape(DESCRIPTIONS[case_id])}</p>
-  <figure class="case-figure"><a href="{primary["file"]}" target="_blank" rel="noopener"><img src="{primary["file"]}" loading="lazy" decoding="async" alt="Actual recorded result for {html.escape(SHORT_NAMES[case_id])}"></a><figcaption>Original recorded plot. Open the image for full resolution.</figcaption></figure>
-  <div class="table-scroll"><table class="metric-table"><caption>Selected representation · recorded numerical results</caption><thead><tr><th scope="col">Scope</th><th scope="col">Samples</th><th scope="col">Groups</th><th scope="col">MI</th><th scope="col">ε</th><th scope="col">Test R²</th></tr></thead><tbody>{metric_rows}</tbody></table></div>
+  <figure class="case-figure"><a href="{primary["file"]}" target="_blank" rel="noopener"><img src="{primary["file"]}" loading="lazy" decoding="async" alt="Results for {html.escape(SHORT_NAMES[case_id])}"></a><figcaption>Open the image for full resolution.</figcaption></figure>
+  <div class="table-scroll"><table class="metric-table"><caption>Selected representation · numerical results</caption><thead><tr><th scope="col">Scope</th><th scope="col">Samples</th><th scope="col">Groups</th><th scope="col">MI</th><th scope="col">ε</th><th scope="col">Test R²</th></tr></thead><tbody>{metric_rows}</tbody></table></div>
   <details class="formulas"><summary>Selected dimensionless relations</summary>{formula_rows}</details>
   <div class="case-actions"><a class="button" href="{card}">Read full result card</a><a class="button button-outline" href="{notebook}">Open executed notebook</a></div>
   <div class="case-text-links">{trace_html}<a href="{github(f'configs/cases/{case_id}.json', repository=repository, branch=branch)}">Exact case settings</a></div>

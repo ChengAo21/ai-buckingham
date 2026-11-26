@@ -4,7 +4,7 @@ import plotly.express as px
 import streamlit as st
 
 from .components import chart, masthead, table
-from .data import case_catalog, dataset_path, read_csv, read_json, reproduction, runs
+from .data import ROOT, case_catalog, dataset_path, read_csv, read_json, reproduction
 
 
 def render():
@@ -12,44 +12,48 @@ def render():
              "Explore dimensional reasoning, retrieval grounding, physical regimes, and dimensionless learning across ten physical systems.")
     catalog = case_catalog()
     coverage = read_json(reproduction("rag_ablation") / "results" / "coverage.json")
-    replay = read_json(reproduction("rag_ablation") / "results" / "rag_replay_summary.json")
-    available_runs = runs()
-    statuses = pd.Series([read_json(path / "manifest.json").get("status", "unknown") for path in available_runs], dtype="object")
-    columns = st.columns(5)
-    columns[0].metric("Physical systems", len(catalog))
-    columns[1].metric("Completed runs", int(statuses.isin(["completed", "complete", "success"]).sum()))
-    columns[2].metric("Running runs", int(statuses.eq("running").sum()))
-    columns[3].metric("Failed / stopped", int(statuses.isin(["failed", "blocked", "cancelled", "warning"]).sum()))
-    columns[4].metric("Archived trials", coverage.get("archived_trials", "Unavailable"))
-    st.caption(f"{len(available_runs)} saved case records · {replay.get('checker_rounds', 'Unavailable')} recorded historical checking rounds. Running and failed calculations are retained separately from completed evidence.")
-    st.markdown("### Follow a result from input to evidence")
-    st.markdown("Use **Case workflow** for a complete case, **Retrieval evidence** for variable-level checks, "
-                "**Numerical diagnostics** for decisions and optimization, and **Comparisons** for the recorded evaluation. "
-                "Browsing these pages does not start a model request. New calculations start only from **Run analysis**.")
+    publication = read_json(ROOT / "results" / "index.json")
+    included_cases = {
+        case["case_id"] for case in publication.get("cases", [])
+        if any(run.get("run_id") == case.get("selected_run") and run.get("status") == "completed"
+               for run in case.get("runs", []))
+    }
     records = []
     for case_id, item in catalog.items():
-        frame = read_csv(dataset_path(case_id))
-        available = runs(case_id)
-        case_statuses = [read_json(path / "manifest.json").get("status", "unknown") for path in available]
-        records.append({"case_id": case_id, "Physical system": item["title"], "Similarity setting": item["kind"],
-                        "Dataset rows": len(frame) if not frame.empty else None, "Dataset columns": len(frame.columns),
-                        "Completed runs": sum(s in {"completed", "complete", "success"} for s in case_statuses),
-                        "Running runs": case_statuses.count("running"),
-                        "Failed / stopped runs": sum(s in {"failed", "blocked", "cancelled", "warning"} for s in case_statuses),
-                        "Data available": not frame.empty})
+        data = read_csv(dataset_path(case_id))
+        records.append({"Physical system": item["title"], "Similarity setting": item["kind"],
+                        "Observations": len(data) if not data.empty else None})
     frame = pd.DataFrame(records)
-    st.markdown("### Benchmark collection")
-    table(frame, "case_inventory.csv")
-    if frame["Dataset rows"].notna().any():
-        chart(px.bar(frame, x="Dataset rows", y="Physical system", color="Similarity setting", orientation="h",
-                     height=470, labels={"Dataset rows": "Observations"}), "overview_samples")
-    st.markdown("### Reading the evidence")
-    a, b, c = st.columns(3)
-    with a:
-        st.markdown("**Historical record**\n\nAn archived reply, numerical result, or figure from the supplied study. Its source and completeness are shown beside the result.")
-    with b:
-        st.markdown("**Offline recalculation**\n\nA calculation from recorded inputs, coefficients, or embeddings. This does not imply a fresh language-model response or a repeated global search.")
-    with c:
-        st.markdown("**New analysis**\n\nA user-triggered execution with its own configuration, trace and result bundle. It remains separate from the paper evidence.")
+    columns = st.columns(4)
+    columns[0].metric("Physical systems", len(catalog))
+    columns[1].metric("Observations", f"{int(frame['Observations'].sum()):,}")
+    columns[2].metric("Paper case coverage", f"{len(included_cases.intersection(catalog))}/{len(catalog)}")
+    columns[3].metric("Dimensional-checking trials", coverage.get("archived_trials", "Unavailable"))
+    st.markdown("### Selected results")
+    results = [
+        ("Local physical regimes", "cess_regimes.png",
+         "Gradient-based partition and local scaling in the Cess channel-flow model."),
+        ("Equivalent sand-grain roughness", "sandgrain_predictions.png",
+         "Offline prediction comparison using surface statistics and learned dimensionless groups on the same train–test split."),
+    ]
+    for column, (title, filename, caption) in zip(st.columns(2), results):
+        with column:
+            st.markdown("#### " + title)
+            image = ROOT / "docs" / "assets" / filename
+            if image.is_file():
+                st.image(str(image), caption=caption, width="stretch")
     st.caption("The collapse-validation score evaluates prediction conditional on a selected representation. "
                "It is not an out-of-sample evaluation of the complete discovery workflow.")
+    st.markdown("### Follow a result from input to evidence")
+    st.markdown("Use **Case workflow** for a complete case, **Retrieval evidence** for variable-level checks, "
+                "**Numerical diagnostics** for decisions and optimization, and **Comparisons** for evaluation. "
+                "Use **Run analysis** to start a calculation or browse saved runs.")
+    st.markdown("### Benchmark collection")
+    table(frame, "case_inventory.csv")
+    if frame["Observations"].notna().any():
+        chart(px.bar(frame, x="Observations", y="Physical system", color="Similarity setting", orientation="h",
+                     height=470), "overview_samples")
+    with st.expander("About result sources", expanded=False):
+        st.markdown("**Paper results** are the included case executions and benchmark records. "
+                    "**Offline recalculations** evaluate saved inputs, coefficients or embeddings. "
+                    "**New analyses** are user-initiated calculations with their own settings and result bundles.")

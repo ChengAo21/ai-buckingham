@@ -15,7 +15,7 @@ import pandas as pd
 import streamlit as st
 
 from .components import interpretation_commentary, json_panel, masthead, table
-from .data import ROOT, archive_bytes, case_catalog, load_run, read_json, scrub
+from .data import ROOT, archive_bytes, case_catalog, read_json, runs
 
 MARKER = "AI_BUCKINGHAM_EVENT "
 
@@ -64,7 +64,7 @@ def progress():
     path=Path(job["output_dir"])
     manifest=read_json(path/"manifest.json")
     if code is None:
-        st.info("Analysis is running. Node completions and generation traces are saved as they become available.")
+        st.info("Analysis is running. Progress updates appear below.")
         if st.button("Cancel this calculation",key="cancel_job"):
             process.terminate()
             process.wait(timeout=10)
@@ -75,18 +75,18 @@ def progress():
             st.rerun(scope="fragment")
     else:
         if manifest.get("status")=="completed":
-            st.success("Calculation completed. The recorded workflow and result bundle are available below.")
+            st.success("Calculation completed. Results and downloads are available below.")
         elif manifest.get("status")=="cancelled":
-            st.warning("Calculation cancelled. Partial evidence is retained and marked cancelled.")
+            st.warning("Calculation cancelled. Partial results remain available.")
         else:
-            st.warning("Calculation stopped. Review the recorded status and error evidence; no scientific success is inferred from process completion.")
+            st.warning("Calculation stopped. See the error details below.")
     if job["events"]:
         table(pd.json_normalize(job["events"]),"live_node_progress.csv","live_progress_csv")
     if manifest:
         json_panel("Current run manifest",manifest,key="live_manifest")
     trace=path/"evidence"/"optimization_trace.jsonl"
     if trace.is_file():
-        st.caption(f"Recorded optimization trace: {trace.stat().st_size:,} bytes. Open Numerical diagnostics after completion to inspect each generation.")
+        st.caption("Open Numerical diagnostics after completion to inspect the optimization history.")
     if code is not None and manifest:
         report=path/"report.html"
         if report.is_file():
@@ -99,10 +99,41 @@ def progress():
             st.rerun()
 
 
+def saved_runs():
+    with st.expander("Saved runs and status", expanded=False):
+        available = runs()
+        if not available:
+            st.info("No saved runs are available.")
+            return
+        records = []
+        for path in available:
+            manifest = read_json(path / "manifest.json")
+            records.append({"Case": manifest.get("case_id", path.parent.name), "Run": path.name,
+                            "Status": manifest.get("status", "unknown"),
+                            "Source": "Paper results" if path.is_relative_to(ROOT / "results") else "New analysis"})
+        frame = pd.DataFrame(records)
+        statuses = frame["Status"]
+        columns = st.columns(3)
+        columns[0].metric("Completed runs", int(statuses.isin(["completed", "complete", "success"]).sum()))
+        columns[1].metric("Running runs", int(statuses.eq("running").sum()))
+        columns[2].metric("Failed / stopped", int(statuses.isin(["failed", "blocked", "cancelled", "warning"]).sum()))
+        table(frame, "saved_runs.csv", "saved_runs_csv")
+        selected = st.selectbox("Saved run", available,
+                                format_func=lambda path: f"{path.parent.name} · {path.name}", key="saved_run_selection")
+        json_panel("Saved run details", read_json(selected / "manifest.json"), key="saved_run_details")
+        report = selected / "report.html"
+        if report.is_file():
+            st.download_button("Download result card · HTML", report.read_bytes(),
+                               file_name=f"{selected.parent.name}_{selected.name}.html", mime="text/html", key="saved_run_report")
+        st.download_button("Download run bundle · ZIP", archive_bytes(selected),
+                           file_name=f"{selected.parent.name}_{selected.name}.zip", mime="application/zip", key="saved_run_bundle")
+
+
 def render():
-    masthead("Run a new analysis", "Execute the real LangGraph workflow with a supplied case or your own CSV. Every run receives a separate evidence bundle.", "Live execution")
-    st.markdown("The recorded results remain available without credentials. A new run sends the problem description, relevant data previews and retrieval queries to the configured model providers. "
+    masthead("Run a new analysis", "Run AI Buckingham with a supplied case or your own CSV. Each run produces a downloadable result bundle.", "Live execution")
+    st.markdown("A new run sends the problem description, relevant data previews and retrieval queries to the configured model providers. "
                 "Credentials entered here are used only for this session's isolated calculation and are excluded from the saved scientific configuration.")
+    saved_runs()
     job=st.session_state.get("analysis_job")
     if job:
         progress()

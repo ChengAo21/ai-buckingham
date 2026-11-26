@@ -90,7 +90,7 @@ def interpretation_commentary(text: str | None) -> None:
     if not text:
         return
     with st.expander("Archived model commentary", expanded=False):
-        st.caption("Original generated commentary, preserved verbatim. The structured results define the selected input coordinates, output rescaling and individual scopes.")
+        st.caption("Model-generated interpretation; see the structured results for the selected relations.")
         st.markdown(text)
 
 

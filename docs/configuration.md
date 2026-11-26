@@ -13,16 +13,14 @@ structured settings determine the executed calculation.
 Each included case declares `numerical_threads` in its JSON configuration.
 The rough-pipe reference uses **20 threads**; the other nine included runs use
 one thread. `run_analysis` applies the declared count to the loaded NumPy,
-SciPy and OpenMP libraries for that analysis, records their actual counts and
+SciPy and OpenMP libraries for that analysis, records their counts and
 versions in `manifest.json` under `numerical_runtime`, and restores the caller's
 settings afterwards. A custom analysis without this field inherits its runtime.
 
 The rough-pipe affine-sigmoid GPR fit is sensitive to floating-point reduction
 order near the prescribed branch discontinuity. The 20-thread execution
 reproduces the reported gradients, candidate partitions and local numerical
-evidence. No sample labels are manually assigned or changed. Thread count is
-an execution parameter; the scientific objectives, clustering rules, random
-seeds and data remain those of the supplied implementation.
+evidence. Retain the declared thread count when reproducing this case.
 
 Different BLAS implementations can also affect floating-point intermediates.
 The saved results and native-library metadata preserve the verified execution;
@@ -33,8 +31,8 @@ candidate partition counts. The expected values are used only for validation,
 never as optimization inputs.
 
 The study's shared settings describe defaults, not every case override. The
-exceptions below originate in the supplied implementation and numerical
-notebooks. They were retained when the source was split into modules.
+exceptions below are specified in the case configurations and numerical
+notebooks.
 
 ## Sand-grain roughness
 
@@ -99,18 +97,18 @@ settings or described as the same optimization run.
 | Blasius | 200 | 50,000 | 0.06 |
 
 These searches use the notebook's seed 42. The maximum is a budget; the original
-CMA-ES convergence criteria can stop the actual search sooner. The main agent's
+CMA-ES convergence criteria can stop the search sooner. The main agent's
 shared population and maximum-generation defaults are 300 and 30,000, with its
 shared rationalization MI-loss threshold of 0.10. The independent notebook also
 retains its own other convergence and rationalization settings. Full settings,
-actual stopping reasons and numeric generation histories accompany each result
+stopping reasons and numeric generation histories accompany each result
 under [`results/mi_landscapes/`](../results/mi_landscapes/).
 
 The MHD landscape has a different source mode:
 `offline_landscape_evaluation_with_recorded_trajectory`. Its grid is evaluated
-over the full two-coefficient input basis and overlaid with the actual recorded
-primary-seed trajectory. No additional MHD CMA-ES search is claimed by that
-export. A contour's fixed slice and a search trajectory projected onto two
+over the full two-coefficient input basis and overlaid with the saved
+primary-seed trajectory. This export evaluates the grid without a new CMA-ES
+search. A contour's fixed slice and a search trajectory projected onto two
 coefficients are different objects.
 
 ## Direct Reynolds-number baseline

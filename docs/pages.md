@@ -10,15 +10,15 @@ The public research page is served at [chengao21.github.io/ai-buckingham](https:
 python scripts/build_pages.py
 ```
 
-The builder reads the committed result index and summaries, and stages the static page and selected assets under `site/`. It does not run the scientific engine or call model APIs. The Pages artifact contains only `site/`; the workflow does not send the entire research repository through Jekyll.
+The builder reads the committed result index and summaries, and stages the static page and selected assets under `site/`. The workflow publishes this directory.
 
-Build steps have repository-read access. Only the deployment job receives `pages: write` and `id-token: write`. Deployment requires the successful build job, uses the `github-pages` environment, and publishes only from `main`. Existing deployment history remains available in GitHub Actions.
+Build steps have repository-read access. Only the deployment job receives `pages: write` and `id-token: write`. Deployment requires the successful build job, uses the `github-pages` environment, and publishes only from `main`.
 
 ## Repository setting
 
 In the repository's **Settings → Pages → Build and deployment**, set **Source** to **GitHub Actions**. The corresponding REST API value is `build_type: workflow`. A branch-based publishing source would start a different build pipeline and should not be used with this workflow.
 
-After publication, check the latest **Publish research page** run at the current commit. Both **Build static research page** and **Deploy research page** should succeed, and the deployment environment should link to the public page. A historical failed Pages run remains historical evidence; use the latest deployment and commit when checking the current status.
+After publication, check the latest **Publish research page** run at the current commit. Both **Build static research page** and **Deploy research page** should succeed, and the deployment environment should link to the public page.
 
 ## Local preview
 

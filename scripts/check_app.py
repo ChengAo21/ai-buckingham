@@ -23,7 +23,12 @@ def main():
         app = AppTest.from_file(str(ROOT / "streamlit_app.py"), default_timeout=30).run()
         record("Overview has no exception", not app.exception)
         metrics = {metric.label: str(metric.value) for metric in app.metric}
-        record("Publication snapshot has ten completed runs and zero failed runs", metrics.get("Completed runs") == "10" and metrics.get("Running runs") == "0" and metrics.get("Failed / stopped") == "0")
+        record("Overview shows research coverage and observation counts",
+               metrics.get("Physical systems") == "10" and metrics.get("Observations") == "4,926"
+               and metrics.get("Paper case coverage") == "10/10"
+               and metrics.get("Dimensional-checking trials") == "600")
+        record("Overview leaves run status on the analysis page",
+               not {"Completed runs", "Running runs", "Failed / stopped"}.intersection(metrics))
         app.sidebar.radio[0].set_value("Numerical diagnostics").run()
         for case_id in ["blasius", "mhd", "cess_channel", "rough_pipe", "sandgrain", "velocity_scaling"]:
             app.selectbox(key="diagnostic_case").set_value(case_id).run()
@@ -40,6 +45,12 @@ def main():
         r2 = [float(metric.value) for metric in app.metric if metric.label == "Conditional held-out R²"]
         record("Rough-pipe page displays the verified final mutual information", not app.exception and sorted(round(value, 3) for value in mi) == [2.198, 3.085])
         record("Rough-pipe page displays the verified final validation scores", sorted(round(value, 3) for value in r2) == [0.974, 0.984])
+        app.sidebar.radio[0].set_value("Run analysis").run()
+        metrics = {metric.label: str(metric.value) for metric in app.metric}
+        record("Run analysis retains saved-run status and access",
+               not app.exception and metrics.get("Completed runs") == "10"
+               and metrics.get("Running runs") == "0" and metrics.get("Failed / stopped") == "0"
+               and len(app.selectbox(key="saved_run_selection").options) == 10)
     report = {"offline_only": True, "network_requests_blocked": True, "total_checks": len(checks), "all_passed": True, "checks": checks}
     args.report.parent.mkdir(parents=True, exist_ok=True)
     args.report.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")

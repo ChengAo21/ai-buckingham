@@ -15,32 +15,27 @@ streamlit run streamlit_app.py
 
 | View | Available interactions |
 | --- | --- |
-| Overview | Dataset coverage, case inventory, sample counts and saved-run coverage. |
+| Overview | Research results, dataset coverage, case inventory and sample counts. |
 | Case workflow | Input scatter, variable ledger, dimensions and basis, resolved configuration, mechanism evidence, selected relations, complete result cards and downloads. |
 | Retrieval evidence | Select model, physical system, trial, checking round and variable. Inspect exact query, ranked records and score components, citations, dimensional changes and gate audit. |
-| Numerical diagnostics | Inspect recorded gradients and all saved candidate K memberships in both log-Pi and physical coordinates. Select an exported conditional MI contour/3D surface and its genuine recorded generation history, or inspect the full live CMA-ES trace. |
+| Numerical diagnostics | Inspect gradients and candidate K memberships in both log-Pi and physical coordinates. Explore conditional MI contours/3D surfaces and saved CMA-ES generation histories. |
 | Comparisons | Filter 600 trial outcomes and 730 recorded checking rounds; inspect Cess regional relevance by M/seed/conditioning and velocity profiles and RMS intervals. |
-| Run analysis | Start an explicit model-backed LangGraph calculation from a supplied case or uploaded CSV and download its independently recorded evidence bundle. |
+| Run analysis | Inspect saved-run status, start an analysis from a supplied case or uploaded CSV, and download its result bundle. |
 
 The case pages read `configs/cases/*.json`, `data/datasets/`, and
 `results/cases/<case_id>/<run_id>/`. New reader calculations are written under
-`generated/cases/<case_id>/<run_id>/`; the explorer includes these alongside immutable included runs. They are local runtime artifacts and
-should not be committed as historical paper evidence.
+`generated/cases/<case_id>/<run_id>/`; the explorer labels these separately from
+the paper's included runs.
 
 ## Evidence and missing records
 
-A historical record, offline recalculation and new execution are different
-sources. The app shows source/status information and reports missing records
-instead of marking an unrecorded stage complete. A final figure does not imply
-that historical per-generation optimizer records exist. CMA-ES generations are
-read from `evidence/optimization_trace.jsonl`, using actual `optimizer_generation`
-events; a final optimizer event is not treated as a generation.
+A saved result, offline recalculation and new analysis have different sources.
+The app shows source and status labels, including when records are unavailable.
+CMA-ES generation histories are stored in `evidence/optimization_trace.jsonl`.
 
-The optimizer view labels the penalized objective explicitly. It does not label
-the objective as mutual information or fabricate intermediate generations. Its
-two-coordinate path is a projection of an evolving high-dimensional search,
-not a conditional MI surface. A conditional surface is shown only when an
-exported numeric grid is available.
+The optimizer view shows the penalized objective, which can differ from mutual
+information. Its two-coordinate path projects a higher-dimensional search;
+conditional MI surfaces are available for exported numeric grids.
 
 The reported held-out collapse score is conditional on an already selected
 representation. It does not measure generalization of the complete discovery
@@ -49,17 +44,12 @@ rescaling exponents are not normalized in the same way.
 
 ## Live runs and credentials
 
-No live calculation starts while a page is being loaded or a parameter is being
-edited. A reader must submit the analysis form. Each job starts a separate Python
-interpreter, which initializes the actual model clients and runs the actual
-LangGraph through `ai_buckingham.cli.run_analysis`. This prevents the numerical
-implementation's global clients from being shared between concurrent sessions.
+Submit the analysis form to start a calculation. Each analysis runs in an
+isolated process through `ai_buckingham.cli.run_analysis`.
 
-Credentials are passed to the child through stdin rather than command-line
-arguments, result JSON or shared caches. Supplied keys remain in the current
-Streamlit session and its execution process; they are not written by the app to
-the repository. The live runner disables implicit remote tracing. The uploaded
-CSV is intentionally saved inside its run bundle so the execution is inspectable.
+Supplied keys remain in the current Streamlit session and its analysis process;
+they are not saved in the result configuration or repository. The uploaded CSV
+is included in the downloadable run bundle.
 
 The graph uses the LLM and embedding providers configured in the form. Launching
 a calculation sends the problem description, relevant dataset previews and
@@ -79,14 +69,14 @@ GitHub Pages serves static results; Streamlit provides the interactive Python in
 
 Saved evidence can also be browsed locally without API credentials. New analyses
 require the configured model services and enough compute for their selected budgets.
-Long CMA-ES searches consume actual CPU and memory; use a local installation when
+Long CMA-ES searches consume CPU and memory; use a local installation when
 more compute or durable run storage is needed. Runtime artifacts require durable
 storage if they must survive hosted-app restarts.
 
 Keep deployment credentials in the platform's secret settings, outside the repository;
 do not commit `.streamlit/secrets.toml`.
 
-## Additional recorded numerical evidence
+## Additional numerical evidence
 
 `results/mi_landscapes/<case_id>/` supplies the exported 101-by-101 MI grids,
 generation histories, run metadata and original figures for the included
@@ -97,8 +87,7 @@ The generation slider only reveals the stored history.
 Candidate membership arrays are read from a run's
 `evidence/regime_candidates/<record_id>/` or the separately validated
 `results/regime_candidates/<case_id>/<run_id>/` supplement. The supplement is
-explicitly labelled `offline_recalculation_from_recorded_gradients`; the viewer
-never implies that these later arrays were observed in the original run.
+labelled `offline_recalculation_from_recorded_gradients`.
 Source hashes and agreement checks remain downloadable.
 
 Case relations include pointwise `tables/*_collapse.csv` and can be explored
@@ -107,5 +96,4 @@ validation refit, with source/split filters and comparison of the original seven
 statistics against the learned groups using the identical 83/21 split.
 
 A toggle in the case downloads view displays the complete saved HTML result
-card in a scrollable frame. It is disabled by default and does not execute a
-calculation. All data downloads and inline figures are loaded from local files.
+card in a scrollable frame. It is disabled by default.

@@ -59,7 +59,7 @@ def render():
         path = st.selectbox("Case and run", available, format_func=lambda p: f"{p.parent.name} / {p.name}", key="rag_case_run")
         loaded = load_run(path)
         record, events = loaded["state"], loaded["events"]
-        st.caption("Included case execution · Exact retrieval/audit pairs are read from the recorded Checker node updates when available.")
+        st.caption("Dimensional-checking results for the selected case.")
     rounds = _rounds_from_state(record, events)
     if not rounds:
         st.info("This source contains no recorded dimensional-checking round. A failed initial response may stop before retrieval.")

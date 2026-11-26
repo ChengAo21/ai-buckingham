@@ -17,9 +17,7 @@ with st.sidebar:
     st.caption("Agentic discovery of dimensionless scaling laws across physical regimes")
     selection=st.radio("Explore",["Overview","Case workflow","Retrieval evidence","Numerical diagnostics","Comparisons","Run analysis"],key="page_navigation")
     st.divider()
-    st.markdown("**Evidence first**")
-    st.caption("Archived observations, numerical decisions and new calculations carry separate provenance.")
-    st.caption("Browsing does not initialize models or send API requests.")
+    st.caption("Browse saved results without API credentials.")
 
 PAGES={"Overview":overview.render,"Case workflow":cases.render,"Retrieval evidence":rag.render,
        "Numerical diagnostics":diagnostics.render,"Comparisons":comparisons.render,"Run analysis":run_page.render}

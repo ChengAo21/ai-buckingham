@@ -32,15 +32,15 @@ The examples span fluid mechanics, magnetohydrodynamics, thermal convection and 
 
 The authors’ Figure 2 illustrates the workflow. Case-specific numerical results are reported below and in the linked result cards.
 
-Two knowledge bases contain **247 physical quantities** and **251 dimensionless relations**. Retrieved records support dimensional checking and physical interpretation. Gradient-based clustering identifies local mechanisms; mutual information guides group-count selection, with sparsification and rationalization producing compact expressions. The recorded evidence includes variable-level retrieval, dimensional ledgers, candidate partitions, actual optimizer generations and validation splits.
+Two knowledge bases contain **247 physical quantities** and **251 dimensionless relations**. Retrieved records support dimensional checking and physical interpretation. Gradient-based clustering identifies local mechanisms; mutual information guides group-count selection, with sparsification and rationalization producing compact expressions. Result bundles include variable-level retrieval, dimensional ledgers, candidate partitions, optimizer traces and validation splits.
 
 ## Selected results
 
 ### A compact group from the admissible dimensionless space
 
-![MHD mutual-information landscape and actual recorded optimizer path](docs/assets/mhd_mi_landscape.png)
+![MHD mutual-information landscape and optimization trajectory](docs/assets/mhd_mi_landscape.png)
 
-For **483 MHD duct-flow observations**, the selected single-group representation reduces to an invertible form of the pressure–viscous parameter. The figure shows two views of the saved MI grid and the actual primary-seed coefficient path. The full card also includes the original dimensional basis and final collapse.
+For **483 MHD duct-flow observations**, the selected single-group representation reduces to an invertible form of the pressure–viscous parameter. The figure shows two views of the MI grid and the primary-seed coefficient trajectory. The full card also includes the dimensional basis and final collapse.
 
 [MHD notebook](notebooks/cases/mhd.ipynb) · [Complete result card](https://chengao21.github.io/ai-buckingham/cards/mhd.html) · [Saved landscape](results/mi_landscapes/mhd/)
 
@@ -76,7 +76,7 @@ For compressible channel and pipe profiles, the learned algebraic transformation
 
 [Velocity notebook](notebooks/cases/velocity_scaling.ipynb) · [Complete result card](https://chengao21.github.io/ai-buckingham/cards/velocity_scaling.html) · [Velocity comparison](reproduction/velocity_comparison/)
 
-The gallery is redrawn from saved numerical evidence. [Figure sources and hashes](docs/assets/manifest.json) identify the exact inputs; original PNG/PDF/SVG figures remain in each run bundle. Regenerating the gallery does not run the agent or call a model API.
+Figures and underlying data are available in the linked notebooks and result cards.
 
 ## All ten cases
 
@@ -97,19 +97,21 @@ Original row counts are listed above. Analysis-eligible counts and excluded zero
 
 ## Interactive explorer
 
-**[Open the browser-based results page](https://chengao21.github.io/ai-buckingham/)** to view the selected figures, explore all ten cases and open their complete saved result cards without installation or API credentials.
+**[Open the browser-based results page](https://chengao21.github.io/ai-buckingham/)** to view the selected figures, explore all ten cases and open their complete result cards.
 
-**[Open the Streamlit evidence explorer](https://ai-buckingham.streamlit.app/)** for detailed controls across the full workflow. Browsing the saved results requires no API keys.
+**[Open the Streamlit evidence explorer](https://ai-buckingham.streamlit.app/)** for detailed controls across the full workflow.
+
+Browsing saved results requires no API credentials. New analyses require configured LLM and embedding services.
 
 | View | What to inspect |
 |---|---|
 | Case workflow | Inputs, dimensional assignments, bases, resolved settings, local relations and full cards |
 | Retrieval evidence | Variable-level queries, ranked records, score components and revision history |
-| Numerical diagnostics | Gradients, candidate K partitions, MI landscapes and actual CMA-ES generations |
+| Numerical diagnostics | Gradients, candidate K partitions, MI landscapes and CMA-ES generation histories |
 | Comparisons | Dimensional-checking trials, Cess regional relevance, velocity transforms and roughness predictions |
 | Run analysis | A new model-backed LangGraph calculation with its own downloadable evidence bundle |
 
-The app is hosted on Streamlit Community Cloud; the commands below also let you run it locally. GitHub Pages serves the static results gallery and complete saved cards. New Python calculations run through Streamlit or the CLI with configured model access. See the [application guide](docs/app.md) and [Pages guide](docs/pages.md).
+See the [application guide](docs/app.md) for browsing results and running new analyses.
 
 ## Run locally
 
@@ -123,7 +125,7 @@ python -m pip install -e ".[app,notebooks,dev]"
 python -m streamlit run streamlit_app.py
 ```
 
-Open [http://localhost:8501](http://localhost:8501). Browsing saved evidence needs no API keys. The [offline quickstart notebook](notebooks/quickstart.ipynb) is another API-free entry point.
+Open [http://localhost:8501](http://localhost:8501), or use the [offline quickstart notebook](notebooks/quickstart.ipynb).
 
 <details>
 <summary><strong>Run a new complete analysis and configure model access</strong></summary>
@@ -141,11 +143,11 @@ from ai_buckingham import run_case
 state = run_case("mhd")
 ```
 
-Each new run receives a separate directory under `generated/cases/<case_id>/<run_id>/`. It stores the exact prompt, resolved settings, state, node events, retrieval evidence, optimizer trace, numerical tables, figures and HTML report. Package import, graph construction and saved-result browsing do not call model APIs.
+Each new run saves its configuration, results, figures and execution trace under `generated/cases/<case_id>/<run_id>/`.
 
-Custom configurations can be passed to `ai_buckingham.cli.run_analysis`. Explicit input names are bound by CSV column name; reference dimensions in the supplied case metadata do not replace the Analyzer/Checker workflow. Native thread profiles and case overrides are described in [`docs/configuration.md`](docs/configuration.md).
+Custom configurations can be passed to `ai_buckingham.cli.run_analysis`. Case settings and numerical thread profiles are described in the [configuration guide](docs/configuration.md).
 
-Complete agent runs and full-budget MI searches can take substantial time. The original scientific objectives, thresholds and primary-seed selection rule are retained; additional restarts quantify variability.
+Complete agent runs and full-budget MI searches can take substantial time.
 
 </details>
 
@@ -162,7 +164,7 @@ python scripts/check_web.py
 python reproduction/verify_integrity.py
 ```
 
-Four reproduction packages preserve the supplied historical evidence and independent numerical examples:
+Four reproduction packages provide benchmark replay and numerical examples:
 
 | Package | Included evidence |
 |---|---|
@@ -171,16 +173,7 @@ Four reproduction packages preserve the supplied historical evidence and indepen
 | [Velocity comparison](reproduction/velocity_comparison/) | Six profiles, transformations and matched-coordinate errors |
 | [MI landscapes](reproduction/mi_landscapes/) | Independent numerical notebooks and search configurations |
 
-Historical records, fresh complete executions and offline figure exports carry separate provenance. Conditional collapse scores assess a selected representation. [Evidence and interpretation](docs/evidence.md) explains the relevant limits and equivalent power reparameterizations.
-
-To rebuild the presentation assets after installing the project dependencies:
-
-```bash
-python scripts/build_showcase_assets.py
-python scripts/build_pages.py
-```
-
-The Pages builder publishes only the static `site/` output through its dedicated workflow. See [`docs/pages.md`](docs/pages.md). The scientific checks make no model requests.
+Saved results, offline recalculations and new analyses are labelled by source. Conditional collapse scores assess a selected representation. [Evidence and interpretation](docs/evidence.md) explains the relevant limits and equivalent power reparameterizations.
 
 ## Repository map
 
@@ -191,7 +184,7 @@ data/                   Ten datasets, provenance and supplied generators
 knowledge/              Two knowledge bases and their GLM embedding NPZ indexes
 notebooks/cases/        Ten complete executed LangGraph notebooks
 results/                States, cards, tables, optimizer histories and original figures
-reproduction/           Four historical/numerical reproduction packages
+reproduction/           Four benchmark and numerical reproduction packages
 docs/assets/            Source-linked gallery figures, workflow image and SVG branding
 site/                   Buildable static GitHub Pages results explorer
 scripts/                Execution, validation and presentation builders
@@ -199,14 +192,26 @@ tests/                  Offline scientific and interface acceptance checks
 streamlit_app.py        Interactive evidence explorer
 ```
 
-See [module boundaries and adaptations](docs/refactoring.md) for the source refactor. Embedding indexes include their source hashes and model metadata; new semantic queries require embedding API access. Explicit index generation uses `python scripts/build_indexes.py`, while runtime cache rebuilds stay under `generated/cache/`.
+See [numerical configuration](docs/configuration.md) for case settings and [repository layout](docs/repository-layout.md) for directory details.
 
-## Software citation and terms
+## Citation and terms
 
-Use [`CITATION.cff`](CITATION.cff) to cite this software and acknowledge the original dataset sources you use. Original project code is released under the [MIT License](LICENSE); third-party terms are listed in [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).
+If you use AI Buckingham in your research, please cite the following paper:
 
-The repository distributes code, datasets and result evidence. Manuscript PDFs, reference-publication PDFs and local credential files are excluded.
+Ao Cheng, Lei Zhang and Guowei He. *AI Buckingham: Agentic Discovery of Dimensionless Scaling Laws Across Physical Regimes*. arXiv preprint arXiv:2611.33961 (2026). [doi:10.48550/arXiv.2611.33961](https://doi.org/10.48550/arXiv.2611.33961).
+
+```bibtex
+@article{cheng2026aibuckingham,
+  title   = {{AI Buckingham}: Agentic Discovery of Dimensionless Scaling Laws Across Physical Regimes},
+  author  = {Ao Cheng and Lei Zhang and Guowei He},
+  journal = {arXiv preprint arXiv:2611.33961},
+  year    = {2026},
+  doi     = {10.48550/arXiv.2611.33961}
+}
+```
+
+Citation metadata is also available in [`CITATION.cff`](CITATION.cff). Please acknowledge the original dataset sources you use. Original project code is released under the [MIT License](LICENSE); third-party terms are listed in [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).
 
 ## Acknowledgements
 
-We thank GPT-6.2 (OpenAI), used through Codex, for assistance with code organization, reproducibility checks, documentation and the design of the results explorers. The authors reviewed the assisted changes and remain responsible for the scientific methods, results and interpretation. We also thank the developers of the open-source tools and the contributors of the datasets acknowledged in this repository.
+We thank GPT-6.2 (OpenAI), via Codex, for assistance with reproducibility checks, documentation editing and refinements to the results explorer interfaces. The authors reviewed the assisted work and retain full responsibility. We also thank the developers of the open-source tools and the contributors of the datasets acknowledged in this repository.

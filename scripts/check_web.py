@@ -73,17 +73,24 @@ def main(argv=None) -> int:
             app = AppTest.from_file(str(ROOT / "streamlit_app.py"), default_timeout=args.timeout).run()
             metrics = {m.label: str(m.value) for m in app.metric}
             record("Overview renders the final publication snapshot")
-            record("Publication snapshot shows ten completed runs and no running or failed runs",
-                   metrics.get("Completed runs", metrics.get("Completed case runs")) == "10"
-                   and metrics.get("Running runs", metrics.get("Running case runs")) == "0"
-                   and metrics.get("Failed / stopped", metrics.get("Failed / stopped case runs")) == "0",
+            record("Overview emphasizes paper coverage and observations",
+                   metrics.get("Physical systems") == "10"
+                   and metrics.get("Observations") == "4,926"
+                   and metrics.get("Paper case coverage") == "10/10"
+                   and metrics.get("Dimensional-checking trials") == "600"
+                   and not {"Completed runs", "Running runs", "Failed / stopped"}.intersection(metrics),
                    metrics)
+            inventory = frames_with("Physical system", "Observations")
+            record("Overview presents research results and a case inventory without run status",
+                   any(element.value == "### Selected results" for element in app.markdown)
+                   and len(inventory) == 1 and len(inventory[0]) == 10
+                   and not {"Completed runs", "Running runs", "Failed / stopped runs"}.intersection(inventory[0].columns))
 
             navigate("Case workflow")
             case_ids = sorted(p.stem for p in (ROOT / "configs" / "cases").glob("*.json"))
             for case_id in case_ids:
                 app.selectbox(key="workflow_case").set_value(case_id).run()
-                collapse_path = Path(select_by_label("Recorded scope").value)
+                collapse_path = Path(select_by_label("Scope").value)
                 expected = pd.read_csv(collapse_path)
                 point_tables = frames_with("csv_row", "response_transformed")
                 record(f"Case workflow and displayed collapse belong to the active case/run: {case_id}",
@@ -241,12 +248,21 @@ def main(argv=None) -> int:
 
             navigate("Run analysis")
             record("Supplied-case analysis form renders without starting execution")
+            metrics = {m.label: str(m.value) for m in app.metric}
+            status_panel = next(element for element in app.expander if element.label == "Saved runs and status")
+            record("Run analysis retains saved-run status and access in a closed panel",
+                   metrics.get("Completed runs") == "10"
+                   and metrics.get("Running runs") == "0" and metrics.get("Failed / stopped") == "0"
+                   and len(app.selectbox(key="saved_run_selection").options) == 10
+                   and not status_panel.proto.expanded,
+                   metrics)
             for case_id in ["blasius", "rough_pipe"]:
                 app.selectbox(key="live_case").set_value(case_id).run()
                 expected = read_json(ROOT / "configs" / "cases" / f"{case_id}.json")
                 prompt = next(widget.value for widget in app.text_area if widget.label == "Problem description")
                 previews = [json.loads(widget.value) for widget in app.json]
-                preview = next(value for value in previews if isinstance(value, dict) and value.get("case_id") == case_id)
+                preview = next(value for value in previews if isinstance(value, dict)
+                               and value.get("case_id") == case_id and "prompt" in value)
                 record(f"Live case switch keeps the problem and submitted configuration consistent: {case_id}",
                        prompt == expected["prompt"] and preview.get("prompt") == expected["prompt"]
                        and preview.get("numerical_threads") == expected["numerical_threads"]

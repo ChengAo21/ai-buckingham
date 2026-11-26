@@ -4,7 +4,7 @@
 
 Historical evidence, historical replay, fresh numerical recomputation, and a fresh complete agent execution answer different questions. Run manifests identify the execution mode and hashes. A new model response is not expected to reproduce the historical response byte-for-byte; fixed model names do not freeze a hosted service. The original archival evidence remains immutable.
 
-The repository distributes the authors' supplied CSVs and reference evidence, not the unpublished manuscript. Figure and table descriptions below are navigation aids for the corresponding study; they do not assert that a new execution reproduces every historical number.
+The repository provides datasets, analysis results and reproduction tools for the accompanying paper.
 
 ## Evidence by stage
 
@@ -13,23 +13,23 @@ The repository distributes the authors' supplied CSVs and reference evidence, no
 | Problem formulation | Exact prompt, input column order, dependent variable, semantic records and confidence |
 | Physical consistency | Quantity-specific query, top-k results, lexical/semantic/hybrid scores, record citations, candidate and revised dimensions, gate and revision history |
 | Dimensional basis | Ordered variables, dimensional matrix, rank/nullity, symbolic basis, orthonormal screening basis |
-| Analysis protocol | Planner output, manual overrides, actual resolved settings and parameter provenance |
+| Analysis protocol | Planner output, manual overrides, resolved settings and parameter provenance |
 | Mechanism evidence | Eligible row mapping, surrogate settings, gradients, candidate cluster counts, eigenvalue ratios, sample fractions, directional evidence and acceptance reasons |
 | Local selection | Similarity-type screening, formal local learning, group-count candidates, MI and epsilon, restart and subsampling uncertainty |
 | Selected relations | Full, sparse and rationalized exponents; accepted/rejected simplifications and measured information loss |
 | Validation and figures | Exact training/test rows, predictions and evaluation settings, per-regime collapse and final plots |
 
-`state.json` is the full JSON export. Stage-oriented files under `evidence/` are navigation views of the same data; they do not run a second implementation. `events.jsonl` retains actual node updates and unsuccessful attempts. HTML cards are captured from the real IPython display output, not recreated to imply a successful historical execution.
+`state.json` is the full JSON export. Stage-oriented files under `evidence/` provide views of the same data. `events.jsonl` contains node events and attempt statuses. HTML cards contain the notebook display output.
 
 ## Optimizer generations
 
 `evidence/optimization_trace.jsonl` is append-only. A generation record is written after the original `ask` / objective-evaluation / `tell` operations. Recording does not evaluate the objective again, consume scientific random draws, or change the selected candidate.
 
-Records identify the local scope, phase, search, seed, group count and whether output scaling is optimized. They contain generation number, evaluations, sigma, best objective, population statistics and coefficient vectors. Scalar/direct paths record an `optimizer_end`; they do not have CMA generations. Missing historical trajectories are displayed as missing, rather than inferred from endpoints.
+Records identify the local scope, phase, search, seed, group count and whether output scaling is optimized. They contain generation number, evaluations, sigma, best objective, population statistics and coefficient vectors. Scalar/direct paths record an `optimizer_end`; they do not have CMA generations. Unavailable trajectories are labelled as missing.
 
 For feasible candidates the search objective is negative MI; original feasibility and collinearity penalties also contribute. A plot of `-objective` is therefore not universally an MI plot. A two-coordinate projection of a higher-dimensional trajectory is not an independently recomputed MI landscape. Fresh landscape grids are available through the separate reproduction package.
 
-The original selection rule is retained: the primary-seed candidate is the reported result and other restarts quantify variability. The code does not replace this with the best result from all restarts.
+The primary-seed candidate is the reported result; other restarts quantify variability.
 
 ## Figure coverage
 
@@ -55,5 +55,5 @@ The original selection rule is retained: the primary-seed candidate is the repor
 - The rough-pipe CSV is generated from a prescribed piecewise relationship with a switch at Re = 3000. This is not an experimentally discovered transition threshold.
 - Blasius has 200 original observations and 196 positive-response observations; velocity has 1,109 original and 1,103 positive-response observations. Surrogate training selection is separate from collapse-validation splitting.
 - The dimensional-checking benchmark compares three parsing models, ten cases, two wording variants and ten repetitions, with the same Checker model and at most one revision. It is not a complete paired RAG-on/off experiment.
-- Full semantic ranking can be recomputed for 60 archived Sandgrain rounds with recorded query vectors. Other archived rounds replay recorded top-k scores; missing query vectors are not silently reconstructed.
-- Default Cess and velocity comparison reproduction uses the recorded fitted model or partition where documented. Replotting these comparisons does not claim to have retrained the complete agent pipeline.
+- Full semantic ranking can be recomputed for 60 archived Sandgrain rounds with saved query vectors. Other rounds support top-k score replay; full-ranking reconstruction requires the query vectors.
+- Default Cess and velocity comparison reproduction replots the saved fitted model or partition where documented. A new complete agent execution is a separate analysis.

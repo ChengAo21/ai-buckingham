@@ -18,7 +18,7 @@ def _values(title, value):
 
 
 def render():
-    masthead("Case workflow", "Read the input, inspect the decisions, and download the complete recorded result.", "Case study")
+    masthead("Case workflow", "Read the input, inspect the decisions, and download the complete result.", "Case study")
     catalog = case_catalog()
     case_id = st.selectbox("Physical system", list(catalog), format_func=lambda key: catalog[key]["title"], key="workflow_case")
     item = catalog[case_id]
@@ -92,7 +92,7 @@ def render():
             st.markdown("#### Interactive data collapse")
             collapse_tables = sorted((run["path"] / "tables").glob("*collapse.csv"))
             if collapse_tables:
-                path = st.selectbox("Recorded scope", collapse_tables, format_func=lambda p: p.stem.replace("_collapse", ""), key=f"collapse_scope_{case_id}_{run['path'].name}")
+                path = st.selectbox("Scope", collapse_tables, format_func=lambda p: p.stem.replace("_collapse", ""), key=f"collapse_scope_{case_id}_{run['path'].name}")
                 frame = read_csv(path)
                 pi_columns = [c for c in frame if c.startswith("pi_")]
                 if pi_columns and "response_transformed" in frame:
@@ -116,11 +116,11 @@ def render():
                     table(read_csv(path), path.name, "case_table_" + path.stem)
             report = run["path"] / "report.html"
             if report.is_file():
-                if st.toggle("Display the complete recorded result card", value=False, key="show_complete_card"):
-                    st.caption("The complete card is the original execution record, including generated commentary and evidence figures. The structured relations specify the selected coordinates and output rescaling. Displaying the card does not rerun any analysis.")
+                if st.toggle("Display the complete result card", value=False, key="show_complete_card"):
+                    st.caption("Complete result card, including model commentary and figures. See the structured results for the selected relations.")
                     components.html(report.read_text(encoding="utf-8"), height=950, scrolling=True)
                 st.download_button("Download complete result card · HTML", report.read_bytes(), file_name=f"{case_id}_report.html", mime="text/html")
-            st.download_button("Download recorded run bundle · ZIP", archive_bytes(run["path"]), file_name=f"{case_id}_{run['path'].name}.zip", mime="application/zip")
+            st.download_button("Download run bundle · ZIP", archive_bytes(run["path"]), file_name=f"{case_id}_{run['path'].name}.zip", mime="application/zip")
             json_panel("Run manifest", run["manifest"])
         else:
             st.info("No saved run bundle is available for this case.")
@@ -157,7 +157,7 @@ def prediction_view():
             chart(figure, f"sandgrain_prediction_{i}")
     table(filtered, "sandgrain_predictions.csv", "prediction_download")
     figures(folder, "sandgrain_prediction_figures")
-    st.caption("Offline validation refit using the same 83 training and 21 test samples. Both representations use the same split; this does not rerun dimensional discovery.")
+    st.caption("Offline validation refit comparing both representations on the same 83 training and 21 test samples.")
 
 
 def pressure_baseline_view():

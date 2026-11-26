@@ -81,8 +81,8 @@ def candidate_memberships(run, case_id):
                           format_func=lambda p: read_json(p).get("mode", "recorded candidate partitions") + " · " + p.parent.name,
                           key=f"candidate_membership_source_{case_id}_{run['path'].name}")
     manifest = read_json(source)
-    mode = manifest.get("mode", "actual execution record")
-    st.caption("Source mode: " + mode + ". " + str(manifest.get("method", "Recorded from the actual numerical execution.")))
+    mode = manifest.get("mode", "case execution")
+    st.caption("Source: " + mode)
     available = sorted(source.parent.glob("k_*.npz"))
     if not available:
         st.info("No pointwise membership arrays are available in this evidence source.")
@@ -150,10 +150,10 @@ def landscape_view(case_id):
     surface_path = folder / "response_surface.csv"
     if not surface_path.is_file():
         return
-    st.markdown("#### MI landscape and its recorded search")
+    st.markdown("#### MI landscape and optimization history")
     metadata = read_json(folder / "run_metadata.json")
     result = read_json(folder / "optimization_result.json")
-    st.caption("Source mode: " + str(metadata.get("mode", "recorded calculation")) + ". " + str(metadata.get("method", "Landscape grid and generation history from the supplied numerical reproduction.")))
+    st.caption("Source: " + str(metadata.get("mode", "case calculation")))
     frame = read_csv(surface_path)
     histories = sorted(folder.glob("*generation_history.csv"))
     history = read_csv(histories[0]) if histories else pd.DataFrame()
@@ -175,19 +175,19 @@ def landscape_view(case_id):
         selected_record = subset.iloc[-1]
         xcol,ycol = f"mean_c_{ix}",f"mean_c_{iy}"
         if xcol in subset and ycol in subset:
-            figure.add_trace(go.Scatter(x=subset[xcol],y=subset[ycol],mode="lines+markers",name="Recorded mean projection",
+            figure.add_trace(go.Scatter(x=subset[xcol],y=subset[ycol],mode="lines+markers",name="Optimizer mean projection",
                                        line={"color":"#C17837","width":2},marker={"size":6},customdata=subset.generation,
                                        hovertemplate="Generation %{customdata}<br>x=%{x}<br>y=%{y}<extra></extra>"))
             figure.add_trace(go.Scatter(x=[selected_record[xcol]],y=[selected_record[ycol]],mode="markers",name="Selected generation",marker={"size":15,"symbol":"diamond","color":"#D25264"}))
         stats = st.columns(3)
-        stats[0].metric("Recorded generation",int(selected_generation))
+        stats[0].metric("Generation",int(selected_generation))
         if "global_best_mi" in selected_record:
-            stats[1].metric("Best recorded MI",f"{selected_record['global_best_mi']:.6g}")
+            stats[1].metric("Best MI",f"{selected_record['global_best_mi']:.6g}")
         if "sigma" in selected_record:
             stats[2].metric("Step size σ",f"{selected_record['sigma']:.6g}")
     figure.update_layout(xaxis_title=f"c{ix+1}",yaxis_title=f"c{iy+1}",height=590)
     chart(figure,"landscape_conditional_plot")
-    st.caption("The contour is an exported conditional MI grid. The overlaid mean path is a projection of the actual search; unplotted coefficients can change along the path and need not equal the fixed slice values. Finite negative MI estimates are retained.")
+    st.caption("The contour is a fixed two-coefficient MI slice. The path projects the optimizer mean onto the same axes; any undisplayed coefficients may vary during the search. Negative MI estimates are retained.")
     view = st.radio("Landscape rendering",["Contour","3D surface"],horizontal=True,key="landscape_rendering")
     if view=="3D surface":
         surface=go.Figure(go.Surface(x=pivot.columns,y=pivot.index,z=pivot.values,colorscale="Blues",
@@ -197,7 +197,7 @@ def landscape_view(case_id):
         chart(surface,"landscape_3d_surface")
     if not history.empty:
         if "global_best_mi" in history:
-            chart(px.line(history[history.generation<=selected_generation],x="generation",y="global_best_mi",markers=True,labels={"global_best_mi":"Best recorded MI"}),"landscape_history_mi")
+            chart(px.line(history[history.generation<=selected_generation],x="generation",y="global_best_mi",markers=True,labels={"global_best_mi":"Best MI"}),"landscape_history_mi")
         table(history,"landscape_generation_history.csv","landscape_history_download")
     st.download_button("Download numeric landscape grid · CSV",surface_path.read_bytes(),file_name=f"{case_id}_mi_grid.csv",mime="text/csv",key="landscape_grid_download")
     json_panel("Landscape metadata",metadata,key="landscape_metadata")
@@ -252,8 +252,7 @@ def trace_view(path):
     trace_file = path / "evidence" / "optimization_trace.jsonl" if path else None
     records = [r for r in json_lines(trace_file) if isinstance(r.get("generation"), (int, float))] if trace_file else []
     if not records:
-        st.info("No per-generation trace is present in this run. Final coefficients and a figure do not establish a historical optimization path.")
-        st.caption("New CMA-ES runs export actual post-tell generation records to evidence/optimization_trace.jsonl.")
+        st.info("Per-generation optimization history is unavailable for this run.")
         return
     # A generation reset marks a different optimizer instance even when its
     # scope, seed and candidate count coincide (screening versus final search).
@@ -275,7 +274,7 @@ def trace_view(path):
     selected = instances[index]
     frame = pd.DataFrame(selected)
     generations = sorted(frame["generation"].unique().tolist())
-    generation = st.select_slider("Recorded generation", generations, value=generations[-1], key="trace_generation") if len(generations)>1 else generations[0]
+    generation = st.select_slider("Generation", generations, value=generations[-1], key="trace_generation") if len(generations)>1 else generations[0]
     subset = frame[frame["generation"]<=generation]
     row = subset.iloc[-1]
     metrics = st.columns(4)
@@ -286,7 +285,7 @@ def trace_view(path):
     if fields:
         chart(px.line(subset.melt(id_vars="generation", value_vars=fields, var_name="Objective", value_name="Value"),
                       x="generation", y="Value", color="Objective"), "trace_objective")
-    st.caption("These values are the actual penalized optimization objective; they are not mutual information. The slider reveals recorded history and does not rerun the search.")
+    st.caption("The curves show the penalized objective, not MI. The slider displays saved generations.")
     means = [r.get("mean_coefficients",[]) for r in selected]
     if means and isinstance(means[0],list) and len(means[0])>=2:
         size = min(len(v) for v in means)
@@ -298,11 +297,11 @@ def trace_view(path):
         fig = go.Figure()
         fig.add_trace(go.Scatter(x=points.x,y=points.y, mode="lines+markers",marker={"color":points.generation,"colorscale":"Blues","size":7,
                                 "colorbar":{"title":{"text":"Generation","side":"top"},"thickness":16,"len":.85,"nticks":7}},
-                                customdata=points.generation,hovertemplate="θx=%{x}<br>θy=%{y}<br>Generation %{customdata}<extra></extra>",name="Recorded mean"))
+                                customdata=points.generation,hovertemplate="θx=%{x}<br>θy=%{y}<br>Generation %{customdata}<extra></extra>",name="Optimizer mean"))
         fig.add_trace(go.Scatter(x=[points.x.iloc[-1]],y=[points.y.iloc[-1]],mode="markers",marker={"size":15,"symbol":"diamond","color":"#C17837"},name="Selected generation"))
         fig.update_layout(xaxis_title=f"θ{ix+1}",yaxis_title=f"θ{iy+1}",height=530)
         chart(fig,"trace_projection")
-        st.caption("Projection of the recorded search mean onto two free coefficients. Other coordinates also evolve; this is not a conditional objective surface.")
+        st.caption("Optimizer-mean projection onto two coefficients; any undisplayed coefficients may vary. The trajectory is distinct from a fixed-coefficient objective surface.")
     json_panel("Selected generation record", selected[len(subset)-1], key="trace_row")
     table(frame.drop(columns=[c for c in frame if frame[c].map(lambda v:isinstance(v,(list,dict))).any()]), "optimization_trace.csv")
     st.download_button("Download complete generation trace · JSONL", trace_file.read_bytes(), file_name="optimization_trace.jsonl", mime="application/x-ndjson")
