@@ -89,13 +89,19 @@ def main(argv=None) -> int:
             record("Overview renders the final publication snapshot")
             metadata = read_json(ROOT / "docs/paper_cases.json")
             paper_cases = {case["id"]: case for case in metadata["cases"]}
-            headings = [element.value.removeprefix("### ") for element in app.main
-                        if element.type == "markdown" and element.value.startswith("### ")]
-            categories = [element.value.removeprefix("## ") for element in app.main
-                          if element.type == "markdown" and element.value.startswith("## ")]
+            gallery = app.main.container(key="overview-gallery")
+            headings = [element.value.removeprefix("### ") for element in gallery.markdown
+                        if element.value.startswith("### ")]
+            categories = [element.value.removeprefix("## ") for element in gallery.markdown
+                          if element.value.startswith("## ")]
             record("Overview shows all ten figures and paper case names in order",
                    headings == [case["title"] for case in metadata["cases"]]
-                   and len(app.get("image")) == 10)
+                   and len(gallery.get("image")) == 10)
+            rows = [block for block in gallery.get("flex_container")
+                    if any(child.type == "column" for child in block.children.values())]
+            record("Overview arranges ten case figures in five pairs",
+                   len(rows) == 5 and all(len(row.columns) == 2 for row in rows)
+                   and all(len(column.get("image")) == 1 for column in gallery.columns))
             record("Overview uses the paper's three similarity categories without a count dashboard",
                    categories == [group["title"] for group in metadata["groups"]]
                    and not app.metric and not app.dataframe and not app.get("plotly_chart"))

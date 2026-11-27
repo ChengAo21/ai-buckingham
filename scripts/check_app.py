@@ -25,11 +25,18 @@ def main():
         app = AppTest.from_file(str(ROOT / "streamlit_app.py"), default_timeout=args.timeout).run()
         record("Overview has no exception", not app.exception)
         metadata = json.loads((ROOT / "docs/paper_cases.json").read_text(encoding="utf-8"))
-        headings = [item.value.removeprefix("### ") for item in app.main
-                    if item.type == "markdown" and item.value.startswith("### ")]
+        gallery = app.main.container(key="overview-gallery")
+        headings = [item.value.removeprefix("### ") for item in gallery.markdown
+                    if item.value.startswith("### ")]
         record("Overview shows all ten cases in paper order",
                headings == [case["title"] for case in metadata["cases"]]
-               and len(app.get("image")) == 10)
+               and len(gallery.get("image")) == 10)
+        paper_figures = app.main.expander[0]
+        record("Figures 1 and 2 are available above the gallery in a collapsed panel",
+               paper_figures.label == "Figures 1–2 · Similarity settings and workflow" and not paper_figures.proto.expanded
+               and [tab.label for tab in paper_figures.tabs] == ["Similarity settings", "AI Buckingham workflow"]
+               and all(len(tab.get("image")) == 1 for tab in paper_figures.tabs)
+               and list(app.main).index(paper_figures) < list(app.main).index(gallery))
         record("Overview has no count dashboard or sample-count chart",
                not app.metric and not app.dataframe and not app.get("plotly_chart"))
         app.sidebar.radio[0].set_value("Numerical diagnostics").run()

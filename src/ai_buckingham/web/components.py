@@ -16,9 +16,12 @@ COLORS = ["#245B78", "#209B88", "#C17837", "#8B6BA5", "#D25264", "#4D7B9A"]
 
 
 def style() -> None:
-    st.markdown("""<style>
+    st.html("""<style>
     .stApp {background:#f7f9fc;color:#172431;}
-    [data-testid="stSidebar"] {background:#edf2f7;border-right:1px solid #d8e1eb;}
+    [data-testid="stSidebar"] {
+        background:linear-gradient(170deg,#e3eeed,#f0f5f4 65%);
+        border-right:1px solid #cbdcda;
+    }
     .block-container {max-width:1450px;padding-top:2.4rem;padding-bottom:3rem;}
     h1,h2,h3 {font-family:Georgia,'Times New Roman',serif;letter-spacing:-.025em;color:#142a3a;}
     h1 {font-size:2.8rem;} h2 {font-size:1.9rem;} h3 {font-size:1.45rem;}
@@ -32,7 +35,49 @@ def style() -> None:
     [data-testid="stExpander"] {background:white;border-color:#d8e1eb;}
     .stButton>button,.stDownloadButton>button {border-radius:4px;}
     .stCaption {color:#5a6b7c;}
-    </style>""", unsafe_allow_html=True)
+    .block-container:has(.ab-paper-heading) {padding-top:4.5rem;}
+    .ab-paper-heading {
+        position:relative; isolation:isolate; overflow:hidden;
+        padding:clamp(1.1rem,3vw,2.35rem); border:1px solid #ccdddb;
+        border-radius:.75rem; background:#e4f0ef;
+    }
+    .ab-paper-heading::before, [data-testid="stSidebar"]::after {
+        content:""; position:absolute; pointer-events:none;
+        background-image:linear-gradient(to right,rgba(40,100,103,.15) 1px,transparent 1px),
+                         linear-gradient(to top,rgba(40,100,103,.15) 1px,transparent 1px);
+        background-size:1.25rem 1.25rem;
+    }
+    .ab-paper-heading::before {
+        z-index:-1; inset:0 0 0 auto; width:min(30%,17rem);
+        mask-image:linear-gradient(110deg,transparent 12%,#000 90%);
+    }
+    [data-testid="stSidebar"]::after {
+        inset:auto 0 0 auto; width:65%; height:min(6rem,12%);
+        mask-image:linear-gradient(145deg,transparent 15%,#000);
+    }
+    .ab-paper-heading h1 {
+        max-width:32ch; margin:0; padding:0; color:#143d43;
+        font:600 clamp(1.7rem,3.25vw,3rem)/1.12 Georgia,'Times New Roman',serif;
+        letter-spacing:-.025em; text-wrap:balance;
+    }
+    .ab-paper-heading .ab-authors {margin:.85rem 0 .65rem;color:#354e52;line-height:1.5;}
+    .ab-paper-heading nav {display:flex;flex-wrap:wrap;gap:.5rem 1.35rem;}
+    .ab-paper-heading nav a {color:#075564;text-underline-offset:.2em;font-weight:600;}
+    .st-key-overview-gallery {container-type:inline-size;}
+    .st-key-overview-gallery h2 {margin-top:.5rem;color:#173e43;}
+    .st-key-overview-gallery [data-testid="stColumn"] {
+        padding:.9rem; border:1px solid #d5e2e0; border-radius:.65rem; background:#fff;
+    }
+    .st-key-overview-gallery h3 {
+        margin:0; padding:0; min-height:2.6em; color:#193f44;
+        font:600 clamp(1.05rem,1.6vw,1.3rem)/1.3 Georgia,'Times New Roman',serif;
+    }
+    @container (max-width:44rem) {
+        .st-key-overview-gallery [data-testid="stHorizontalBlock"] {flex-direction:column;}
+        .st-key-overview-gallery [data-testid="stColumn"] {width:100%;flex:auto;min-width:0;}
+        .st-key-overview-gallery h3 {min-height:0;}
+    }
+    </style>""")
 
 
 def masthead(title: str, description: str = "", tag: str = "") -> None:
