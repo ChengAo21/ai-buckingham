@@ -12,10 +12,12 @@ import json
 from pathlib import Path
 import re
 import shutil
+import sys
 from urllib.parse import quote, unquote, urlsplit
 
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
 TEMPLATES = Path(__file__).with_name("pages")
 REPOSITORY = "https://github.com/ChengAo21/ai-buckingham"
 
@@ -45,11 +47,6 @@ def link(url: str, label: str, class_name: str = "") -> str:
     return f'<a{attribute} href="{html.escape(url, quote=True)}">{html.escape(label)}</a>'
 
 
-def formula(value: str) -> str:
-    escaped = html.escape(value)
-    return re.sub(r"\^\{([^{}]+)\}", r"<sup>\1</sup>", escaped).replace(" * ", " · ")
-
-
 def selected_metrics(state: dict) -> list[dict]:
     metrics = []
     for scope in state["workflow_result"]["local_workflows"]:
@@ -73,34 +70,6 @@ def selected_metrics(state: dict) -> list[dict]:
     return metrics
 
 
-def metric_table(metrics: list[dict]) -> str:
-    rows = "".join(
-        f'<tr><th scope="row">{html.escape(item["scope"])}</th>'
-        f'<td>{item["samples"]:,}</td><td>{item["groups"]}</td>'
-        f'<td>{item["mutual_information"]:.3f}</td><td>{item["epsilon"]:.3f}</td>'
-        f'<td>{item["conditional_test_r2"]:.3f}</td></tr>'
-        for item in metrics
-    )
-    return ('<div class="table-scroll"><table class="metric-table">'
-            '<thead><tr><th scope="col">Scope</th><th scope="col">Samples</th>'
-            '<th scope="col">Groups</th><th scope="col">MI</th>'
-            '<th scope="col">ε</th><th scope="col">Test R²</th></tr></thead>'
-            f'<tbody>{rows}</tbody></table></div>')
-
-
-def selected_relations(metrics: list[dict]) -> str:
-    rows = []
-    for item in metrics:
-        inputs = "".join(
-            f'<div class="formula"><span>Input {number}</span>{formula(value)}</div>'
-            for number, value in enumerate(item["input_formulas"], 1)
-        )
-        rows.append(f'<div class="formula-row"><h4>{html.escape(item["scope"])}</h4>'
-                    + inputs
-                    + f'<div class="formula"><span>Output</span>{formula(item["output_formula"])}</div></div>')
-    return "".join(rows)
-
-
 def case_figure(entry: dict, prefix: str = "") -> str:
     image = html.escape(prefix + entry["image"], quote=True)
     title = html.escape(entry["title"], quote=True)
@@ -111,47 +80,48 @@ def case_figure(entry: dict, prefix: str = "") -> str:
 
 def case_article(entry: dict) -> str:
     actions = "".join([
-        link(entry["full_card"], "Result card", "button"),
-        link(entry["notebook"], "Notebook", "button button-outline"),
-        link(entry["evidence"], "Data", "button button-outline"),
+        link(entry["full_card"], "View results", "button"),
+        link(entry["full_card"] + "#reproduce", "Reproduce", "button button-outline"),
     ])
     return f'''<article class="case-panel" id="case-{entry["case_id"]}">
   <div class="case-heading"><h3>{html.escape(entry["title"])}</h3></div>
   {case_figure(entry)}
   <div class="case-actions">{actions}</div>
-  <details class="result-details"><summary>Numerical results and selected relations</summary>{metric_table(entry["metrics"])}{selected_relations(entry["metrics"])}</details>
 </article>'''
 
 
 def public_card(entry: dict, paper: dict, repository: str) -> str:
-    title = html.escape(entry["title"])
-    source_links = [
-        link(entry["notebook"], "Notebook"),
-        link(entry["dataset"], "Dataset · CSV"),
-        link(entry["state"], "State · JSON"),
-        link(entry["config"], "Case settings · JSON"),
-        link(entry["evidence"], "Run data"),
-    ]
-    if entry["optimizer_trace"]:
-        source_links.append(link(entry["optimizer_trace"], "Optimizer trace · JSONL"))
-    tables = "".join(f'<li>{link(item["url"], item["name"])}</li>' for item in entry["tables"])
-    table_links = f'<h3>Tables</h3><ul class="source-files">{tables}</ul>' if tables else ""
-    return f'''<!doctype html>
-<html lang="en">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{title} · AI Buckingham</title><link rel="stylesheet" href="../assets/style.css"></head>
-<body>
-  <a class="skip-link" href="#main">Skip to results</a>
-  <header class="site-header"><div class="header-inner"><a class="wordmark" href="../index.html">AI Buckingham</a><nav aria-label="Main navigation"><a href="../index.html#cases">Cases</a>{link(paper["url"], "Paper")}{link(repository, "GitHub")}</nav></div></header>
-  <main class="card-page" id="main">
-    <header class="card-heading"><p class="case-meta">{html.escape(entry["tag"])}</p><h1>{title}</h1><p>{link('../index.html#case-' + entry['case_id'], 'All cases')}</p></header>
-    {case_figure(entry, "../")}
-    <section class="card-section"><h2>Numerical results</h2>{metric_table(entry["metrics"])}</section>
-    <section class="card-section"><h2>Selected relations</h2>{selected_relations(entry["metrics"])}</section>
-    <section class="card-section"><h2>Data and settings</h2><div class="source-links">{"".join(source_links)}</div>{table_links}</section>
-  </main>
-</body>
-</html>
-'''
+    from ai_buckingham.reports import render_report
+    report = render_report(ROOT / entry["run_directory"])
+    navigation = (
+        '<nav class="report-navigation" aria-label="Case navigation">'
+        + link("../index.html#case-" + entry["case_id"], "All cases")
+        + link("#reproduce", "Reproduce")
+        + link(paper["url"], "Paper") + '</nav>'
+    )
+    case_id = html.escape(entry["case_id"])
+    reproduction = f'''<section class="report-reproduction" id="reproduce">
+      <h2>Reproduce</h2>
+      <p>Install the dependencies from the repository root.</p>
+      <pre><code>python -m pip install -e ".[app,notebooks]"</code></pre>
+      <p>To generate these cards from the included result, run the first part of the {link(entry["notebook"], "case notebook")}. It reads the selected run and displays its cards and figures.</p>
+      <p>To repeat the analysis using the case data and settings, configure the model services described in the {link(entry["environment"], "environment settings")}, then run:</p>
+      <pre><code>ai-buckingham {case_id}</code></pre>
+      <p>Open <code>result.html</code> in the new directory under <code>generated/cases/{case_id}/</code>. The notebook's final section also runs the analysis and displays its new report.</p>
+      <p>{link(entry["dataset"], "Dataset CSV")} · {link(entry["config"], "Case configuration")}</p>
+      <details><summary>Run files and downloads</summary>
+        <p>{link(entry["evidence"], "Run files")} · {link(entry["state"], "Full state JSON")}</p>
+        <p>The run directory contains <code>plots/</code>, <code>tables/</code>, the configuration and execution records.</p>
+      </details>
+    </section>'''
+    extra_css = """<style>
+      .report-navigation {display:flex;gap:1.5rem;flex-wrap:wrap;margin-bottom:1.5rem}
+      .report-reproduction {margin-top:2rem;padding-top:1rem;border-top:1px solid #d9e2e5}
+      .report-reproduction pre {padding:1rem;background:#edf4f5;white-space:pre-wrap;overflow-wrap:anywhere}
+    </style>"""
+    return (report.replace("</head>", extra_css + "</head>")
+            .replace("<body>", "<body>" + navigation)
+            .replace("</body>", reproduction + "</body>"))
 
 
 def remove_previous_generated_files(output: Path) -> None:
@@ -229,11 +199,13 @@ def build(output: Path, repository: str, branch: str) -> dict:
             "group": published["group"], "tag": group["title"], "section": published["section"],
             "figure": published["figure"], "image": image, "samples": config["data_metadata"]["rows"],
             "run_id": run["run_id"], "full_card": f"cards/{case_id}.html",
+            "run_directory": run["directory"],
             "notebook": github(case["notebook"], repository=repository, branch=branch),
             "evidence": github(run["directory"], repository=repository, branch=branch, directory=True),
             "dataset": github(dataset, repository=repository, branch=branch),
             "state": github(state_path.relative_to(ROOT).as_posix(), repository=repository, branch=branch),
             "config": github(config_relative, repository=repository, branch=branch),
+            "environment": github(".env.example", repository=repository, branch=branch),
             "optimizer_trace": trace, "tables": tables,
             "figures": [{"file": image, "source": image_relative, "name": case_id}],
             "metrics": selected_metrics(read_json(state_path)),
@@ -277,6 +249,8 @@ def build(output: Path, repository: str, branch: str) -> dict:
     def write(relative: str, content: str) -> None:
         destination = output / relative
         destination.parent.mkdir(parents=True, exist_ok=True)
+        if relative.endswith(".html"):
+            content = "\n".join(line.rstrip() for line in content.splitlines()) + "\n"
         destination.write_text(content, encoding="utf-8", newline="\n")
         produced.append(relative)
 

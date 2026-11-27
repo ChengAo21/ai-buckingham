@@ -1,18 +1,18 @@
 # Case results
 
-The table follows the ten cases in the accompanying paper. Each run directory contains its state, settings, numerical tables, figures and workflow records. `index.json` lists their paths.
+The table follows the ten cases in the accompanying paper. **View results** opens the system's HTML cards and figures; **Reproduce** gives the case inputs, configuration and commands. Each run directory contains `result.html`, the original `report.html`, state, settings, numerical tables, `plots/` and workflow records. `index.json` selects the paper's run for each case.
 
-| Case | Result record | Notebook |
+| Case | Results | Reproduce |
 |---|---|---|
-| Magnetohydrodynamic power generator | [HTML report](cases/mhd/20261124T115837Z_f3348420/report.html) | [Notebook](../notebooks/cases/mhd.ipynb) |
-| Skin friction under pressure gradients | [HTML report](cases/pressure_gradient/20261124T120120Z_1faeb540/report.html) | [Notebook](../notebooks/cases/pressure_gradient.ipynb) |
-| Rayleigh–Bénard convection | [HTML report](cases/rayleigh_benard/20261124T120410Z_caa244b3/report.html) | [Notebook](../notebooks/cases/rayleigh_benard.ipynb) |
-| Laser-metal interaction in additive manufacturing | [HTML report](cases/laser_keyhole/20261124T115546Z_69622a2f/report.html) | [Notebook](../notebooks/cases/laser_keyhole.ipynb) |
-| Blasius laminar boundary layer | [HTML report](cases/blasius/20261124T115205Z_88cef1c5/report.html) | [Notebook](../notebooks/cases/blasius.ipynb) |
-| Sand-grain roughness parameterization | [HTML report](cases/sandgrain/20261124T120909Z_42b0fbc0/report.html) | [Notebook](../notebooks/cases/sandgrain.ipynb) |
-| Velocity scaling in compressible wall-bounded turbulence | [HTML report](cases/velocity_scaling/20261124T121057Z_1f58427d/report.html) | [Notebook](../notebooks/cases/velocity_scaling.ipynb) |
-| Goldenfeld’s roughness-induced criticality in pipe flow | [HTML report](cases/goldenfeld/20261124T115205Z_4757102b/report.html) | [Notebook](../notebooks/cases/goldenfeld.ipynb) |
-| Cess eddy-viscosity model in turbulent channel flows | [HTML report](cases/cess_channel/20261124T115205Z_4bd5acad/report.html) | [Notebook](../notebooks/cases/cess_channel.ipynb) |
-| Viscous flow in a rough circular pipe | [HTML report](cases/rough_pipe/20261124T132007Z_432c83c0/report.html) | [Notebook](../notebooks/cases/rough_pipe.ipynb) |
+| Magnetohydrodynamic power generator | [View results](https://chengao21.github.io/ai-buckingham/cards/mhd.html) | [Reproduce](https://chengao21.github.io/ai-buckingham/cards/mhd.html#reproduce) |
+| Skin friction under pressure gradients | [View results](https://chengao21.github.io/ai-buckingham/cards/pressure_gradient.html) | [Reproduce](https://chengao21.github.io/ai-buckingham/cards/pressure_gradient.html#reproduce) |
+| Rayleigh–Bénard convection | [View results](https://chengao21.github.io/ai-buckingham/cards/rayleigh_benard.html) | [Reproduce](https://chengao21.github.io/ai-buckingham/cards/rayleigh_benard.html#reproduce) |
+| Laser-metal interaction in additive manufacturing | [View results](https://chengao21.github.io/ai-buckingham/cards/laser_keyhole.html) | [Reproduce](https://chengao21.github.io/ai-buckingham/cards/laser_keyhole.html#reproduce) |
+| Blasius laminar boundary layer | [View results](https://chengao21.github.io/ai-buckingham/cards/blasius.html) | [Reproduce](https://chengao21.github.io/ai-buckingham/cards/blasius.html#reproduce) |
+| Sand-grain roughness parameterization | [View results](https://chengao21.github.io/ai-buckingham/cards/sandgrain.html) | [Reproduce](https://chengao21.github.io/ai-buckingham/cards/sandgrain.html#reproduce) |
+| Velocity scaling in compressible wall-bounded turbulence | [View results](https://chengao21.github.io/ai-buckingham/cards/velocity_scaling.html) | [Reproduce](https://chengao21.github.io/ai-buckingham/cards/velocity_scaling.html#reproduce) |
+| Goldenfeld’s roughness-induced criticality in pipe flow | [View results](https://chengao21.github.io/ai-buckingham/cards/goldenfeld.html) | [Reproduce](https://chengao21.github.io/ai-buckingham/cards/goldenfeld.html#reproduce) |
+| Cess eddy-viscosity model in turbulent channel flows | [View results](https://chengao21.github.io/ai-buckingham/cards/cess_channel.html) | [Reproduce](https://chengao21.github.io/ai-buckingham/cards/cess_channel.html#reproduce) |
+| Viscous flow in a rough circular pipe | [View results](https://chengao21.github.io/ai-buckingham/cards/rough_pipe.html) | [Reproduce](https://chengao21.github.io/ai-buckingham/cards/rough_pipe.html#reproduce) |
 
-New analyses are saved under `generated/cases/`. See the [result-file guide](../docs/evidence.md) for file contents and validation settings.
+The case notebooks rebuild reports from the saved results offline. New analyses use their own directories under `generated/cases/`, with an HTML report for each run. See the [result-file guide](../docs/evidence.md) for file contents and validation settings.

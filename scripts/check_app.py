@@ -2,6 +2,7 @@
 from pathlib import Path
 import argparse
 import json
+import re
 import sys
 import tempfile
 from unittest.mock import patch
@@ -39,11 +40,11 @@ def main():
                and list(app.main).index(paper_figures) < list(app.main).index(gallery))
         record("Overview has no count dashboard or sample-count chart",
                not app.metric and not app.dataframe and not app.get("plotly_chart"))
-        app.sidebar.radio[0].set_value("Numerical diagnostics").run()
+        app.sidebar.radio[0].set_value("Case results").run()
         for case_id in ["blasius", "mhd", "cess_channel", "rough_pipe", "sandgrain", "velocity_scaling"]:
-            app.selectbox(key="diagnostic_case").set_value(case_id).run()
+            app.selectbox(key="workflow_case").set_value(case_id).run()
             record(f"{case_id}: recorded gradient coordinates reach the view", not app.exception and len(app.selectbox(key="gradient_x").options) >= 2 and not any("Gradient coordinates and vectors were not recorded" in item.value for item in app.info))
-        app.sidebar.radio[0].set_value("Case workflow").run()
+        app.sidebar.radio[0].set_value("Case results").run()
         app.selectbox(key="workflow_case").set_value("pressure_gradient").run()
         baseline = [item.value for item in app.dataframe if "pressure_gradient_class" in item.value.columns]
         record("Pressure-gradient baseline exposes all 144 source rows", not app.exception and len(baseline) == 1 and len(baseline[0]) == 144)
@@ -51,16 +52,24 @@ def main():
         baseline = [item.value for item in app.dataframe if "pressure_gradient_class" in item.value.columns]
         record("Pressure-gradient baseline category filter retains 120 actual rows", not app.exception and len(baseline) == 1 and len(baseline[0]) == 120)
         app.selectbox(key="workflow_case").set_value("rough_pipe").run()
-        mi = [float(metric.value) for metric in app.metric if metric.label == "Mutual information"]
-        r2 = [float(metric.value) for metric in app.metric if metric.label == "Test R²"]
+        result_html = "".join(item.proto.body for item in app.get("html")
+                              if "Selected dimensionless relations" in item.proto.body)
+        mi = [float(value) for value in re.findall(r"MI / information score:</strong> ([\d.]+)", result_html)]
+        r2 = [float(value) for value in re.findall(r"Held-out R²:</strong> ([\d.]+)", result_html)]
         record("Rough-pipe page displays the verified final mutual information", not app.exception and sorted(round(value, 3) for value in mi) == [2.198, 3.085])
         record("Rough-pipe page displays the verified final validation scores", sorted(round(value, 3) for value in r2) == [0.974, 0.984])
+        record("Case results uses completed cards with one level of expandable content",
+               result_html and not app.json and not any("<details" in item.proto.body for item in app.get("html"))
+               and not any(frame.value.shape[1] > 50 for frame in app.dataframe))
         app.sidebar.radio[0].set_value("Run analysis").run()
-        metrics = {metric.label: str(metric.value) for metric in app.metric}
-        record("Run analysis retains saved-run status and access",
-               not app.exception and metrics.get("Completed runs") == "10"
-               and metrics.get("Running runs") == "0" and metrics.get("Failed / stopped") == "0"
-               and len(app.selectbox(key="saved_run_selection").options) == 10)
+        record("Run analysis opens the ten saved cases by default",
+               not app.exception and app.radio(key="analysis_action").value == "View saved results"
+               and len(app.selectbox(key="saved_result_case").options) == 10)
+        app.selectbox(key="saved_result_case").set_value("rough_pipe").run()
+        app.button(key="open_saved_results").click().run()
+        record("Opening a saved result navigates to its existing cards",
+               not app.exception and app.radio(key="page_navigation").value == "Case results"
+               and app.selectbox(key="workflow_case").value == "rough_pipe")
     report = {"offline_only": True, "network_requests_blocked": True, "total_checks": len(checks), "all_passed": True, "checks": checks}
     args.report.parent.mkdir(parents=True, exist_ok=True)
     args.report.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")

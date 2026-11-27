@@ -3,8 +3,8 @@ import pandas as pd
 import plotly.express as px
 import streamlit as st
 
-from .components import chart, json_panel, masthead, table
-from .data import ALIASES, case_catalog, first, read_csv, read_json, reproduction, runs, load_run
+from .components import chart, json_download, masthead, table
+from .data import ALIASES, case_catalog, read_json, reproduction
 
 
 def _rounds_from_state(state, events=None):
@@ -33,57 +33,56 @@ def _rounds_from_state(state, events=None):
 def render():
     masthead("Retrieval evidence")
     base = reproduction("rag_ablation")
-    source = st.radio("Evidence source", ["Archived 600-trial benchmark", "Included case run"], horizontal=True, key="rag_source")
-    events = []
-    if source == "Archived 600-trial benchmark":
-        trials = base / "trials"
-        models = sorted(p.name for p in trials.iterdir() if p.is_dir()) if trials.is_dir() else []
-        if not models:
-            st.info("The dimensional-checking trial archive is unavailable.")
-            return
-        c1, c2, c3 = st.columns([1, 1, 2])
-        model = c1.selectbox("Analyzer model", models, key="rag_model")
-        available = sorted(p for p in (trials / model).iterdir() if p.is_dir() and (p / "on.json").is_file())
-        case_codes = sorted({p.name.split("_")[0] for p in available})
-        catalog = case_catalog()
-        case_code = c2.selectbox("Benchmark case", case_codes,
-                                 format_func=lambda case: catalog.get(ALIASES.get(case, case), {}).get("title", case), key="rag_case")
-        selected = c3.selectbox("Trial identifier", [p for p in available if p.name.startswith(case_code + "_")], format_func=lambda p: p.name, key=f"rag_trial_{model}_{case_code}")
-        record = read_json(selected / "on.json")
-        initial = read_json(selected / "initial.json")
-        json_panel("Initial Analyzer response", initial, key="rag_initial")
-    else:
-        available = runs()
-        if not available:
-            st.info("No saved case run has been recorded.")
-            return
-        path = st.selectbox("Case and run", available, format_func=lambda p: f"{p.parent.name} / {p.name}", key="rag_case_run")
-        loaded = load_run(path)
-        record, events = loaded["state"], loaded["events"]
+    trials = base / "trials"
+    models = sorted(path.name for path in trials.iterdir() if path.is_dir()) if trials.is_dir() else []
+    if not models:
+        st.info("The dimensional-checking trial archive is unavailable.")
+        return
+    c1, c2, c3 = st.columns([1, 1, 2])
+    model = c1.selectbox("LLM", models, key="rag_model")
+    available = sorted(path for path in (trials / model).iterdir()
+                       if path.is_dir() and (path / "on.json").is_file())
+    case_codes = sorted({path.name.split("_")[0] for path in available})
+    catalog = case_catalog()
+    case_code = c2.selectbox("Benchmark case", case_codes,
+                             format_func=lambda case: catalog.get(ALIASES.get(case, case), {}).get("title", case),
+                             key="rag_case")
+    selected = c3.selectbox("Trial identifier", [path for path in available if path.name.startswith(case_code + "_")],
+                            format_func=lambda path: path.name, key=f"rag_trial_{model}_{case_code}")
+    record = read_json(selected / "on.json")
+    initial = read_json(selected / "initial.json")
+    json_download("initial response", initial, key="rag_initial")
+    checking_rounds(record, key_prefix="rag")
+
+
+def render_case(run):
+    prefix = "case_rag_" + run["path"].parent.name + "_" + run["path"].name
+    checking_rounds(run["state"], run["events"], key_prefix=prefix)
+
+
+def checking_rounds(record, events=None, *, key_prefix):
     rounds = _rounds_from_state(record, events)
     if not rounds:
-        st.info("This source contains no recorded dimensional-checking round. A failed initial response may stop before retrieval.")
+        st.info("No dimensional-checking round is available for this result.")
         return
-    round_index = st.selectbox("Checking round", range(len(rounds)), format_func=lambda i: f"Round {i+1}", key="rag_round")
+    round_index = st.selectbox("Checking round", range(len(rounds)), format_func=lambda i: f"Round {i+1}", key=key_prefix + "_round")
     selected_round = rounds[round_index]
     retrieval = selected_round.get("retrieval", selected_round.get("knowledge_retrieval", {})) or {}
     audit = selected_round.get("checker_response", selected_round.get("dimension_audit", {})) or {}
     if not audit:
         audit = (selected_round.get("checker_call") or {}).get("parsed_response", {})
     gate = selected_round.get("gate_status", (selected_round.get("gate") or {}).get("gate_status", "Not recorded"))
-    metrics = st.columns(4)
-    metrics[0].metric("Gate outcome", gate)
+    metrics = st.columns(2)
+    metrics[0].metric("Dimensional-checking outcome", gate)
     metrics[1].metric("Retrieved records", retrieval.get("n_retrieved_records", "Not recorded"))
-    metrics[2].metric("Embedding status", str(retrieval.get("embedding_status", "Not recorded")))
-    metrics[3].metric("Retrieval mode", ", ".join(retrieval.get("retrieval_modes", [])) or str(retrieval.get("retrieval_mode", "Not recorded")))
     matches = retrieval.get("matches_by_variable", {})
     queries = retrieval.get("queries_by_variable", {})
     audit_items = audit.get("variables", []) if isinstance(audit, dict) else []
     variable_names = list(dict.fromkeys(list(queries) + list(matches) + [v.get("csv_name") for v in audit_items if v.get("csv_name")]))
     if not variable_names:
-        json_panel("Recorded checking round", selected_round, key="rag_round_raw", expanded=True)
+        json_download("Recorded checking round", selected_round, key=key_prefix + "_round_raw")
         return
-    variable = st.selectbox("Physical quantity / CSV column", variable_names, key="rag_variable")
+    variable = st.selectbox("Physical quantity / CSV column", variable_names, key=key_prefix + "_variable")
     st.markdown("### Query and ranked evidence")
     st.code(queries.get(variable, "Exact query was not recorded."), language=None, wrap_lines=True)
     records = matches.get(variable, [])
@@ -93,11 +92,10 @@ def render():
         label = "canonical_quantity" if "canonical_quantity" in frame else "entry_id"
         if score_columns and label in frame:
             plot_data = frame.melt(id_vars=[label], value_vars=score_columns, var_name="Score component", value_name="Score")
-            chart(px.bar(plot_data, x="Score", y=label, color="Score component", barmode="group", orientation="h"), "rag_ranking")
+            chart(px.bar(plot_data, x="Score", y=label, color="Score component", barmode="group", orientation="h"), key_prefix + "_ranking")
         preferred = ["entry_id", "canonical_quantity", "definition", "si_dimension", "si_unit", "lexical_score", "semantic_score", "hybrid_score", "source_identifier"]
-        table(frame[[c for c in preferred if c in frame]], "retrieved_records.csv", "rag_records")
-        for i, row in enumerate(records):
-            json_panel(f"Record {i+1} · {row.get('entry_id', 'unidentified')}", row, key=f"rag_record_{i}")
+        table(frame[[c for c in preferred if c in frame]], "retrieved_records.csv", key_prefix + "_records")
+        json_download("retrieved records", records, key=key_prefix + "_ranked_records")
     else:
         st.info("No retrieved record is stored for this quantity.")
     st.markdown("### Dimensional decision")
@@ -105,25 +103,26 @@ def render():
     ledger = selected_round.get("candidate_ledger", {})
     quantities = [v for v in ledger.get("variables", []) if v.get("csv_name") == variable]
     if quantities:
-        json_panel("Submitted quantity and SI exponents", quantities[0], key="rag_submitted", expanded=True)
+        json_download("Submitted quantity and SI exponents", quantities[0], key=key_prefix + "_submitted")
     if decisions:
         decision = decisions[0]
         a, b = st.columns(2)
         a.markdown("**Decision:** " + str(decision.get("decision", "Not recorded")))
         b.markdown("**Support mode:** " + str(decision.get("support_mode", "Not recorded")))
         st.markdown(str(decision.get("reason", "No reason recorded.")))
-        st.write("Cited records", decision.get("evidence_entry_ids", []))
+        st.markdown("**Cited records** " + ", ".join(str(identifier) for identifier in decision.get("evidence_entry_ids", [])))
         exponents = []
         for stage, key in [("Before", "before_si_exponents"), ("Proposed", "suggested_si_exponents")]:
             vector = decision.get(key)
             if isinstance(vector, dict):
                 exponents.append({"Assignment": stage, **vector})
         if exponents:
-            table(pd.DataFrame(exponents), "dimensional_comparison.csv", "rag_dimensions")
-        json_panel("Complete quantity decision", decision, key="rag_decision")
+            table(pd.DataFrame(exponents), "dimensional_comparison.csv", key_prefix + "_dimensions")
+        json_download("Complete quantity decision", decision, key=key_prefix + "_decision")
     else:
-        st.info("No per-quantity Checker decision is stored for this variable.")
-    with st.expander("Exact evidence supplied to the Checker"):
-        st.code(retrieval.get("evidence_markdown", "Not recorded"), language="markdown", wrap_lines=True)
-    json_panel("Gate audit", selected_round.get("gate", {}), key="rag_gate")
-    json_panel("Complete checking round", selected_round, key="rag_complete")
+        st.info("No dimensional-checking decision is available for this variable.")
+    st.download_button("Download retrieval evidence · Markdown",
+                       retrieval.get("evidence_markdown", "Not recorded").encode("utf-8"),
+                       file_name="checker_evidence.md", mime="text/markdown", key=key_prefix + "_evidence")
+    json_download("Dimensional-checking details", selected_round.get("gate", {}), key=key_prefix + "_gate")
+    json_download("Complete checking round", selected_round, key=key_prefix + "_complete")

@@ -4,10 +4,14 @@
 
 The included case results are stored under `results/cases/<case_id>/<run_id>/`. By default, new analyses are written under `generated/cases/<case_id>/<run_id>/`. Each run's manifest identifies its configuration and data sources.
 
+For a complete presentation of a case, use **View results** on [GitHub Pages](https://chengao21.github.io/ai-buckingham/) or **Case results** in [Streamlit](https://ai-buckingham.streamlit.app/). These views use the saved system cards, selected relations and figures. The case notebook rebuilds the same HTML report offline; its final section runs a new analysis from the case data and configuration.
+
+`result.html` is the standalone case report. `report.html` retains the original run output, and `evidence/display_bundles.json` stores the rich displays used to build the case report. `plots/` contains the result figures in PNG, PDF and SVG formats. The report and numerical views read the selected run's files.
+
 | Workflow stage | Files and fields to inspect |
 |---|---|
 | Problem formulation | Prompt, input column order, dependent variable and dimensional records |
-| Dimensional checking | Retrieval queries, ranked knowledge-base records, dimensional assignments and Checker decisions |
+| Dimensional checking | Retrieval queries, ranked knowledge-base records, dimensional assignments and checking decisions |
 | Buckingham–Π basis construction | Ordered variables, dimensional matrix, rank, nullity and basis |
 | Workflow planning | Planner output, manual overrides and resolved settings |
 | Physical-regime identification | Sample mapping, GPR settings, gradients, candidate partitions and partition-selection criteria |
@@ -21,7 +25,7 @@ The included case results are stored under `results/cases/<case_id>/<run_id>/`. 
 
 `evidence/optimization_trace.jsonl` contains optimizer generations and endpoints. Records include the local scope, search identifier, random seed, group count, generation number, evaluation count, objective value and coefficient vectors. Direct evaluation and scalar optimization have endpoint records with no CMA-ES generation number.
 
-The optimization objective includes infeasibility and collinearity penalties; it should be distinguished from MI. A trajectory projected onto two coefficients is also distinct from an MI landscape evaluated on a coefficient grid.
+The optimization objective includes infeasibility and collinearity penalties.
 
 The primary-seed candidate supplies the reported result. Additional restarts provide optimization-variability estimates, as described in SI §3.5.
 
@@ -41,7 +45,7 @@ The rough circular pipe dataset uses the prescribed laminar/Colebrook branch swi
 
 Comparison packages document their inputs and commands separately:
 
-- [LLM ablation and API usage in dimensional checking](../reproduction/rag_ablation/) includes trial records, Checker decisions and summary tables.
+- [LLM ablation and API usage in dimensional checking](../reproduction/rag_ablation/) includes trial records, dimensional-checking decisions and summary tables.
 - [Relation to the Trettel–Larsson transformation](../reproduction/velocity_comparison/): six velocity profiles, transformations and RMS errors.
 - [Physical-regime detection in IT–π and AI Buckingham](../reproduction/regime_comparison/): global IT–π groups, regional relevance scores and Cess partitions.
 - [MI optimization landscapes](../reproduction/mi_landscapes/) includes coefficient grids and optimizer histories for MHD and the four Type I cases in Figure 4.

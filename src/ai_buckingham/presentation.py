@@ -314,6 +314,10 @@ _AGENT_EDITORIAL_CSS = r"""
 }
 .daa-shell pre { white-space: pre-wrap; overflow-wrap: anywhere; max-height: none; }
 .daa-metrics { grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr)); }
+.daa-metrics-wide { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+@media (max-width: 720px) {
+  .daa-metrics-wide { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 .daa-diagnostic-table { display: block; max-width: 100%; overflow-x: auto; table-layout: auto; }
 .daa-diagnostic-table th, .daa-diagnostic-table td {
   min-width: 5.2rem; max-width: 24rem; white-space: normal;
@@ -453,6 +457,7 @@ def display_workflow_stage(
     rows: Optional[List[tuple[str, Any]]] = None,
     bullets: Optional[List[str]] = None,
     code: Optional[str] = None,
+    visible_metrics: int = 5,
     hyperparameters: Optional[dict] = None,
 ) -> None:
     """Render the single fixed publication-style notebook card."""
@@ -463,12 +468,13 @@ def display_workflow_stage(
     tone, status_label, status_class = _status_style(status)
 
     all_rows = list(rows or [])
-    visible_rows = all_rows[:5]
-    hidden_rows = all_rows[5:]
+    visible_rows = all_rows[:visible_metrics]
+    hidden_rows = all_rows[visible_metrics:]
 
     metric_html = ""
     if visible_rows:
-        metric_html = "<div class='daa-metrics'>" + "".join(
+        metric_class = "daa-metrics daa-metrics-wide" if len(visible_rows) > 5 else "daa-metrics"
+        metric_html = "<div class='" + metric_class + "'>" + "".join(
             "<div class='daa-metric'><div class='daa-metric-key'>" +
             html.escape(_ui_text(key, 70)) + "</div><div class='daa-metric-value'>" +
             html.escape(_ui_text(value, 180)) + "</div></div>"
@@ -624,11 +630,7 @@ def display_basis_summary(input_vars, output_var, pi_formulas, output_resolution
         rows=[
             ("Input variables", len(input_vars)),
             ("Output", output_var),
-            ("Output inference", output_resolution.get("source")),
             ("Basis dimension", len(pi_formulas or {})),
-        ],
-        bullets=[
-            "These are basis generators, not yet the final governing groups selected by MI/CMA-ES."
         ],
         code="\n".join(formulas),
         hyperparameters=hyperparameters,
@@ -639,12 +641,23 @@ def display_compiled_plan(plan, compiled, provenance, hyperparameters=None) -> N
     """Display the selected protocol and the output-scaling decision."""
     local = dict(compiled.get('local_workflow', {}))
     stages = list(compiled.get('stages', plan.get('stages', [])))
-    rationale = str(plan.get('rationale', '—'))
     similarity_type = str(local.get('similarity_type', 'first_kind'))
     similarity_is_auto = similarity_type == 'auto'
     input_constraints = local.get('fixed_in_power') or {}
     output_constraints = local.get('fixed_out_power') or {}
-    display_workflow_stage('Stage 4/7 · Workflow planner', status='completed', summary='The macro protocol was selected; the similarity class will be resolved numerically within each local regime.' if similarity_is_auto else 'The macro protocol and similarity class were selected. Count locking and all acceptance decisions remain numerical.', rows=[('Protocol', str(compiled.get('template', '')).replace('_', ' ')), ('Similarity', similarity_type.replace('_', ' ')), ('Output optimization', 'screening: fixed + joint' if similarity_is_auto else bool(local.get('optimize_output', False))), ('Similarity decision · relative MI threshold', local.get('similarity_screening_max_relative_mi_change') if similarity_is_auto else '—'), ('Input constraints', input_constraints if input_constraints else 'none'), ('Output constraints', output_constraints if output_constraints else 'none'), ('Scaling confidence', 'pending numerical screen' if similarity_is_auto else local.get('output_scaling_confidence', '—')), ('Manual overrides', len((provenance or {}).get('manual_overrides', {}))), ('Replanning budget', compiled.get('max_replans'))], bullets=[str(local.get('output_scaling_reason', '')), 'Auto screening ignores fixed input/output basis powers and uses k=1 with the default input-output cosine threshold. Final constraints are restored only after the similarity class is resolved.' if similarity_is_auto else '', rationale], hyperparameters=hyperparameters)
+    display_workflow_stage(
+        'Stage 4/7 · Workflow planner', status='completed',
+        rows=[
+            ('Protocol', str(compiled.get('template', '')).replace('_', ' ')),
+            ('Similarity', similarity_type.replace('_', ' ')),
+            ('Output optimization', 'screening: fixed + joint' if similarity_is_auto else bool(local.get('optimize_output', False))),
+            ('Similarity decision · relative MI threshold', local.get('similarity_screening_max_relative_mi_change') if similarity_is_auto else '—'),
+            ('Input constraints', input_constraints if input_constraints else 'none'),
+            ('Output constraints', output_constraints if output_constraints else 'none'),
+            ('Manual overrides', len((provenance or {}).get('manual_overrides', {}))),
+        ],
+        visible_metrics=7, hyperparameters=hyperparameters,
+    )
     display_workflow_path(stages, current=stages[0] if stages else None, hyperparameters=hyperparameters)
 
 
@@ -658,7 +671,6 @@ def display_similarity_screening_summary(screening: dict, hyperparameters=None) 
         display_workflow_stage(f'Similarity-class screening · {scope_id}', status='warning', summary=screening.get('message', 'The similarity-class screen did not complete.'), rows=[('Status', status)], hyperparameters=hyperparameters)
         return
     selected = str(screening.get('selected_similarity_type', 'unknown'))
-    mi_pass = bool(screening.get('mi_change_negligible', False))
     relative_mi_change = screening.get('relative_mi_loss_without_output_scaling')
     mi_threshold = screening.get('max_relative_mi_change')
     joint_summary = screening.get('joint_output_candidate', {}) or {}
@@ -678,8 +690,23 @@ def display_similarity_screening_summary(screening: dict, hyperparameters=None) 
         screening_formula_lines.append(f"Joint-output optimizer output coordinates: {joint_summary.get('output_basis_coordinate_formula')} = {joint_summary.get('output_basis_expanded_formula')}")
     if joint_summary.get('output_scaling_formula'):
         screening_formula_lines.append(f"Screening output scale: {joint_summary.get('output_scaling_formula')}")
-    criterion_text = f"MI-only decision: {('Type I' if mi_pass else 'Type II')}"
-    display_workflow_stage(f'Similarity-class screening · {scope_id}', status='completed', summary='The similarity class is determined only by the relative mutual-information loss incurred when output scaling is removed.', rows=[('Decision', selected.replace('_', ' ')), ('Screening k', screening.get('screening_k', _config.SIMILARITY_SCREEN_K)), ('MI · fixed output', screening.get('fixed_output_mutual_information')), ('MI · joint output', screening.get('joint_output_mutual_information')), ('Relative MI loss without output scaling', f'{100.0 * float(relative_mi_change):.3g}%' if relative_mi_change is not None else '—'), ('Relative MI threshold', f'≤ {100.0 * float(mi_threshold):.3g}%' if mi_threshold is not None else '—'), ('Criteria', criterion_text), ('Screening cosine threshold', screening.get('screening_max_cosine_similarity')), ('Fixed basis powers during screening', 'none'), ('Final input constraints', screening.get('final_fixed_in_power') or 'none'), ('Final output constraints', screening.get('final_fixed_out_power') or 'none')], bullets=[screening.get('reason', ''), 'Screening is diagnostic only: the selected local workflow is rerun from scratch and restores the user-specified basis constraints for final inference.', 'Type II was selected without an output-side uniqueness constraint; the final optimization will therefore retain the existing unconstrained Type-II behavior.' if selected == 'second_kind' and (not screening.get('final_fixed_out_power')) else ''], code='\n'.join(screening_formula_lines) if screening_formula_lines else None, hyperparameters=hyperparameters)
+    display_workflow_stage(
+        f'Similarity-class screening · {scope_id}', status='completed',
+        rows=[
+            ('Decision', selected.replace('_', ' ')),
+            ('Screening k', screening.get('screening_k', _config.SIMILARITY_SCREEN_K)),
+            ('MI · fixed output', screening.get('fixed_output_mutual_information')),
+            ('MI · joint output', screening.get('joint_output_mutual_information')),
+            ('Relative MI loss without output scaling', f'{100.0 * float(relative_mi_change):.3g}%' if relative_mi_change is not None else '—'),
+            ('Relative MI threshold', f'≤ {100.0 * float(mi_threshold):.3g}%' if mi_threshold is not None else '—'),
+            ('Screening cosine threshold', screening.get('screening_max_cosine_similarity')),
+            ('Fixed basis powers during screening', 'none'),
+            ('Final input constraints', screening.get('final_fixed_in_power') or 'none'),
+            ('Final output constraints', screening.get('final_fixed_out_power') or 'none'),
+        ],
+        code='\n'.join(screening_formula_lines) if screening_formula_lines else None,
+        visible_metrics=10, hyperparameters=hyperparameters,
+    )
 
 
 def _regime_diag_num(value, digits=5) -> str:
@@ -815,7 +842,7 @@ def display_regime_detection_summary(detection: dict, hyperparameters=None, disp
             direction_pair_html = ''
             if direction_pairs:
                 direction_pair_html = "<table class='daa-diagnostic-table'><thead><tr><th>Cluster pair</th><th>|cos θ|</th><th>Angle (deg)</th></tr></thead><tbody>" + ''.join((f"<tr><td>R{pair['cluster_i'] + 1}–R{pair['cluster_j'] + 1}</td><td>{html.escape(_regime_diag_num(pair['absolute_cosine']))}</td><td>{html.escape(_regime_diag_num(pair['angle_degrees']))}</td></tr>" for pair in direction_pairs)) + '</tbody></table>'
-            details.append(f"<details class='daa-regime-details' open><summary>K={k} cluster composition and eigenspectra</summary><table class='daa-diagnostic-table'><thead><tr><th>Regime</th><th class='num'>Samples</th><th class='num'>Fraction</th><th class='num'>λmax / λmin</th><th>Eigenvalues</th></tr></thead><tbody>" + (''.join(cluster_rows) if cluster_rows else "<tr><td colspan='5'>No cluster detail recorded.</td></tr>") + '</tbody></table>' + direction_pair_html + "<div class='daa-diagnostic-note'>" + html.escape('Termination: ' + str(candidate.get('termination_reason', '—')) + f" · iterations={candidate.get('iterations', '—')}") + '</div></details>')
+            details.append(f"<details class='daa-regime-details' open><summary>K={k} cluster composition and eigenspectra</summary><table class='daa-diagnostic-table'><thead><tr><th>Regime</th><th class='num'>Samples</th><th class='num'>Fraction</th><th class='num'>λmax / λmin</th><th>Eigenvalues</th></tr></thead><tbody>" + (''.join(cluster_rows) if cluster_rows else "<tr><td colspan='5'>No cluster detail recorded.</td></tr>") + '</tbody></table>' + direction_pair_html + '</details>')
         candidate_html = "<div class='daa-section-title'>Candidate partition evidence</div><table class='daa-diagnostic-table'><thead><tr><th>K</th><th>Converged</th><th class='num'>Min fraction</th><th>Fraction gate</th><th class='num'>Min samples</th><th>Sample-count gate</th><th class='num'>Min eigenvalue ratio</th><th>Ratio gate</th><th class='num'>K=2 |cos|</th><th class='num'>K=2 angle (deg)</th><th>K=2 action</th><th>Base admissibility</th><th class='num'>Objective</th></tr></thead><tbody>" + ''.join(candidate_rows) + '</tbody></table>'
         candidate_detail_html = ''.join(details)
     failure_rows = []
@@ -847,7 +874,6 @@ def display_local_candidate(
     hyperparameters=None,
 ) -> None:
     validation = candidate.get("gpr_validation") or {}
-    stability = candidate.get("restart_stability") or {}
     formula_lines = _optimization._candidate_formula_lines(
         candidate,
         output_label=str(candidate.get("output_label", "Y")),
@@ -855,10 +881,6 @@ def display_local_candidate(
     display_workflow_stage(
         f"{scope_id} · candidate k={candidate.get('pi_count')}",
         status="completed",
-        summary=(
-            "A candidate representation was optimized and checked "
-            "against restart and held-out evidence."
-        ),
         rows=[
             ("Mutual information", candidate.get("mutual_information")),
             (
@@ -867,14 +889,7 @@ def display_local_candidate(
             ),
             ("Uncertainty", _candidate_uncertainty_text(candidate)),
             ("Held-out R²", validation.get("test_r2_mean")),
-            ("Successful restarts", candidate.get("restart_count")),            
-            (
-                "Restart stability",
-                stability.get("minimum_principal_cosine"),
-            ),
-        ],
-        bullets=[
-            "Physical exponents are display-normalized; basis-coordinate powers are the raw optimizer coefficients."
+            ("Successful restarts", candidate.get("restart_count")),
         ],
         code="\n".join(formula_lines),
         hyperparameters=hyperparameters,
@@ -1097,19 +1112,9 @@ def display_local_final(
           </span>
         </div>
 
-        <div class='daa-summary'>
-          Count selection, parsimony checks, and formula refinement
-          are summarized below.
-        </div>
-
         {table_html}
 
         {formula_html}
-
-        <div class='daa-note'>
-          The physical and basis-coordinate forms are
-          scale-equivalent representations of the selected group.
-        </div>
 
       </section>
     </div>
@@ -1205,11 +1210,6 @@ def display_final_workflow_summary(
           <span class='daa-status success'>
             {html.escape(str(result.get('status', 'complete')).replace('_', ' '))}
           </span>
-        </div>
-        <div class='daa-summary'>
-          Final relations are copied directly from the numerical state.
-          Each relation is shown both in physical variables and in the
-          optimized Buckingham-Pi basis coordinates.
         </div>
         <div class='daa-metrics'>
           <div class='daa-metric'>
@@ -1421,7 +1421,7 @@ def save_State_2md(state: dict, save_name: str, if_save=False):
         write_table(f, [('Generated', datetime.now().strftime('%Y-%m-%d %H:%M:%S')), ('Status', result.get('status', state.get('workflow_status', '—'))), ('Data', state.get('csv_FilePath', '—')), ('Agent version', _config.AGENT_VERSION)])
         f.write('## 1. Problem\n\n')
         f.write(md_text(state.get('prompt_problem', '—'), 5000) + '\n\n')
-        write_table(f, [('Dependent variable', output_var), ('Independent inputs', input_vars), ('Output inference', (state.get('output_resolution') or {}).get('source', state.get('analyzed_output_reasoning', '—')))])
+        write_table(f, [('Dependent variable', output_var), ('Independent inputs', input_vars)])
         try:
             _write_frontend_markdown(f, state)
         except Exception as display_error:
@@ -1628,7 +1628,7 @@ def _frontend_si_html(vector):
 
 def _frontend_ledger_html(ledger, contract=None):
     if not isinstance(ledger, dict):
-        return "<div class='daa-note'>The Analyzer has not returned a usable physical-input ledger.</div>"
+        return "<div class='daa-note'>Physical quantities and dimensions are unavailable.</div>"
     variables = ledger.get('variables') or []
     by_name = {v.get('csv_name'): v for v in variables if isinstance(v, dict)}
     names = list(ledger.get('input_variable_names') or [])
@@ -1639,17 +1639,16 @@ def _frontend_ledger_html(ledger, contract=None):
         rows.append([name, ('html', meaning), ('html', _frontend_si_html(v.get('si_exponents')))])
         powers = v.get('si_exponents') or {}
         exact_rows.append([name] + [('?' if powers.get(b) is None else powers[b]) for b in ('M', 'L', 'T', 'I', 'Theta', 'N', 'J')])
-    result = "<div class='daa-section-title'>Physical input ledger</div>" + _frontend_table(['CSV input', 'Physical meaning', 'Named SI dimensions'], rows)
-    result += "<div class='daa-front-caption'>? means an unknown coordinate; it is never replaced by zero. A value of 0 is known absence of that SI base.</div>"
+    result = "<div class='daa-section-title'>Physical quantities and dimensions</div>" + _frontend_table(['Input variable', 'Physical meaning', 'SI dimensions'], rows)
+    result += "<div class='daa-front-caption'>? denotes an unspecified SI exponent.</div>"
     result += _frontend_details('All seven named SI exponents', _frontend_table(['Input', 'M', 'L', 'T', 'I', 'Theta', 'N', 'J'], exact_rows, matrix=True))
     output = ledger.get('output_variable_name')
     result += "<div class='daa-note'><strong>Output " + _frontend_escape(output) + ':</strong> ' + _frontend_escape(ledger.get('output_variable_reasoning')) + '</div>'
     if isinstance(contract, dict):
         D, axes, columns = contract.get('D_exact'), contract.get('row_order') or [], contract.get('var_names') or []
-        result += "<div class='daa-section-title'>Program-compiled dimensional matrix</div>"
+        result += "<div class='daa-section-title'>Dimensional matrix</div>"
         if D is not None and len(D) == len(axes) and all(len(row) == len(columns) for row in D):
             result += _frontend_table(['SI base / input'] + columns, [[axis] + list(row) for axis, row in zip(axes, D)], matrix=True)
-            result += "<div class='daa-front-caption'>Rows and columns follow the labels above; zero rows may be omitted. Counts are computed from this matrix, not inferred separately by the model.</div>"
         else:
             result += "<div class='daa-note'>No numeric matrix was compiled: named coordinates remain unresolved or the matrix is not available.</div>"
     return result
@@ -1747,9 +1746,9 @@ def _frontend_audit_html(audit, raw=None):
             if conflicts:
                 text += '<br><strong>Known conflict with the cited KB vector:</strong> ' + '; '.join(html.escape(str(base)) + ': candidate/suggestion ' + html.escape(str(values.get('candidate_or_suggestion'))) + ', cited record ' + html.escape(str(values.get('cited_record'))) for base, values in conflicts.items())
             program_notes.append('<div class="daa-note"><strong>Program checks for ' + _frontend_escape(name) + ':</strong> ' + text + '</div>')
-        reasons.append('<article class="daa-result"><h4>' + _frontend_escape(name) + '</h4>' + ('<p>' + _frontend_escape(reason) + '</p>' if reason else '<p>No structured Checker reason was returned.</p>') + ('<p><strong>Program issues:</strong> ' + _frontend_escape(issues) + '</p>' if issues else '') + '</article>')
-    result = _frontend_table(['Input', 'Checker decision', 'Candidate SI exponents', 'Suggested SI', 'Coordinate changes', 'Evidence / support'], rows) if rows else "<div class='daa-note'>No usable structured variable audit is available. The program decision and failure reason remain recorded below.</div>"
-    result += "<div class='daa-front-caption'>Checker decisions are model judgments. The program gate is reported separately above; ? denotes an unknown coordinate, never zero.</div>" + ''.join(program_notes)
+        reasons.append('<article class="daa-result"><h4>' + _frontend_escape(name) + '</h4>' + ('<p>' + _frontend_escape(reason) + '</p>' if reason else '<p>No dimensional-checking explanation is available.</p>') + ('<p><strong>Program issues:</strong> ' + _frontend_escape(issues) + '</p>' if issues else '') + '</article>')
+    result = _frontend_table(['Input', 'Dimensional-checking decision', 'Candidate SI exponents', 'Suggested SI', 'Coordinate changes', 'Evidence / support'], rows) if rows else "<div class='daa-note'>Dimensional-checking results are unavailable.</div>"
+    result += ''.join(program_notes)
     if reasons:
         result += _frontend_details('Per-variable physical reasoning and program checks', "<div class='daa-result-grid'>" + ''.join(reasons) + '</div>')
     feedback = audit.get('feedback') or '\n'.join(map(str, audit.get('issues', [])))
@@ -1998,7 +1997,7 @@ def _recorded_seconds_text(value, missing=0, attempts=0):
 
 def _recorded_costs_rows(provenance):
     role_names = {
-        "Analyzer": "Analyzer", "Hallu_Checker": "Physics audit",
+        "Analyzer": "Semantic parsing", "Hallu_Checker": "Dimensional checking",
         "Output_Binding_Checker": "Output column check",
         "Workflow_Planner": "Planner", "Workflow_Report": "Model output",
     }

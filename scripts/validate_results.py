@@ -1,17 +1,23 @@
 """Validate included scientific evidence without invoking models or optimizers."""
 from pathlib import Path
 from fractions import Fraction
+import argparse
 import base64
 import json
+import re
 import sys
+import tempfile
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--output", type=Path, default=Path(tempfile.gettempdir()) / "ai-buckingham-checks/result_validation.json")
+    args = parser.parse_args()
     import numpy as np
     import nbformat
-    from ai_buckingham.artifacts import read_json, sha256_file, write_json
+    from ai_buckingham.artifacts import read_json, run_figures, sha256_file, write_json
     index = read_json(ROOT / "results" / "index.json")
     cases, failures, generation_count = [], [], 0
     for case in index["cases"]:
@@ -47,10 +53,17 @@ def main():
         nbformat.validate(nb)
         if nb.metadata["ai_buckingham"]["execution"] != "completed" or any(o.get("output_type") == "error" for c in nb.cells for o in c.get("outputs", [])):
             raise ValueError("Incomplete executed notebook")
-        gallery = next(c for c in nb.cells if c.metadata.get("ai_buckingham_role") == "saved_figure_gallery")
-        for name, payload in gallery.attachments.items():
-            if base64.b64decode(payload["image/png"]) != (directory / "figures" / name).read_bytes():
-                raise ValueError("Notebook figure differs from the original PNG")
+        figures = [path for path in run_figures(directory) if path.suffix == ".png"]
+        gallery = next((c for c in nb.cells if c.metadata.get("ai_buckingham_role") == "saved_figure_gallery"), None)
+        if gallery is not None:
+            actual_figures = [base64.b64decode(payload["image/png"]) for payload in gallery.attachments.values()]
+        else:
+            report_html = "".join(output.get("data", {}).get("text/html", "")
+                                  for cell in nb.cells for output in cell.get("outputs", []))
+            actual_figures = [base64.b64decode(encoded) for encoded in re.findall(
+                r'<figure class="daa-report-figure"><img src="data:image/png;base64,([A-Za-z0-9+/=]+)"', report_html)]
+        if sorted(actual_figures) != sorted(path.read_bytes() for path in figures):
+            raise ValueError("Notebook figures differ from the selected run's PNGs")
         plot_manifest = read_json(directory / "evidence" / "plot_data_manifest.json")
         if plot_manifest["warnings"]:
             raise ValueError("Incomplete plot table export")
@@ -75,7 +88,7 @@ def main():
               "cases":cases, "retained_unsuccessful_attempts":failures,
               "sandgrain_shared_split_and_learned_fit_agree":True,
               "method":"Read-only validation of real saved states, dimensions, null spaces, optimizer events, executed notebooks, embedded original figures and plot tables. No model call or numerical search."}
-    write_json(ROOT / "results" / "validation.json", report)
+    write_json(args.output, report)
     print(json.dumps({"status":"passed", "completed_cases":len(cases), "actual_cma_generations":generation_count, "retained_unsuccessful_attempts":len(failures)}))
 
 

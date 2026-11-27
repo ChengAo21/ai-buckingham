@@ -98,6 +98,17 @@ def find_runs(root: Path | str | None = None, case_id: str | None = None) -> lis
     return found
 
 
+def run_figures(run_dir: Path | str) -> list[Path]:
+    """Resolve same-run figures, including runs using the earlier directory."""
+    run_dir = Path(run_dir)
+    paths = {}
+    for directory in ("figures", "plots"):
+        for path in sorted((run_dir / directory).rglob("*")):
+            if path.is_file() and path.suffix.lower() in {".png", ".pdf", ".svg"}:
+                paths[path.relative_to(run_dir / directory).as_posix()] = path
+    return [paths[name] for name in sorted(paths)]
+
+
 def load_run(path: Path | str | dict) -> dict:
     if isinstance(path, dict):
         path = path.get("run_dir") or path.get("_run_dir")
@@ -113,7 +124,7 @@ def load_run(path: Path | str | dict) -> dict:
     return {"run_dir": str(run_dir), "manifest": read_json(run_dir / "manifest.json", {}),
             "state": read_json(run_dir / "state.json", {}),
             "config": read_json(run_dir / "resolved_config.json", {}), "events": events,
-            "figures": [str(p) for p in sorted((run_dir / "figures").glob("*"))]}
+            "figures": [str(p) for p in run_figures(run_dir)]}
 
 
 def _write_csv(path: Path, rows: list[dict]) -> None:
@@ -130,7 +141,7 @@ def _write_csv(path: Path, rows: list[dict]) -> None:
 
 def saved_figures_html(run_dir: Path) -> str:
     """Embed the exact saved PNGs, including when Matplotlib uses Agg."""
-    figures = sorted((Path(run_dir) / "figures").glob("*.png"))
+    figures = [path for path in run_figures(run_dir) if path.suffix == ".png"]
     originals = [path for path in figures if not path.name.startswith("display_")]
     if not figures:
         return ""
@@ -149,7 +160,7 @@ class RunRecorder:
         if (self.run_dir / "manifest.json").exists():
             raise FileExistsError(f"Existing run is immutable: {self.run_dir}")
         self.case_id, self.config, self.mode = case_id, config, mode
-        for name in ("evidence", "tables", "figures"):
+        for name in ("evidence", "tables", "plots"):
             (self.run_dir / name).mkdir(parents=True, exist_ok=True)
         root = repository_root()
         dataset = root / config.get("dataset", "")
@@ -190,7 +201,7 @@ class RunRecorder:
             if data:
                 self.rich_outputs.append(portable(data))
                 if "image/png" in data:
-                    (self.run_dir / "figures" / f"display_{index:03d}.png").write_bytes(base64.b64decode(data["image/png"]))
+                    (self.run_dir / "plots" / f"display_{index:03d}.png").write_bytes(base64.b64decode(data["image/png"]))
         write_json(self.run_dir / "evidence" / "display_bundles.json", self.rich_outputs)
 
     def finalize(self, state: dict, status: str = "completed") -> dict:
@@ -265,6 +276,8 @@ class RunRecorder:
         rendered += saved_figures_html(self.run_dir)
         page = '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AI Buckingham — ' + html.escape(self.case_id) + '</title><style>body{font:16px/1.55 system-ui;margin:32px auto;max-width:1240px;padding:0 20px;color:#17202a}pre{white-space:pre-wrap;overflow-wrap:anywhere}img{max-width:100%}.identity{padding:14px;border:1px solid #ccd7de;background:#f0f6f9}</style></head><body><h1>AI Buckingham — ' + html.escape(self.case_id) + '</h1><p class="identity">' + html.escape(self.manifest["interpretation"]) + '<br>Run: ' + html.escape(self.run_dir.name) + ' · Status: ' + html.escape(self.manifest["status"]) + '</p>' + rendered + '</body></html>'
         (self.run_dir / "report.html").write_text(page, encoding="utf-8")
+        from .reports import export_report
+        export_report(self.run_dir, self.run_dir / "result.html")
 
 
 def new_run_id() -> str:

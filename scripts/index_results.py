@@ -9,7 +9,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 
 def main():
-    from ai_buckingham.artifacts import find_runs, write_json
+    from ai_buckingham.artifacts import find_runs, run_figures, write_json
     cases, summaries = [], []
     for config in sorted((ROOT / "configs" / "cases").glob("*.json")):
         case = json.loads(config.read_text(encoding="utf-8"))
@@ -26,7 +26,7 @@ def main():
                             "directory": folder.relative_to(ROOT).as_posix(),
                             "manifest": (folder / "manifest.json").relative_to(ROOT).as_posix(),
                             "optimizer_generations": generations,
-                            "figures": [p.relative_to(ROOT).as_posix() for p in sorted((folder / "figures").glob("*"))],
+                            "figures": [p.relative_to(ROOT).as_posix() for p in run_figures(folder)],
                             "report": (folder / "report.html").relative_to(ROOT).as_posix()})
         successful = [item for item in records if item["status"] == "completed"]
         if successful:
@@ -66,12 +66,11 @@ def main():
             writer = csv.DictWriter(handle, fieldnames=list(summaries[0]))
             writer.writeheader()
             writer.writerows(summaries)
-    rows = ["# Included case evidence", "", index["interpretation"], "", "| Case | Selected completed run | Recorded attempts | Notebook |", "|---|---|---:|---|"]
+    rows = ["# Case results", "", "| Case | Results | Reproduce |", "|---|---|---|"]
     for case in cases:
-        selected = next((r for r in case["runs"] if r["run_id"] == case["selected_run"]), None)
-        link = f"[HTML report]({Path(selected['report']).relative_to('results').as_posix()})" if selected else "No completed live run"
-        rows.append(f"| {case['title']} | {link} | {len(case['runs'])} | [notebook](../{case['notebook']}) |")
-    rows += ["", "Each run directory contains its actual state, node updates, resolved settings, recorded displays, optimizer trace, numerical tables and original figures. See `index.json` for machine-readable paths and all attempts.", ""]
+        page = f"https://chengao21.github.io/ai-buckingham/cards/{case['case_id']}.html"
+        rows.append(f"| {case['title']} | [View results]({page}) | [Reproduce]({page}#reproduce) |")
+    rows += ["", "Each selected run directory contains its plots, tables, configuration and complete state. The case notebooks generate HTML cards from the selected results or run a new analysis under `generated/cases/`.", ""]
     (ROOT / "results" / "README.md").write_text("\n".join(rows), encoding="utf-8")
     print(json.dumps({"cases": len(cases), "completed_cases": sum(bool(c["selected_run"]) for c in cases), "attempts": sum(len(c["runs"]) for c in cases)}))
 

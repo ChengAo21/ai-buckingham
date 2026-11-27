@@ -1,6 +1,6 @@
 # Static results explorer
 
-The [results explorer](https://chengao21.github.io/ai-buckingham/) presents the ten cases and links to their notebooks and result records. The [Streamlit application](https://ai-buckingham.streamlit.app/) provides the interactive workflow and analysis interface.
+The [results explorer](https://chengao21.github.io/ai-buckingham/) presents the ten cases in two columns, with full result cards and reproduction instructions. The [Streamlit application](https://ai-buckingham.streamlit.app/) provides interactive results and analysis controls.
 
 ## Build and preview
 

@@ -7,8 +7,8 @@
 | `data/datasets/` | Case input CSVs |
 | `data/generation/` | Dataset generators and source information |
 | `knowledge/` | Physical-quantity and dimensionless-relation knowledge bases and embedding indexes |
-| `notebooks/cases/` | Executed case notebooks |
-| `results/cases/<case_id>/<run_id>/` | Included case results, settings, tables, figures and execution records |
+| `notebooks/cases/` | Case reports rebuilt from saved results, workflow diagrams and an optional new analysis from the inputs |
+| `results/cases/<case_id>/<run_id>/` | HTML reports, system cards, settings, numerical tables, plots and execution records |
 | `reproduction/` | Dimensional-checking statistics, comparison calculations and MI-landscape examples |
 | `docs/` | Usage, configuration and file-format guides |
 | `site/` | Static results explorer |
@@ -19,7 +19,7 @@ Case IDs identify the corresponding configuration, dataset, notebook and run dir
 
 New analyses, caches and reproduction outputs use `generated/`, which is excluded from Git. Each analysis has a separate run directory. Create a new run when changing settings.
 
-Within a run, `plots/` contains figures referenced by the state, and `figures/` contains the copies used by the viewer and reports. PDF files in result directories contain generated figures.
+Within a run, `result.html` presents the analysis cards and result figures. `plots/` is the figure directory shared by the state, reports and viewer. PNG, PDF and SVG files provide raster and vector versions of the figures.
 
 The velocity-comparison package uses its own input CSV and column order. Follow that package's [input and reproduction instructions](../reproduction/velocity_comparison/README.md).
 

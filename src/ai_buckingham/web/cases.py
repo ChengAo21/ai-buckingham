@@ -1,131 +1,133 @@
-"""The complete case workflow, without treating absent stages as complete."""
+"""Case reports and their numerical views, bound to one selected run."""
+from pathlib import Path
+
 import pandas as pd
 import plotly.express as px
 import streamlit as st
 
-from .components import chart, collapse_axis_controls, figures, json_panel, masthead, selected_run, table
+from ..artifacts import run_figures
+from ..reports import render_report, report_figures, report_sections, report_styles
+from . import diagnostics, rag
+from .components import chart, collapse_axis_controls, figures, json_download, masthead, selected_run, table
 from .data import ROOT, archive_bytes, case_catalog, dataset_path, first, read_csv, read_json
 from .publication import paper_cases
 
 
-def _values(title, value):
-    if value is None or value == {} or value == []:
-        st.info(f"{title} was not recorded in this evidence source.")
-    elif isinstance(value, str):
-        st.markdown(value)
-    else:
-        json_panel(title, value, key="workflow_" + title)
+def _stage(section):
+    if section:
+        st.html(section["html"])
 
 
 def render():
-    masthead("Case workflow")
+    masthead("Case results")
     catalog = case_catalog()
-    case_id = st.selectbox("Physical system", list(catalog), format_func=lambda key: catalog[key]["title"], key="workflow_case")
-    item = catalog[case_id]
+    case_id = st.selectbox("Physical system", list(catalog),
+                           format_func=lambda key: catalog[key]["title"], key="workflow_case")
     run = selected_run(case_id, key="workflow_run")
-    state = run["state"] if run else {}
-    config = run["config"] if run and run["config"] else item["config"]
-    tabs = st.tabs(["Input & formulation", "Dimensions & basis", "Analysis protocol", "Physical-regime identification", "Selected relations", "Figures & downloads"])
-    with tabs[0]:
-        prompt = state.get("prompt_problem") or config.get("prompt_problem") or config.get("prompt") or config.get("problem_description")
-        _values("Problem description", prompt)
-        frame = read_csv(dataset_path(case_id))
-        if not frame.empty:
-            st.markdown("#### Observations")
-            table(frame, f"{case_id}_data.csv", "case_data_download")
-            numeric = frame.select_dtypes(include="number").columns.tolist()
-            if len(numeric) >= 2:
-                xcol, ycol = st.columns(2)
-                x = xcol.selectbox("Input coordinate", numeric, key="case_scatter_x")
-                y = ycol.selectbox("Response coordinate", numeric, index=len(numeric)-1, key="case_scatter_y")
-                chart(px.scatter(frame, x=x, y=y, hover_data=list(frame.columns)[:12], opacity=.75), "case_input_scatter")
-        _values("Variable ledger", state.get("dimension_ledger"))
-    with tabs[1]:
-        _values("Dimensional matrix", state.get("dimension_mat", first(state, "dimensional_matrix")))
-        basis = state.get("basis_pi_formulas")
-        if isinstance(basis, dict) and basis:
-            table(pd.DataFrame([{"Group": k, "Expression": v} for k, v in basis.items()]), "basis_formulas.csv")
-        else:
-            _values("Buckingham–Pi basis", basis)
-        _values("Full-precision basis vectors", state.get("basis_pi_matrices"))
-        _values("Basis construction evidence", state.get("basis_tool_history"))
-    with tabs[2]:
-        _values("Resolved configuration", config)
-        _values("Planner proposal", state.get("workflow_plan"))
-        _values("Configuration provenance", state.get("hyperparameter_provenance"))
-        _values("Compiled workflow", state.get("compiled_workflow"))
-    with tabs[3]:
-        detection = first(state, "regime_detection")
-        _values("Physical-regime identification", detection)
-        if run and run["events"]:
-            table(pd.json_normalize(run["events"]), "workflow_events.csv")
-        if not detection:
-            st.markdown("The archived Cess partition and regional comparison are available under **Numerical diagnostics** and **Comparisons**.")
-    with tabs[4]:
-        paper_case = paper_cases().get(case_id)
-        if paper_case:
-            image = ROOT / paper_case["image"]
-            if image.is_file():
-                st.image(str(image), width="stretch")
-        locals_ = first(state, "local_workflows", default=[])
-        for i, local in enumerate(locals_ if isinstance(locals_, list) else []):
-            st.markdown("#### " + str(local.get("scope_id", f"Regime {i+1}")).replace("_", " ").title())
-            final = local.get("final_solution", {})
-            values = st.columns(3)
-            values[0].metric("Selected groups", local.get("locked_count", "Not recorded"))
-            values[1].metric("Mutual information", str(final.get("mutual_information", "Not recorded")))
-            r2 = (final.get("gpr_validation") or {}).get("test_r2_mean", final.get("gpr_test_r2", "Not recorded"))
-            values[2].metric("Test R²", str(r2))
-            for formula in final.get("input_formulas", []):
-                st.code(formula, language=None)
-            if final.get("output_dimensionless_formula"):
-                st.markdown("**Output rescaling**")
-                st.code(final["output_dimensionless_formula"], language=None)
-            json_panel("Local evidence " + str(i+1), local, key=f"local_evidence_{i}")
-        if not locals_:
-            _values("Selected relations", first(state, "selected_relations", "final_solution"))
-        _values("Interpretation retrieval", state.get("interpretation_knowledge_retrieval"))
-        if run:
-            st.markdown("#### Interactive data collapse")
-            collapse_tables = sorted((run["path"] / "tables").glob("*collapse.csv"))
-            if collapse_tables:
-                path = st.selectbox("Scope", collapse_tables, format_func=lambda p: p.stem.replace("_collapse", ""), key=f"collapse_scope_{case_id}_{run['path'].name}")
-                frame = read_csv(path)
-                pi_columns = [c for c in frame if c.startswith("pi_")]
-                if pi_columns and "response_transformed" in frame:
-                    panel = path.stem.removesuffix("_collapse")
-                    control_key = f"collapse_{case_id}_{run['path'].name}_{panel}"
-                    x = st.selectbox("Dimensionless coordinate", pi_columns, key=f"{control_key}_coordinate")
-                    log_x, log_y = collapse_axis_controls(case_id, panel, key=control_key)
-                    valid = frame
-                    if log_x:
-                        valid = valid[valid[x] > 0]
-                    if log_y:
-                        valid = valid[valid.response_transformed > 0]
-                    figure = px.scatter(valid, x=x, y="response_transformed", log_x=log_x, log_y=log_y,
-                                        hover_data=[c for c in ["csv_row","response_original","output_scale"] if c in valid], opacity=.75)
-                    figure.update_layout(xaxis_type="log" if log_x else "linear", yaxis_type="log" if log_y else "linear")
-                    chart(figure, f"case_{control_key}")
-                    table(frame, path.name, "case_collapse_download")
-            else:
-                st.info("Pointwise collapse coordinates are not present in this run.")
-        if case_id == "sandgrain":
+    if not run:
+        return
+    state = run["state"]
+    published = diagnostics.is_publication_run(case_id, run)
+    sections = {section["id"]: section for section in report_sections(run["path"])}
+    st.html(report_styles())
+
+    _stage(sections.get("results"))
+    paper_case = paper_cases().get(case_id)
+    if published and paper_case and (ROOT / paper_case["image"]).is_file():
+        st.image(str(ROOT / paper_case["image"]), width="stretch")
+    else:
+        for image in report_figures(run["path"]):
+            st.image(str(image), width="stretch")
+
+    with st.expander("Interactive data collapse", expanded=False):
+        collapse_view(run, case_id)
+        if published and case_id == "sandgrain":
             prediction_view()
-        if case_id == "pressure_gradient":
+        if published and case_id == "pressure_gradient":
             pressure_baseline_view()
-    with tabs[5]:
-        if run:
-            figures(run["path"] / "figures", "case_figures")
-            for path in sorted((run["path"] / "tables").glob("*.csv")):
-                with st.expander(path.name):
-                    table(read_csv(path), path.name, "case_table_" + path.stem)
-            report = run["path"] / "report.html"
-            if report.is_file():
-                st.download_button("Download raw run report · HTML", report.read_bytes(), file_name=f"{case_id}_raw_report.html", mime="text/html")
-            st.download_button("Download run bundle · ZIP", archive_bytes(run["path"]), file_name=f"{case_id}_{run['path'].name}.zip", mime="application/zip")
-            json_panel("Run manifest", run["manifest"])
-        else:
-            st.info("No saved run bundle is available for this case.")
+
+    for stage_id in ("formulation", "dimensions", "planning"):
+        section = sections.get(stage_id)
+        if section or stage_id == "dimensions":
+            title = section["title"] if section else "Physical consistency and dimensional basis"
+            with st.expander(title, expanded=False):
+                if stage_id == "dimensions":
+                    cards, retrieval = st.tabs(["Dimensions and basis", "Retrieved records"])
+                    with cards:
+                        _stage(section)
+                    with retrieval:
+                        rag.render_case(run)
+                else:
+                    _stage(section)
+                if stage_id == "formulation":
+                    dataset = Path(run["config"].get("dataset", ""))
+                    if not dataset.is_absolute():
+                        dataset = ROOT / dataset
+                    if not dataset.is_file() and published:
+                        dataset = dataset_path(case_id)
+                    if dataset.is_file():
+                        st.download_button("Download input dataset · CSV", dataset.read_bytes(),
+                                           file_name=dataset.name, mime="text/csv", key="case_dataset_download")
+
+    detection = first(state, "regime_detection", default={}) or {}
+    with st.expander("Physical-regime identification", expanded=False):
+        _stage(sections.get("regimes"))
+        views = []
+        if diagnostics.gradient_available(detection, case_id, allow_publication_fallback=published):
+            views.append("Gradient field")
+        if diagnostics.candidate_sources(run, case_id):
+            views.append("Candidate partitions")
+        if views:
+            for tab, title in zip(st.tabs(views), views):
+                with tab:
+                    if title == "Gradient field":
+                        diagnostics.gradient_view(detection, case_id, allow_publication_fallback=published)
+                    else:
+                        diagnostics.candidate_memberships(run, case_id)
+
+    with st.expander("Dimensionless learning and validation", expanded=False):
+        _stage(sections.get("learning"))
+        diagnostics.mi_view(state, run, case_id)
+
+    with st.expander("Downloads", expanded=False):
+        st.download_button("Download case report · HTML", render_report(run["path"]).encode("utf-8"),
+                           file_name=f"{case_id}_report.html", mime="text/html", key="case_report_download")
+        st.download_button("Download run files · ZIP", archive_bytes(run["path"]),
+                           file_name=f"{case_id}_{run['path'].name}.zip", mime="application/zip", key="case_bundle_download")
+        for path in run_figures(run["path"]):
+            st.download_button("Download " + path.name, path.read_bytes(), file_name=path.name,
+                               key="case_figure_" + path.name)
+        json_download("run settings", run["config"], key="case_config")
+        json_download("run manifest", run["manifest"], key="case_manifest")
+
+
+def collapse_view(run, case_id):
+    collapse_tables = sorted((run["path"] / "tables").glob("*collapse.csv"))
+    if not collapse_tables:
+        st.info("Data-collapse coordinates are unavailable for this run.")
+        return
+    path = st.selectbox("Scope", collapse_tables, format_func=lambda p: p.stem.removesuffix("_collapse"),
+                        key=f"collapse_scope_{case_id}_{run['path'].name}")
+    frame = read_csv(path)
+    pi_columns = [column for column in frame if column.startswith("pi_")]
+    if not pi_columns or "response_transformed" not in frame:
+        return
+    panel = path.stem.removesuffix("_collapse")
+    control_key = f"collapse_{case_id}_{run['path'].name}_{panel}"
+    x = st.selectbox("Dimensionless coordinate", pi_columns, key=f"{control_key}_coordinate")
+    log_x, log_y = collapse_axis_controls(case_id, panel, key=control_key)
+    valid = frame
+    if log_x:
+        valid = valid[valid[x] > 0]
+    if log_y:
+        valid = valid[valid.response_transformed > 0]
+    figure = px.scatter(valid, x=x, y="response_transformed", log_x=log_x, log_y=log_y,
+                        hover_data=[column for column in ["csv_row", "response_original", "output_scale"] if column in valid],
+                        opacity=.75)
+    figure.update_traces(marker={"size":8})
+    figure.update_layout(xaxis_type="log" if log_x else "linear", yaxis_type="log" if log_y else "linear")
+    chart(figure, f"case_{control_key}")
+    table(frame, path.name, "case_collapse_download")
 
 
 def prediction_view():
@@ -134,7 +136,6 @@ def prediction_view():
     if frame.empty:
         return
     st.markdown("#### Sand-grain prediction comparison")
-    json_panel("Prediction comparison provenance", read_json(folder / "manifest.json"), key="prediction_manifest")
     # Column names are retained from the exported validation refit.
     filtered = frame.copy()
     for field in ["source", "split"]:
@@ -158,7 +159,8 @@ def prediction_view():
                     figure.add_shape(type="line",x0=low,x1=high,y0=factor*low,y1=factor*high,line={"color":"#8b9baa","dash":"dot"})
             chart(figure, f"sandgrain_prediction_{i}")
     table(filtered, "sandgrain_predictions.csv", "prediction_download")
-    figures(folder, "sandgrain_prediction_figures")
+    figures(folder, "sandgrain_prediction_figures", display_images=False)
+    json_download("prediction comparison settings", read_json(folder / "manifest.json"), key="prediction_manifest")
 
 
 def pressure_baseline_view():
@@ -181,6 +183,5 @@ def pressure_baseline_view():
     figure.update_traces(marker={"size":8,"line":{"width":1.3}})
     chart(figure, "pressure_baseline_scatter")
     table(selected, "pressure_gradient_baseline_points.csv", "pressure_baseline_csv")
-    with st.expander("Original baseline figure and vector downloads"):
-        figures(folder, "pressure_baseline_original")
-    json_panel("Baseline coordinate provenance", manifest, key="pressure_baseline_manifest")
+    figures(folder, "pressure_baseline_original", display_images=False)
+    json_download("baseline coordinate settings", manifest, key="pressure_baseline_manifest")

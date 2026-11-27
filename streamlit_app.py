@@ -8,16 +8,16 @@ if str(ROOT/"src") not in sys.path:
 
 import streamlit as st
 from ai_buckingham.web.components import style
-from ai_buckingham.web import overview, cases, rag, diagnostics, comparisons, run_page
+from ai_buckingham.web import overview, cases, rag, comparisons, run_page
 
 st.set_page_config(page_title="AI Buckingham",page_icon="Π",layout="wide",initial_sidebar_state="expanded")
 style()
 with st.sidebar:
     st.markdown("## AI Buckingham")
-    selection=st.radio("Explore",["Overview","Case workflow","Retrieval evidence","Numerical diagnostics","Comparisons","Run analysis"],key="page_navigation")
+    selection=st.radio("Explore",["Overview","Case results","Retrieval evidence","Comparisons","Run analysis"],key="page_navigation")
     st.divider()
     st.caption("Browse saved results without API credentials.")
 
-PAGES={"Overview":overview.render,"Case workflow":cases.render,"Retrieval evidence":rag.render,
-       "Numerical diagnostics":diagnostics.render,"Comparisons":comparisons.render,"Run analysis":run_page.render}
+PAGES={"Overview":overview.render,"Case results":cases.render,"Retrieval evidence":rag.render,
+       "Comparisons":comparisons.render,"Run analysis":run_page.render}
 PAGES[selection]()

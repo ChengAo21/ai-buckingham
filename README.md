@@ -2,6 +2,9 @@
 
 # AI Buckingham: Agentic Discovery of Dimensionless Scaling Laws Across Physical Regimes
 
+**Ao Cheng · Lei Zhang · Guowei He**<br>
+[arXiv:2611.33961](https://arxiv.org/abs/2611.33961)
+
 [![Results explorer](https://img.shields.io/badge/Results-Open_explorer-087f8c?style=flat-square)](https://chengao21.github.io/ai-buckingham/)
 [![LangGraph notebooks](https://img.shields.io/badge/LangGraph-10_notebooks-245b78?style=flat-square)](notebooks/cases/)
 [![Streamlit app](https://img.shields.io/badge/Streamlit-Open_app-FF4B4B?style=flat-square&logo=streamlit&logoColor=white)](https://ai-buckingham.streamlit.app/)
@@ -15,8 +18,6 @@
 ## Research overview
 
 AI Buckingham is an agentic framework for autonomous dimensionless discovery from natural-language descriptions of physical problems and observational data. It couples LLM-based reasoning and planning with symbolic and numerical tools for dimensional checking, physical-regime identification, dimensionless learning, simplification and validation.
-
-**Ao Cheng, Lei Zhang and Guowei He**
 
 The accompanying paper studies ten physical systems: six cases of **Type I similarity: complete similarity**, two cases of **Type II similarity: incomplete similarity**, and two **Multi-regime physical systems**.
 
@@ -34,24 +35,26 @@ The two literature-based knowledge bases contain 247 physical-quantity entries a
 
 ## Ten physical systems
 
-| Similarity setting | Case | Observations | Notebook | Results | Figure |
+| Similarity setting | Case | Observations | Reproduce | Results | Figure |
 |---|---|---:|---|---|---|
-| Type I | Magnetohydrodynamic power generator | 483 | [Notebook](notebooks/cases/mhd.ipynb) | [Results](https://chengao21.github.io/ai-buckingham/cards/mhd.html) | [Figure](docs/assets/cases/mhd.png) |
-| Type I | Skin friction under pressure gradients | 144 | [Notebook](notebooks/cases/pressure_gradient.ipynb) | [Results](https://chengao21.github.io/ai-buckingham/cards/pressure_gradient.html) | [Figure](docs/assets/cases/pressure_gradient.png) |
-| Type I | Rayleigh–Bénard convection | 182 | [Notebook](notebooks/cases/rayleigh_benard.ipynb) | [Results](https://chengao21.github.io/ai-buckingham/cards/rayleigh_benard.html) | [Figure](docs/assets/cases/rayleigh_benard.png) |
-| Type I | Laser-metal interaction in additive manufacturing | 90 | [Notebook](notebooks/cases/laser_keyhole.ipynb) | [Results](https://chengao21.github.io/ai-buckingham/cards/laser_keyhole.html) | [Figure](docs/assets/cases/laser_keyhole.png) |
-| Type I | Blasius laminar boundary layer | 200 | [Notebook](notebooks/cases/blasius.ipynb) | [Results](https://chengao21.github.io/ai-buckingham/cards/blasius.html) | [Figure](docs/assets/cases/blasius.png) |
-| Type I | Sand-grain roughness parameterization | 104 | [Notebook](notebooks/cases/sandgrain.ipynb) | [Results](https://chengao21.github.io/ai-buckingham/cards/sandgrain.html) | [Figure](docs/assets/cases/sandgrain.png) |
-| Type II | Velocity scaling in compressible wall-bounded turbulence | 1,109 | [Notebook](notebooks/cases/velocity_scaling.ipynb) | [Results](https://chengao21.github.io/ai-buckingham/cards/velocity_scaling.html) | [Figure](docs/assets/cases/velocity_scaling.png) |
-| Type II | Goldenfeld’s roughness-induced criticality in pipe flow | 414 | [Notebook](notebooks/cases/goldenfeld.ipynb) | [Results](https://chengao21.github.io/ai-buckingham/cards/goldenfeld.html) | [Figure](docs/assets/cases/goldenfeld.png) |
-| Multi-regime | Cess eddy-viscosity model in turbulent channel flows | 1,000 | [Notebook](notebooks/cases/cess_channel.ipynb) | [Results](https://chengao21.github.io/ai-buckingham/cards/cess_channel.html) | [Figure](docs/assets/cases/cess_channel.png) |
-| Multi-regime | Viscous flow in a rough circular pipe | 1,200 | [Notebook](notebooks/cases/rough_pipe.ipynb) | [Results](https://chengao21.github.io/ai-buckingham/cards/rough_pipe.html) | [Figure](docs/assets/cases/rough_pipe.png) |
+| Type I | Magnetohydrodynamic power generator | 483 | [Reproduce](https://chengao21.github.io/ai-buckingham/cards/mhd.html#reproduce) | [View results](https://chengao21.github.io/ai-buckingham/cards/mhd.html) | [Figure](docs/assets/cases/mhd.png) |
+| Type I | Skin friction under pressure gradients | 144 | [Reproduce](https://chengao21.github.io/ai-buckingham/cards/pressure_gradient.html#reproduce) | [View results](https://chengao21.github.io/ai-buckingham/cards/pressure_gradient.html) | [Figure](docs/assets/cases/pressure_gradient.png) |
+| Type I | Rayleigh–Bénard convection | 182 | [Reproduce](https://chengao21.github.io/ai-buckingham/cards/rayleigh_benard.html#reproduce) | [View results](https://chengao21.github.io/ai-buckingham/cards/rayleigh_benard.html) | [Figure](docs/assets/cases/rayleigh_benard.png) |
+| Type I | Laser-metal interaction in additive manufacturing | 90 | [Reproduce](https://chengao21.github.io/ai-buckingham/cards/laser_keyhole.html#reproduce) | [View results](https://chengao21.github.io/ai-buckingham/cards/laser_keyhole.html) | [Figure](docs/assets/cases/laser_keyhole.png) |
+| Type I | Blasius laminar boundary layer | 200 | [Reproduce](https://chengao21.github.io/ai-buckingham/cards/blasius.html#reproduce) | [View results](https://chengao21.github.io/ai-buckingham/cards/blasius.html) | [Figure](docs/assets/cases/blasius.png) |
+| Type I | Sand-grain roughness parameterization | 104 | [Reproduce](https://chengao21.github.io/ai-buckingham/cards/sandgrain.html#reproduce) | [View results](https://chengao21.github.io/ai-buckingham/cards/sandgrain.html) | [Figure](docs/assets/cases/sandgrain.png) |
+| Type II | Velocity scaling in compressible wall-bounded turbulence | 1,109 | [Reproduce](https://chengao21.github.io/ai-buckingham/cards/velocity_scaling.html#reproduce) | [View results](https://chengao21.github.io/ai-buckingham/cards/velocity_scaling.html) | [Figure](docs/assets/cases/velocity_scaling.png) |
+| Type II | Goldenfeld’s roughness-induced criticality in pipe flow | 414 | [Reproduce](https://chengao21.github.io/ai-buckingham/cards/goldenfeld.html#reproduce) | [View results](https://chengao21.github.io/ai-buckingham/cards/goldenfeld.html) | [Figure](docs/assets/cases/goldenfeld.png) |
+| Multi-regime | Cess eddy-viscosity model in turbulent channel flows | 1,000 | [Reproduce](https://chengao21.github.io/ai-buckingham/cards/cess_channel.html#reproduce) | [View results](https://chengao21.github.io/ai-buckingham/cards/cess_channel.html) | [Figure](docs/assets/cases/cess_channel.png) |
+| Multi-regime | Viscous flow in a rough circular pipe | 1,200 | [Reproduce](https://chengao21.github.io/ai-buckingham/cards/rough_pipe.html#reproduce) | [View results](https://chengao21.github.io/ai-buckingham/cards/rough_pipe.html) | [Figure](docs/assets/cases/rough_pipe.png) |
 
 Dataset sources, preparation and analysis-eligible sample counts are documented in [data/README.md](data/README.md).
 
 ## Interactive explorer
 
-[Open the results explorer](https://chengao21.github.io/ai-buckingham/) to browse all ten cases, or [open the Streamlit application](https://ai-buckingham.streamlit.app/) to inspect the workflow and run an analysis. Browsing saved results requires no API credentials. New analyses require configured LLM and embedding services.
+[Open the results explorer](https://chengao21.github.io/ai-buckingham/) to read the HTML reports for all ten cases. In the [Streamlit application](https://ai-buckingham.streamlit.app/), **Case results** brings the system cards, data collapse, physical-regime identification and numerical views together for the selected run. New analyses require configured LLM and embedding services.
+
+MI and ε bars include the saved uncertainty estimates. **Comparisons** provides LLM ablation and API usage in dimensional checking, interactive Cess partitions and velocity transformations alongside the paper's comparison figures. Under **Run analysis**, choose **View saved results** to open an included result, or **Run new analysis** to select the case, numerical settings and model services.
 
 See the [application guide](docs/app.md) for available views and model configuration.
 
@@ -85,7 +88,7 @@ from ai_buckingham import run_case
 state = run_case("mhd")
 ```
 
-By default, each run saves its configuration, results, figures and execution trace under `generated/cases/<case_id>/<run_id>/`. Custom configurations can be passed to `ai_buckingham.cli.run_analysis`. Case settings and numerical thread profiles are described in the [configuration guide](docs/configuration.md).
+By default, each run saves its configuration, results, figures and execution trace under `generated/cases/<case_id>/<run_id>/`. Open that run's `result.html` to read its analysis cards and figures. Custom configurations can be passed to `ai_buckingham.cli.run_analysis`. Case settings and numerical thread profiles are described in the [configuration guide](docs/configuration.md).
 
 Full-budget analyses can take substantial time.
 
@@ -93,7 +96,11 @@ Full-budget analyses can take substantial time.
 
 ## Reproduce and verify
 
-The repository includes executed notebooks and saved results for all ten cases. From the repository root, run:
+Each case's **Reproduce** link gives the input data, configuration, notebook and analysis command. Each notebook generates the HTML cards from the paper's saved result locally. The workflow diagram uses LangGraph's native Mermaid renderer and requires Internet access when rerun. Set `SAVE_HTML = True` to save a standalone report under `generated/reports/`.
+
+The notebook's final section runs the full analysis from the case data and configuration when `RUN_NEW_ANALYSIS = True`. Configure model and embedding access as described above; the new run writes its own `result.html` under `generated/cases/`.
+
+To check the included inputs, numerical results and application, run from the repository root:
 
 ```bash
 python -m pytest -q

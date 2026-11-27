@@ -1,4 +1,4 @@
-"""Exercise the six evidence-explorer pages without model or network access.
+"""Exercise the five result-explorer pages without model or network access.
 
 Run from any working directory with the app dependencies installed. The checks
 read the included publication snapshot, change real Streamlit controls, and
@@ -8,9 +8,12 @@ modify scientific results. Use --report to save a local verification report.
 from __future__ import annotations
 
 import argparse
+import base64
 from datetime import datetime, timezone
 import hashlib
+import html
 import json
+import re
 from pathlib import Path
 import sys
 import tempfile
@@ -31,8 +34,10 @@ def main(argv=None) -> int:
     parser.add_argument("--timeout", type=int, default=60)
     args = parser.parse_args(argv)
     from streamlit.testing.v1 import AppTest
+    import numpy as np
     import pandas as pd
     from ai_buckingham.web.data import read_json, reproduction, runs
+    from ai_buckingham.web import run_page
 
     checks = []
     failure = None
@@ -60,8 +65,28 @@ def main(argv=None) -> int:
     def select_by_label(label):
         return next(widget for widget in app.selectbox if widget.label == label)
 
+    def plot_spec(key):
+        plot = next(item for item in app.get("plotly_chart") if item.proto.id.endswith("-" + key))
+        return json.loads(plot.proto.spec)
+
+    def plot_array(value):
+        if isinstance(value, dict) and "bdata" in value:
+            values = np.frombuffer(base64.b64decode(value["bdata"]), dtype=value["dtype"])
+            shape = tuple(int(part) for part in value.get("shape", str(len(values))).split(","))
+            return values.reshape(shape)
+        return np.asarray(value)
+
+    def displayed_memberships():
+        return {int(row[0]): int(trace["name"])
+                for trace in plot_spec("candidate_partition_scatter")["data"]
+                for row in plot_array(trace["customdata"])}
+
     def axis_checkbox(axis):
         return next(widget for widget in app.checkbox if widget.label == f"Logarithmic {axis}-axis")
+
+    def result_html():
+        return html.unescape("".join(item.proto.body for item in app.get("html")
+                                     if "Selected dimensionless relations" in item.proto.body))
 
     def verify_collapse_axes(name, expected):
         case_id = app.selectbox(key="workflow_case").value
@@ -84,7 +109,8 @@ def main(argv=None) -> int:
     try:
         with patch("httpx.Client.send", side_effect=AssertionError("HTTP is forbidden during offline web QA")) as sync_send, \
              patch("httpx.AsyncClient.send", side_effect=AssertionError("HTTP is forbidden during offline web QA")) as async_send, \
-             patch("ai_buckingham.web.run_page.start_job", side_effect=AssertionError("Live analysis is forbidden during offline web QA")) as start_job:
+             patch("ai_buckingham.web.run_page.start_job", side_effect=AssertionError("Live analysis is forbidden during offline web QA")) as start_job, \
+             patch("ai_buckingham.web.run_page.numerical_settings", wraps=run_page.numerical_settings) as numerical_form:
             app = AppTest.from_file(str(ROOT / "streamlit_app.py"), default_timeout=args.timeout).run()
             record("Overview renders the final publication snapshot")
             metadata = read_json(ROOT / "docs/paper_cases.json")
@@ -106,7 +132,7 @@ def main(argv=None) -> int:
                    categories == [group["title"] for group in metadata["groups"]]
                    and not app.metric and not app.dataframe and not app.get("plotly_chart"))
 
-            navigate("Case workflow")
+            navigate("Case results")
             case_ids = sorted(p.stem for p in (ROOT / "configs" / "cases").glob("*.json"))
             for case_id in case_ids:
                 app.selectbox(key="workflow_case").set_value(case_id).run()
@@ -125,11 +151,23 @@ def main(argv=None) -> int:
                     saved = read_json(case_run_path(case_id) / "state.json")
                     output = saved["workflow_result"]["local_workflows"][0]["final_solution"]["output_dimensionless_formula"]
                     record("Type II response relation retains the complete recorded output rescaling",
-                           any(element.value == output for element in app.code))
+                           output in result_html())
                 saved = read_json(case_run_path(case_id) / "state.json")
                 record(f"Paper case does not display unreviewed model interpretation: {case_id}",
                        not any(element.value == saved.get("final_report") for element in app.markdown)
                        and not app.get("iframe"))
+                cards = html.unescape(" ".join(item.proto.body for item in app.get("html")))
+                removed_copy = ("Restart stability", "Termination: fixed_partition",
+                                "A candidate representation was optimized and checked",
+                                "Physical exponents are display-normalized",
+                                "Authoritative manual similarity_type",
+                                "Screening is diagnostic only",
+                                "Count selection, parsimony checks",
+                                "scale-equivalent representations", "Program-compiled dimensional matrix",
+                                "Counts are computed from this matrix", "Checker decisions are model judgments")
+                record(f"Obsolete process text is absent from all visible case cards: {case_id}",
+                       not any(text in cards for text in removed_copy)
+                       and all(widget.label != "CMA-ES search" for widget in app.selectbox))
 
             app.selectbox(key="workflow_case").set_value("mhd").run()
             axis_checkbox("x").set_value(False).run()
@@ -162,12 +200,12 @@ def main(argv=None) -> int:
             saved = read_json(case_run_path("sandgrain") / "state.json")
             inputs = saved["workflow_result"]["local_workflows"][0]["final_solution"]["input_formulas"]
             record("Sandgrain displays both selected groups without a model-generated response law",
-                   len(inputs) == 2 and all(any(element.value == value for element in app.code) for value in inputs)
+                   len(inputs) == 2 and all(value in result_html() for value in inputs)
                    and not any(element.value == saved["final_report"] for element in app.markdown))
 
             app.selectbox(key="workflow_case").set_value("rough_pipe").run()
-            mi = [float(m.value) for m in app.metric if m.label == "Mutual information"]
-            r2 = [float(m.value) for m in app.metric if m.label == "Test R²"]
+            mi = [float(value) for value in re.findall(r"MI / information score:</strong> ([\d.]+)", result_html())]
+            r2 = [float(value) for value in re.findall(r"Held-out R²:</strong> ([\d.]+)", result_html())]
             record("Corrected rough-pipe results reach the case metrics",
                    sorted(round(v, 3) for v in mi) == [2.198, 3.085]
                    and sorted(round(v, 3) for v in r2) == [0.974, 0.984],
@@ -201,116 +239,107 @@ def main(argv=None) -> int:
                 app.selectbox(key="rag_variable").set_value("eta").run()
             record("Archived quantity switch retains ranked evidence and score components",
                    bool(frames_with("entry_id", "lexical_score", "semantic_score", "hybrid_score")))
-            app.radio(key="rag_source").set_value("Included case run").run()
+            navigate("Case results")
             for case_id in ["mhd", "sandgrain", "cess_channel", "rough_pipe", "velocity_scaling"]:
-                app.selectbox(key="rag_case_run").set_value(case_run_path(case_id)).run()
+                app.selectbox(key="workflow_case").set_value(case_id).run()
                 record(f"Included case Checker event pairs expose exact ranked evidence: {case_id}",
                        bool(frames_with("entry_id", "lexical_score", "semantic_score", "hybrid_score")))
 
-            navigate("Numerical diagnostics")
+            navigate("Case results")
             for case_id in ["mhd", "pressure_gradient", "rayleigh_benard", "laser_keyhole", "blasius"]:
-                app.selectbox(key="diagnostic_case").set_value(case_id).run()
-                record(f"Exported MI grid and genuine generation history render: {case_id}",
-                       len(app.select_slider(key="landscape_generation").options) > 1)
-                generation = int(app.select_slider(key="landscape_generation").options[0])
-                app.select_slider(key="landscape_generation").set_value(generation).run()
-                record(f"MI history slider reveals the first recorded generation: {case_id}",
-                       int(app.select_slider(key="landscape_generation").value) == generation)
-            app.radio(key="landscape_rendering").set_value("3D surface").run()
-            record("Exported MI grid supports the interactive 3D surface")
-            app.radio(key="landscape_rendering").set_value("Contour").run()
+                app.selectbox(key="workflow_case").set_value(case_id).run()
+                landscape = plot_spec("landscape_3d_surface")
+                record(f"The paper MI landscape has one 3D surface and its full trajectory: {case_id}",
+                       sum(trace["type"] == "surface" for trace in landscape["data"]) == 1
+                       and any(trace["type"] == "scatter3d" for trace in landscape["data"])
+                       and not app.select_slider)
+                for key in ("mi_path_0", "epsilon_path_0"):
+                    stages = plot_spec(key)["data"]
+                    record(f"Stage results are labeled bars: {case_id}/{key}",
+                           all(trace["type"] == "bar" and trace.get("text") for trace in stages))
+                    record(f"Stage bars display saved uncertainty: {case_id}/{key}",
+                           all(trace.get("error_y", {}).get("type", "data") == "data"
+                               and len(plot_array(trace["error_y"]["array"])) == len(plot_array(trace["y"]))
+                               for trace in stages))
 
             for case_id in ["blasius", "cess_channel", "rough_pipe"]:
-                app.selectbox(key="diagnostic_case").set_value(case_id).run()
+                app.selectbox(key="workflow_case").set_value(case_id).run()
                 candidate_path = Path(select_by_label("Candidate partition").value)
-                source_path = Path(select_by_label("Pointwise partition evidence").value)
                 expected_rows = {"blasius":196,"cess_channel":1000,"rough_pipe":1200}[case_id]
-                candidates = frames_with("z_x", "z_y", "Regime", "csv_row")
+                actual = displayed_memberships()
+                with np.load(candidate_path.parent / "coordinates.npz", allow_pickle=False) as arrays:
+                    indices = arrays["valid_indices"]
+                with np.load(candidate_path, allow_pickle=False) as arrays:
+                    expected = dict(zip(indices.tolist(), arrays["labels"].tolist()))
                 record(f"Switching cases keeps candidate K arrays in the active context: {case_id}",
-                       candidate_path.parent == source_path.parent
-                       and len(candidates) == 1 and len(candidates[0]) == expected_rows,
+                       len(actual) == expected_rows and actual == expected,
                        {"candidate_path": str(candidate_path.relative_to(ROOT)), "rows": expected_rows})
-            memberships = frames_with("z_x", "z_y", "Regime", "csv_row")
-            member_frame = memberships[0].set_index("csv_row")
-            row_labels = {row: int(member_frame.loc[row, "Regime"]) for row in [544, 1181]}
+            row_labels = {row: displayed_memberships()[row] for row in [544, 1181]}
             record("Corrected rough-pipe pointwise labels reach the K=2 view", row_labels == {544: 1, 1181: 0},
                    {"csv_row_index_base": 0, "labels": row_labels})
             selected_candidate = Path(select_by_label("Candidate partition").value)
             select_by_label("Candidate partition").set_value(selected_candidate.with_name("k_4.npz")).run()
-            memberships = frames_with("z_x", "z_y", "Regime", "csv_row")
+            memberships = displayed_memberships()
             record("Rough-pipe candidate selector exposes all 1200 K=4 point assignments",
-                   len(memberships) == 1 and len(memberships[0]) == 1200 and memberships[0]["Regime"].nunique() == 4)
+                   len(memberships) == 1200 and len(set(memberships.values())) == 4)
 
-            app.selectbox(key="diagnostic_case").set_value("goldenfeld").run()
-            memberships = frames_with("z_x", "z_y", "Regime", "csv_row")
+            app.selectbox(key="workflow_case").set_value("goldenfeld").run()
+            memberships = displayed_memberships()
             record("Goldenfeld candidate partition evidence renders independently",
-                   len(memberships) == 1 and len(memberships[0]) == 414)
-
-            app.selectbox(key="diagnostic_case").set_value("mhd").run()
-            generation = int(app.select_slider(key="trace_generation").options[0])
-            app.select_slider(key="trace_generation").set_value(generation).run()
-            record("Actual CMA trace slider exposes a recorded first generation",
-                   int(app.select_slider(key="trace_generation").value) == generation)
-            searches = app.selectbox(key="trace_search").options
-            app.selectbox(key="trace_search").set_value(1).run()
-            record("CMA search selector switches between separately recorded searches", len(searches) > 1)
+                   len(memberships) == 414)
 
             navigate("Comparisons")
-            trials = frames_with("pair_id", "validated_result")
-            rounds = frames_with("pair_id", "checker_round", "replayed_gate")
-            record("Benchmark view exposes all 600 scored trials and 730 checking rounds",
-                   len(trials) == 1 and len(trials[0]) == 600 and len(rounds) == 1 and len(rounds[0]) == 730)
+            record("Dimensional checking shows the paper's 600 trial summary",
+                   next(item for item in app.metric if item.label == "Selected scheduled trials").value == "600"
+                   and not app.dataframe and not app.json)
             app.multiselect(key="benchmark_cases").set_value(["MHD"]).run()
-            trials = frames_with("pair_id", "validated_result")
             record("Benchmark physical-system filter selects 60 scheduled MHD trials",
-                   len(trials) == 1 and len(trials[0]) == 60)
+                   next(item for item in app.metric if item.label == "Selected scheduled trials").value == "60")
             app.multiselect(key="benchmark_variants").set_value(["original"]).run()
-            trials = frames_with("pair_id", "validated_result")
             record("Benchmark wording filter selects 30 original-prompt MHD trials",
-                   len(trials) == 1 and len(trials[0]) == 30)
+                   next(item for item in app.metric if item.label == "Selected scheduled trials").value == "30")
 
             app.radio(key="comparison_page").set_value("Cess regime comparison").run()
-            record("Historical Cess relevance/gradient comparison renders")
+            record("Cess comparison retains the paper figure and interactive partitions",
+                   len(app.get("image")) == 1 and app.selectbox(key="cess_m").value == 3
+                   and len(app.get("plotly_chart")) == 2 and not app.dataframe and not app.json)
+            before = [trace["name"] for trace in plot_spec("cess_regional")["data"]]
             app.selectbox(key="cess_m").set_value(5).run()
-            regional = frames_with("conditioning", "M", "seed", "category", "n")
-            record("Cess M=5 selects its five recorded regional scores",
-                   len(regional) == 1 and len(regional[0]) == 5 and regional[0]["M"].eq(5).all())
-            app.selectbox(key="cess_seed").set_value(46).run()
-            app.selectbox(key="cess_condition").set_value("raw").run()
-            regional = frames_with("conditioning", "M", "seed", "category", "n")
-            record("Cess seed and conditioning controls select the matching recorded calculation",
-                   len(regional) == 1 and regional[0]["seed"].eq(46).all() and regional[0]["conditioning"].eq("raw").all())
+            after = [trace["name"] for trace in plot_spec("cess_regional")["data"]]
+            record("Cess region selection updates its saved M=5 classification",
+                   plot_spec("cess_regional")["layout"]["title"]["text"] == "IT–π, M = 5"
+                   and before != after and "K = 3" in plot_spec("cess_gradient")["layout"]["title"]["text"])
 
             app.radio(key="comparison_page").set_value("Velocity transformations").run()
-            record("Historical velocity profiles and RMS comparison render")
+            record("Velocity profiles, RMS comparison and paper figure render", len(app.get("image")) == 1)
             app.multiselect(key="velocity_profiles").set_value([1, 6]).run()
-            profiles = frames_with("case", "y_plus", "U_plus", "x_TL", "U_TL", "x_AI", "U_AI")
-            record("Velocity profile selection exposes only the selected native observations",
-                   len(profiles) == 1 and set(profiles[0]["case"]) == {1, 6})
+            profiles = plot_spec("velocity_profiles_plot")["data"]
+            record("Velocity profile selection shows the selected curves",
+                   len(profiles) == 9 and all(trace["line"]["width"] >= 2.8 for trace in profiles)
+                   and not app.dataframe)
             app.radio(key="velocity_interval").set_value("30–200").run()
             record("Velocity RMS interval control selects the outer interval",
                    app.radio(key="velocity_interval").value == "30–200")
 
             navigate("Run analysis")
+            record("Run analysis defaults to the ten saved physical systems",
+                   app.radio(key="analysis_action").value == "View saved results"
+                   and len(app.selectbox(key="saved_result_case").options) == 10)
+            app.selectbox(key="saved_result_case").set_value("mhd").run()
+            app.button(key="open_saved_results").click().run()
+            record("Saved-result access opens the existing MHD cards without execution",
+                   app.radio(key="page_navigation").value == "Case results"
+                   and app.selectbox(key="workflow_case").value == "mhd" and start_job.call_count == 0)
+            navigate("Run analysis")
+            app.radio(key="analysis_action").set_value("Run new analysis").run()
             record("Supplied-case analysis form renders without starting execution")
-            metrics = {m.label: str(m.value) for m in app.metric}
-            status_panel = next(element for element in app.expander if element.label == "Saved runs and status")
-            record("Run analysis retains saved-run status and access in a closed panel",
-                   metrics.get("Completed runs") == "10"
-                   and metrics.get("Running runs") == "0" and metrics.get("Failed / stopped") == "0"
-                   and len(app.selectbox(key="saved_run_selection").options) == 10
-                   and not status_panel.proto.expanded,
-                   metrics)
             for case_id in ["blasius", "rough_pipe"]:
                 app.selectbox(key="live_case").set_value(case_id).run()
                 expected = read_json(ROOT / "configs" / "cases" / f"{case_id}.json")
                 prompt = next(widget.value for widget in app.text_area if widget.label == "Problem description")
-                previews = [json.loads(widget.value) for widget in app.json]
-                preview = next(value for value in previews if isinstance(value, dict)
-                               and value.get("case_id") == case_id and "prompt" in value)
+                preview = numerical_form.call_args.args[0]
                 record(f"Live case switch keeps the problem and submitted configuration consistent: {case_id}",
-                       prompt == expected["prompt"] and preview.get("prompt") == expected["prompt"]
-                       and preview.get("numerical_threads") == expected["numerical_threads"]
+                       prompt == expected["prompt"] and preview == expected
                        and (case_id != "rough_pipe" or preview.get("numerical_threads") == 20),
                        {"case_id": case_id, "prompt_matches_selected_case": prompt == expected["prompt"],
                         "submitted_numerical_threads": preview.get("numerical_threads")})

@@ -1,35 +1,44 @@
-"""Numerical decisions and CMA-ES optimization histories."""
+"""Physical-regime views and the paper's dimensionless-learning results."""
 from __future__ import annotations
 
-import json
+from pathlib import Path
 import numpy as np
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
 
-from .components import chart, json_panel, masthead, selected_run, table
-from .data import ROOT, case_catalog, dataset_path, first, json_lines, read_csv, read_json, reproduction
+from .components import chart, json_download
+from .data import ROOT, dataset_path, first, read_csv, read_json, reproduction
 
 
-def mi_contour(pivot: pd.DataFrame) -> go.Contour:
-    """Render the saved MI grid with 80 color bands; retain every input value."""
-    finite = pivot.to_numpy(dtype=float)
-    finite = finite[np.isfinite(finite)]
-    contours = {"coloring":"fill", "showlines":False}
-    settings = {}
-    if finite.size and finite.max() > finite.min():
-        low, high = float(finite.min()), float(finite.max())
-        contours.update(start=low, end=high, size=(high-low)/80)
-        settings["autocontour"] = False
-    return go.Contour(x=pivot.columns, y=pivot.index, z=pivot.values,
-                      colorscale="Blues", ncontours=80, contours=contours,
-                      colorbar={"title":{"text":"MI", "side":"top"}, "nticks":8,
-                                "tickformat":".3g", "thickness":16, "len":.85},
-                      name="MI", **settings)
+def is_publication_run(case_id, run):
+    if not run:
+        return False
+    index = read_json(ROOT / "results" / "index.json")
+    selected = next((case for case in index.get("cases", []) if case["case_id"] == case_id), {})
+    directory = ROOT / "results" / "cases" / case_id / str(selected.get("selected_run", ""))
+    return run["path"].resolve() == directory.resolve()
 
 
-def gradient_view(detection: dict, case_id: str):
+def gradient_available(detection, case_id, *, allow_publication_fallback=True):
+    coordinates = np.asarray(detection.get("feature_coordinates", []))
+    gradients = np.asarray(detection.get("surrogate_gradients", []))
+    if coordinates.ndim == 2 and coordinates.shape[1] >= 2 and coordinates.shape == gradients.shape:
+        return bool(len(coordinates))
+    return (allow_publication_fallback and case_id in {"cess_channel", "cess"}
+            and not read_csv(reproduction("regime_comparison") / "data" / "recorded_gradient_membership.csv").empty)
+
+
+def candidate_sources(run, case_id):
+    if not run:
+        return []
+    direct = sorted((run["path"] / "evidence" / "regime_candidates").glob("*/manifest.json"))
+    supplementary = ROOT / "results" / "regime_candidates" / case_id / run["path"].name / "manifest.json"
+    return direct + ([supplementary] if is_publication_run(case_id, run) and supplementary.is_file() else [])
+
+
+def gradient_view(detection: dict, case_id: str, *, allow_publication_fallback=True):
     coordinates = detection.get("feature_coordinates", [])
     gradients = detection.get("surrogate_gradients", [])
     if coordinates and gradients:
@@ -55,15 +64,19 @@ def gradient_view(detection: dict, case_id: str):
             fig.update_layout(xaxis_title=f"z{ix+1} · orthonormal log-Pi", yaxis_title=f"z{iy+1} · orthonormal log-Pi", height=570)
             chart(fig, "gradient_field")
             st.caption("Normalized gradient directions in the displayed coordinates.")
-            table(pd.concat([frame, pd.DataFrame(g, columns=[f"gradient_z{i+1}" for i in range(g.shape[1])])], axis=1), "gradient_field.csv")
+            output = pd.concat([frame, pd.DataFrame(g, columns=[f"gradient_z{i+1}" for i in range(g.shape[1])])], axis=1)
+            st.download_button("Download gradient field · CSV", output.to_csv(index=False).encode("utf-8"),
+                               file_name="gradient_field.csv", mime="text/csv", key="gradient_field_csv")
             return
-    if case_id in {"cess_channel", "cess"}:
+    if allow_publication_fallback and case_id in {"cess_channel", "cess"}:
         frame = read_csv(reproduction("regime_comparison") / "data" / "recorded_gradient_membership.csv")
         if not frame.empty:
             chart(px.scatter(frame, x="Re_tau", y="eta", color="original_regime", log_x=True, log_y=True,
                              hover_data=["row_id", "y_plus"], height=570), "recorded_cess_partition")
             st.caption("Gradient vectors are unavailable for this archived partition.")
-            table(frame, "recorded_gradient_membership.csv")
+            st.download_button("Download regime membership · CSV", frame.to_csv(index=False).encode("utf-8"),
+                               file_name="recorded_gradient_membership.csv", mime="text/csv",
+                               key="recorded_cess_membership_csv")
             return
     st.info("Gradient coordinates and vectors were not recorded for this source. Run an analysis to export the full numerical state.")
 
@@ -71,18 +84,15 @@ def gradient_view(detection: dict, case_id: str):
 def candidate_memberships(run, case_id):
     if not run:
         return
-    direct = sorted((run["path"] / "evidence" / "regime_candidates").glob("*/manifest.json"))
-    supplementary = ROOT / "results" / "regime_candidates" / case_id / run["path"].name / "manifest.json"
-    sources = direct + ([supplementary] if supplementary.is_file() else [])
+    sources = candidate_sources(run, case_id)
     if not sources:
         st.info("Pointwise labels for unselected K candidates were not recorded in this run. Summary statistics alone cannot reconstruct those assignments.")
         return
-    source = st.selectbox("Pointwise partition evidence", sources,
-                          format_func=lambda p: read_json(p).get("mode", "recorded candidate partitions") + " · " + p.parent.name,
-                          key=f"candidate_membership_source_{case_id}_{run['path'].name}")
+    source = sources[0] if len(sources) == 1 else st.selectbox(
+        "Pointwise partition evidence", sources,
+        format_func=lambda p: read_json(p).get("mode", "recorded candidate partitions") + " · " + p.parent.name,
+        key=f"candidate_membership_source_{case_id}_{run['path'].name}")
     manifest = read_json(source)
-    mode = manifest.get("mode", "case execution")
-    st.caption("Source: " + mode)
     available = sorted(source.parent.glob("k_*.npz"))
     if not available:
         st.info("No pointwise membership arrays are available in this evidence source.")
@@ -105,10 +115,16 @@ def candidate_memberships(run, case_id):
         frame["Assignment confidence"] = confidence
     chart(px.scatter(frame,x="z_x",y="z_y",color="Regime",hover_data=[c for c in ["csv_row","Assignment confidence"] if c in frame],
                      labels={"z_x":f"z{ix+1} · orthonormal log-Pi","z_y":f"z{iy+1} · orthonormal log-Pi"},height=550),"candidate_partition_scatter")
-    physical = read_csv(dataset_path(case_id))
+    dataset = Path(run["config"].get("dataset", ""))
+    if not dataset.is_absolute():
+        dataset = ROOT / dataset
+    if not dataset.is_file() and is_publication_run(case_id, run):
+        dataset = dataset_path(case_id)
+    physical = read_csv(dataset)
     numeric = physical.select_dtypes(include="number").columns.tolist()
     if len(numeric)>=2 and len(valid_indices) and int(max(valid_indices))<len(physical):
-        with st.expander("Inspect the same assignments in physical coordinates"):
+        with st.container():
+            st.markdown("##### Physical coordinates")
             pa,pb = st.columns(2)
             px_col = pa.selectbox("Physical coordinate x",numeric,key="candidate_physical_x")
             py_col = pb.selectbox("Physical coordinate y",numeric,index=1,key="candidate_physical_y")
@@ -116,32 +132,113 @@ def candidate_memberships(run, case_id):
             physical_view["Regime"] = frame.Regime.to_numpy()
             physical_view["csv_row"] = valid_indices
             chart(px.scatter(physical_view,x=px_col,y=py_col,color="Regime",hover_data=["csv_row"],height=480),"candidate_physical_plot")
-    table(frame,"selected_candidate_memberships.csv","candidate_memberships_csv")
-    json_panel("Pointwise membership provenance",manifest,key="candidate_manifest")
-    json_panel("Selected candidate details",read_json(chosen.with_suffix(".json")),key="candidate_detail_json")
+    st.download_button("Download candidate membership · CSV", frame.to_csv(index=False).encode("utf-8"),
+                       file_name="selected_candidate_memberships.csv", mime="text/csv",
+                       key="candidate_memberships_csv")
+    json_download("partition settings",manifest,key="candidate_manifest")
+    json_download("selected candidate details",read_json(chosen.with_suffix(".json")),key="candidate_detail_json")
 
 
-def partition_view(detection: dict, run=None, case_id=None):
-    candidate_memberships(run, case_id)
-    candidates = detection.get("candidate_summary", [])
-    if not candidates:
-        st.info("No candidate-partition table is recorded for this source.")
-        return
-    rows = [{k:v for k,v in candidate.items() if not isinstance(v,(dict,list))} for candidate in candidates]
-    table(pd.DataFrame(rows), "candidate_partitions.csv")
-    for candidate in candidates:
-        k = candidate.get("k", "?")
-        with st.expander(f"K = {k} · cluster-level evidence"):
-            clusters = candidate.get("clusters", [])
-            if clusters:
-                rows = [{key: value for key,value in cluster.items() if not isinstance(value,(dict,list))} for cluster in clusters]
-                table(pd.DataFrame(rows), f"partition_k{k}_clusters.csv", f"clusters_{k}")
-                if all("fraction" in row for row in rows):
-                    fig = px.bar(pd.DataFrame(rows).assign(Regime=[str(i+1) for i in range(len(rows))]), x="Regime", y="fraction")
-                    chart(fig, f"partition_fraction_{k}")
-            json_panel(f"Full K={k} candidate", candidate, key=f"full_candidate_{k}")
-    json_panel("Regime selection criteria", detection.get("acceptance_criteria", {}))
-    json_panel("Final regime decision", {k: detection.get(k) for k in ["status","best_k","selection_basis","decision_evidence","k2_direction_action","single_regime_baseline"]})
+_LANDSCAPE_VIEWS = {
+    "mhd": (50, 50),
+    "rayleigh_benard": (50, 50),
+    "pressure_gradient": (60, -70),
+    "laser_keyhole": (50, 50),
+    "blasius": (65, -20),
+}
+
+
+def landscape_figure(case_id, frame, history, result, trajectory=None):
+    """Place the matching optimizer path on its saved conditional MI grid."""
+    from scipy.interpolate import RegularGridInterpolator
+
+    pivot = frame.pivot(index="coefficient_y", columns="coefficient_x", values="mutual_information")
+    x = pivot.columns.to_numpy(dtype=float)
+    y = pivot.index.to_numpy(dtype=float)
+    z = pivot.to_numpy(dtype=float)
+    finite = z[np.isfinite(z)]
+    figure = go.Figure(go.Surface(
+        x=x, y=y, z=z, colorscale="Viridis", opacity=.9,
+        colorbar={"title": {"text": "MI", "side": "top"}, "thickness": 16,
+                  "len": .72, "x": .99, "tickformat": ".3g", "nticks": 6},
+        lighting={"ambient": .8, "diffuse": .5, "roughness": .8, "specular": .1},
+        lightposition={"x": 100, "y": 200, "z": 300},
+        hovertemplate="cₓ=%{x:.3f}<br>cᵧ=%{y:.3f}<br>MI=%{z:.4g}<extra></extra>",
+        name="MI",
+    ))
+    coefficients = (result.get("plot_info") or {}).get("selected_coefficients", ["c_1", "c_2"])
+    ix, iy = [int(name.split("_")[-1]) - 1 for name in coefficients]
+    bounded = [f"bounded_mean_c_{axis}" for axis in (ix, iy)]
+    columns = bounded if all(column in history for column in bounded) else [f"mean_c_{ix}", f"mean_c_{iy}"]
+    positions = None
+    if trajectory is not None and not trajectory.empty:
+        positions = trajectory[["coefficient_x", "coefficient_y"]].to_numpy(dtype=float)
+        heights = trajectory["mutual_information"].to_numpy(dtype=float)
+        generations = trajectory["generation"].to_numpy()
+        if len(positions) != len(history) or not np.array_equal(generations, history["generation"]):
+            raise ValueError("The landscape trajectory does not match its optimization history")
+        if not np.allclose(positions, history[columns].to_numpy(dtype=float), atol=1e-12, rtol=0):
+            raise ValueError("The landscape trajectory uses different coefficient coordinates")
+    elif not history.empty and all(column in history for column in columns):
+        positions = history[columns].to_numpy(dtype=float)
+        interpolator = RegularGridInterpolator((y, x), z, bounds_error=False, fill_value=np.nan)
+        heights = interpolator(positions[:, [1, 0]])
+        generations = history["generation"].to_numpy() if "generation" in history else np.arange(1, len(history) + 1)
+    if positions is not None:
+        offset = np.ptp(finite) * .015 if finite.size else 0.0
+        figure.add_trace(go.Scatter3d(
+            x=positions[:, 0], y=positions[:, 1], z=heights + offset,
+            mode="lines", name="CMA-ES trajectory", connectgaps=False,
+            line={"color": "#E63946", "width": 5},
+            customdata=np.column_stack((generations, heights)),
+            hovertemplate="Generation %{customdata[0]}<br>MI=%{customdata[1]:.4g}<extra></extra>",
+        ))
+        if np.isfinite(heights[0]):
+            figure.add_trace(go.Scatter3d(
+                x=[positions[0, 0]], y=[positions[0, 1]], z=[heights[0] + offset],
+                mode="markers", name="Start",
+                marker={"color": "white", "size": 6, "line": {"color": "#172431", "width": 2}},
+                hovertemplate="Start<extra></extra>",
+            ))
+        if np.isfinite(heights[-1]):
+            figure.add_trace(go.Scatter3d(
+                x=[positions[-1, 0]], y=[positions[-1, 1]], z=[heights[-1] + offset],
+                mode="text", text=["★"], textposition="middle center", name="End", showlegend=False,
+                textfont={"family": "Times New Roman", "size": 28, "color": "#E6B800"},
+                hovertemplate="End<extra></extra>",
+            ))
+            figure.add_trace(go.Scatter3d(
+                x=[None], y=[None], z=[None], mode="markers", name="★ End",
+                marker={"size": 0}, showlegend=True, hoverinfo="skip",
+            ))
+    bounds = np.column_stack((x[[0, -1]], y[[0, -1]]))
+    if positions is not None:
+        bounds = np.vstack((bounds, positions))
+    minimum, maximum = np.nanmin(bounds, axis=0), np.nanmax(bounds, axis=0)
+    padding = (maximum - minimum) * .025
+    elevation, azimuth = np.radians(_LANDSCAPE_VIEWS.get(case_id, (50, 50)))
+    figure.data[0].hovertemplate = (
+        f"c{ix + 1}=%{{x:.3f}}<br>c{iy + 1}=%{{y:.3f}}<br>MI=%{{z:.4g}}<extra></extra>")
+    figure.update_layout(
+        template="plotly_white",
+        font={"family": "Times New Roman, Times, serif", "size": 15, "color": "#20384b"},
+        height=530, margin={"l": 0, "r": 35, "t": 10, "b": 30},
+        paper_bgcolor="rgba(0,0,0,0)",
+        scene={
+            "xaxis": {"title": {"text": f"c<sub>{ix + 1}</sub>"},
+                      "range": [minimum[0] - padding[0], maximum[0] + padding[0]], "nticks": 5},
+            "yaxis": {"title": {"text": f"c<sub>{iy + 1}</sub>"},
+                      "range": [minimum[1] - padding[1], maximum[1] + padding[1]], "nticks": 5},
+            "zaxis": {"title": {"text": "MI"}, "nticks": 5},
+            "aspectmode": "manual", "aspectratio": {"x": 1.15, "y": 1.15, "z": .75},
+            "camera": {"eye": {"x": float(2 * np.cos(elevation) * np.cos(azimuth)),
+                               "y": float(2 * np.cos(elevation) * np.sin(azimuth)),
+                               "z": float(2 * np.sin(elevation))}},
+        },
+        legend={"orientation": "h", "x": .05, "xanchor": "left", "y": 0, "yanchor": "top",
+                "font": {"size": 13}},
+    )
+    return figure
 
 
 def landscape_view(case_id):
@@ -149,175 +246,110 @@ def landscape_view(case_id):
     surface_path = folder / "response_surface.csv"
     if not surface_path.is_file():
         return
-    st.markdown("#### MI optimization landscape")
-    metadata = read_json(folder / "run_metadata.json")
-    result = read_json(folder / "optimization_result.json")
-    st.caption("Source: " + str(metadata.get("mode", "case calculation")))
     frame = read_csv(surface_path)
+    if not {"coefficient_x", "coefficient_y", "mutual_information"}.issubset(frame.columns):
+        return
+    result = read_json(folder / "optimization_result.json")
     histories = sorted(folder.glob("*generation_history.csv"))
     history = read_csv(histories[0]) if histories else pd.DataFrame()
-    if not {"coefficient_x","coefficient_y","mutual_information"}.issubset(frame.columns):
-        json_panel("Landscape metadata",metadata,key="landscape_metadata")
-        return
-    pivot = frame.pivot(index="coefficient_y",columns="coefficient_x",values="mutual_information")
-    figure = go.Figure(mi_contour(pivot))
-    selected_record = None
-    ix, iy = 0, 1
-    coefficients = (result.get("plot_info") or {}).get("selected_coefficients", [])
-    if len(coefficients)==2:
-        ix,iy = [int(name.split("_")[-1])-1 for name in coefficients]
-    selected_generation = None
-    if not history.empty and "generation" in history:
-        generations = history.generation.tolist()
-        selected_generation = st.select_slider("Landscape history generation",generations,value=generations[-1],key="landscape_generation") if len(generations)>1 else generations[0]
-        subset = history[history.generation<=selected_generation]
-        selected_record = subset.iloc[-1]
-        bounded = [f"bounded_mean_c_{axis}" for axis in (ix, iy)]
-        if all(column in subset for column in bounded):
-            xcol, ycol = bounded
-        else:
-            xcol, ycol = f"mean_c_{ix}", f"mean_c_{iy}"
-        if xcol in subset and ycol in subset:
-            figure.add_trace(go.Scatter(x=subset[xcol],y=subset[ycol],mode="lines+markers",name="CMA-ES trajectory",
-                                       line={"color":"#C17837","width":2},marker={"size":6},customdata=subset.generation,
-                                       hovertemplate="Generation %{customdata}<br>x=%{x}<br>y=%{y}<extra></extra>"))
-            figure.add_trace(go.Scatter(x=[selected_record[xcol]],y=[selected_record[ycol]],mode="markers",name="Selected generation",marker={"size":15,"symbol":"diamond","color":"#D25264"}))
-        stats = st.columns(3)
-        stats[0].metric("Generation",int(selected_generation))
-        if "global_best_mi" in selected_record:
-            stats[1].metric("Best MI",f"{selected_record['global_best_mi']:.6g}")
-        if "sigma" in selected_record:
-            stats[2].metric("Step size σ",f"{selected_record['sigma']:.6g}")
-    figure.update_layout(xaxis_title=f"c{ix+1}",yaxis_title=f"c{iy+1}",height=590)
-    chart(figure,"landscape_conditional_plot")
-    st.caption("The surface varies the displayed coefficients with other coefficients fixed; the trajectory is projected onto the same axes.")
-    view = st.radio("Landscape rendering",["Contour","3D surface"],horizontal=True,key="landscape_rendering")
-    if view=="3D surface":
-        surface=go.Figure(go.Surface(x=pivot.columns,y=pivot.index,z=pivot.values,colorscale="Blues",
-                                    colorbar={"title":{"text":"MI","side":"top"},"nticks":8,
-                                              "tickformat":".3g","thickness":16,"len":.85}))
-        surface.update_layout(scene={"xaxis_title":f"c{ix+1}","yaxis_title":f"c{iy+1}","zaxis_title":"MI"},height=580)
-        chart(surface,"landscape_3d_surface")
-    if not history.empty:
-        if "global_best_mi" in history:
-            chart(px.line(history[history.generation<=selected_generation],x="generation",y="global_best_mi",markers=True,labels={"global_best_mi":"Best MI"}),"landscape_history_mi")
-        table(history,"landscape_generation_history.csv","landscape_history_download")
-    st.download_button("Download numeric landscape grid · CSV",surface_path.read_bytes(),file_name=f"{case_id}_mi_grid.csv",mime="text/csv",key="landscape_grid_download")
-    json_panel("Landscape metadata",metadata,key="landscape_metadata")
-    if result:
-        json_panel("Landscape search result",result,key="landscape_result")
-    from .components import figures
-    with st.expander("Original landscape figure and vector downloads"):
-        figures(folder,"landscape_original")
+    trajectory = read_csv(folder / "trajectory_surface.csv")
+    st.markdown("#### MI optimization landscape")
+    st.plotly_chart(landscape_figure(case_id, frame, history, result, trajectory),
+                    width="stretch", key="landscape_3d_surface",
+                    config={"displaylogo": False, "toImageButtonOptions": {"format": "png", "scale": 3}})
+    st.download_button("Download MI grid · CSV", surface_path.read_bytes(),
+                       file_name=f"{case_id}_mi_grid.csv", mime="text/csv", key="landscape_grid_download")
+
+
+def stage_comparison(local):
+    """Read candidate and refinement values in their stage order."""
+    from ..plotting import _candidate_uncertainty
+
+    def stage_record(label, candidate):
+        record = {"Stage": label, "MI": candidate.get("mutual_information"),
+                  "ε": candidate.get("normalized_information_score")}
+        subsampling = candidate.get("mi_score_subsampling_uq") or {}
+        available = {}
+        for metric, restart_field, subsample_field in (
+                ("MI", "restart_mutual_information_std", "subsample_mi_std"),
+                ("ε", "restart_information_score_std", "subsample_score_std")):
+            for component, source, field in (("restart", candidate, restart_field),
+                                             ("subsampling", subsampling, subsample_field)):
+                value = source.get(field)
+                provided = isinstance(value, (int, float)) and np.isfinite(value) and value >= 0
+                record[f"{metric} {component} SD"] = value if provided else np.nan
+                if provided:
+                    if component == "restart":
+                        available[field] = value
+                    else:
+                        available.setdefault("mi_score_subsampling_uq", {})[field] = value
+        uncertainty = _candidate_uncertainty(available)
+        for metric, combined_field in (("MI", "combined_mi_std"), ("ε", "combined_score_std")):
+            provided = any(pd.notna(record[f"{metric} {component} SD"])
+                           for component in ("restart", "subsampling"))
+            record[f"{metric} SD"] = uncertainty[combined_field] if provided else np.nan
+        return record
+
+    candidates = {candidate["pi_count"]: candidate for candidate in local.get("dimension_path", [])
+                  if candidate.get("pi_count") is not None}
+    records = [stage_record(f"k={count}", candidate) for count, candidate in sorted(candidates.items())]
+    for name, field in (("Sparse", "sparsification"), ("Rationalized", "rationalization")):
+        result = local.get(field) or {}
+        solution = result.get("final") or result.get("candidate") or {}
+        if solution:
+            records.append(stage_record(name, solution))
+    return pd.DataFrame(records, columns=["Stage", "MI", "ε", "MI SD", "ε SD", "MI restart SD",
+                                         "MI subsampling SD", "ε restart SD", "ε subsampling SD"])
 
 
 def mi_view(state: dict, run, case_id):
-    landscape_view(case_id)
+    if is_publication_run(case_id, run):
+        landscape_view(case_id)
     locals_ = first(state, "local_workflows", default=[])
-    if not locals_:
-        st.info("This source has no recorded MI candidate path.")
+    uncertainty_note_displayed = False
     for i, local in enumerate(locals_ if isinstance(locals_, list) else []):
         st.markdown("#### " + str(local.get("scope_id", "Global")).replace("_", " ").title())
-        records = []
-        for candidate in local.get("dimension_path", []):
-            records.append({"Stage": f"k={candidate.get('pi_count', '?')}",
-                            "MI": candidate.get("mutual_information"),
-                            "Normalized information score ε": candidate.get("normalized_information_score")})
-        for name, field in [("Sparse", "sparsification"), ("Rationalized", "rationalization")]:
-            result = local.get(field) or {}
-            solution = result.get("final", result.get("candidate", {})) or {}
-            if solution:
-                records.append({"Stage": name, "MI": solution.get("mutual_information"),
-                                "Normalized information score ε": solution.get("normalized_information_score")})
-        frame = pd.DataFrame(records)
-        if not frame.empty:
-            a, b = st.columns(2)
-            with a:
-                chart(px.line(frame, x="Stage", y="MI", markers=True), f"mi_path_{i}")
-            with b:
-                chart(px.line(frame, x="Stage", y="Normalized information score ε", markers=True), f"epsilon_path_{i}")
-            table(frame, f"mi_path_{i}.csv")
-        json_panel(f"Similarity screening · {i+1}", local.get("similarity_screening", {}), key=f"screen_{i}")
-        json_panel(f"Count and simplification decisions · {i+1}", {key:local.get(key) for key in ["count_decisions","lock_reason","sparsification","rationalization"]}, key=f"simplify_{i}")
-    if run:
-        surfaces = list(run["path"].rglob("response_surface.csv"))
-        for i, path in enumerate(surfaces):
-            frame = read_csv(path)
-            if {"coefficient_x","coefficient_y","mutual_information"}.issubset(frame.columns):
-                pivot = frame.pivot(index="coefficient_y", columns="coefficient_x", values="mutual_information")
-                chart(go.Figure(mi_contour(pivot)), f"mi_surface_{i}")
-                st.caption("MI optimization landscape for the displayed coefficients; other coefficients are fixed.")
-                table(frame, f"mi_surface_{i}.csv")
-
-
-def trace_view(path):
-    trace_file = path / "evidence" / "optimization_trace.jsonl" if path else None
-    records = [r for r in json_lines(trace_file) if isinstance(r.get("generation"), (int, float))] if trace_file else []
-    if not records:
-        st.info("Per-generation optimization history is unavailable for this run.")
-        return
-    # A generation reset marks a different optimizer instance even when its
-    # scope, seed and candidate count coincide (screening versus final search).
-    instances, current, previous_signature, previous_generation = [], [], None, None
-    for record in records:
-        signature = tuple(str(record.get(k,"")) for k in ["search_id","optimization_id","scope_id","pi_count","optimize_output","seed"])
-        generation = record.get("generation", 0)
-        if current and (signature != previous_signature or generation <= previous_generation):
-            instances.append(current)
-            current = []
-        current.append(record)
-        previous_signature, previous_generation = signature, generation
-    if current:
-        instances.append(current)
-    def label(index):
-        r = instances[index][0]
-        return f"Search {index+1} · {r.get('scope_id','scope')} · k={r.get('pi_count','?')} · seed={r.get('seed','?')} · output scaling={r.get('optimize_output','?')}"
-    index = st.selectbox("CMA-ES search", range(len(instances)), format_func=label, key="trace_search")
-    selected = instances[index]
-    frame = pd.DataFrame(selected)
-    generations = sorted(frame["generation"].unique().tolist())
-    generation = st.select_slider("Generation", generations, value=generations[-1], key="trace_generation") if len(generations)>1 else generations[0]
-    subset = frame[frame["generation"]<=generation]
-    row = subset.iloc[-1]
-    metrics = st.columns(4)
-    for column, title, field in zip(metrics, ["Generation","Best penalized objective","Step size σ","Function evaluations"], ["generation","best_objective","sigma","evaluations"]):
-        value = row.get(field)
-        column.metric(title, f"{value:.6g}" if isinstance(value,(int,float,np.number)) else str(value))
-    fields = [c for c in ["best_objective","generation_best_objective","mean_objective"] if c in subset]
-    if fields:
-        chart(px.line(subset.melt(id_vars="generation", value_vars=fields, var_name="Objective", value_name="Value"),
-                      x="generation", y="Value", color="Objective"), "trace_objective")
-    st.caption("The curves show the penalized objective, not MI. The slider displays saved generations.")
-    means = [r.get("mean_coefficients",[]) for r in selected]
-    if means and isinstance(means[0],list) and len(means[0])>=2:
-        size = min(len(v) for v in means)
-        a, b = st.columns(2)
-        ix = a.selectbox("Projected coefficient x", range(size), format_func=lambda i:f"θ{i+1}", key="trace_x")
-        iy = b.selectbox("Projected coefficient y", range(size), index=1, format_func=lambda i:f"θ{i+1}", key="trace_y")
-        points = pd.DataFrame({"x":[v[ix] for v in means],"y":[v[iy] for v in means],"generation":frame["generation"]})
-        points = points[points["generation"]<=generation]
-        fig = go.Figure()
-        fig.add_trace(go.Scatter(x=points.x,y=points.y, mode="lines+markers",marker={"color":points.generation,"colorscale":"Blues","size":7,
-                                "colorbar":{"title":{"text":"Generation","side":"top"},"thickness":16,"len":.85,"nticks":7}},
-                                customdata=points.generation,hovertemplate="θx=%{x}<br>θy=%{y}<br>Generation %{customdata}<extra></extra>",name="Optimizer mean"))
-        fig.add_trace(go.Scatter(x=[points.x.iloc[-1]],y=[points.y.iloc[-1]],mode="markers",marker={"size":15,"symbol":"diamond","color":"#C17837"},name="Selected generation"))
-        fig.update_layout(xaxis_title=f"θ{ix+1}",yaxis_title=f"θ{iy+1}",height=530)
-        chart(fig,"trace_projection")
-        st.caption("Optimizer-mean projection onto two coefficients; any undisplayed coefficients may vary. The trajectory is distinct from a fixed-coefficient objective surface.")
-    json_panel("Selected generation record", selected[len(subset)-1], key="trace_row")
-    table(frame.drop(columns=[c for c in frame if frame[c].map(lambda v:isinstance(v,(list,dict))).any()]), "optimization_trace.csv")
-    st.download_button("Download complete generation trace · JSONL", trace_file.read_bytes(), file_name="optimization_trace.jsonl", mime="application/x-ndjson")
-
-
-def render():
-    masthead("Numerical diagnostics")
-    catalog = case_catalog()
-    case_id = st.selectbox("Physical system", list(catalog), format_func=lambda k:catalog[k]["title"], key="diagnostic_case")
-    run = selected_run(case_id, key="diagnostic_run")
-    state = run["state"] if run else {}
-    detection = first(state, "regime_detection", default={}) or {}
-    tabs = st.tabs(["Gradient field", "Candidate partitions", "MI & simplification", "CMA-ES generations"])
-    with tabs[0]: gradient_view(detection, case_id)
-    with tabs[1]: partition_view(detection, run, case_id)
-    with tabs[2]: mi_view(state, run, case_id)
-    with tabs[3]: trace_view(run["path"] if run else None)
+        frame = stage_comparison(local)
+        if frame.empty:
+            continue
+        if not uncertainty_note_displayed and frame[["MI SD", "ε SD"]].notna().any().any():
+            st.caption("Error bars: ±1 SD.")
+            uncertainty_note_displayed = True
+        columns = st.columns(2)
+        for column, metric, color in zip(columns, ("MI", "ε"), ("#245B78", "#209B88")):
+            with column:
+                figure = px.bar(frame, x="Stage", y=metric, text=metric, error_y=f"{metric} SD",
+                                 color_discrete_sequence=[color], height=310,
+                                 category_orders={"Stage": frame.Stage.tolist()})
+                hover = []
+                for _, row in frame.iterrows():
+                    details = []
+                    if pd.notna(row[f"{metric} SD"]):
+                        details.append(f"SD={row[f'{metric} SD']:.3g}")
+                    for component in ("restart", "subsampling"):
+                        value = row[f"{metric} {component} SD"]
+                        if pd.notna(value):
+                            details.append(f"{component.title()} SD={value:.3g}")
+                    hover.append(["<br>" + "<br>".join(details) if details else ""])
+                figure.update_traces(texttemplate="%{y:.3g}", textposition="none", cliponaxis=False,
+                                     error_y={"color": "#20384b", "thickness": 1.2, "width": 3},
+                                     customdata=hover,
+                                     hovertemplate=f"%{{x}}<br>{metric}=%{{y:.4g}}%{{customdata[0]}}<extra></extra>")
+                values = pd.to_numeric(frame[metric], errors="coerce").to_numpy(dtype=float)
+                label_errors = frame[f"{metric} SD"].fillna(0).to_numpy(dtype=float)
+                valid = np.isfinite(values)
+                for stage, value, error in zip(frame.Stage[valid], values[valid], label_errors[valid]):
+                    figure.add_annotation(
+                        x=stage, y=value + error, text=f"{value:.3g}", showarrow=False,
+                        xanchor="center", yanchor="bottom", yshift=8,
+                        font={"family": "Times New Roman, Times, serif", "size": 13, "color": "#20384b"})
+                if valid.any():
+                    lower = min(0, np.min(values[valid] - label_errors[valid]))
+                    upper = max(0, np.max(values[valid] + label_errors[valid]))
+                    span = upper - lower or 1
+                    figure.update_yaxes(range=[lower - (.04 * span if lower < 0 else 0), upper + .2 * span])
+                figure.update_layout(xaxis_title=None, bargap=.4, showlegend=False)
+                chart(figure, f"{'mi' if metric == 'MI' else 'epsilon'}_path_{i}")
+        st.download_button("Download stage results · CSV", frame.to_csv(index=False).encode("utf-8"),
+                           file_name=f"{local.get('scope_id', 'global')}_mi_stages.csv",
+                           mime="text/csv", key=f"mi_stages_{i}")

@@ -5,8 +5,6 @@ the validated planner output, and explicit user settings, in that order of
 precedence. Inspect `configs/cases/<case_id>.json`, the run's
 `resolved_config.json`, and the `resolved_hyperparameters`,
 `hyperparameter_provenance` and `compiled_workflow` fields of `state.json`.
-Configuration shown in a planner's prose can describe its proposal; the resolved
-structured settings determine the executed calculation.
 
 ## Native numerical execution
 
@@ -25,10 +23,9 @@ count when reproducing this case.
 Different BLAS implementations can also affect floating-point intermediates.
 The saved results include native-library metadata;
 `python scripts/check_publication.py` checks the included numerical evidence
-against the author tables without fitting another surrogate. It checks reported
+against the paper's tables. It checks reported
 MI, epsilon, combined uncertainty, R², group counts, similarity types and
-candidate partition counts. The expected values are used only for validation,
-never as optimization inputs.
+candidate partition counts.
 
 The settings below describe the case configurations and numerical notebooks
 included in this repository. Case overrides are applied to the shared defaults.
@@ -76,35 +73,6 @@ the local sample counts: the larger 975-sample regime uses histogram MI with 20
 bins, and the 225-sample regime uses KSG with five neighbors in the included
 execution. Regime labels are identifiers, not a fixed physical ordering.
 
-## MI optimization landscape settings
-
-The five landscape examples use the notebook's CMA-ES and MI calculations.
-The full case workflows use the separate settings in `configs/cases/`.
-
-| Case | Population | Maximum generations | Accepted rationalization MI loss |
-| --- | --- | --- | --- |
-| Magnetohydrodynamic power generator | 300 | 50,000 | 0.06 |
-| Rayleigh–Bénard convection | 300 | 50,000 | 0.06 |
-| Skin friction under pressure gradients | 300 | 50,000 | 0.06 |
-| Laser-metal interaction in additive manufacturing | 300 | 50,000 | 0.10 |
-| Blasius laminar boundary layer | 200 | 50,000 | 0.06 |
-
-These searches use seed 42. CMA-ES convergence criteria can stop a search before
-the maximum-generation budget. The main agent's
-shared population and maximum-generation defaults are 300 and 30,000, with its
-shared rationalization MI-loss threshold of 0.10. Full settings,
-stopping reasons and numeric generation histories accompany each result
-under [`results/mi_landscapes/`](../results/mi_landscapes/).
-
-The trajectory follows the CMA-ES search center at each generation. The circle
-and star mark the first and last centers on the displayed coefficient axes.
-
-For MHD, the grid varies the exponents of the two basis groups in Figure 3b.
-The search evaluates MI with the dimensionless velocity `u*` using the KSG
-estimator with four neighbors. The MHD plot uses the CMA-ES center in the
-bounded coefficient space. The accompanying data-collapse plot uses the
-rationalized group in Figure 3e.
-
 ## Skin friction under pressure gradients: Reynolds-number comparison
 
 The pressure-gradient baseline in
@@ -120,5 +88,4 @@ From the repository root, regenerate it into a new directory:
 python scripts/export_pressure_baseline.py --output-dir generated/pressure_gradient_baseline
 ```
 
-The CSV, full-resolution PNG, vector PDF/SVG and manifest preserve the row mapping,
-coordinate definition, label mapping, source hash and generation script hash.
+The command exports a CSV and figures in PNG, PDF and SVG formats.

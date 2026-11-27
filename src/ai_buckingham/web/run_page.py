@@ -14,7 +14,8 @@ import uuid
 import pandas as pd
 import streamlit as st
 
-from .components import interpretation_commentary, json_panel, masthead, table
+from ..reports import render_report, report_sections, report_styles
+from .components import json_panel, masthead, table
 from .data import ROOT, archive_bytes, case_catalog, read_json, runs
 
 MARKER = "AI_BUCKINGHAM_EVENT "
@@ -81,66 +82,154 @@ def progress():
         else:
             st.warning("Calculation stopped. See the error details below.")
     if job["events"]:
-        table(pd.json_normalize(job["events"]),"live_node_progress.csv","live_progress_csv")
+        progress_rows = [{key: event[key] for key in ("sequence", "node", "status", "message") if key in event}
+                         for event in job["events"]]
+        table(pd.DataFrame(progress_rows),"live_node_progress.csv","live_progress_csv")
     if manifest:
         json_panel("Current run manifest",manifest,key="live_manifest")
     trace=path/"evidence"/"optimization_trace.jsonl"
     if trace.is_file():
-        st.caption("Open Numerical diagnostics after completion to inspect the optimization history.")
+        st.caption("Open Case results after completion to inspect this run and its optimization history.")
     if code is not None and manifest:
-        report=path/"report.html"
-        if report.is_file():
-            st.download_button("Download model report · HTML",report.read_bytes(),file_name="analysis_report.html",mime="text/html",key="live_report")
+        st.html(report_styles())
+        for section in report_sections(path):
+            if section["id"] == "results":
+                st.html(section["html"])
+        st.download_button("Download case report · HTML", render_report(path).encode("utf-8"),
+                           file_name="analysis_report.html", mime="text/html", key="live_report")
         st.download_button("Download this run · ZIP",archive_bytes(path),file_name=path.name+".zip",mime="application/zip",key="live_bundle")
-        state=read_json(path/"state.json")
-        interpretation_commentary(state.get("final_report"))
         if st.button("Clear finished job from this session",key="clear_job"):
             del st.session_state["analysis_job"]
             st.rerun()
 
 
+def _open_saved_run(case_id, path):
+    st.session_state["workflow_case"] = case_id
+    st.session_state["workflow_run"] = path
+    st.session_state["page_navigation"] = "Case results"
+
+
 def saved_runs():
-    with st.expander("Saved runs and status", expanded=False):
-        available = runs()
-        if not available:
-            st.info("No saved runs are available.")
-            return
-        catalog = case_catalog()
-        records = []
-        for path in available:
-            manifest = read_json(path / "manifest.json")
-            case_id = manifest.get("case_id", path.parent.name)
-            records.append({"Case": catalog.get(case_id, {}).get("title", case_id), "Run": path.name,
-                            "Status": manifest.get("status", "unknown"),
-                            "Source": "Included run data" if path.is_relative_to(ROOT / "results") else "New analysis"})
-        frame = pd.DataFrame(records)
-        statuses = frame["Status"]
-        columns = st.columns(3)
-        columns[0].metric("Completed runs", int(statuses.isin(["completed", "complete", "success"]).sum()))
-        columns[1].metric("Running runs", int(statuses.eq("running").sum()))
-        columns[2].metric("Failed / stopped", int(statuses.isin(["failed", "blocked", "cancelled", "warning"]).sum()))
-        table(frame, "saved_runs.csv", "saved_runs_csv")
-        selected = st.selectbox("Saved run", available,
-                                format_func=lambda path: f"{catalog.get(path.parent.name, {}).get('title', path.parent.name)} · {path.name}", key="saved_run_selection")
-        json_panel("Saved run details", read_json(selected / "manifest.json"), key="saved_run_details")
-        report = selected / "report.html"
-        if report.is_file():
-            st.download_button("Download raw run report · HTML", report.read_bytes(),
-                               file_name=f"{selected.parent.name}_{selected.name}.html", mime="text/html", key="saved_run_report")
+    available = runs()
+    if not available:
+        st.info("No saved results are available.")
+        return
+    catalog = case_catalog()
+    case_ids = list(dict.fromkeys(path.parent.name for path in available))
+    case_ids.sort(key=lambda case_id: list(catalog).index(case_id) if case_id in catalog else len(catalog))
+    case_id = st.selectbox("Physical system", case_ids,
+                           format_func=lambda value: catalog.get(value, {}).get("title", value),
+                           key="saved_result_case")
+    options = [path for path in available if path.parent.name == case_id]
+    index = read_json(ROOT / "results" / "index.json")
+    selected_id = next((item.get("selected_run") for item in index.get("cases", [])
+                        if item.get("case_id") == case_id), None)
+    default_index = next((i for i, path in enumerate(options) if path.name == selected_id), 0)
+    selected = st.selectbox("Saved result", options, format_func=lambda path: path.name,
+                            index=default_index, key=f"saved_result_run_{case_id}")
+    st.button("Open case results", type="primary", key="open_saved_results",
+              on_click=_open_saved_run, args=(case_id, selected))
+    st.caption("Open the saved cards and figures without starting a new analysis.")
+    with st.expander("Downloads", expanded=False):
+        st.download_button("Download case report · HTML", render_report(selected).encode("utf-8"),
+                           file_name=f"{case_id}_{selected.name}.html", mime="text/html", key="saved_run_report")
         st.download_button("Download run bundle · ZIP", archive_bytes(selected),
-                           file_name=f"{selected.parent.name}_{selected.name}.zip", mime="application/zip", key="saved_run_bundle")
+                           file_name=f"{case_id}_{selected.name}.zip", mime="application/zip", key="saved_run_bundle")
+
+
+def numerical_settings(config, case_id):
+    original = dict(config.get("manual_hyperparams") or {})
+    hp = dict(original)
+    with st.expander("Numerical settings", expanded=False):
+        a, b = st.columns(2)
+        similarity_labels = {None: "Use workflow selection", "auto": "Automatic selection",
+                             "first_kind": "Type I · complete similarity", "second_kind": "Type II · incomplete similarity"}
+        similarity_options = list(similarity_labels)
+        initial_similarity = original.get("similarity_type")
+        similarity = a.selectbox("Similarity setting", similarity_options,
+                                 index=similarity_options.index(initial_similarity),
+                                 format_func=similarity_labels.get, key=f"numerical_similarity_{case_id}")
+        if similarity != initial_similarity:
+            if similarity is None:
+                hp.pop("similarity_type", None)
+            else:
+                hp["similarity_type"] = similarity
+        denominator = b.number_input("Maximum rational denominator", min_value=1,
+                                     value=int(original.get("max_rational_denominator", 5)),
+                                     key=f"numerical_denominator_{case_id}")
+        if denominator != original.get("max_rational_denominator", 5):
+            hp["max_rational_denominator"] = int(denominator)
+
+        method_labels = {None: "Use workflow selection", "auto": "Automatic selection",
+                         "kraskov": "Kraskov estimator", "binning": "Binning estimator"}
+        method_options = list(method_labels)
+        initial_method = original.get("mi_method_used")
+        method = a.selectbox("MI estimator", method_options, index=method_options.index(initial_method),
+                             format_func=method_labels.get, key=f"numerical_mi_method_{case_id}")
+        if method != initial_method:
+            if method is None:
+                hp.pop("mi_method_used", None)
+            else:
+                hp["mi_method_used"] = method
+        parameter = b.number_input("MI parameter", min_value=1, value=original.get("mi_param_used"),
+                                    placeholder="Use workflow selection", key=f"numerical_mi_parameter_{case_id}",
+                                    help="Number of neighbors for the Kraskov estimator or bins for the binning estimator.")
+        if parameter != original.get("mi_param_used"):
+            if parameter is None:
+                hp.pop("mi_param_used", None)
+            else:
+                hp["mi_param_used"] = int(parameter)
+
+        st.markdown("##### Optimization budget")
+        budget = st.radio("Execution budget", ["Case settings", "Reduced exploration budget"],
+                          horizontal=True, label_visibility="collapsed", key="execution_budget")
+        reduced = budget == "Reduced exploration budget"
+        budget_defaults = {"cma_maxiter": 30 if reduced else 30000, "cma_popsize": 24 if reduced else 300}
+        for column, (name, label) in zip(st.columns(2), [("cma_maxiter", "Maximum generations"), ("cma_popsize", "Population size")]):
+            source_key = f"regime_{name}" if original.get(f"regime_{name}") is not None else name
+            initial_value = budget_defaults[name] if reduced else original.get(source_key, budget_defaults[name])
+            value = int(column.number_input(label, min_value=1 if name == "cma_maxiter" else 4,
+                                             value=int(initial_value), key=f"numerical_{name}_{case_id}_{budget}"))
+            if reduced or value != initial_value:
+                hp[source_key] = value
+        if reduced:
+            st.caption("Reduced budgets use fewer generations and a smaller population than the case settings.")
+
+        managed = {"similarity_type", "max_rational_denominator", "mi_method_used", "mi_param_used",
+                   "cma_maxiter", "cma_popsize", "regime_cma_maxiter", "regime_cma_popsize"}
+        if st.checkbox("Edit additional parameters", key=f"advanced_numerical_{case_id}"):
+            additional = {name: value for name, value in original.items() if name not in managed}
+            text = st.text_area("Additional parameters · JSON", json.dumps(additional, indent=2), height=220,
+                                key=f"additional_parameters_{case_id}")
+            try:
+                parsed = json.loads(text)
+                if not isinstance(parsed, dict):
+                    raise ValueError("Additional parameters must be a JSON object.")
+                if managed.intersection(parsed):
+                    raise ValueError("Use the controls above for similarity, MI and optimization-budget settings.")
+                hp = {name: value for name, value in hp.items() if name in managed}
+                hp.update(parsed)
+            except ValueError as error:
+                st.error(str(error))
+                return False
+        config["manual_hyperparams"] = hp
+        st.download_button("Download analysis settings · JSON", json.dumps(config, ensure_ascii=False, indent=2),
+                           file_name=f"{case_id}_settings.json", mime="application/json", key="live_config_download")
+    return True
 
 
 def render():
     masthead("Run analysis")
-    st.markdown("A new run sends the problem description, relevant data previews and retrieval queries to the configured model providers. "
-                "Credentials entered here are used only for this session's isolated calculation and are excluded from the saved scientific configuration.")
-    saved_runs()
     job=st.session_state.get("analysis_job")
     if job:
         progress()
         if job["process"].poll() is None:
             return
+    action = st.radio("Analysis mode", ["View saved results", "Run new analysis"], horizontal=True,
+                       label_visibility="collapsed", key="analysis_action")
+    if action == "View saved results":
+        saved_runs()
+        return
     catalog=case_catalog()
     mode=st.radio("Input",["Supplied physical case","My CSV and problem"],horizontal=True,key="live_input_mode")
     upload=None
@@ -166,32 +255,18 @@ def render():
             except (ValueError,pd.errors.ParserError) as error:
                 st.error(f"CSV could not be read: {error}")
                 return
-    with st.expander("Numerical settings",expanded=False):
-        budget=st.radio("Execution budget",["Case settings","Reduced exploration budget"],horizontal=True,key="execution_budget")
-        hp=dict(config.get("manual_hyperparams") or {})
-        if budget=="Reduced exploration budget":
-            a,b=st.columns(2)
-            hp["cma_maxiter"]=int(a.number_input("Maximum CMA-ES generations",min_value=1,max_value=30000,value=30,key="exploration_generations"))
-            hp["cma_popsize"]=int(b.number_input("Population size",min_value=4,max_value=1000,value=24,key="exploration_population"))
-            st.caption("Reduced budgets generate an exploratory run and do not reproduce the paper's optimization budget.")
-        text=st.text_area("Manual numerical overrides · JSON",json.dumps(hp,indent=2),height=190,key=f"manual_overrides_{case_id}_{budget}")
-        try:
-            parsed=json.loads(text)
-            if not isinstance(parsed,dict):raise ValueError("Overrides must be a JSON object.")
-            config["manual_hyperparams"]=parsed
-        except ValueError as error:
-            st.error(str(error))
-            return
-        json_panel("Submitted analysis configuration",config,key="live_config_preview")
+    if not numerical_settings(config, case_id):
+        return
     with st.form("analysis_launch_form"):
-        st.markdown("#### Model connection")
+        st.markdown("#### Model settings")
+        st.caption("New analyses use the configured model services. Leave key fields empty to use host credentials.")
         a,b=st.columns(2)
         openai_key=a.text_input("OpenAI-compatible API key",type="password",key="live_openai_key")
         embedding_key=b.text_input("GLM embedding API key",type="password",key="live_embedding_key")
         endpoint=a.text_input("LLM base URL",value="https://api.openai.com/v1",key="live_llm_endpoint")
         embedding_endpoint=b.text_input("Embedding base URL",value="https://llmapi.paratera.com/v1",key="live_embedding_endpoint")
-        analyzer=st.selectbox("Analyzer model",["gpt-5-mini","gpt-4.1-mini","gpt-4o-mini"],key="live_analyzer_model")
-        st.caption("Checker, planner and interpretation use GPT-5 mini. A key already configured on the host may be used when its field is left empty. Full scientific runs can be computationally expensive.")
+        analyzer=st.selectbox("LLM for semantic parsing",["gpt-5-mini","gpt-4.1-mini","gpt-4o-mini"],key="live_analyzer_model")
+        st.caption("GPT-5 mini is used for the remaining workflow stages.")
         acknowledged=st.checkbox("Use these settings and send the analysis inputs to the configured model providers.",key="launch_acknowledged")
         submitted=st.form_submit_button("Start LangGraph analysis",type="primary")
     if submitted:

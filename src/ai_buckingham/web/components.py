@@ -91,11 +91,11 @@ def chart(fig: go.Figure, key: str | None = None, *, compact_title: bool = False
                       font={"family": "Times New Roman, Times, serif", "size": 14, "color": "#20384b"},
                       height=fig.layout.height or 520,
                       title={"x":0,"xanchor":"left","y":.98,"yanchor":"top","automargin":True,
-                             "font":{"size":18}},
+                             "font":{"family":"Times New Roman, Times, serif","size":18}},
                       margin={"l": 45, "r": 35, "t": 85 if fig.layout.title.text else 35, "b": 125 if has_legend else 60,
                               "autoexpand":True},
                       legend={"orientation":"h","yanchor":"top","y":-.22,"x":0,"xanchor":"left",
-                              "title":{"side":"top"},"font":{"size":12},"maxheight":100})
+                              "title":{"side":"top"},"font":{"family":"Times New Roman, Times, serif","size":12},"maxheight":100})
     if compact_title and fig.layout.title.text:
         # Keep comparison headings close to the axes, with room for two lines
         # below the preceding controls, independent of the figure height.
@@ -133,20 +133,27 @@ def interpretation_commentary(text: str | None) -> None:
 
 def json_panel(title: str, value, key: str | None = None, expanded: bool = False) -> None:
     with st.expander(title, expanded=expanded):
-        st.json(scrub(value), expanded=False)
+        st.json(scrub(value), expanded=True)
         st.download_button("Download · JSON", json.dumps(scrub(value), ensure_ascii=False, indent=2, default=str),
                            file_name=title.lower().replace(" ", "_") + ".json", mime="application/json",
                            key=key or "json_" + title)
 
 
-def figures(folder: Path, key: str = "figures") -> None:
+def json_download(title: str, value, key: str) -> None:
+    st.download_button("Download " + title + " · JSON",
+                       json.dumps(scrub(value), ensure_ascii=False, indent=2, default=str).encode("utf-8"),
+                       file_name=key + ".json", mime="application/json", key=key)
+
+
+def figures(folder: Path, key: str = "figures", *, display_images: bool = True) -> None:
     images = sorted(folder.rglob("*.png")) if folder.is_dir() else []
     vectors = sorted(folder.rglob("*.pdf")) + sorted(folder.rglob("*.svg")) if folder.is_dir() else []
     if not images and not vectors:
         st.info("No rendered figure is present in this run. Numerical evidence is shown separately.")
         return
     for i, path in enumerate(images):
-        st.image(str(path), caption=path.relative_to(folder).as_posix(), width="stretch")
+        if display_images:
+            st.image(str(path), caption=path.relative_to(folder).as_posix(), width="stretch")
         st.download_button("Download full-resolution PNG", path.read_bytes(), file_name=path.name,
                            mime="image/png", key=f"{key}_png_{i}")
     for i, path in enumerate(vectors):
@@ -160,10 +167,10 @@ def selected_run(case_id: str, *, key: str = "case_run"):
     if not available:
         st.info("No saved case run is available. Input data and archived benchmark evidence remain accessible.")
         return None
-    picked = st.selectbox("Evidence run", available, format_func=lambda p: p.name, key=key)
+    picked = available[0] if len(available) == 1 else st.selectbox("Run", available, format_func=lambda p: p.name, key=key)
     result = load_run(picked)
     manifest = result["manifest"]
-    source = "Included run data" if picked.is_relative_to(Path(__file__).resolve().parents[3] / "results") else "New analysis"
-    st.caption("Source: " + source
-               + " · Status: " + str(manifest.get("status", manifest.get("scientific_status", "not recorded"))))
+    status = str(manifest.get("status", manifest.get("scientific_status", "not recorded")))
+    if len(available) > 1 or status != "completed":
+        st.caption("Run " + picked.name + " · " + status)
     return result

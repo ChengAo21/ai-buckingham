@@ -16,12 +16,4 @@ python reproduction/mi_landscapes/reproduce.py --case mhd
 
 To run a single Figure 4 case, pass `--case pressure_gradient`, `--case rayleigh_benard`, `--case laser_keyhole` or `--case blasius`. Outputs go to `generated/optimize/<case_id>/` within this package unless `--output-dir` is provided.
 
-Each run exports the grid, optimization history, basis-selection table, coefficients, input hashes, environment metadata and figures. See [Numerical configuration](../../docs/configuration.md) for the notebook and case-workflow settings.
-
-For a short execution check:
-
-```bash
-python reproduction/mi_landscapes/reproduce.py --case blasius --maxiter 2 --popsize 8 --grid-size 15
-```
-
-The selected budget is saved in the output metadata.
+Each run exports the grid, optimization history, basis-selection table, coefficients and figures.
