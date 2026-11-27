@@ -37,23 +37,15 @@ def style() -> None:
     .stCaption {color:#5a6b7c;}
     .block-container:has(.ab-paper-heading) {padding-top:4.5rem;}
     .ab-paper-heading {
-        position:relative; isolation:isolate; overflow:hidden;
+        display:grid; grid-template-columns:minmax(0,1fr) minmax(6rem,18%);
+        align-items:center; gap:clamp(1rem,3vw,2.5rem);
         padding:clamp(1.1rem,3vw,2.35rem); border:1px solid #ccdddb;
         border-radius:.75rem; background:#e4f0ef;
     }
-    .ab-paper-heading::before, [data-testid="stSidebar"]::after {
-        content:""; position:absolute; pointer-events:none;
-        background-image:linear-gradient(to right,rgba(40,100,103,.15) 1px,transparent 1px),
-                         linear-gradient(to top,rgba(40,100,103,.15) 1px,transparent 1px);
-        background-size:1.25rem 1.25rem;
-    }
-    .ab-paper-heading::before {
-        z-index:-1; inset:0 0 0 auto; width:min(30%,17rem);
-        mask-image:linear-gradient(110deg,transparent 12%,#000 90%);
-    }
-    [data-testid="stSidebar"]::after {
-        inset:auto 0 0 auto; width:65%; height:min(6rem,12%);
-        mask-image:linear-gradient(145deg,transparent 15%,#000);
+    .ab-paper-illustration {display:block; width:100%; max-width:11rem; height:auto; justify-self:center;}
+    @media (max-width:54rem) {
+        .ab-paper-heading {grid-template-columns:1fr;}
+        .ab-paper-illustration {display:none;}
     }
     .ab-paper-heading h1 {
         max-width:32ch; margin:0; padding:0; color:#143d43;

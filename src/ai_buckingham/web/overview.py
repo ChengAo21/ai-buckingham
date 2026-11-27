@@ -13,12 +13,15 @@ def render():
     authors = " · ".join(escape(author) for author in paper["authors"])
     st.html(f"""
         <header class="ab-paper-heading">
-          <h1>{escape(paper["title"])}</h1>
-          <p class="ab-authors">{authors}</p>
-          <nav aria-label="Paper and code">
-            <a href="{escape(paper["url"], quote=True)}" target="_blank" rel="noopener noreferrer">arXiv:{escape(paper["version"])}</a>
-            <a href="https://github.com/ChengAo21/ai-buckingham" target="_blank" rel="noopener noreferrer">GitHub</a>
-          </nav>
+          <div>
+            <h1>{escape(paper["title"])}</h1>
+            <p class="ab-authors">{authors}</p>
+            <nav aria-label="Paper and code">
+              <a href="{escape(paper["url"], quote=True)}" target="_blank" rel="noopener noreferrer">arXiv:{escape(paper["version"])}</a>
+              <a href="https://github.com/ChengAo21/ai-buckingham" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </nav>
+          </div>
+          <img class="ab-paper-illustration" src="app/static/buckingham-robot.png" alt="">
         </header>
     """)
 
