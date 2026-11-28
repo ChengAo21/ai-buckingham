@@ -1640,7 +1640,6 @@ def _frontend_ledger_html(ledger, contract=None):
         powers = v.get('si_exponents') or {}
         exact_rows.append([name] + [('?' if powers.get(b) is None else powers[b]) for b in ('M', 'L', 'T', 'I', 'Theta', 'N', 'J')])
     result = "<div class='daa-section-title'>Physical quantities and dimensions</div>" + _frontend_table(['Input variable', 'Physical meaning', 'SI dimensions'], rows)
-    result += "<div class='daa-front-caption'>? denotes an unspecified SI exponent.</div>"
     result += _frontend_details('All seven named SI exponents', _frontend_table(['Input', 'M', 'L', 'T', 'I', 'Theta', 'N', 'J'], exact_rows, matrix=True))
     output = ledger.get('output_variable_name')
     result += "<div class='daa-note'><strong>Output " + _frontend_escape(output) + ':</strong> ' + _frontend_escape(ledger.get('output_variable_reasoning')) + '</div>'

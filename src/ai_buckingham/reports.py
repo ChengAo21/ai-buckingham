@@ -104,6 +104,8 @@ _SCREENING_FIELDS = (
     "Final input constraints", "Final output constraints",
 )
 _REDUNDANT_COPY = {
+    "? means an unknown coordinate; it is never replaced by zero. A value of 0 is known absence of that SI base.",
+    "? denotes an unspecified SI exponent.",
     "Rows and columns follow the labels above; zero rows may be omitted. Counts are computed from this matrix, not inferred separately by the model.",
     "Checker decisions are model judgments. The program gate is reported separately above; ? denotes an unknown coordinate, never zero.",
     "A candidate representation was optimized and checked against restart and held-out evidence.",
@@ -121,7 +123,6 @@ _READER_LABELS = {
     "Named SI dimensions": "SI dimensions",
     "Checker decision": "Dimensional-checking decision",
     "No structured Checker reason was returned.": "No dimensional-checking explanation is available.",
-    "? means an unknown coordinate; it is never replaced by zero. A value of 0 is known absence of that SI base.": "? denotes an unspecified SI exponent.",
 }
 
 
